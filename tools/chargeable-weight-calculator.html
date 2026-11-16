@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chargeable Weight Calculator — Air & Sea Freight (LCL W/M)</title>
+  <meta name="description" content="Calculate billable chargeable weight for Air Freight (0.5 kg carrier rounding) and Ocean Freight (LCL W/M Revenue Tons). Free instant calculator.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/chargeable-weight-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/chargeable-weight-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/chargeable-weight-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Chargeable Weight Calculator (Air & Ocean W/M)",
+    "description": "Calculate billable chargeable freight weight for Air Freight with 0.5 kg rounding, and Sea Freight LCL W/M Revenue Tons.",
+    "url": "https://nexivo.com/tools/chargeable-weight-calculator.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is chargeable weight in air freight?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In air freight, chargeable weight is the greater of actual gross weight and volumetric dimensional weight. Air carriers round this value up to the next half kilogram (0.5 kg)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does W/M mean in sea freight LCL?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "W/M stands for 'Weight or Measurement'. Ocean shipping lines compare the total volume in cubic meters (CBM) against the gross weight in metric tons (1,000 kg). The larger number becomes the chargeable Revenue Ton (W/M)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is my air freight billed by volume instead of actual weight?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "When cargo is bulky or low density (such as textiles, toys, or electronics with foam packaging), its volumetric weight exceeds its deadweight scale weight. Airlines charge for the volumetric space consumed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my commercial shipping data kept private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. All computations are performed entirely in your browser using local JavaScript. No cargo data, invoice amounts, or measurements are ever saved or transmitted."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#logistics">Logistics</a></li>
+      <li>/</li>
+      <li aria-current="page">Chargeable Weight Calculator</li>
+    </nav>
+
+    <!-- Cross-Linking Freight Suite Nav -->
+    <div class="freight-suite-nav">
+      <span class="freight-suite-label">Freight Suite:</span>
+      <a href="/tools/cbm-calculator.html" class="freight-pill">CBM Calculator</a>
+      <a href="/tools/volumetric-weight-calculator.html" class="freight-pill">Volumetric Weight</a>
+      <a href="/tools/chargeable-weight-calculator.html" class="freight-pill active">Chargeable Weight</a>
+      <a href="/tools/container-loading-calculator.html" class="freight-pill">Container Loading</a>
+      <a href="/tools/pallet-calculator.html" class="freight-pill">Pallet Calculator</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Chargeable Weight Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Determine billable freight weight for Air Cargo &amp; Express (Gross vs. Volumetric with official 0.5 kg rounding) and Ocean Freight (LCL Weight or Measurement W/M Revenue Tons).
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-popular">Popular</span>
+        <span class="tool-badge">Air &amp; Sea LCL Modes</span>
+        <span class="tool-badge">Carrier 0.5kg Rounding</span>
+        <span class="tool-badge">100% In-Browser</span>
+      </div>
+    </div>
+
+    <!-- Calculator Main Panel -->
+    <div class="tool-panel">
+      <!-- Mode Selection & Unit Toggle -->
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-4); margin-block-end: var(--space-4); border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-4);">
+        <!-- Mode: Air vs Sea -->
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <span style="font-size: var(--font-size-sm); font-weight: 700; color: var(--color-text-primary);">Shipment Mode:</span>
+          <div class="unit-toggle-group" role="radiogroup" aria-label="Shipment Transportation Mode">
+            <button type="button" class="unit-toggle-btn active" id="btn-mode-air">Air / Express Courier</button>
+            <button type="button" class="unit-toggle-btn" id="btn-mode-sea">Sea Freight (LCL W/M)</button>
+          </div>
+        </div>
+
+        <!-- Divisor & Units -->
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3);">
+          <div id="air-divisor-wrapper" style="display: flex; align-items: center; gap: var(--space-2);">
+            <label for="air-dim-select" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-secondary);">DIM Divisor:</label>
+            <select id="air-dim-select" class="form-select" style="inline-size: auto; padding: 0.35rem 0.65rem; font-size: var(--font-size-xs);">
+              <option value="6000">IATA Air Freight (6000)</option>
+              <option value="5000">Express Courier (5000)</option>
+              <option value="4000">Road Freight (4000)</option>
+              <option value="custom">Custom...</option>
+            </select>
+            <input type="number" id="air-dim-custom" class="form-input" style="inline-size: 80px; padding: 0.35rem 0.5rem; font-size: var(--font-size-xs); display: none;" value="6000">
+          </div>
+
+          <div class="unit-toggle-group" role="radiogroup" aria-label="Measurement Units">
+            <button type="button" class="unit-toggle-btn active" id="btn-metric">Metric (cm/kg)</button>
+            <button type="button" class="unit-toggle-btn" id="btn-imperial">Imperial (in/lbs)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cargo Table -->
+      <div class="cargo-table-container">
+        <table class="cargo-table" id="chargeable-table">
+          <thead>
+            <tr>
+              <th style="inline-size: 20%;">Package / Item Name</th>
+              <th style="inline-size: 14%;">Length (<span class="unit-len-label">cm</span>)</th>
+              <th style="inline-size: 14%;">Width (<span class="unit-len-label">cm</span>)</th>
+              <th style="inline-size: 14%;">Height (<span class="unit-len-label">cm</span>)</th>
+              <th style="inline-size: 14%;">Actual Wt (<span class="unit-wt-label">kg</span>)</th>
+              <th style="inline-size: 10%;">Qty</th>
+              <th style="inline-size: 14%;">Volumetric Wt</th>
+              <th style="inline-size: 4%;"></th>
+            </tr>
+          </thead>
+          <tbody id="chargeable-tbody">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cargo-table-actions">
+        <div class="cargo-action-btns">
+          <button type="button" class="btn btn-primary" id="btn-add-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Add Another Item</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btn-reset">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>Reset</span>
+          </button>
+        </div>
+
+        <div class="cargo-action-btns">
+          <button type="button" class="btn btn-secondary" id="btn-copy-summary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy Results</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btn-send-container">
+            <span>Send to Container Loading &rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Warning alert -->
+      <div id="chargeable-warning" class="alert alert-info" style="margin-block-start: var(--space-4); display: none;">
+        <span>Please enter valid positive numbers for dimensions and weights.</span>
+      </div>
+
+      <!-- Primary Decision Callout Card -->
+      <div style="background: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-5); margin-block-start: var(--space-6);">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: var(--space-4);">
+          <div>
+            <div style="font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); margin-block-end: var(--space-1);">
+              Billable Chargeable Metric
+            </div>
+            <div id="res-primary-chargeable" style="font-size: var(--font-size-3xl); font-weight: 800; color: var(--color-primary); line-height: 1.1;">
+              0.00 kg
+            </div>
+            <div id="res-rounding-note" style="font-size: var(--font-size-xs); color: var(--color-text-secondary); margin-block-start: var(--space-1);">
+              Carrier rounded (0.5 kg standard): <strong id="res-carrier-rounded">0.0 kg</strong>
+            </div>
+          </div>
+
+          <div style="text-align: right;">
+            <div id="res-basis-badge" class="freight-status-badge badge-volumetric">
+              Billed by Volumetric Weight (Bulky)
+            </div>
+            <div id="res-basis-explanation" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-2); max-inline-size: 34ch;">
+              Volumetric weight exceeds actual gross weight.
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison Bar -->
+        <div style="margin-block-start: var(--space-4);">
+          <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-secondary); margin-block-end: var(--space-1);">
+            <span>Actual Scale Weight: <strong id="label-bar-actual">0 kg</strong></span>
+            <span>Volumetric Weight: <strong id="label-bar-volumetric">0 kg</strong></span>
+          </div>
+          <div class="freight-compare-bar" role="progressbar" aria-label="Actual vs Volumetric weight distribution">
+            <div class="freight-compare-seg freight-compare-actual" id="seg-actual" style="width: 50%;">Actual</div>
+            <div class="freight-compare-seg freight-compare-volumetric" id="seg-volumetric" style="width: 50%;">Volumetric</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Metrics Grid -->
+      <div class="stats-grid" style="margin-block-start: var(--space-5);">
+        <div class="stat-card">
+          <div class="stat-value" id="res-stat-actual">0.00 <span style="font-size: var(--font-size-sm); font-weight: 500;">kg</span></div>
+          <div class="stat-label">Total Actual Gross Weight</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="res-stat-volumetric">0.00 <span style="font-size: var(--font-size-sm); font-weight: 500;">kg</span></div>
+          <div class="stat-label">Total Volumetric Weight</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="res-stat-cbm">0.000 <span style="font-size: var(--font-size-sm); font-weight: 500;">m³</span></div>
+          <div class="stat-label">Total Volume (CBM)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="res-stat-qty">0</div>
+          <div class="stat-label">Total Cartons</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational & SEO Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>
+          The <strong>Chargeable Weight Calculator</strong> resolves the critical pricing disparity between actual weight and dimensional volume. In commercial air and ocean shipping, transport carriers do not bill strictly by scale weight; instead, they bill by <em>Chargeable Weight</em>. This tool automatically compares your shipment's gross deadweight against its volumetric space (applying international IATA 0.5 kg rounding for air freight, or the 1 CBM : 1,000 kg W/M standard for ocean LCL), identifying your exact billing basis and cost-driver.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li><strong>Select shipment mode:</strong> Toggle between <em>Air / Express Courier</em> and <em>Sea Freight (LCL W/M)</em>.</li>
+          <li><strong>Select your unit preference:</strong> Switch between Metric ($cm / kg$) or Imperial ($in / lbs$).</li>
+          <li><strong>Configure DIM divisor:</strong> For air cargo, standard IATA utilizes divisor $6,000$. For express couriers like DHL, FedEx, or UPS, select divisor $5,000$.</li>
+          <li><strong>Enter box rows:</strong> Input box length, width, height, gross weight per piece, and quantities.</li>
+          <li><strong>Evaluate the billing decision:</strong> Check the badge indicator to see whether your consignment is penalized for being bulky (Volumetric) or dense (Actual Weight).</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Mathematical Formulas Used</h2>
+        <div class="example-box">
+          <p style="margin-block-end: var(--space-2); font-weight: 600;">Air Freight Chargeable Weight Rule:</p>
+          <pre class="example-pre">Chargeable Weight = Max(Total Actual Gross Weight, Total Volumetric Weight)&#10;Carrier Billed Weight = Ceiling(Chargeable Weight × 2) / 2  (Rounded up to next 0.5 kg)</pre>
+          <p style="margin-block-start: var(--space-3); margin-block-end: var(--space-2); font-weight: 600;">Ocean Freight (LCL W/M Revenue Tons) Rule:</p>
+          <pre class="example-pre">Metric Tons = Gross Weight (kg) / 1,000&#10;Revenue Tons (W/M) = Max(Total CBM, Metric Tons)  [Minimum: 1.0 W/M]</pre>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Air vs. Ocean Billing Standards Reference Table</h2>
+        <div class="cargo-table-container">
+          <table class="cargo-table">
+            <thead>
+              <tr>
+                <th>Freight Category</th>
+                <th>Comparison Formula</th>
+                <th>Volumetric Ratio</th>
+                <th>Carrier Rounding Rule</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>IATA Air Cargo</strong></td>
+                <td>$\max(\text{Actual kg}, \text{Volumetric kg})$</td>
+                <td>$1\text{ CBM} = 167\text{ kg}$ (Divisor 6000)</td>
+                <td>Rounded up to next $0.5\text{ kg}$</td>
+              </tr>
+              <tr>
+                <td><strong>Express Couriers</strong></td>
+                <td>$\max(\text{Actual kg}, \text{Volumetric kg})$</td>
+                <td>$1\text{ CBM} = 200\text{ kg}$ (Divisor 5000)</td>
+                <td>Rounded up to next $0.5\text{ kg}$</td>
+              </tr>
+              <tr>
+                <td><strong>Sea Freight LCL</strong></td>
+                <td>$\max(\text{CBM}, \text{Metric Tons})$</td>
+                <td>$1\text{ CBM} = 1,000\text{ kg}$ ($1\text{ Ton}$)</td>
+                <td>Standard minimum $1.0\text{ W/M}$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Preventing Unexpected Freight Invoices:</strong> Shippers verify whether their freight forwarder will charge by deadweight or dimensional volume before booking flight space.</li>
+          <li><strong>Packaging Redesign:</strong> Identifying oversized boxes that trigger expensive volumetric penalties and trimming 2–3 cm to save hundreds in shipping costs.</li>
+          <li><strong>LCL Ocean Freight Quotes:</strong> Verifying ocean revenue tons ($W/M$) for palletized consignments.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input (Air Cargo)</div>
+              <pre class="example-pre">Boxes: 10 units @ 50 × 40 × 40 cm&#10;Actual Weight: 8 kg per box (Total: 80 kg)&#10;Air DIM Divisor: 6000</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">Volumetric Weight: (50×40×40 / 6000) × 10 = 133.33 kg&#10;Actual Weight: 80.00 kg&#10;Chargeable Weight: 133.33 kg&#10;Carrier Rounded (0.5 kg): 133.5 kg (Billed by Volumetric)</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          Calculations use pure local JavaScript with zero server roundtrips. When in Imperial mode, pound conversions retain full decimal precision before rounding displays. Sea Freight LCL calculations enforce the universal commercial convention of a $1.0\text{ W/M}$ minimum charge.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Some specialized airlines apply custom density multipliers or contract thresholds (e.g., $1\text{ CBM} = 250\text{ kg}$ for express air charter). For custom contracts, use the "Custom Divisor" setting.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Your consignment sizes, product weights, and commercial data are strictly kept within your browser's private memory. No analytics or server transmissions occur.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>How does the 0.5 kg carrier rounding work?</h3>
+          <p>
+            Airlines and express couriers do not bill fractional weights below 0.5 kg. For instance, if your shipment has an exact chargeable weight of 12.1 kg, you will be billed for 12.5 kg. If it weighs 12.51 kg, it rounds up to 13.0 kg.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What does 'Dense Cargo' vs 'Bulky Cargo' mean?</h3>
+          <p>
+            Dense cargo (such as steel, liquids, or machinery) has high weight in a small space, meaning it is billed by Actual Weight. Bulky cargo (such as shoes, apparel, or empty containers) takes up lots of aircraft space and is billed by Volumetric Weight.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I transfer my box sizes to the Container Loading tool?</h3>
+          <p>
+            Yes. Click "Send to Container Loading" to test whether your cargo can be packed into a 20ft or 40ft ocean container.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/cbm-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>CBM Calculator</span>
+          </a>
+          <a href="/tools/volumetric-weight-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>Volumetric Weight Calculator</span>
+          </a>
+          <a href="/tools/container-loading-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>Container Loading Calculator</span>
+          </a>
+          <a href="/tools/pallet-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16M4 16h16M6 12h12M4 8h16M8 4h8"/></svg>
+            <span>Pallet Calculator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/freight-utils.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let isMetric = true;
+      let shipmentMode = 'air'; // 'air' or 'sea'
+
+      const tbody = document.getElementById('chargeable-tbody');
+      const btnModeAir = document.getElementById('btn-mode-air');
+      const btnModeSea = document.getElementById('btn-mode-sea');
+      const btnMetric = document.getElementById('btn-metric');
+      const btnImperial = document.getElementById('btn-imperial');
+      const btnAddRow = document.getElementById('btn-add-row');
+      const btnReset = document.getElementById('btn-reset');
+      const btnCopy = document.getElementById('btn-copy-summary');
+      const btnSendContainer = document.getElementById('btn-send-container');
+      const airDivisorWrapper = document.getElementById('air-divisor-wrapper');
+      const airDimSelect = document.getElementById('air-dim-select');
+      const airDimCustom = document.getElementById('air-dim-custom');
+      const warningEl = document.getElementById('chargeable-warning');
+
+      const lenLabels = document.querySelectorAll('.unit-len-label');
+      const wtLabels = document.querySelectorAll('.unit-wt-label');
+
+      const defaultRows = [
+        { name: 'Carton 1', l: 60, w: 40, h: 40, wt: 12, qty: 10 },
+        { name: 'Carton 2', l: 50, w: 40, h: 30, wt: 20, qty: 5 }
+      ];
+
+      function updateUnitLabels() {
+        lenLabels.forEach(el => el.textContent = isMetric ? 'cm' : 'in');
+        wtLabels.forEach(el => el.textContent = isMetric ? 'kg' : 'lbs');
+        updateDimOptions();
+      }
+
+      function updateDimOptions() {
+        if (isMetric) {
+          airDimSelect.options[0].text = 'IATA Air Freight (6000)';
+          airDimSelect.options[0].value = '6000';
+          airDimSelect.options[1].text = 'Express Courier (5000)';
+          airDimSelect.options[1].value = '5000';
+          airDimSelect.options[2].text = 'Road Freight (4000)';
+          airDimSelect.options[2].value = '4000';
+        } else {
+          airDimSelect.options[0].text = 'IATA Air Freight (166)';
+          airDimSelect.options[0].value = '166';
+          airDimSelect.options[1].text = 'Express Courier (139)';
+          airDimSelect.options[1].value = '139';
+          airDimSelect.options[2].text = 'Road Freight (111)';
+          airDimSelect.options[2].value = '111';
+        }
+      }
+
+      function getAirDivisor() {
+        if (airDimSelect.value === 'custom') {
+          return parseFloat(airDimCustom.value) || (isMetric ? 6000 : 166);
+        }
+        return parseFloat(airDimSelect.value) || (isMetric ? 6000 : 166);
+      }
+
+      function createRowHtml(item = { name: '', l: 0, w: 0, h: 0, wt: 0, qty: 1 }) {
+        const tr = document.createElement('tr');
+        tr.className = 'cargo-row';
+        tr.innerHTML = `
+          <td><input type="text" class="form-input row-name" placeholder="Box description" value="${escapeAttr(item.name)}"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-l" value="${item.l || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-w" value="${item.w || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-h" value="${item.h || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-wt" value="${item.wt || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="1" min="1" class="form-input row-qty" value="${item.qty || 1}"></td>
+          <td class="row-subtotal-vol" style="font-weight: 600; font-family: monospace;">0.00 kg</td>
+          <td style="text-align: center;">
+            <button type="button" class="btn btn-icon btn-remove-row" title="Delete this row" aria-label="Delete this row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        `;
+        return tr;
+      }
+
+      function escapeAttr(str) {
+        return (str || '').replace(/"/g, '&quot;');
+      }
+
+      function getItems() {
+        const rows = tbody.querySelectorAll('.cargo-row');
+        const items = [];
+        rows.forEach(tr => {
+          items.push({
+            name: tr.querySelector('.row-name').value.trim(),
+            l: parseFloat(tr.querySelector('.row-l').value) || 0,
+            w: parseFloat(tr.querySelector('.row-w').value) || 0,
+            h: parseFloat(tr.querySelector('.row-h').value) || 0,
+            wt: parseFloat(tr.querySelector('.row-wt').value) || 0,
+            qty: parseInt(tr.querySelector('.row-qty').value, 10) || 0
+          });
+        });
+        return items;
+      }
+
+      function calculate() {
+        const items = getItems();
+        const divisor = getAirDivisor();
+        let totalActualWeight = 0;
+        let totalVolumetricWeight = 0;
+        let totalCbm = 0;
+        let totalQty = 0;
+        let hasInvalidInput = false;
+
+        const rows = tbody.querySelectorAll('.cargo-row');
+        rows.forEach((tr, idx) => {
+          const it = items[idx];
+          if (it.l < 0 || it.w < 0 || it.h < 0 || it.wt < 0 || it.qty < 0) {
+            hasInvalidInput = true;
+          }
+
+          let unitVol = 0;
+          let unitCbm = 0;
+
+          if (it.l > 0 && it.w > 0 && it.h > 0) {
+            if (isMetric) {
+              unitVol = (it.l * it.w * it.h) / divisor;
+              unitCbm = (it.l * it.w * it.h) / 1000000;
+            } else {
+              unitVol = (it.l * it.w * it.h) / divisor;
+              unitCbm = (it.l * it.w * it.h) / 61023.7;
+            }
+          }
+
+          const subtotalVol = unitVol * it.qty;
+          tr.querySelector('.row-subtotal-vol').textContent = `${subtotalVol.toFixed(2)} ${isMetric ? 'kg' : 'lbs'}`;
+
+          totalActualWeight += (it.wt * it.qty);
+          totalVolumetricWeight += subtotalVol;
+          totalCbm += (unitCbm * it.qty);
+          totalQty += it.qty;
+        });
+
+        if (hasInvalidInput) {
+          warningEl.style.display = 'block';
+        } else {
+          warningEl.style.display = 'none';
+        }
+
+        const wtUnit = isMetric ? 'kg' : 'lbs';
+        const primaryEl = document.getElementById('res-primary-chargeable');
+        const badgeEl = document.getElementById('res-basis-badge');
+        const noteEl = document.getElementById('res-rounding-note');
+        const carrierRoundedEl = document.getElementById('res-carrier-rounded');
+        const explanationEl = document.getElementById('res-basis-explanation');
+
+        if (shipmentMode === 'air') {
+          // Air Mode: Max of Actual vs Volumetric Weight
+          const chargeableExact = Math.max(totalActualWeight, totalVolumetricWeight);
+          let carrierRounded = 0;
+          if (isMetric) {
+            carrierRounded = Math.ceil(chargeableExact * 2) / 2;
+          } else {
+            // For lbs, carrier round up to next whole pound
+            carrierRounded = Math.ceil(chargeableExact);
+          }
+
+          primaryEl.innerHTML = `${chargeableExact.toFixed(2)} <span style="font-size: var(--font-size-lg); font-weight: 500;">${wtUnit}</span>`;
+          noteEl.style.display = 'block';
+          carrierRoundedEl.textContent = `${carrierRounded.toFixed(1)} ${wtUnit}`;
+
+          const isVolumetric = totalVolumetricWeight > totalActualWeight;
+          if (isVolumetric) {
+            badgeEl.className = 'freight-status-badge badge-volumetric';
+            badgeEl.textContent = 'Billed by Volumetric Weight (Bulky Cargo)';
+            explanationEl.textContent = `Volumetric weight (${totalVolumetricWeight.toFixed(2)} ${wtUnit}) exceeds actual scale weight (${totalActualWeight.toFixed(2)} ${wtUnit}).`;
+          } else {
+            badgeEl.className = 'freight-status-badge badge-actual';
+            badgeEl.textContent = 'Billed by Actual Weight (Dense Cargo)';
+            explanationEl.textContent = `Actual scale weight (${totalActualWeight.toFixed(2)} ${wtUnit}) exceeds volumetric space weight.`;
+          }
+
+          // Comparison Bar
+          document.getElementById('label-bar-actual').textContent = `${totalActualWeight.toFixed(1)} ${wtUnit}`;
+          document.getElementById('label-bar-volumetric').textContent = `${totalVolumetricWeight.toFixed(1)} ${wtUnit}`;
+          const sum = totalActualWeight + totalVolumetricWeight;
+          const actualPct = sum > 0 ? (totalActualWeight / sum) * 100 : 50;
+          const volPct = sum > 0 ? (totalVolumetricWeight / sum) * 100 : 50;
+          document.getElementById('seg-actual').style.width = `${actualPct}%`;
+          document.getElementById('seg-volumetric').style.width = `${volPct}%`;
+
+        } else {
+          // Sea Mode (LCL W/M): Compare CBM vs Metric Tons
+          // 1 Metric Ton = 1000 kg. If Imperial, convert lbs to tons
+          const actualKg = isMetric ? totalActualWeight : (totalActualWeight * 0.453592);
+          const metricTons = actualKg / 1000;
+          const revenueTonsExact = Math.max(totalCbm, metricTons);
+          const revenueTonsBilled = Math.max(revenueTonsExact, 1.0); // 1.0 W/M minimum
+
+          primaryEl.innerHTML = `${revenueTonsBilled.toFixed(3)} <span style="font-size: var(--font-size-lg); font-weight: 500;">W/M (Revenue Tons)</span>`;
+          noteEl.style.display = 'block';
+          carrierRoundedEl.textContent = `${revenueTonsBilled.toFixed(2)} W/M (Min. 1.0 applies)`;
+
+          const isVolumeBilled = totalCbm >= metricTons;
+          if (isVolumeBilled) {
+            badgeEl.className = 'freight-status-badge badge-volumetric';
+            badgeEl.textContent = 'Billed by Volume (CBM)';
+            explanationEl.textContent = `Total Volume (${totalCbm.toFixed(3)} CBM) exceeds cargo weight in metric tons (${metricTons.toFixed(3)} tons).`;
+          } else {
+            badgeEl.className = 'freight-status-badge badge-actual';
+            badgeEl.textContent = 'Billed by Weight (Metric Tons)';
+            explanationEl.textContent = `Cargo weight (${metricTons.toFixed(3)} metric tons) exceeds volume in CBM.`;
+          }
+
+          // Comparison bar: CBM vs Tons
+          document.getElementById('label-bar-actual').textContent = `${metricTons.toFixed(3)} Tons`;
+          document.getElementById('label-bar-volumetric').textContent = `${totalCbm.toFixed(3)} CBM`;
+          const sumWm = totalCbm + metricTons;
+          const tonPct = sumWm > 0 ? (metricTons / sumWm) * 100 : 50;
+          const cbmPct = sumWm > 0 ? (totalCbm / sumWm) * 100 : 50;
+          document.getElementById('seg-actual').style.width = `${tonPct}%`;
+          document.getElementById('seg-volumetric').style.width = `${cbmPct}%`;
+        }
+
+        // Secondary stats
+        document.getElementById('res-stat-actual').innerHTML = `${totalActualWeight.toFixed(2)} <span style="font-size: var(--font-size-sm); font-weight: 500;">${wtUnit}</span>`;
+        document.getElementById('res-stat-volumetric').innerHTML = `${totalVolumetricWeight.toFixed(2)} <span style="font-size: var(--font-size-sm); font-weight: 500;">${wtUnit}</span>`;
+        document.getElementById('res-stat-cbm').innerHTML = `${totalCbm.toFixed(3)} <span style="font-size: var(--font-size-sm); font-weight: 500;">m³</span>`;
+        document.getElementById('res-stat-qty').textContent = totalQty.toLocaleString();
+      }
+
+      function populateRows(data) {
+        tbody.innerHTML = '';
+        data.forEach(item => {
+          tbody.appendChild(createRowHtml(item));
+        });
+        calculate();
+      }
+
+      tbody.addEventListener('input', calculate);
+
+      tbody.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.btn-remove-row');
+        if (removeBtn) {
+          const rows = tbody.querySelectorAll('.cargo-row');
+          if (rows.length > 1) {
+            removeBtn.closest('tr').remove();
+            calculate();
+          } else {
+            const tr = rows[0];
+            tr.querySelectorAll('input').forEach(inp => inp.value = '');
+            tr.querySelector('.row-qty').value = '1';
+            calculate();
+          }
+        }
+      });
+
+      btnAddRow.addEventListener('click', () => {
+        const rows = tbody.querySelectorAll('.cargo-row');
+        tbody.appendChild(createRowHtml({ name: `Item ${rows.length + 1}`, l: '', w: '', h: '', wt: '', qty: 1 }));
+        calculate();
+      });
+
+      btnReset.addEventListener('click', () => {
+        populateRows(defaultRows);
+      });
+
+      btnModeAir.addEventListener('click', () => {
+        if (shipmentMode !== 'air') {
+          shipmentMode = 'air';
+          btnModeAir.classList.add('active');
+          btnModeSea.classList.remove('active');
+          airDivisorWrapper.style.display = 'flex';
+          calculate();
+        }
+      });
+
+      btnModeSea.addEventListener('click', () => {
+        if (shipmentMode !== 'sea') {
+          shipmentMode = 'sea';
+          btnModeSea.classList.add('active');
+          btnModeAir.classList.remove('active');
+          airDivisorWrapper.style.display = 'none';
+          calculate();
+        }
+      });
+
+      airDimSelect.addEventListener('change', () => {
+        if (airDimSelect.value === 'custom') {
+          airDimCustom.style.display = 'inline-block';
+        } else {
+          airDimCustom.style.display = 'none';
+        }
+        calculate();
+      });
+
+      airDimCustom.addEventListener('input', calculate);
+
+      btnMetric.addEventListener('click', () => {
+        if (!isMetric) {
+          isMetric = true;
+          btnMetric.classList.add('active');
+          btnImperial.classList.remove('active');
+          updateUnitLabels();
+          calculate();
+        }
+      });
+
+      btnImperial.addEventListener('click', () => {
+        if (isMetric) {
+          isMetric = false;
+          btnImperial.classList.add('active');
+          btnMetric.classList.remove('active');
+          updateUnitLabels();
+          calculate();
+        }
+      });
+
+      btnCopy.addEventListener('click', () => {
+        const primary = document.getElementById('res-primary-chargeable').textContent.trim();
+        const badge = document.getElementById('res-basis-badge').textContent.trim();
+        const actual = document.getElementById('res-stat-actual').textContent.trim();
+        const vol = document.getElementById('res-stat-volumetric').textContent.trim();
+        const cbm = document.getElementById('res-stat-cbm').textContent.trim();
+        const mode = shipmentMode === 'air' ? 'Air Freight / Express' : 'Sea Freight LCL (W/M)';
+
+        const text = `--- Chargeable Weight Summary ---
+Mode: ${mode}
+Billable Chargeable Weight: ${primary}
+Billing Basis: ${badge}
+Actual Gross Weight: ${actual}
+Volumetric Weight: ${vol}
+Total Volume: ${cbm}
+Generated via Free Online Tools (https://freeonlinetools.net/tools/chargeable-weight-calculator.html)`;
+
+        if (window.FreightUtils && window.FreightUtils.copyTextToClipboard) {
+          window.FreightUtils.copyTextToClipboard(text, 'Chargeable weight summary copied!');
+        }
+      });
+
+      btnSendContainer.addEventListener('click', () => {
+        const items = getItems();
+        if (window.FreightUtils && window.FreightUtils.encodeCargoParams) {
+          const url = window.FreightUtils.encodeCargoParams('/tools/container-loading-calculator.html', items, isMetric);
+          window.location.href = url;
+        } else {
+          window.location.href = '/tools/container-loading-calculator.html';
+        }
+      });
+
+      if (window.FreightUtils && window.FreightUtils.parseCargoParams) {
+        const parsed = window.FreightUtils.parseCargoParams();
+        if (parsed && parsed.items && parsed.items.length) {
+          if (!parsed.isMetric) {
+            btnImperial.click();
+          }
+          populateRows(parsed.items);
+          return;
+        }
+      }
+
+      populateRows(defaultRows);
+    })();
+  </script>
+</body>
+</html>

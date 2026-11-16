@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formateador y Validador JSON — Herramientas Online Gratuitas</title>
+  <meta name="description" content="Formatee, valide, embellezca e inspeccione cargas útiles JSON con indentación configurable y diagnóstico claro de errores.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/es/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="bn" href="https://nexivo.com/bn/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="hi" href="https://nexivo.com/hi/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="es" href="https://nexivo.com/es/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="fr" href="https://nexivo.com/fr/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="ar" href="https://nexivo.com/ar/tools/json-formatter-validator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Formateador y Validador JSON",
+    "description": "Formatee, valide, embellezca e inspeccione cargas útiles JSON con indentación configurable y diagnóstico claro de errores.",
+    "url": "https://nexivo.com/es/tools/json-formatter-validator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/es/index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Herramientas Online Gratuitas</span>
+      </a>
+      <div class="header-actions">
+        <!-- Language Selector -->
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en">English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es" selected>Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/es/index.html" class="btn btn-secondary">Todas las herramientas</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Cambiar tema">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/es/index.html">Inicio</a></li>
+      <li>/</li>
+      <li><a href="/es/index.html">Herramientas de Desarrollo</a></li>
+      <li>/</li>
+      <li aria-current="page">Formateador y Validador JSON</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Formateador y Validador JSON</span>
+      </h1>
+      <p class="tool-header-lead">
+        Formatee, valide, embellezca e inspeccione cargas útiles JSON con indentación configurable y diagnóstico claro de errores.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Nivel 1: Nativo del Navegador</span>
+        <span class="tool-badge">100% Privado</span>
+        <span class="tool-badge">Ejecución Instantánea</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Toolbar Controls -->
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center;">
+          <button type="button" class="btn btn-primary" id="btn-format">Beautify JSON</button>
+          <button type="button" class="btn btn-secondary" id="btn-minify">Minificar JSON</button>
+          <button type="button" class="btn btn-secondary" id="btn-validate">Validar Only</button>
+          <select id="indent-size" class="form-select" style="inline-size: auto; padding-block: 0.4rem; font-size: var(--font-size-xs);">
+            <option value="2">2 Espacios</option>
+            <option value="4">4 Espacios</option>
+            <option value="tab">Tabulacións</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample</button>
+          <button type="button" class="btn btn-secondary" id="btn-download">Descargar (.json)</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Limpiar</button>
+        </div>
+      </div>
+
+      <!-- Feedback Banner -->
+      <div id="json-feedback" class="alert" style="display: none;"></div>
+
+      <!-- JSON Input / Editor Area -->
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="json-input" class="form-label" style="margin-bottom: 0;">Entrada / Salida JSON:</label>
+          <button type="button" class="btn btn-secondary" id="btn-copy">Copy to Clipboard</button>
+        </div>
+        <textarea id="json-input" class="form-textarea code-font" style="min-block-size: 320px;" placeholder="Paste raw JSON here..."></textarea>
+      </div>
+
+      <!-- Size Statistics -->
+      <div id="json-stats" style="font-size: var(--font-size-xs); color: var(--color-text-muted); display: flex; gap: var(--space-4);">
+        <span>Length: <strong id="stat-len">0</strong> chars</span>
+        <span>Size: <strong id="stat-bytes">0</strong> B</span>
+      </div>
+    </div>
+
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>Qué hace esta herramienta y qué problema resuelve</h2>
+        <p>El <strong>Formateador y Validador JSON</strong> convierte cadenas JSON comprimidas o desordenadas en estructuras legibles e indentadas, verificando el cumplimiento estricto del estándar RFC 8259 y señalando la posición exacta de errores sintácticos.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Instrucciones paso a paso</h2>
+        <ol class="doc-steps">
+          <li>Pegue su código JSON en el editor.</li>
+          <li>Seleccione la sangría deseada (2 espacios, 4 espacios o Tabulación).</li>
+          <li>Haga clic en "Formatear JSON" para embellecer o en "Validar" para comprobar la sintaxis.</li>
+          <li>Haga clic en "Copiar" o "Descargar (.json)" cuando esté listo.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Casos de uso prácticos comunes</h2>
+        <ul>
+          <li><strong>Depuración de Respuestas de API:</strong> Formatear respuestas densas de servicios REST o webhooks para lectura rápida.</li>
+          <li><strong>Archivos de Configuración:</strong> Localizar comas faltantes o comillas erróneas en package.json o ficheros de configuración.</li>
+          <li><strong>Optimización de Cargas Útiles:</strong> Comprimir JSON eliminando espacios en blanco para transmisiones de red eficientes.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Ejemplo realista y resultado esperado</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Entrada de ejemplo</div>
+              <pre class="example-pre" dir="ltr">{"id":10,"usuario":"Carlos","activo":true}</pre>
+            </div>
+            <div>
+              <div class="example-title">Resultado esperado</div>
+              <pre class="example-pre" dir="ltr">{
+  "id": 10,
+  "usuario": "Carlos",
+  "activo": true
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Especificaciones técnicas y mecánica</h2>
+        <p>Impulsado por los motores nativos <code>JSON.parse()</code> y <code>JSON.stringify()</code> del navegador. Reporta posición exacta y mensaje descriptivo en caso de error.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitaciones y fronteras del navegador</h2>
+        <p>Aplica las reglas estrictas de RFC 8259; comillas simples o comentarios no son válidos en JSON estándar.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Garantía de privacidad y seguridad</h2>
+        <p>Claves de API confidenciales o registros de usuarios permanecen 100% seguros en su navegador local sin viajar a ningún servidor.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Preguntas Frecuentes (FAQs)</h2>
+        
+        <div class="faq-item">
+          <h3>¿Admite comentarios el formato JSON estándar?</h3>
+          <p>No. El estándar oficial JSON no admite comentarios. Deben eliminarse antes de validar.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Herramientas de Navegador Relacionadas</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/es/tools/word-counter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Contador de Palabras y Caracteres</span>
+          </a>
+
+          <a href="/es/tools/case-converter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Conversor de Mayúsculas y Minúsculas</span>
+          </a>
+
+          <a href="/es/tools/percentage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Calculadora de Porcentajes y Descuentos</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Herramientas Online Gratuitas. Client-side browser utilities.</p>
+      <a href="/es/index.html">Volver al Inicio</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const input = document.getElementById('json-input');
+      const feedback = document.getElementById('json-feedback');
+      const indentSelect = document.getElementById('indent-size');
+      const statLen = document.getElementById('stat-len');
+      const statBytes = document.getElementById('stat-bytes');
+
+      const btnFormat = document.getElementById('btn-format');
+      const btnMinify = document.getElementById('btn-minify');
+      const btnValidar = document.getElementById('btn-validate');
+      const btnSample = document.getElementById('btn-sample');
+      const btnDownload = document.getElementById('btn-download');
+      const btnLimpiar = document.getElementById('btn-clear');
+      const btnCopy = document.getElementById('btn-copy');
+
+      function showFeedback(type, message) {
+        feedback.className = `alert alert-${type}`;
+        feedback.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+            ${type === 'success' 
+              ? '<polyline points="20 6 9 17 4 12"/>' 
+              : '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'}
+          </svg>
+          <div>${window.FreeOnlineTools.escapeHtml(message)}</div>
+        `;
+        feedback.style.display = 'flex';
+      }
+
+      function hideFeedback() {
+        feedback.style.display = 'none';
+      }
+
+      function updateStats() {
+        const text = input.value;
+        statLen.textContent = text.length.toLocaleString();
+        statBytes.textContent = new TextEncoder().encode(text).length.toLocaleString();
+      }
+
+      input.addEventListener('input', updateStats);
+
+      btnFormat.addEventListener('click', () => {
+        hideFeedback();
+        const text = input.value.trim();
+        if (!text) return;
+        try {
+          const parsed = JSON.parse(text);
+          const indentVal = indentSelect.value === 'tab' ? '\t' : parseInt(indentSelect.value, 10);
+          input.value = JSON.stringify(parsed, null, indentVal);
+          showFeedback('success', 'Valid JSON formatted successfully.');
+          updateStats();
+        } catch (err) {
+          showFeedback('danger', 'JSON Syntax Error: ' + err.message);
+        }
+      });
+
+      btnMinify.addEventListener('click', () => {
+        hideFeedback();
+        const text = input.value.trim();
+        if (!text) return;
+        try {
+          const parsed = JSON.parse(text);
+          input.value = JSON.stringify(parsed);
+          showFeedback('success', 'JSON minified successfully.');
+          updateStats();
+        } catch (err) {
+          showFeedback('danger', 'JSON Syntax Error: ' + err.message);
+        }
+      });
+
+      btnValidar.addEventListener('click', () => {
+        hideFeedback();
+        const text = input.value.trim();
+        if (!text) {
+          showFeedback('danger', 'Please enter some JSON to validate.');
+          return;
+        }
+        try {
+          JSON.parse(text);
+          showFeedback('success', 'Valid JSON! No syntax errors detected.');
+        } catch (err) {
+          showFeedback('danger', 'Invalid JSON: ' + err.message);
+        }
+      });
+
+      btnSample.addEventListener('click', () => {
+        hideFeedback();
+        const sampleObj = {
+          website: "Free Online Tools",
+          version: "1.0.0",
+          privacy: "100% Client-Side",
+          supportedLanguages: ["en", "bn", "hi", "es", "fr", "ar"],
+          capabilities: {
+            textTools: 40,
+            developerTools: 40,
+            calculators: 40
+          },
+          isActive: true
+        };
+        input.value = JSON.stringify(sampleObj, null, 2);
+        showFeedback('success', 'Sample JSON loaded.');
+        updateStats();
+      });
+
+      btnDownload.addEventListener('click', () => {
+        const text = input.value;
+        if (!text) {
+          window.FreeOnlineTools.showToast('No JSON to download.');
+          return;
+        }
+        const blob = new Blob([text], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        window.FreeOnlineTools.showToast('Downloaded data.json');
+      });
+
+      btnLimpiar.addEventListener('click', () => {
+        hideFeedback();
+        input.value = '';
+        updateStats();
+        input.focus();
+      });
+
+      btnCopy.addEventListener('click', () => {
+        window.FreeOnlineTools.copyToClipboard(input.value, 'JSON copied to clipboard!');
+      });
+
+      updateStats();
+    })();
+  </script>
+</body>
+</html>

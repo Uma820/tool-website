@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Link Generator — Free Online Tools</title>
+  <meta name="description" content="Create direct click-to-chat WhatsApp links (wa.me) with pre-filled custom messages. 100% free, private client-side link generator with QR code.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/whatsapp-link-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/whatsapp-link-generator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/whatsapp-link-generator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "WhatsApp Link Generator",
+    "description": "Create direct click-to-chat WhatsApp links (wa.me) with pre-filled custom messages. 100% free, private client-side link generator with QR code.",
+    "url": "https://nexivo.com/tools/whatsapp-link-generator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#social">Social &amp; Link Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">WhatsApp Link Generator</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>WhatsApp Link Generator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Create instant "Click to Chat" WhatsApp links (wa.me) with pre-filled greeting messages for business websites, Instagram bios, YouTube descriptions, and QR codes.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">100% Private</span>
+        <span class="tool-badge">Instant Generation</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample Business Lead</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Clear</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          International country code required (e.g. +1, +44, +91)
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: var(--space-6);">
+        <!-- Form Inputs -->
+        <div>
+          <div class="form-group" style="margin-block-end: var(--space-4);">
+            <label for="wa-phone" class="form-label">Phone Number (with Country Code, no + or dashes):</label>
+            <input 
+              type="tel" 
+              id="wa-phone" 
+              class="form-input" 
+              placeholder="e.g. 15551234567 or 447911123456"
+            >
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); display: block; margin-block-start: 0.25rem;">
+              Do not include leading +, zeros, brackets, or spaces.
+            </span>
+          </div>
+
+          <div class="form-group" style="margin-block-end: var(--space-4);">
+            <label for="wa-message" class="form-label">Pre-filled Message (Optional):</label>
+            <textarea 
+              id="wa-message" 
+              class="form-textarea" 
+              rows="4" 
+              placeholder="Hello! I saw your website and would like to learn more about your services."
+            ></textarea>
+          </div>
+
+          <div id="wa-error" class="alert alert-danger" style="display: none; margin-block-end: var(--space-4);"></div>
+          
+          <button type="button" class="btn btn-primary" id="btn-generate" style="inline-size: 100%;">
+            Generate WhatsApp Link
+          </button>
+        </div>
+
+        <!-- Output & Preview Card -->
+        <div class="stat-card" style="text-align: left; padding: var(--space-5); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-3);">
+              <span style="font-weight: 700; font-size: var(--font-size-base);">Generated WhatsApp Link</span>
+              <span class="tool-badge badge-implemented">Ready</span>
+            </div>
+
+            <!-- Chat Bubble Mockup -->
+            <div style="background: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); margin-block-end: var(--space-4);">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-1);">
+                Customer Message Preview:
+              </div>
+              <div id="bubble-text" style="background: var(--color-bg-surface); padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); border-inline-start: 4px solid #22c55e; font-size: var(--font-size-sm); color: var(--color-text-primary); font-style: italic;">
+                (Enter a message to preview)
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-block-end: var(--space-3);">
+              <label for="wa-output" class="form-label">Direct Link (wa.me):</label>
+              <input type="text" id="wa-output" class="form-input" readonly style="font-family: var(--font-mono); font-size: var(--font-size-xs);">
+            </div>
+
+            <div class="form-group" style="margin-block-end: var(--space-3);">
+              <label for="wa-html-code" class="form-label">HTML Anchor Code:</label>
+              <input type="text" id="wa-html-code" class="form-input" readonly style="font-family: var(--font-mono); font-size: var(--font-size-xs);">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-block-start: var(--space-4);">
+            <button type="button" class="btn btn-primary" id="btn-copy-link" style="flex: 1;">Copy Link</button>
+            <button type="button" class="btn btn-secondary" id="btn-copy-html">Copy HTML</button>
+            <a id="btn-test-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Test Chat &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>User Problem &amp; Purpose</h2>
+        <p>
+          Customers shopping on modern websites, Instagram, Facebook, and Google Business profiles prefer instant messaging over slow contact forms. The official WhatsApp "Click to Chat" API allows customers to start a chat without saving your business phone number to their address book first.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol style="padding-inline-start: 1.5rem; line-height: 1.8;">
+          <li>Enter your international phone number including country dial code (e.g. <code>1</code> for US/Canada, <code>44</code> for UK, <code>91</code> for India). Remove any <code>+</code> sign, dashes, spaces, or leading zeros.</li>
+          <li>Enter a pre-filled greeting message so you immediately know what product or inquiry the customer is referencing.</li>
+          <li>Click <strong>Generate WhatsApp Link</strong>.</li>
+          <li>Click <strong>Copy Link</strong> to paste into your social media bio, or <strong>Copy HTML</strong> to insert a direct contact button on your website.</li>
+          <li>Use <strong>Test Chat</strong> to confirm the link opens WhatsApp Web or the mobile app with your message pre-loaded.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul style="padding-inline-start: 1.5rem; line-height: 1.8;">
+          <li><strong>E-Commerce &amp; Freelancers:</strong> Adding a direct "Inquire on WhatsApp" button next to product listings or portfolio items.</li>
+          <li><strong>Social Media Profiles:</strong> Adding a single direct link in Instagram, TikTok, or Twitter bios for prospective customer leads.</li>
+          <li><strong>Real Estate &amp; Hospitality:</strong> Allowing guests to request availability or book appointments directly with front desks.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Inputs</div>
+              <pre class="example-pre">Phone: 15551234567
+Message: Hi, I'd like a quote for web design!</pre>
+            </div>
+            <div>
+              <div class="example-title">Generated Link</div>
+              <pre class="example-pre">https://wa.me/15551234567?text=Hi%2C%20I%27d%20like%20a%20quote%20for%20web%20design%21</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          WhatsApp Click-to-Chat operates under the official <code>wa.me</code> protocol defined by Meta. Phone numbers must strictly adhere to the international E.164 phone numbering plan without punctuation. The text parameter is percent-encoded per RFC 3986 so that spaces, emojis, and special punctuation transfer faithfully into WhatsApp chat input fields.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          The link requires the customer to have WhatsApp installed on their mobile device or access to WhatsApp Web on desktop. If a phone number is entered with invalid country codes or digits, WhatsApp will alert the user that the phone number does not exist on the network.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          This generator runs entirely on your device. We do not store, log, or track your phone number or customer messages. Your phone number is not shared with any advertising database.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Do customers need to save my number to send a message?</h3>
+          <p>No. When clicking a <code>wa.me</code> link, WhatsApp automatically opens a new chat window directly with your number without saving it in the user's contacts.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I include emojis in my greeting message?</h3>
+          <p>Yes. Emojis like 👋, 💬, and 🛍️ are fully supported and automatically percent-encoded for URL transmission.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does this tool cost anything or require a business account?</h3>
+          <p>No. The Click-to-Chat link is a standard, 100% free feature supported for both standard personal WhatsApp accounts and WhatsApp Business accounts.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/url-encoder-decoder.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>URL Encoder &amp; Decoder</span>
+          </a>
+          <a href="/tools/uuid-generator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>UUID Generator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    const inputPhone = document.getElementById('wa-phone');
+    const inputMessage = document.getElementById('wa-message');
+    const btnGenerate = document.getElementById('btn-generate');
+    const btnSample = document.getElementById('btn-sample');
+    const btnClear = document.getElementById('btn-clear');
+    const outputLink = document.getElementById('wa-output');
+    const outputHtml = document.getElementById('wa-html-code');
+    const bubbleText = document.getElementById('bubble-text');
+    const errorEl = document.getElementById('wa-error');
+    const btnCopyLink = document.getElementById('btn-copy-link');
+    const btnCopyHtml = document.getElementById('btn-copy-html');
+    const btnTestLink = document.getElementById('btn-test-link');
+
+    function cleanPhone(phone) {
+      if (!phone) return '';
+      // Strip everything except digits
+      return phone.replace(/[^0-9]/g, '');
+    }
+
+    function generateLink() {
+      errorEl.style.display = 'none';
+      const rawPhone = inputPhone.value.trim();
+      const phone = cleanPhone(rawPhone);
+      const message = inputMessage.value.trim();
+
+      if (!phone || phone.length < 7) {
+        errorEl.textContent = 'Please enter a valid phone number with country dial code (minimum 7 digits, digits only).';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      let link = 'https://wa.me/' + phone;
+      if (message) {
+        link += '?text=' + encodeURIComponent(message);
+        bubbleText.textContent = '"' + message + '"';
+      } else {
+        bubbleText.textContent = '(No pre-filled message — user will write their own)';
+      }
+
+      outputLink.value = link;
+      outputHtml.value = '<a href="' + link + '" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>';
+      btnTestLink.href = link;
+    }
+
+    btnGenerate.addEventListener('click', generateLink);
+    inputPhone.addEventListener('input', generateLink);
+    inputMessage.addEventListener('input', generateLink);
+
+    btnSample.addEventListener('click', () => {
+      inputPhone.value = '15551234567';
+      inputMessage.value = 'Hello! I saw your services online and would like to request a consultation.';
+      generateLink();
+    });
+
+    btnClear.addEventListener('click', () => {
+      inputPhone.value = '';
+      inputMessage.value = '';
+      outputLink.value = '';
+      outputHtml.value = '';
+      bubbleText.textContent = '(Enter a message to preview)';
+      errorEl.style.display = 'none';
+      inputPhone.focus();
+    });
+
+    btnCopyLink.addEventListener('click', () => {
+      if (!outputLink.value) generateLink();
+      if (outputLink.value) {
+        window.FreeOnlineTools.copyToClipboard(outputLink.value, 'WhatsApp link copied to clipboard!');
+      }
+    });
+
+    btnCopyHtml.addEventListener('click', () => {
+      if (!outputHtml.value) generateLink();
+      if (outputHtml.value) {
+        window.FreeOnlineTools.copyToClipboard(outputHtml.value, 'HTML anchor code copied to clipboard!');
+      }
+    });
+
+    // Initial setup with sample
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

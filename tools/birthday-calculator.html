@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Calculator &amp; Age Countdown — Free Online Tools</title>
+  <meta name="description" content="Calculate your exact age down to the second, countdown to your next birthday, find your birth day of the week, zodiac sign, and milestone dates. 100% free.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/birthday-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/birthday-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/birthday-calculator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Birthday Calculator & Age Countdown",
+    "description": "Calculate your exact age down to the second, countdown to your next birthday, find your birth day of the week, zodiac sign, and milestone dates. 100% free.",
+    "url": "https://nexivo.com/tools/birthday-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#calc">Calculators</a></li>
+      <li>/</li>
+      <li aria-current="page">Birthday Calculator</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Birthday Calculator &amp; Age Countdown</span>
+      </h1>
+      <p class="tool-header-lead">
+        Track your exact age in years, months, days, hours, and seconds with a live ticking countdown. Discover your birth day of the week, astrological signs, and life milestones.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Live Real-Time Clock</span>
+        <span class="tool-badge">Zodiac &amp; Milestones</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample Birthday</button>
+          <button type="button" class="btn btn-secondary" id="btn-today">Set Today</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Real-time live clock
+        </div>
+      </div>
+
+      <!-- Date / Time Input Row -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-5); background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+        <div class="form-group" style="margin-block-end: 0;">
+          <label for="birth-date" class="form-label" style="font-weight: var(--font-weight-semibold);">Date of Birth:</label>
+          <input type="date" id="birth-date" class="form-input">
+        </div>
+        <div class="form-group" style="margin-block-end: 0;">
+          <label for="birth-time" class="form-label" style="font-weight: var(--font-weight-semibold);">Time of Birth (Optional):</label>
+          <input type="time" id="birth-time" class="form-input" value="12:00">
+        </div>
+      </div>
+
+      <!-- Hero Age Display & Countdown Banner -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-4);">
+        <!-- Exact Age Live Card -->
+        <div style="background: var(--color-bg); border-radius: var(--radius-md); border: 2px solid var(--color-primary); padding: var(--space-4); text-align: center;">
+          <div style="font-size: var(--font-size-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); font-weight: var(--font-weight-bold); margin-block-end: var(--space-1);">Your Exact Current Age</div>
+          <div id="live-age-text" style="font-size: clamp(1.2rem, 3.5vw, 1.7rem); font-weight: var(--font-weight-extrabold); color: var(--color-primary); line-height: 1.25; margin-block-end: var(--space-2);">
+            --
+          </div>
+          <div id="birth-day-name" style="font-size: var(--font-size-sm); color: var(--color-text-muted);">
+            Born on: --
+          </div>
+        </div>
+
+        <!-- Next Birthday Countdown Card -->
+        <div style="background: var(--color-bg); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4); text-align: center;">
+          <div style="font-size: var(--font-size-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); font-weight: var(--font-weight-bold); margin-block-end: var(--space-1);">Next Birthday Countdown</div>
+          <div id="next-bday-countdown" style="font-size: clamp(1.2rem, 3.5vw, 1.7rem); font-weight: var(--font-weight-extrabold); color: var(--color-success); line-height: 1.25; margin-block-end: var(--space-2);">
+            --
+          </div>
+          <div id="next-bday-turning" style="font-size: var(--font-size-sm); color: var(--color-text-muted);">
+            Turning age: --
+          </div>
+        </div>
+      </div>
+
+      <!-- Astrological & Historical Stats Grid -->
+      <div class="stats-grid" style="margin-block-end: var(--space-4);">
+        <div class="stat-card">
+          <div class="stat-label">Western Zodiac Sign</div>
+          <div class="stat-value" id="stat-zodiac">--</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="stat-zodiac-element">Element: --</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Chinese Zodiac Animal</div>
+          <div class="stat-value" id="stat-chinese-zodiac">--</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="stat-chinese-sign">Lunar Year</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Days Alive</div>
+          <div class="stat-value" id="stat-days-alive">0</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);"><span id="stat-hours-alive">0</span> hours</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Estimated Heartbeats</div>
+          <div class="stat-value" id="stat-heartbeats">0</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);"><span id="stat-breaths">0</span> breaths taken</div>
+        </div>
+      </div>
+
+      <!-- Upcoming Milestones Table -->
+      <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4);">
+        <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-3);">Life Milestones &amp; Anniversaries</h3>
+        <div style="overflow-x: auto;">
+          <table style="inline-size: 100%; border-collapse: collapse; font-size: var(--font-size-sm);">
+            <thead>
+              <tr style="border-block-end: 1px solid var(--color-border); text-align: start;">
+                <th style="padding: 6px;">Milestone</th>
+                <th style="padding: 6px; text-align: center;">Calendar Date</th>
+                <th style="padding: 6px; text-align: end;">Status / Countdown</th>
+              </tr>
+            </thead>
+            <tbody id="milestones-table-body">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Birthday Calculator Do?</h2>
+        <p>
+          The <strong>Birthday Calculator &amp; Age Countdown</strong> measures the exact duration of your life with down-to-the-second accuracy. Beyond standard year-based age counters, this interactive tool updates continuously in real-time, detailing the exact count of years, months, days, hours, minutes, and seconds you have been alive.
+        </p>
+        <p>
+          It also calculates your upcoming birthday countdown, the day of the week you were born on, your Western astrological sign, your Chinese zodiac animal, and projections for rare life milestones (such as your 10,000th and 20,000th days alive).
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Select Your Birthdate:</strong> Choose your date of birth using the calendar picker, or click <strong>Sample Birthday</strong>.</li>
+          <li><strong>Add Time of Birth (Optional):</strong> If you know the hour and minute you were born, enter it to refine down-to-the-second calculations.</li>
+          <li><strong>Watch the Live Clock:</strong> The age display automatically ticks second-by-second to display your dynamic age.</li>
+          <li><strong>Explore Astrological &amp; Milestone Data:</strong> View your zodiac element, Chinese lunar animal, and inspect the milestone table to see upcoming milestone days.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Birthday Party Countdown</h3>
+            <p>Know the exact days and hours remaining until milestone celebrations such as 18th, 21st, 30th, or 50th birthdays.</p>
+          </div>
+          <div class="card">
+            <h3>Baby &amp; Child Growth Tracking</h3>
+            <p>Calculate precise months and days for infant doctor appointments, immunizations, and developmental milestones.</p>
+          </div>
+          <div class="card">
+            <h3>Day 10,000 Celebration</h3>
+            <p>Discover the exact calendar date of your 10,000th day alive (typically around age 27.4), a popular alternative milestone celebration.</p>
+          </div>
+          <div class="card">
+            <h3>Astrological Curiosity</h3>
+            <p>Look up Western sun signs and Chinese zodiac animals based on official solar and lunar boundary dates.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Example Birthday Calculation:</div>
+          <pre class="example-pre">Date of Birth: May 14, 1996 (12:00 PM)
+Day of Week Born: Tuesday
+Western Zodiac: Taurus (Earth Element)
+Chinese Zodiac: Rat (1996)
+Current Age: 30 years, 5 months, 27 days, 4 hours, 18 mins, 22 secs
+10,000th Day Alive: September 29, 2023 (Celebrated)</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Ticking Loop:</strong> Driven by browser <code>requestAnimationFrame</code> and high-precision timestamps for smooth second transitions.</li>
+          <li><strong>Zodiac Calculations:</strong> Astronomical sun sign boundary dates (e.g. Aries Mar 21 - Apr 19, Taurus Apr 20 - May 20, etc.).</li>
+          <li><strong>Chinese Zodiac:</strong> Traditional 12-animal cyclical calculation based on Chinese lunar year alignment.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Biological metrics (estimated heartbeats and breaths taken) are calculated using average resting human physiological benchmarks (approx. 80 beats per minute and 16 breaths per minute) and serve as entertaining statistical estimates rather than medical diagnostics.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Your birthdate and birth time are calculated exclusively in your browser tab's local memory. No personal dates are transmitted across the network or stored in persistent tracking cookies.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">What is a 10,000-day milestone?</summary>
+            <div class="faq-answer">
+              <p>10,000 days alive occurs when an individual is approximately 27 years and 137 days old. Many people celebrate this unique mathematical milestone as a fun alternative to traditional birthdays.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">How does leap year affect the birthday countdown?</summary>
+            <div class="faq-answer">
+              <p>The countdown uses JavaScript's native Date calendar engine, which automatically factors in leap years (366 days) and varying month lengths.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What if I was born on February 29 (Leap Day)?</summary>
+            <div class="faq-answer">
+              <p>In non-leap years, your official anniversary is traditionally celebrated on either February 28 or March 1, and the calculator adapts the countdown accordingly.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/age-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Age Calculator</div>
+            <div class="related-tool-desc">Calculate exact age in years, months, days, hours, and minutes.</div>
+          </a>
+          <a href="/tools/age-difference-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Age Difference Calculator</div>
+            <div class="related-tool-desc">Find the exact time difference between two people or dates.</div>
+          </a>
+          <a href="/tools/percentage-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Percentage Calculator</div>
+            <div class="related-tool-desc">Calculate percentage increase, discounts, ratios, and fractions.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const birthDate = document.getElementById('birth-date');
+    const birthTime = document.getElementById('birth-time');
+
+    const liveAgeText = document.getElementById('live-age-text');
+    const birthDayName = document.getElementById('birth-day-name');
+    const nextBdayCountdown = document.getElementById('next-bday-countdown');
+    const nextBdayTurning = document.getElementById('next-bday-turning');
+
+    const statZodiac = document.getElementById('stat-zodiac');
+    const statZodiacElement = document.getElementById('stat-zodiac-element');
+    const statChineseZodiac = document.getElementById('stat-chinese-zodiac');
+    const statChineseSign = document.getElementById('stat-chinese-sign');
+    const statDaysAlive = document.getElementById('stat-days-alive');
+    const statHoursAlive = document.getElementById('stat-hours-alive');
+    const statHeartbeats = document.getElementById('stat-heartbeats');
+    const statBreaths = document.getElementById('stat-breaths');
+    const milestonesTableBody = document.getElementById('milestones-table-body');
+
+    const btnSample = document.getElementById('btn-sample');
+    const btnToday = document.getElementById('btn-today');
+
+    const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    const ZODIACS = [
+      { name: 'Capricorn', symbol: '♑', element: 'Earth', start: [12, 22], end: [1, 19] },
+      { name: 'Aquarius', symbol: '♒', element: 'Air', start: [1, 20], end: [2, 18] },
+      { name: 'Pisces', symbol: '♓', element: 'Water', start: [2, 19], end: [3, 20] },
+      { name: 'Aries', symbol: '♈', element: 'Fire', start: [3, 21], end: [4, 19] },
+      { name: 'Taurus', symbol: '♉', element: 'Earth', start: [4, 20], end: [5, 20] },
+      { name: 'Gemini', symbol: '♊', element: 'Air', start: [5, 21], end: [6, 20] },
+      { name: 'Cancer', symbol: '♋', element: 'Water', start: [6, 21], end: [7, 22] },
+      { name: 'Leo', symbol: '♌', element: 'Fire', start: [7, 23], end: [8, 22] },
+      { name: 'Virgo', symbol: '♍', element: 'Earth', start: [8, 23], end: [9, 22] },
+      { name: 'Libra', symbol: '♎', element: 'Air', start: [9, 23], end: [10, 22] },
+      { name: 'Scorpio', symbol: '♏', element: 'Water', start: [10, 23], end: [11, 21] },
+      { name: 'Sagittarius', symbol: '♐', element: 'Fire', start: [11, 22], end: [12, 21] }
+    ];
+
+    const CHINESE_ANIMALS = ['Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Horse', 'Goat', 'Monkey', 'Rooster', 'Dog', 'Pig'];
+
+    function getZodiac(month, day) {
+      for (const z of ZODIACS) {
+        if (z.name === 'Capricorn') {
+          if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return z;
+        } else {
+          if ((month === z.start[0] && day >= z.start[1]) || (month === z.end[0] && day <= z.end[1])) return z;
+        }
+      }
+      return ZODIACS[0];
+    }
+
+    function getChineseZodiac(year) {
+      // 1900 is year of the Rat (index 0)
+      const offset = (year - 1900) % 12;
+      const idx = offset >= 0 ? offset : offset + 12;
+      return CHINESE_ANIMALS[idx];
+    }
+
+    let intervalId = null;
+
+    function tick() {
+      const dateVal = birthDate.value;
+      if (!dateVal) return;
+
+      const timeVal = birthTime.value || '00:00';
+      const birth = new Date(dateVal + 'T' + timeVal + ':00');
+      const now = new Date();
+
+      if (isNaN(birth.getTime()) || birth > now) {
+        liveAgeText.textContent = '-- (Date is in future)';
+        return;
+      }
+
+      // Day of week born
+      birthDayName.textContent = 'Born on a ' + DAYS[birth.getDay()];
+
+      // Y-M-D and H-M-S arithmetic
+      let y1 = birth.getFullYear(), m1 = birth.getMonth(), d1 = birth.getDate();
+      let y2 = now.getFullYear(), m2 = now.getMonth(), d2 = now.getDate();
+
+      let diffY = y2 - y1;
+      let diffM = m2 - m1;
+      let diffD = d2 - d1;
+
+      if (diffD < 0) {
+        const prevMonth = new Date(y2, m2, 0);
+        diffD += prevMonth.getDate();
+        diffM -= 1;
+      }
+      if (diffM < 0) {
+        diffM += 12;
+        diffY -= 1;
+      }
+
+      let diffH = now.getHours() - birth.getHours();
+      let diffMin = now.getMinutes() - birth.getMinutes();
+      let diffSec = now.getSeconds() - birth.getSeconds();
+
+      if (diffSec < 0) { diffSec += 60; diffMin -= 1; }
+      if (diffMin < 0) { diffMin += 60; diffH -= 1; }
+      if (diffH < 0) { diffH += 24; }
+
+      liveAgeText.textContent = `${diffY}y, ${diffM}m, ${diffD}d ${diffH}h ${diffMin}m ${diffSec}s`;
+
+      // Next Birthday Countdown
+      let nextBday = new Date(now.getFullYear(), birth.getMonth(), birth.getDate(), birth.getHours(), birth.getMinutes());
+      if (nextBday < now) {
+        nextBday = new Date(now.getFullYear() + 1, birth.getMonth(), birth.getDate(), birth.getHours(), birth.getMinutes());
+      }
+      const bdayMs = nextBday.getTime() - now.getTime();
+      const bdayDays = Math.floor(bdayMs / (1000 * 60 * 60 * 24));
+      const bdayHours = Math.floor((bdayMs / (1000 * 60 * 60)) % 24);
+      const bdayMins = Math.floor((bdayMs / (1000 * 60)) % 60);
+      const bdaySecs = Math.floor((bdayMs / 1000) % 60);
+
+      nextBdayCountdown.textContent = `${bdayDays}d ${bdayHours}h ${bdayMins}m ${bdaySecs}s`;
+      nextBdayTurning.textContent = `Turning age ${nextBday.getFullYear() - birth.getFullYear()}`;
+
+      // Total metrics
+      const totalMs = now.getTime() - birth.getTime();
+      const totalDays = Math.floor(totalMs / (1000 * 60 * 60 * 24));
+      const totalHours = Math.floor(totalMs / (1000 * 60 * 60));
+      const totalMins = Math.floor(totalMs / (1000 * 60));
+
+      statDaysAlive.textContent = totalDays.toLocaleString();
+      statHoursAlive.textContent = totalHours.toLocaleString();
+
+      // Heartbeats & breaths
+      const beats = Math.round(totalMins * 80);
+      const breaths = Math.round(totalMins * 16);
+      statHeartbeats.textContent = beats.toLocaleString();
+      statBreaths.textContent = breaths.toLocaleString();
+
+      // Zodiac
+      const z = getZodiac(birth.getMonth() + 1, birth.getDate());
+      statZodiac.textContent = `${z.name} ${z.symbol}`;
+      statZodiacElement.textContent = `Element: ${z.element}`;
+
+      const cz = getChineseZodiac(birth.getFullYear());
+      statChineseZodiac.textContent = cz;
+      statChineseSign.textContent = `Year of the ${cz}`;
+
+      // Milestones
+      const milestones = [
+        { label: '1,000 Days Alive', days: 1000 },
+        { label: '5,000 Days Alive', days: 5000 },
+        { label: '10,000 Days Alive', days: 10000 },
+        { label: '15,000 Days Alive', days: 15000 },
+        { label: '20,000 Days Alive', days: 20000 }
+      ];
+
+      const opt = { year: 'numeric', month: 'short', day: 'numeric' };
+      milestonesTableBody.innerHTML = milestones.map(m => {
+        const mDate = new Date(birth.getTime() + (m.days * 24 * 60 * 60 * 1000));
+        const passed = now > mDate;
+        const statusText = passed
+          ? '<span style="color: var(--color-success); font-weight: bold;">Passed ✓</span>'
+          : `In ${Math.ceil((mDate - now) / (1000 * 60 * 60 * 24))} days`;
+        return `
+          <tr style="border-block-end: 1px solid var(--color-border);">
+            <td style="padding: 6px; font-weight: 500;">${m.label}</td>
+            <td style="padding: 6px; text-align: center;">${mDate.toLocaleDateString('en-US', opt)}</td>
+            <td style="padding: 6px; text-align: end;">${statusText}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function init() {
+      if (intervalId) clearInterval(intervalId);
+      tick();
+      intervalId = setInterval(tick, 1000);
+    }
+
+    [birthDate, birthTime].forEach(el => {
+      el.addEventListener('input', init);
+      el.addEventListener('change', init);
+    });
+
+    btnSample.addEventListener('click', () => {
+      birthDate.value = '1998-05-14';
+      birthTime.value = '10:30';
+      init();
+    });
+
+    btnToday.addEventListener('click', () => {
+      const now = new Date();
+      birthDate.value = now.toISOString().split('T')[0];
+      birthTime.value = '12:00';
+      init();
+    });
+
+    // Run sample on load
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

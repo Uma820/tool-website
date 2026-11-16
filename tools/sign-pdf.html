@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign PDF Online Free — Electronic Signature — Free Online Tools</title>
+  <meta name="description" content="Sign PDF documents directly in your browser. Draw, type, or upload your signature and place it on any page. 100% private with no cloud uploads.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/sign-pdf.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/sign-pdf.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/sign-pdf.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Sign PDF Online Free",
+    "description": "Sign PDF documents directly in your browser. Draw, type, or upload your signature and place it on any page. 100% private with no cloud uploads.",
+    "url": "https://nexivo.com/tools/sign-pdf.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .sig-tabs {
+      display: flex;
+      gap: var(--space-2);
+      margin-block-end: var(--space-3);
+    }
+    .sig-tab-btn.active {
+      background: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
+    }
+    .sig-canvas-wrap {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      inline-size: 100%;
+      block-size: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    #signature-pad {
+      inline-size: 100%;
+      block-size: 100%;
+      touch-action: none;
+      cursor: crosshair;
+    }
+    .dropzone {
+      border: 2px dashed var(--color-primary-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-align: center;
+      background: var(--color-bg-subtle);
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      background: rgba(2, 132, 199, 0.05);
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#pdf">PDF Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">Sign PDF</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Sign PDF Online</span>
+      </h1>
+      <p class="tool-header-lead">
+        Add legal electronic signatures to PDF contracts, agreements, and forms. Draw, type, or upload your signature and embed it into any page 100% privately in your browser.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 2: Client Library (pdf-lib)</span>
+        <span class="tool-badge">Draw &bull; Type &bull; Upload</span>
+        <span class="tool-badge">Zero Server Uploads</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Status Alert Banner -->
+      <div id="status-banner" style="display: none; margin-block-end: var(--space-4);"></div>
+
+      <!-- Dropzone (Step 1) -->
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload PDF to sign">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary); margin-block-end: var(--space-2);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <div style="font-weight: var(--font-weight-bold); font-size: var(--font-size-base);">Click to Select PDF or Drag &amp; Drop</div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: 4px;" id="loaded-file-name">Select any standard PDF document to sign</div>
+        <input type="file" id="file-input" accept="application/pdf" style="display: none;">
+      </div>
+
+      <!-- Signing Workspace (Step 2 - visible once PDF is loaded) -->
+      <div id="signing-workspace" style="display: none; margin-block-start: var(--space-5);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-5); align-items: start;">
+          <!-- Signature Input Section -->
+          <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-3);">Create Your Signature</h3>
+
+            <!-- Signature Tabs -->
+            <div class="sig-tabs">
+              <button type="button" class="btn btn-secondary sig-tab-btn active" data-sig="draw">Draw</button>
+              <button type="button" class="btn btn-secondary sig-tab-btn" data-sig="type">Type Name</button>
+              <button type="button" class="btn btn-secondary sig-tab-btn" data-sig="upload">Upload</button>
+            </div>
+
+            <!-- Draw Signature Tab -->
+            <div id="sig-panel-draw">
+              <div class="sig-canvas-wrap">
+                <canvas id="signature-pad" width="450" height="160"></canvas>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-block-start: var(--space-2);">
+                <span style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Sign with mouse, trackpad, or finger</span>
+                <button type="button" class="btn btn-secondary" id="btn-clear-sig" style="font-size: var(--font-size-xs); padding: 0.25rem 0.6rem;">Clear Pad</button>
+              </div>
+            </div>
+
+            <!-- Type Signature Tab -->
+            <div id="sig-panel-type" style="display: none;">
+              <div class="form-group">
+                <label for="typed-name" class="form-label" style="font-size: var(--font-size-xs);">Your Full Name:</label>
+                <input type="text" id="typed-name" class="form-input" placeholder="e.g. Johnathan Doe" value="John Doe">
+              </div>
+              <div class="form-group" style="margin-block-end: 0;">
+                <label for="cursive-font" class="form-label" style="font-size: var(--font-size-xs);">Signature Style:</label>
+                <select id="cursive-font" class="form-select">
+                  <option value="cursive-1">Elegant Script (Brush Script MT)</option>
+                  <option value="cursive-2">Executive Cursive (Lucida Handwriting)</option>
+                  <option value="cursive-3">Classic Formal (Georgia Italic)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Upload Signature Tab -->
+            <div id="sig-panel-upload" style="display: none;">
+              <div class="form-group" style="margin-block-end: 0;">
+                <label class="form-label" style="font-size: var(--font-size-xs);">Upload Signature Image (PNG with transparency recommended):</label>
+                <input type="file" id="sig-upload-input" accept="image/png, image/jpeg" class="form-input" style="font-size: var(--font-size-xs); padding: 0.35rem;">
+              </div>
+            </div>
+          </div>
+
+          <!-- Signature Placement Section -->
+          <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-3);">Placement &amp; Size</h3>
+
+            <div class="form-group">
+              <label for="target-page-select" class="form-label" style="font-size: var(--font-size-xs);">Target Page:</label>
+              <select id="target-page-select" class="form-select"></select>
+            </div>
+
+            <div class="form-group">
+              <label for="placement-preset" class="form-label" style="font-size: var(--font-size-xs);">Position on Page:</label>
+              <select id="placement-preset" class="form-select">
+                <option value="bottom-right" selected>Bottom Right (Standard Signature Block)</option>
+                <option value="bottom-left">Bottom Left</option>
+                <option value="center">Center of Page</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-block-end: 0;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-1);">
+                <label for="sig-scale" class="form-label" style="font-size: var(--font-size-xs); margin-block-end: 0;">Signature Width:</label>
+                <span id="sig-scale-val" style="font-size: var(--font-size-xs); font-weight: bold;">150 pt</span>
+              </div>
+              <input type="range" id="sig-scale" min="80" max="300" value="150" style="inline-size: 100%; cursor: pointer;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Download Button -->
+        <div style="text-align: center; margin-block-start: var(--space-5);">
+          <button type="button" class="btn btn-primary" id="btn-burn-sign" style="padding: 0.6rem 2rem; font-size: var(--font-size-base);">
+            <span id="sign-spinner" style="display: none; margin-inline-end: 6px;">⏳</span>
+            Sign &amp; Download PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Sign PDF Tool Do?</h2>
+        <p>
+          The <strong>Sign PDF Online</strong> tool allows professionals, freelancers, and clients to electronically sign PDF contracts, non-disclosure agreements (NDAs), invoices, and lease forms directly in the web browser.
+        </p>
+        <p>
+          Instead of printing out pages, signing with a pen, and scanning them back onto your computer, you can draw a fluid signature using your mouse or touchscreen, type your name in elegant script calligraphy, or upload an existing signature PNG. The signature is burned permanently into the PDF document's vector streams using <code>pdf-lib</code> with <strong>zero server uploads</strong>.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Upload Your PDF:</strong> Click the dropzone to select your PDF document from your device.</li>
+          <li><strong>Create Signature:</strong> Choose between <strong>Draw</strong> (freehand signature with pen smoothing), <strong>Type Name</strong> (calligraphic font generator), or <strong>Upload</strong> (PNG image).</li>
+          <li><strong>Choose Placement:</strong> Pick the target page (e.g. Page 1, Last Page) and select a placement preset (such as <em>Bottom Right</em> for standard contract signature blocks).</li>
+          <li><strong>Sign and Download:</strong> Adjust the signature scale slider to your preferred size and click <strong>Sign &amp; Download PDF</strong>.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Employment &amp; Contractor Agreements</h3>
+            <p>Sign offer letters, consulting agreements, and non-disclosure agreements in seconds without printing paper.</p>
+          </div>
+          <div class="card">
+            <h3>Real Estate &amp; Lease Forms</h3>
+            <p>Affix your signature to rental applications, lease renewals, and tenant verification documents securely.</p>
+          </div>
+          <div class="card">
+            <h3>Invoices &amp; Purchase Orders</h3>
+            <p>Authorize vendor invoices, purchase orders, and corporate quotes with standard electronic approval stamps.</p>
+          </div>
+          <div class="card">
+            <h3>School Permission Slips</h3>
+            <p>Parents can easily sign field trip permission slips and medical release forms directly from their smartphones.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Signing Scenario:</div>
+          <pre class="example-pre">Document: Consulting_Agreement_2026.pdf (3 pages)
+Signature Method: Hand-drawn signature on canvas
+Target Placement: Page 3 (Bottom Right, 160 pt width)
+Result: Signed PDF downloaded in 2 seconds. The original text formatting is preserved with your signature permanently embedded.</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>PDF Core:</strong> Powered by <code>pdf-lib</code> (MIT License) running client-side WebAssembly / JS.</li>
+          <li><strong>Canvas Vector Smoothing:</strong> Signature pad captures high-resolution pointer coordinates with smooth quadratic Bézier interpolation.</li>
+          <li><strong>Transparency Preservation:</strong> Signatures are embedded as 32-bit alpha PNGs so existing lines, text, and underlines behind the signature remain clearly visible.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          This tool generates standard <strong>Electronic Signatures (e-Signatures)</strong> by rasterizing and embedding your visual signature onto the PDF page. It does not provide cryptographic Public Key Infrastructure (PKI) digital certificates (Digital Signatures / Adobe Certified Document Services) which require hardware smart cards or paid identity verification authorities.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Your confidential legal agreements and your personal signature never leave your device. All rendering, canvas manipulation, and PDF compilation happen completely in your browser tab. No document data is ever sent to an external server.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Are electronic signatures legally binding?</summary>
+            <div class="faq-answer">
+              <p>In most jurisdictions (including under the United States ESIGN Act and European Union eIDAS regulations), electronic signatures are legally binding for the vast majority of commercial contracts, invoices, and business agreements.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Can I sign on my mobile phone?</summary>
+            <div class="faq-answer">
+              <p>Yes! The signature pad supports touch gestures on smartphones and tablets, allowing you to sign naturally with your finger or a stylus.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Will the signature cover up the contract text?</summary>
+            <div class="faq-answer">
+              <p>Because signatures are rendered with a transparent background, document lines and text beneath your signature strokes remain fully readable.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/pdf-editor.html" class="related-tool-chip">
+            <div class="related-tool-title">PDF Editor</div>
+            <div class="related-tool-desc">Add text annotations, blackout redactions, and highlights to PDFs.</div>
+          </a>
+          <a href="/tools/pdf-converter.html" class="related-tool-chip">
+            <div class="related-tool-title">Image to PDF</div>
+            <div class="related-tool-desc">Convert JPG and PNG photos into a clean PDF document.</div>
+          </a>
+          <a href="/tools/pdf-merger.html" class="related-tool-chip">
+            <div class="related-tool-title">PDF Merger</div>
+            <div class="related-tool-desc">Combine multiple PDF documents into one organized file.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/vendor/pdf-lib.min.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    const loadedFileName = document.getElementById('loaded-file-name');
+    const statusBanner = document.getElementById('status-banner');
+    const signingWorkspace = document.getElementById('signing-workspace');
+
+    const sigPad = document.getElementById('signature-pad');
+    const sigCtx = sigPad.getContext('2d');
+    const btnClearSig = document.getElementById('btn-clear-sig');
+    const sigTabButtons = document.querySelectorAll('.sig-tab-btn');
+
+    const panelDraw = document.getElementById('sig-panel-draw');
+    const panelType = document.getElementById('sig-panel-type');
+    const panelUpload = document.getElementById('sig-panel-upload');
+
+    const typedName = document.getElementById('typed-name');
+    const cursiveFont = document.getElementById('cursive-font');
+    const sigUploadInput = document.getElementById('sig-upload-input');
+
+    const targetPageSelect = document.getElementById('target-page-select');
+    const placementPreset = document.getElementById('placement-preset');
+    const sigScale = document.getElementById('sig-scale');
+    const sigScaleVal = document.getElementById('sig-scale-val');
+
+    const btnBurnSign = document.getElementById('btn-burn-sign');
+    const signSpinner = document.getElementById('sign-spinner');
+
+    let currentPdfBytes = null;
+    let pdfDocLoaded = null;
+    let currentMethod = 'draw';
+    let uploadedSigImage = null;
+
+    function showBanner(type, msg) {
+      statusBanner.className = `alert alert-${type}`;
+      statusBanner.textContent = msg;
+      statusBanner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      statusBanner.style.display = 'none';
+    }
+
+    // Signature Pad Drawing Logic
+    let isDrawing = false;
+    let lastX = 0, lastY = 0;
+    sigCtx.strokeStyle = '#000000';
+    sigCtx.lineWidth = 2.5;
+    sigCtx.lineCap = 'round';
+    sigCtx.lineJoin = 'round';
+
+    function getPos(e) {
+      const rect = sigPad.getBoundingClientRect();
+      const scaleX = sigPad.width / rect.width;
+      const scaleY = sigPad.height / rect.height;
+      if (e.touches && e.touches[0]) {
+        return {
+          x: (e.touches[0].clientX - rect.left) * scaleX,
+          y: (e.touches[0].clientY - rect.top) * scaleY
+        };
+      }
+      return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
+      };
+    }
+
+    function startDraw(e) {
+      isDrawing = true;
+      const pos = getPos(e);
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      sigCtx.beginPath();
+      sigCtx.moveTo(lastX, lastY);
+      sigCtx.lineTo(pos.x, pos.y);
+      sigCtx.stroke();
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    function stopDraw() {
+      isDrawing = false;
+    }
+
+    sigPad.addEventListener('mousedown', startDraw);
+    sigPad.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stopDraw);
+
+    sigPad.addEventListener('touchstart', startDraw, { passive: false });
+    sigPad.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', stopDraw);
+
+    btnClearSig.addEventListener('click', () => {
+      sigCtx.clearRect(0, 0, sigPad.width, sigPad.height);
+    });
+
+    // Signature Tab Switching
+    sigTabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sigTabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentMethod = btn.dataset.sig;
+
+        panelDraw.style.display = currentMethod === 'draw' ? 'block' : 'none';
+        panelType.style.display = currentMethod === 'type' ? 'block' : 'none';
+        panelUpload.style.display = currentMethod === 'upload' ? 'block' : 'none';
+      });
+    });
+
+    sigUploadInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        uploadedSigImage = new Image();
+        uploadedSigImage.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    sigScale.addEventListener('input', () => {
+      sigScaleVal.textContent = sigScale.value + ' pt';
+    });
+
+    // Handle PDF File Load
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files[0]) loadPdf(e.dataTransfer.files[0]);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files[0]) loadPdf(e.target.files[0]);
+    });
+
+    async function loadPdf(file) {
+      hideBanner();
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        showBanner('danger', 'Please choose a valid PDF file.');
+        return;
+      }
+
+      loadedFileName.textContent = `Loaded: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+
+      try {
+        currentPdfBytes = await file.arrayBuffer();
+        pdfDocLoaded = await PDFLib.PDFDocument.load(currentPdfBytes, { ignoreEncryption: false });
+        const numPages = pdfDocLoaded.getPageCount();
+
+        // Populate page selector
+        targetPageSelect.innerHTML = '';
+        for (let i = 1; i <= numPages; i++) {
+          const opt = document.createElement('option');
+          opt.value = i - 1;
+          opt.textContent = `Page ${i} of ${numPages}${i === numPages ? ' (Last Page)' : ''}`;
+          if (i === numPages) opt.selected = true;
+          targetPageSelect.appendChild(opt);
+        }
+
+        signingWorkspace.style.display = 'block';
+      } catch (err) {
+        showBanner('danger', 'Could not open PDF: ' + err.message);
+      }
+    }
+
+    // Generate Signature PNG Blob
+    async function getSignaturePngBytes() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      if (currentMethod === 'draw') {
+        canvas.width = sigPad.width;
+        canvas.height = sigPad.height;
+        ctx.drawImage(sigPad, 0, 0);
+      } else if (currentMethod === 'type') {
+        canvas.width = 500;
+        canvas.height = 160;
+        const name = typedName.value.trim() || 'John Doe';
+        const style = cursiveFont.value;
+
+        ctx.fillStyle = '#0f172a';
+        if (style === 'cursive-1') ctx.font = 'italic 52px "Brush Script MT", "Segoe Script", cursive';
+        else if (style === 'cursive-2') ctx.font = 'italic 44px "Lucida Handwriting", cursive';
+        else ctx.font = 'italic 48px "Georgia", serif';
+
+        ctx.textBaseline = 'middle';
+        ctx.fillText(name, 20, 80);
+      } else if (currentMethod === 'upload') {
+        if (!uploadedSigImage || !uploadedSigImage.complete) {
+          throw new Error('Please select an image file to use as your signature.');
+        }
+        canvas.width = uploadedSigImage.naturalWidth;
+        canvas.height = uploadedSigImage.naturalHeight;
+        ctx.drawImage(uploadedSigImage, 0, 0);
+      }
+
+      const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+      return await blob.arrayBuffer();
+    }
+
+    // Burn & Download
+    btnBurnSign.addEventListener('click', async () => {
+      hideBanner();
+      if (!pdfDocLoaded) {
+        showBanner('danger', 'Please upload a PDF document first.');
+        return;
+      }
+
+      btnBurnSign.disabled = true;
+      signSpinner.style.display = 'inline-block';
+
+      try {
+        const sigBytes = await getSignaturePngBytes();
+        const embeddedSig = await pdfDocLoaded.embedPng(sigBytes);
+
+        const pageIdx = parseInt(targetPageSelect.value, 10);
+        const page = pdfDocLoaded.getPage(pageIdx);
+        const { width: pWidth, height: pHeight } = page.getSize();
+
+        // Calculate aspect-ratio preserved dimensions
+        const sigTargetWidth = parseFloat(sigScale.value);
+        const sigAspect = embeddedSig.height / embeddedSig.width;
+        const sigTargetHeight = sigTargetWidth * sigAspect;
+
+        // Position coordinates (PDF origin is bottom-left (0,0))
+        let posX = 40, posY = 40;
+        const preset = placementPreset.value;
+
+        if (preset === 'bottom-right') {
+          posX = pWidth - sigTargetWidth - 40;
+          posY = 40;
+        } else if (preset === 'bottom-left') {
+          posX = 40;
+          posY = 40;
+        } else if (preset === 'center') {
+          posX = (pWidth - sigTargetWidth) / 2;
+          posY = (pHeight - sigTargetHeight) / 2;
+        }
+
+        page.drawImage(embeddedSig, {
+          x: Math.max(10, posX),
+          y: Math.max(10, posY),
+          width: sigTargetWidth,
+          height: sigTargetHeight
+        });
+
+        const modifiedBytes = await pdfDocLoaded.save();
+        const blob = new Blob([modifiedBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'signed-document.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        setTimeout(() => URL.revokeObjectURL(url), 60000);
+        showBanner('success', 'Document signed successfully! Your signed PDF has been downloaded.');
+      } catch (err) {
+        showBanner('danger', 'Signing error: ' + err.message);
+      } finally {
+        btnBurnSign.disabled = false;
+        signSpinner.style.display = 'none';
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

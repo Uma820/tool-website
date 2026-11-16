@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON-LD Schema Markup Generator for Google Rich Snippets — 100% Client-Side</title>
+  <meta name="description" content="Generate structured JSON-LD schema markup for Google Rich Snippets: FAQPage, LocalBusiness, HowTo, Article, Product with star ratings, and BreadcrumbList with real-time SERP preview and validation.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/json-ld-schema-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/json-ld-schema-generator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/json-ld-schema-generator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSON-LD Schema Markup Generator for Google Rich Snippets",
+    "description": "Generate clean, Google-compliant JSON-LD structured data markup for FAQPage, LocalBusiness, HowTo, Article, Product, and BreadcrumbList schemas with instant SERP preview and property validation.",
+    "url": "https://nexivo.com/tools/json-ld-schema-generator.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is JSON-LD and why does Google officially recommend it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "JSON-LD (JavaScript Object Notation for Linked Data) is a standardized method of embedding structured data into a webpage. Unlike Microdata or RDFa, which must be woven into existing HTML elements, JSON-LD is self-contained inside a single <script type=\"application/ld+json\"> tag, making it much easier to maintain, debug, and inject without breaking frontend designs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do Google Rich Snippets improve click-through rates (CTR)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rich Snippets enhance your standard blue search link with visual elements like yellow star ratings, review counts, FAQ accordions, pricing, and availability badges. These visual enhancements increase search listing height and credibility, often boosting organic CTR by 20% to 35% compared to plain text snippets."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where should I paste the generated JSON-LD code in WordPress, Shopify, or Next.js?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can paste the generated <script type=\"application/ld+json\"> tag inside the <head> section of your HTML template or before the closing </body> tag. In WordPress, use your theme's custom header code section or a snippet plugin. In Shopify, add it to your theme.liquid file or specific product/blog templates. In Next.js, render it inside a next/head component or Next.js Script tag."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I verify that my JSON-LD markup is free of syntax errors?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our tool includes real-time property validation that flags missing required fields as you type. Once generated, you can click the 'Test in Google Rich Results' button to test your code directly on Google's official Rich Results Test tool (search.google.com/test/rich-results) and Schema Markup Validator."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Studio Layout */
+    .schema-studio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .schema-studio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Tabs Bar */
+    .schema-tabs-bar {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: var(--space-4);
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .schema-tab-btn {
+      padding: 0.65rem 1.15rem;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .schema-tab-btn:hover {
+      color: var(--color-text-primary);
+    }
+    .schema-tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* Panel Card */
+    .studio-panel {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-3);
+    }
+    .form-group label {
+      display: block;
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .form-group .form-hint {
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      margin-top: 0.2rem;
+    }
+    .form-control, .form-select {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-canvas);
+      color: var(--color-text-primary);
+      font-size: var(--font-size-sm);
+      transition: border-color var(--transition-fast);
+      box-sizing: border-box;
+    }
+    .form-control:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-primary-subtle);
+    }
+    textarea.form-control {
+      resize: vertical;
+      min-height: 72px;
+      font-family: inherit;
+    }
+
+    .row-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+    }
+    .row-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-3);
+    }
+    @media (max-width: 600px) {
+      .row-grid-2, .row-grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Repeatable Row Cards */
+    .repeatable-item {
+      background: var(--color-bg-canvas);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+      position: relative;
+    }
+    .repeatable-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-2);
+    }
+    .repeatable-title {
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      color: var(--color-text-secondary);
+    }
+    .repeatable-actions {
+      display: flex;
+      gap: 0.25rem;
+    }
+    .btn-sm-icon {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-bg-surface);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+    .btn-sm-icon:hover {
+      background: var(--color-bg-muted);
+      color: var(--color-text-primary);
+    }
+    .btn-sm-danger {
+      color: var(--color-danger);
+    }
+    .btn-sm-danger:hover {
+      background: var(--color-danger-subtle);
+      border-color: var(--color-danger);
+    }
+
+    /* Google SERP Preview Card */
+    .serp-card {
+      background: #ffffff;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: arial, sans-serif;
+      color: #202124;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      margin-bottom: var(--space-4);
+    }
+    [data-theme="dark"] .serp-card {
+      background: #202124;
+      border-color: #3c4043;
+      color: #e8eaed;
+    }
+    .serp-source {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .serp-favicon {
+      width: 26px;
+      height: 26px;
+      background: #f1f3f4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: bold;
+      color: #5f6368;
+    }
+    [data-theme="dark"] .serp-favicon {
+      background: #303134;
+      color: #9aa0a6;
+    }
+    .serp-site-info {
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .serp-site-name {
+      font-weight: 500;
+      color: #202124;
+    }
+    [data-theme="dark"] .serp-site-name {
+      color: #dadce0;
+    }
+    .serp-breadcrumb {
+      font-size: 12px;
+      color: #4d5156;
+      word-break: break-all;
+    }
+    [data-theme="dark"] .serp-breadcrumb {
+      color: #bdc1c6;
+    }
+    .serp-title {
+      font-size: 20px;
+      line-height: 1.3;
+      color: #1a0dab;
+      margin-bottom: 4px;
+      cursor: pointer;
+      font-weight: 400;
+    }
+    [data-theme="dark"] .serp-title {
+      color: #8ab4f8;
+    }
+    .serp-title:hover {
+      text-decoration: underline;
+    }
+    .serp-snippet {
+      font-size: 14px;
+      line-height: 1.58;
+      color: #4d5156;
+    }
+    [data-theme="dark"] .serp-snippet {
+      color: #bdc1c6;
+    }
+
+    /* Rich Result Enhancements */
+    .serp-rich-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 13px;
+      margin: 6px 0;
+      color: #4d5156;
+    }
+    [data-theme="dark"] .serp-rich-badges {
+      color: #bdc1c6;
+    }
+    .serp-stars {
+      color: #e37400;
+      font-weight: bold;
+    }
+    .serp-faq-accordion {
+      margin-top: 10px;
+      border-top: 1px solid #ebebeb;
+      padding-top: 6px;
+    }
+    [data-theme="dark"] .serp-faq-accordion {
+      border-color: #3c4043;
+    }
+    .serp-faq-item {
+      padding: 6px 0;
+      border-bottom: 1px solid #f1f3f4;
+      font-size: 13px;
+    }
+    [data-theme="dark"] .serp-faq-item {
+      border-color: #303134;
+    }
+    .serp-faq-q {
+      font-weight: 500;
+      color: #1a0dab;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    [data-theme="dark"] .serp-faq-q {
+      color: #8ab4f8;
+    }
+    .serp-faq-a {
+      color: #4d5156;
+      font-size: 12px;
+      margin-top: 4px;
+      line-height: 1.45;
+      padding-left: 4px;
+    }
+    [data-theme="dark"] .serp-faq-a {
+      color: #bdc1c6;
+    }
+    .serp-steps-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      margin-top: 8px;
+      padding-bottom: 4px;
+    }
+    .serp-step-chip {
+      background: #f1f3f4;
+      border-radius: 14px;
+      padding: 4px 10px;
+      font-size: 11px;
+      white-space: nowrap;
+      color: #3c4043;
+    }
+    [data-theme="dark"] .serp-step-chip {
+      background: #303134;
+      color: #e8eaed;
+    }
+
+    /* Validation Box */
+    .validation-box {
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-bottom: var(--space-4);
+      border: 1px solid transparent;
+      font-size: var(--font-size-xs);
+    }
+    .validation-valid {
+      background: var(--color-success-subtle);
+      border-color: var(--color-success);
+      color: var(--color-success);
+    }
+    .validation-warning {
+      background: var(--color-warning-subtle);
+      border-color: var(--color-warning);
+      color: var(--color-warning);
+    }
+    .validation-danger {
+      background: var(--color-danger-subtle);
+      border-color: var(--color-danger);
+      color: var(--color-danger);
+    }
+    .val-list {
+      margin: 0.35rem 0 0 1.2rem;
+      padding: 0;
+    }
+    .val-list li {
+      margin-bottom: 0.15rem;
+    }
+
+    /* Code Output Box */
+    .code-container {
+      position: relative;
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-top: var(--space-2);
+      max-height: 400px;
+      overflow: auto;
+    }
+    .code-container pre {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      white-space: pre;
+    }
+    .code-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: var(--space-2);
+    }
+    .code-tab-btn {
+      padding: 0.35rem 0.75rem;
+      font-size: var(--font-size-xs);
+      background: var(--color-bg-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      font-weight: 600;
+    }
+    .code-tab-btn.active {
+      background: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
+    }
+
+    /* SEO Article Styles */
+    .seo-article {
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+    .seo-article h2 {
+      font-size: var(--font-size-xl);
+      margin-top: var(--space-6);
+      margin-bottom: var(--space-3);
+      color: var(--color-text-primary);
+    }
+    .seo-article p, .seo-article li {
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--space-3);
+    }
+    .seo-article ul, .seo-article ol {
+      margin-left: 1.5rem;
+      margin-bottom: var(--space-4);
+    }
+    .faq-container {
+      margin-top: var(--space-4);
+    }
+    .faq-item {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-3);
+      background: var(--color-bg-surface);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: var(--space-3) var(--space-4);
+      background: none;
+      border: none;
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-answer {
+      padding: 0 var(--space-4) var(--space-4) var(--space-4);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      display: none;
+    }
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+    .faq-icon {
+      transition: transform 0.2s ease;
+    }
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Related Tools Strip */
+    .related-tools-strip {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-3);
+    }
+    .related-card {
+      display: block;
+      padding: var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--color-text-primary);
+      background: var(--color-bg-canvas);
+      transition: border-color var(--transition-fast), transform var(--transition-fast);
+    }
+    .related-card:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+    .related-card h4 {
+      font-size: var(--font-size-sm);
+      margin: 0 0 0.25rem 0;
+      color: var(--color-primary);
+    }
+    .related-card p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      margin: 0;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <!-- Global Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="width: auto; padding: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: var(--space-4);">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb" style="margin-bottom: var(--space-3); font-size: var(--font-size-xs); color: var(--color-text-muted);">
+      <a href="/" style="color: var(--color-primary); text-decoration: none;">Home</a> &gt;
+      <a href="/#seo" style="color: var(--color-primary); text-decoration: none;">SEO Tools</a> &gt;
+      <span>JSON-LD Schema Markup Generator</span>
+    </nav>
+
+    <!-- Tool Header -->
+    <div class="tool-header" style="margin-bottom: var(--space-4);">
+      <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+        <h1 style="font-size: var(--font-size-2xl); font-weight: 800; margin:0; color: var(--color-text-primary);">
+          JSON-LD Schema Markup Generator
+        </h1>
+        <span class="badge" style="background:var(--color-primary-subtle); color:var(--color-primary); border:1px solid var(--color-primary-border); padding:0.2rem 0.6rem; border-radius:var(--radius-full); font-size:var(--font-size-xs); font-weight:700;">
+          100% Client-Side
+        </span>
+        <span class="badge" style="background:var(--color-success-subtle); color:var(--color-success); border:1px solid var(--color-success); padding:0.2rem 0.6rem; border-radius:var(--radius-full); font-size:var(--font-size-xs); font-weight:700;">
+          Google Rich Results Ready
+        </span>
+      </div>
+      <p style="color: var(--color-text-secondary); margin:0; font-size: var(--font-size-base);">
+        Create clean, structured JSON-LD schema tags for FAQPage, LocalBusiness, HowTo, Article, Product, and Breadcrumbs with instant live Google SERP preview and missing-property validation.
+      </p>
+    </div>
+
+    <!-- Schema Type Tabs & Quick Actions -->
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:var(--space-2);">
+      <div class="schema-tabs-bar" id="schemaTabs" style="margin-bottom:0;">
+        <button type="button" class="schema-tab-btn active" data-type="faq">
+          ❓ FAQPage
+        </button>
+        <button type="button" class="schema-tab-btn" data-type="localbusiness">
+          🏪 LocalBusiness
+        </button>
+        <button type="button" class="schema-tab-btn" data-type="howto">
+          🛠️ HowTo
+        </button>
+        <button type="button" class="schema-tab-btn" data-type="article">
+          📰 Article / Blog
+        </button>
+        <button type="button" class="schema-tab-btn" data-type="product">
+          🛍️ Product &amp; Reviews
+        </button>
+        <button type="button" class="schema-tab-btn" data-type="breadcrumb">
+          🧭 BreadcrumbList
+        </button>
+      </div>
+
+      <div style="display:flex; gap:0.5rem;">
+        <button type="button" id="btnLoadSample" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.45rem 0.85rem;">
+          ✨ Load Sample Data
+        </button>
+        <button type="button" id="btnClearForm" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.45rem 0.85rem;">
+          🗑️ Clear Form
+        </button>
+      </div>
+    </div>
+
+    <!-- Dual Workspace Grid -->
+    <div class="schema-studio-grid">
+      <!-- Left Panel: Interactive Form Builder -->
+      <div class="studio-panel" id="formContainer">
+        
+        <!-- 1. FAQ Form -->
+        <div id="formFaq" class="schema-form-pane">
+          <h3 style="font-size:var(--font-size-base); margin-top:0; margin-bottom:var(--space-2); color:var(--color-text-primary);">
+            FAQPage Questions &amp; Answers
+          </h3>
+          <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin-bottom:var(--space-3);">
+            Add question and answer pairs. Google Search will display these directly beneath your search listing as an interactive accordion.
+          </p>
+
+          <div id="faqItemsContainer"></div>
+
+          <button type="button" id="btnAddFaq" class="btn btn-secondary" style="width:100%; font-size:var(--font-size-xs); margin-top:var(--space-2);">
+            ➕ Add Question &amp; Answer
+          </button>
+        </div>
+
+        <!-- 2. LocalBusiness Form -->
+        <div id="formLocalBusiness" class="schema-form-pane" style="display:none;">
+          <h3 style="font-size:var(--font-size-base); margin-top:0; margin-bottom:var(--space-2); color:var(--color-text-primary);">
+            LocalBusiness Information
+          </h3>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="lbType">Business Category</label>
+              <select id="lbType" class="form-select">
+                <option value="LocalBusiness">LocalBusiness (General)</option>
+                <option value="Restaurant">Restaurant / Bistro / Cafe</option>
+                <option value="Dentist">Dentist / Dental Clinic</option>
+                <option value="Store">Store / Retail Shop</option>
+                <option value="Plumber">Plumber / HVAC / Contractor</option>
+                <option value="AutoRepair">AutoRepair / Garage</option>
+                <option value="Attorney">Attorney / Legal Service</option>
+                <option value="MedicalBusiness">Medical Clinic / Health</option>
+                <option value="RealEstateAgent">RealEstateAgent</option>
+                <option value="HairSalon">HairSalon / Beauty Care</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="lbName">Business Name *</label>
+              <input type="text" id="lbName" class="form-control" placeholder="e.g. Sunset Bistro">
+            </div>
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="lbPhone">Telephone *</label>
+              <input type="text" id="lbPhone" class="form-control" placeholder="+1-555-839-2041">
+            </div>
+            <div class="form-group">
+              <label for="lbPriceRange">Price Range</label>
+              <select id="lbPriceRange" class="form-select">
+                <option value="">Select Price Range</option>
+                <option value="$">$ (Inexpensive)</option>
+                <option value="$$">$$ (Moderate)</option>
+                <option value="$$$">$$$ (Expensive)</option>
+                <option value="$$$$">$$$$ (Luxury)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="lbUrl">Website URL</label>
+              <input type="url" id="lbUrl" class="form-control" placeholder="https://example.com">
+            </div>
+            <div class="form-group">
+              <label for="lbEmail">Email Address</label>
+              <input type="email" id="lbEmail" class="form-control" placeholder="info@example.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lbImage">Storefront / Logo Image URL</label>
+            <input type="url" id="lbImage" class="form-control" placeholder="https://example.com/photo.jpg">
+          </div>
+
+          <div class="form-group">
+            <label for="lbDescription">Description</label>
+            <textarea id="lbDescription" class="form-control" placeholder="Brief overview of services, specialty, and location."></textarea>
+          </div>
+
+          <h4 style="font-size:var(--font-size-xs); text-transform:uppercase; color:var(--color-text-secondary); margin:var(--space-3) 0 var(--space-2) 0;">
+            📍 Physical Address
+          </h4>
+
+          <div class="form-group">
+            <label for="lbStreet">Street Address *</label>
+            <input type="text" id="lbStreet" class="form-control" placeholder="742 Evergreen Promenade">
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="lbCity">City / Locality *</label>
+              <input type="text" id="lbCity" class="form-control" placeholder="Santa Monica">
+            </div>
+            <div class="form-group">
+              <label for="lbState">State / Region</label>
+              <input type="text" id="lbState" class="form-control" placeholder="CA">
+            </div>
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="lbPostalCode">Postal / Zip Code</label>
+              <input type="text" id="lbPostalCode" class="form-control" placeholder="90401">
+            </div>
+            <div class="form-group">
+              <label for="lbCountry">Country Code</label>
+              <input type="text" id="lbCountry" class="form-control" placeholder="US">
+            </div>
+          </div>
+
+          <h4 style="font-size:var(--font-size-xs); text-transform:uppercase; color:var(--color-text-secondary); margin:var(--space-3) 0 var(--space-2) 0;">
+            🌐 Map Geo Coordinates
+          </h4>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="lbLat">Latitude</label>
+              <input type="text" id="lbLat" class="form-control" placeholder="34.0195">
+            </div>
+            <div class="form-group">
+              <label for="lbLng">Longitude</label>
+              <input type="text" id="lbLng" class="form-control" placeholder="-118.4912">
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. HowTo Form -->
+        <div id="formHowto" class="schema-form-pane" style="display:none;">
+          <h3 style="font-size:var(--font-size-base); margin-top:0; margin-bottom:var(--space-2); color:var(--color-text-primary);">
+            HowTo Guide &amp; Tutorial
+          </h3>
+
+          <div class="form-group">
+            <label for="htName">Guide Title / Objective *</label>
+            <input type="text" id="htName" class="form-control" placeholder="e.g. How to Build a Motorized Standing Desk">
+          </div>
+
+          <div class="form-group">
+            <label for="htDesc">Guide Description</label>
+            <textarea id="htDesc" class="form-control" placeholder="Overview of the DIY project or instructional guide."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="htImage">Featured Image URL</label>
+            <input type="url" id="htImage" class="form-control" placeholder="https://example.com/guide-hero.jpg">
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label>Execution Time (Auto ISO 8601)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="number" id="htHours" class="form-control" placeholder="Hours" min="0" max="99">
+                <input type="number" id="htMinutes" class="form-control" placeholder="Minutes" min="0" max="59">
+              </div>
+              <div class="form-hint" id="htIsoHint">Duration: Not set</div>
+            </div>
+
+            <div class="form-group">
+              <label>Estimated Cost</label>
+              <div style="display:flex; gap:0.5rem;">
+                <select id="htCostCurrency" class="form-select" style="max-width:85px;">
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="GBP">GBP</option>
+                  <option value="INR">INR</option>
+                  <option value="CAD">CAD</option>
+                  <option value="AUD">AUD</option>
+                </select>
+                <input type="text" id="htCostValue" class="form-control" placeholder="e.g. 150.00">
+              </div>
+            </div>
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="htSupplies">Supplies Needed (Comma-Separated)</label>
+              <input type="text" id="htSupplies" class="form-control" placeholder="Butcher block, Screws, Wood stain">
+            </div>
+            <div class="form-group">
+              <label for="htTools">Tools Needed (Comma-Separated)</label>
+              <input type="text" id="htTools" class="form-control" placeholder="Drill, Sandpaper, Measuring tape">
+            </div>
+          </div>
+
+          <h4 style="font-size:var(--font-size-xs); text-transform:uppercase; color:var(--color-text-secondary); margin:var(--space-3) 0 var(--space-2) 0;">
+            📝 Step-by-Step Instructions *
+          </h4>
+
+          <div id="htStepsContainer"></div>
+
+          <button type="button" id="btnAddStep" class="btn btn-secondary" style="width:100%; font-size:var(--font-size-xs); margin-top:var(--space-2);">
+            ➕ Add Step
+          </button>
+        </div>
+
+        <!-- 4. Article Form -->
+        <div id="formArticle" class="schema-form-pane" style="display:none;">
+          <h3 style="font-size:var(--font-size-base); margin-top:0; margin-bottom:var(--space-2); color:var(--color-text-primary);">
+            Article &amp; BlogPosting
+          </h3>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="artType">Article Type</label>
+              <select id="artType" class="form-select">
+                <option value="Article">Article (General)</option>
+                <option value="BlogPosting" selected>BlogPosting (Recommended for Blogs)</option>
+                <option value="NewsArticle">NewsArticle</option>
+                <option value="TechArticle">TechArticle</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="artHeadline">Headline / Title *</label>
+              <input type="text" id="artHeadline" class="form-control" placeholder="e.g. The Ultimate Guide to Core Web Vitals">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="artDesc">Summary / Description</label>
+            <textarea id="artDesc" class="form-control" placeholder="A concise 1-2 sentence executive summary of the article."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="artImage">Featured Hero Image URL</label>
+            <input type="url" id="artImage" class="form-control" placeholder="https://example.com/cover.jpg">
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="artAuthorName">Author Name *</label>
+              <input type="text" id="artAuthorName" class="form-control" placeholder="e.g. Sarah Jenkins">
+            </div>
+            <div class="form-group">
+              <label for="artAuthorUrl">Author Profile / Bio URL</label>
+              <input type="url" id="artAuthorUrl" class="form-control" placeholder="https://example.com/author">
+            </div>
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="artPubName">Publisher Name</label>
+              <input type="text" id="artPubName" class="form-control" placeholder="e.g. Search Insights Media">
+            </div>
+            <div class="form-group">
+              <label for="artPubLogo">Publisher Logo URL</label>
+              <input type="url" id="artPubLogo" class="form-control" placeholder="https://example.com/logo.png">
+            </div>
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="artDatePub">Date Published *</label>
+              <input type="date" id="artDatePub" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="artDateMod">Date Modified</label>
+              <div style="display:flex; gap:0.25rem;">
+                <input type="date" id="artDateMod" class="form-control">
+                <button type="button" id="btnSetToday" class="btn btn-secondary" style="font-size:0.75rem; white-space:nowrap; padding:0 0.5rem;" title="Set to Today">Today</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Product Form -->
+        <div id="formProduct" class="schema-form-pane" style="display:none;">
+          <h3 style="font-size:var(--font-size-base); margin-top:0; margin-bottom:var(--space-2); color:var(--color-text-primary);">
+            Product &amp; AggregateRating
+          </h3>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="prodName">Product Name *</label>
+              <input type="text" id="prodName" class="form-control" placeholder="e.g. UltraLite Carbon Keyboard">
+            </div>
+            <div class="form-group">
+              <label for="prodBrand">Brand Name</label>
+              <input type="text" id="prodBrand" class="form-control" placeholder="e.g. AeroType Labs">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="prodImage">Product Image URL</label>
+            <input type="url" id="prodImage" class="form-control" placeholder="https://example.com/product.jpg">
+          </div>
+
+          <div class="form-group">
+            <label for="prodDesc">Product Description</label>
+            <textarea id="prodDesc" class="form-control" placeholder="Key specs, features, and dimensions."></textarea>
+          </div>
+
+          <div class="row-grid-3">
+            <div class="form-group">
+              <label for="prodPrice">Price *</label>
+              <input type="number" id="prodPrice" class="form-control" placeholder="129.99" step="0.01">
+            </div>
+            <div class="form-group">
+              <label for="prodCurrency">Currency</label>
+              <select id="prodCurrency" class="form-select">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="GBP">GBP (£)</option>
+                <option value="INR">INR (₹)</option>
+                <option value="CAD">CAD ($)</option>
+                <option value="AUD">AUD ($)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="prodAvail">Stock Availability</label>
+              <select id="prodAvail" class="form-select">
+                <option value="InStock">InStock</option>
+                <option value="OutOfStock">OutOfStock</option>
+                <option value="PreOrder">PreOrder</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="prodSku">SKU / Item Identifier</label>
+              <input type="text" id="prodSku" class="form-control" placeholder="e.g. AERO-CARB-65">
+            </div>
+            <div class="form-group">
+              <label for="prodUrl">Product Page URL</label>
+              <input type="url" id="prodUrl" class="form-control" placeholder="https://example.com/product">
+            </div>
+          </div>
+
+          <h4 style="font-size:var(--font-size-xs); text-transform:uppercase; color:var(--color-text-secondary); margin:var(--space-3) 0 var(--space-2) 0;">
+            ⭐ Review &amp; AggregateRating
+          </h4>
+
+          <div class="row-grid-2">
+            <div class="form-group">
+              <label for="prodRating">Rating Value (1.0 – 5.0)</label>
+              <input type="number" id="prodRating" class="form-control" placeholder="4.9" min="1.0" max="5.0" step="0.1">
+            </div>
+            <div class="form-group">
+              <label for="prodReviews">Total Reviews Count</label>
+              <input type="number" id="prodReviews" class="form-control" placeholder="382" min="1">
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Breadcrumb Form -->
+        <div id="formBreadcrumb" class="schema-form-pane" style="display:none;">
+          <h3 style="font-size:var(--font-size-base); margin-top:0; margin-bottom:var(--space-2); color:var(--color-text-primary);">
+            BreadcrumbList Navigation
+          </h3>
+          <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin-bottom:var(--space-3);">
+            Specify hierarchical page levels (e.g., Home &gt; Category &gt; Subcategory &gt; Product). Google displays this clean trail above your search listing instead of raw URL parameters.
+          </p>
+
+          <div id="breadcrumbItemsContainer"></div>
+
+          <button type="button" id="btnAddBreadcrumb" class="btn btn-secondary" style="width:100%; font-size:var(--font-size-xs); margin-top:var(--space-2);">
+            ➕ Add Breadcrumb Level
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Right Panel: Google SERP Preview & Output -->
+      <div>
+        <!-- Google SERP Mockup Box -->
+        <div class="serp-card">
+          <div class="serp-source">
+            <div class="serp-favicon" id="serpFavicon">G</div>
+            <div class="serp-site-info">
+              <div class="serp-site-name" id="serpSiteName">Example Web</div>
+              <div class="serp-breadcrumb" id="serpBreadcrumb">https://example.com &gt; page</div>
+            </div>
+          </div>
+
+          <div class="serp-title" id="serpTitle">
+            Page Title — Rich Snippet Result
+          </div>
+
+          <!-- Dynamic Rich Snippet Badges -->
+          <div class="serp-rich-badges" id="serpRichBadges" style="display:none;"></div>
+
+          <div class="serp-snippet" id="serpSnippet">
+            This is how your snippet description looks in Google search results. Structured data enriches this view with rich elements.
+          </div>
+
+          <!-- FAQ Accordion Mockup -->
+          <div class="serp-faq-accordion" id="serpFaqAccordion" style="display:none;"></div>
+
+          <!-- HowTo Step Pills Mockup -->
+          <div class="serp-steps-pills" id="serpHowToSteps" style="display:none;"></div>
+        </div>
+
+        <!-- Validation Status Card -->
+        <div id="validationCard" class="validation-box validation-valid">
+          <div style="font-weight:700; display:flex; align-items:center; gap:0.4rem;" id="valTitle">
+            ✓ Ready for Google Rich Results
+          </div>
+          <ul class="val-list" id="valList"></ul>
+        </div>
+
+        <!-- Code Generator & Output Controls -->
+        <div class="studio-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-2); flex-wrap:wrap; gap:0.5rem;">
+            <div class="code-tabs">
+              <button type="button" class="code-tab-btn active" data-fmt="html">&lt;script&gt; Tag</button>
+              <button type="button" class="code-tab-btn" data-fmt="pretty">Pretty JSON</button>
+              <button type="button" class="code-tab-btn" data-fmt="minified">Minified</button>
+            </div>
+
+            <div style="display:flex; gap:0.5rem;">
+              <button type="button" id="btnCopyCode" class="btn btn-primary" style="font-size:var(--font-size-xs); padding:0.4rem 0.8rem;">
+                📋 Copy Schema Code
+              </button>
+              <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.4rem 0.8rem; text-decoration:none;">
+                🔍 Test in Google ↗
+              </a>
+            </div>
+          </div>
+
+          <div class="code-container">
+            <pre><code id="outputCodeSnippet">// JSON-LD schema will be generated here</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related SEO & Developer Tools -->
+    <section class="related-tools-strip">
+      <h3 style="font-size:var(--font-size-base); margin:0; color:var(--color-text-primary);">
+        Related SEO &amp; Developer Tools
+      </h3>
+      <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin:0.25rem 0 0 0;">
+        Explore complementary client-side utilities to optimize your site metadata, social cards, and schema compliance.
+      </p>
+      <div class="related-grid">
+        <a href="/tools/meta-tags-toolkit.html" class="related-card">
+          <h4>Meta Tags Generator</h4>
+          <p>Generate search-ready HTML meta tags, Open Graph, and Twitter Cards.</p>
+        </a>
+        <a href="/tools/serp-preview-tool.html" class="related-card">
+          <h4>Google SERP Simulator</h4>
+          <p>Preview desktop and mobile search snippets with character &amp; pixel counters.</p>
+        </a>
+        <a href="/tools/open-graph-previewer.html" class="related-card">
+          <h4>Open Graph Previewer</h4>
+          <p>Simulate how links appear when shared on Facebook, X (Twitter), and LinkedIn.</p>
+        </a>
+        <a href="/tools/json-formatter-validator.html" class="related-card">
+          <h4>JSON Formatter &amp; Validator</h4>
+          <p>Format, validate, repair, and minify JSON data directly in your browser.</p>
+        </a>
+        <a href="/tools/favicon-manifest-generator.html" class="related-card">
+          <h4>Favicon &amp; Manifest Generator</h4>
+          <p>Generate binary favicon.ico, Apple touch icons, and site.webmanifest in 1 click.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Comprehensive SEO Educational Guide (8+ H2 Sections) -->
+    <article class="seo-article">
+      <h2>1. What is JSON-LD Structured Data &amp; Why Google Recommends It</h2>
+      <p>
+        JSON-LD (JavaScript Object Notation for Linked Data) is a standardized W3C data format used to annotate webpages with contextual meaning. When search engine web crawlers like Googlebot index a webpage, they often struggle to distinguish whether a number represents a product price, an office phone number, or a shipping weight. Structured data eliminates ambiguity by organizing information into explicit entities, properties, and relationships defined by Schema.org.
+      </p>
+      <p>
+        While structured data can also be implemented using Microdata or RDFa attributes embedded directly inside HTML tags, Google officially endorses JSON-LD as the industry standard. Because JSON-LD lives within a dedicated <code>&lt;script type="application/ld+json"&gt;</code> block, developers can cleanly generate, test, and update schemas without worrying about breaking existing CSS styling or frontend layout components.
+      </p>
+
+      <h2>2. How Google Rich Snippets Boost Organic Click-Through Rates (CTR)</h2>
+      <p>
+        In modern organic search results, standard 10-blue-link SERPs have been replaced by visually rich, interactive experiences known as <strong>Google Rich Results</strong>. By embedding valid schema markup, eligible pages can display star ratings, product availability, recipe cooking durations, interactive FAQ accordions, and breadcrumb trails directly below the page title.
+      </p>
+      <p>
+        Industry search benchmarks show that listings enriched with Google Rich Snippets capture significantly more visual attention and achieve organic click-through rate (CTR) increases between 20% and 35%. Furthermore, rich snippets help filter out unqualified clicks by presenting key details (such as price ranges or business opening hours) before the searcher leaves the Google results page.
+      </p>
+
+      <h2>3. Supported Google Rich Snippet Schema Types</h2>
+      <p>
+        Our client-side schema builder focuses on the six most impactful Google Search schema specifications:
+      </p>
+      <ul>
+        <li><strong>FAQPage:</strong> Perfect for landing pages, service descriptions, and informational guides. It displays expandable question-and-answer drop-downs directly on the search results page.</li>
+        <li><strong>LocalBusiness:</strong> Essential for brick-and-mortar storefronts, clinics, restaurants, and local trades. Highlights street addresses, telephone contacts, price tiers ($–$$$$), and opening hour schedules.</li>
+        <li><strong>HowTo:</strong> Tailored for tutorials, DIY woodworking, cooking guides, and repairs. Features step-by-step instructions, execution times, supplies, and tools.</li>
+        <li><strong>Article / BlogPosting:</strong> Required for news publishers and content blogs to establish author attribution, publication timelines, and publisher trust.</li>
+        <li><strong>Product &amp; AggregateRating:</strong> Crucial for e-commerce stores to surface real-time pricing, stock availability badges, and customer review star ratings.</li>
+        <li><strong>BreadcrumbList:</strong> Replaces messy URL path strings with clean hierarchical breadcrumb trails on desktop and mobile SERPs.</li>
+      </ul>
+
+      <h2>4. Step-by-Step Implementation Guide for Modern CMSs &amp; Frameworks</h2>
+      <p>
+        Adding your generated JSON-LD schema code to your website takes less than two minutes. Follow these platform-specific guidelines:
+      </p>
+      <ul>
+        <li><strong>WordPress:</strong> You can paste your <code>&lt;script type="application/ld+json"&gt;</code> tag into your theme’s header script settings, via the <em>Insert Headers and Footers</em> plugin, or within an HTML block directly inside the Gutenberg block editor.</li>
+        <li><strong>Shopify:</strong> In your Shopify Admin, navigate to <em>Online Store &gt; Themes &gt; Edit Code</em>. Open <code>theme.liquid</code> and paste the script tag right before the closing <code>&lt;/head&gt;</code> tag, or inside <code>product-template.liquid</code> for item-specific schemas.</li>
+        <li><strong>Next.js (App &amp; Pages Router):</strong> In Next.js Pages router, import <code>Head</code> from <code>'next/head'</code> and inject the JSON-LD snippet using <code>dangerouslySetInnerHTML</code>. In Next.js App Router, inject a standard <code>&lt;script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} /&gt;</code> in your <code>page.tsx</code> or <code>layout.tsx</code>.</li>
+        <li><strong>Webflow:</strong> Open the Page Settings panel, scroll down to the <em>Custom Code</em> section, and paste the code snippet inside the <em>Inside &lt;head&gt; tag</em> textarea.</li>
+      </ul>
+
+      <h2>5. Google-Required vs. Recommended Schema Properties</h2>
+      <p>
+        Schema.org defines hundreds of theoretical properties for each schema type, but Google Search enforces strict compliance rules regarding which fields are mandatory for rich result eligibility:
+      </p>
+      <ul>
+        <li><strong>Required Properties:</strong> Missing a required property (such as <code>name</code> on a Product or <code>streetAddress</code> on a LocalBusiness) invalidates the schema entirely, preventing Google from awarding a rich result badge.</li>
+        <li><strong>Recommended Properties:</strong> Missing recommended properties (like <code>image</code> or <code>priceRange</code>) will not cause an error, but providing them significantly increases your chances of triggering enhanced visual snippets and Google Knowledge Graph cards.</li>
+      </ul>
+
+      <h2>6. Validating &amp; Debugging Structured Data in Google Search Console</h2>
+      <p>
+        After deploying your JSON-LD markup to production, always test your live URLs using two official Google diagnostic tools:
+      </p>
+      <ol>
+        <li><strong>Google Rich Results Test (search.google.com/test/rich-results):</strong> Checks whether your specific page markup qualifies for visual search enhancements on both Smartphone and Desktop crawlers.</li>
+        <li><strong>Schema Markup Validator (validator.schema.org):</strong> The official W3C validator that inspects general syntactical compliance against Schema.org standards.</li>
+        <li><strong>Google Search Console Enhancements Report:</strong> GSC automatically monitors indexed pages and alerts site owners to invalid structured data items, warning you before ranking or snippet impressions drop.</li>
+      </ol>
+
+      <h2>7. Avoiding Google Schema Penalties &amp; Guideline Violations</h2>
+      <p>
+        Google enforces strict webmaster quality guidelines regarding structured data. Engaging in manipulative practices can lead to algorithmic devaluation or manual schema penalties:
+      </p>
+      <ul>
+        <li><strong>Hidden Content:</strong> All information marked up in JSON-LD must be clearly visible to real human visitors on the page. Never add FAQs or reviews in schema that do not appear in the webpage text.</li>
+        <li><strong>Fabricated Reviews:</strong> Generating false star ratings or self-authored aggregate ratings without genuine customer reviews violates Google’s review guidelines.</li>
+        <li><strong>Mismatched Entities:</strong> Marking up a generic blog post as a LocalBusiness or an informational article as a Product offer is considered deceptive markup.</li>
+      </ul>
+
+      <h2>8. Combining Multiple Schemas on a Single Webpage Safely</h2>
+      <p>
+        It is very common—and completely valid—for a single webpage to contain multiple schemas. For example, a product page might include both a <code>Product</code> schema, an <code>FAQPage</code> schema answering customer questions, and a <code>BreadcrumbList</code> schema for site navigation.
+      </p>
+      <p>
+        You can safely bundle multiple schemas either by including separate <code>&lt;script type="application/ld+json"&gt;</code> blocks on the page, or by combining them inside a single <code>@graph</code> array wrapper (e.g. <code>{ "@context": "https://schema.org", "@graph": [ { ...Product }, { ...FAQPage } ] }</code>).
+      </p>
+
+      <!-- 4 FAQ Accordion Items -->
+      <h2 style="margin-top:var(--space-8);">Frequently Asked Questions</h2>
+      <div class="faq-container">
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>What is JSON-LD and why does Google officially recommend it?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>JSON-LD (JavaScript Object Notation for Linked Data) is a standardized method of embedding structured data into a webpage. Unlike Microdata or RDFa, which must be woven into existing HTML elements, JSON-LD is self-contained inside a single <code>&lt;script type="application/ld+json"&gt;</code> tag, making it much easier to maintain, debug, and inject without breaking frontend designs.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>How do Google Rich Snippets improve click-through rates (CTR)?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Rich Snippets enhance your standard blue search link with visual elements like yellow star ratings, review counts, FAQ accordions, pricing, and availability badges. These visual enhancements increase search listing height and credibility, often boosting organic CTR by 20% to 35% compared to plain text snippets.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>Where should I paste the generated JSON-LD code in WordPress, Shopify, or Next.js?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>You can paste the generated <code>&lt;script type="application/ld+json"&gt;</code> tag inside the <code>&lt;head&gt;</code> section of your HTML template or before the closing <code>&lt;/body&gt;</code> tag. In WordPress, use your theme's custom header code section or a snippet plugin. In Shopify, add it to your theme.liquid file or specific product/blog templates. In Next.js, render it inside a next/head component or Next.js Script tag.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>How can I verify that my JSON-LD markup is free of syntax errors?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Our tool includes real-time property validation that flags missing required fields as you type. Once generated, you can click the 'Test in Google Rich Results' button to test your code directly on Google's official Rich Results Test tool (search.google.com/test/rich-results) and Schema Markup Validator.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer" style="margin-top:var(--space-6); border-top:1px solid var(--color-border); padding:var(--space-4) 0; text-align:center; color:var(--color-text-muted); font-size:var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/json-ld-schema-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const Utils = window.JsonLdSchemaUtils;
+    if (!Utils) {
+      console.error('JsonLdSchemaUtils failed to load.');
+      return;
+    }
+
+    // Current State
+    let activeType = 'faq'; // 'faq', 'localbusiness', 'howto', 'article', 'product', 'breadcrumb'
+    let outputFormat = 'html'; // 'html', 'pretty', 'minified'
+
+    let state = {
+      faq: JSON.parse(JSON.stringify(Utils.SAMPLE_DATA.faq)),
+      localbusiness: JSON.parse(JSON.stringify(Utils.SAMPLE_DATA.localbusiness)),
+      howto: JSON.parse(JSON.stringify(Utils.SAMPLE_DATA.howto)),
+      article: JSON.parse(JSON.stringify(Utils.SAMPLE_DATA.article)),
+      product: JSON.parse(JSON.stringify(Utils.SAMPLE_DATA.product)),
+      breadcrumb: JSON.parse(JSON.stringify(Utils.SAMPLE_DATA.breadcrumb))
+    };
+
+    // DOM Elements - Tabs & Global Buttons
+    const schemaTabs = document.getElementById('schemaTabs');
+    const btnLoadSample = document.getElementById('btnLoadSample');
+    const btnClearForm = document.getElementById('btnClearForm');
+    const formPanes = {
+      faq: document.getElementById('formFaq'),
+      localbusiness: document.getElementById('formLocalBusiness'),
+      howto: document.getElementById('formHowto'),
+      article: document.getElementById('formArticle'),
+      product: document.getElementById('formProduct'),
+      breadcrumb: document.getElementById('formBreadcrumb')
+    };
+
+    // SERP Preview Elements
+    const serpFavicon = document.getElementById('serpFavicon');
+    const serpSiteName = document.getElementById('serpSiteName');
+    const serpBreadcrumb = document.getElementById('serpBreadcrumb');
+    const serpTitle = document.getElementById('serpTitle');
+    const serpRichBadges = document.getElementById('serpRichBadges');
+    const serpSnippet = document.getElementById('serpSnippet');
+    const serpFaqAccordion = document.getElementById('serpFaqAccordion');
+    const serpHowToSteps = document.getElementById('serpHowToSteps');
+
+    // Validation & Output Elements
+    const validationCard = document.getElementById('validationCard');
+    const valTitle = document.getElementById('valTitle');
+    const valList = document.getElementById('valList');
+    const outputCodeSnippet = document.getElementById('outputCodeSnippet');
+    const btnCopyCode = document.getElementById('btnCopyCode');
+    const codeFormatBtns = document.querySelectorAll('.code-tab-btn');
+
+    // FAQ Container
+    const faqItemsContainer = document.getElementById('faqItemsContainer');
+    const btnAddFaq = document.getElementById('btnAddFaq');
+
+    // HowTo Step Container & Iso Hint
+    const htStepsContainer = document.getElementById('htStepsContainer');
+    const btnAddStep = document.getElementById('btnAddStep');
+    const htHours = document.getElementById('htHours');
+    const htMinutes = document.getElementById('htMinutes');
+    const htIsoHint = document.getElementById('htIsoHint');
+
+    // Breadcrumb Container
+    const breadcrumbItemsContainer = document.getElementById('breadcrumbItemsContainer');
+    const btnAddBreadcrumb = document.getElementById('btnAddBreadcrumb');
+
+    // Date Modified "Today" button
+    const btnSetToday = document.getElementById('btnSetToday');
+
+    // Switch Schema Tab
+    schemaTabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('.schema-tab-btn');
+      if (!btn) return;
+      const type = btn.dataset.type;
+      if (!type || type === activeType) return;
+
+      document.querySelectorAll('.schema-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      Object.values(formPanes).forEach(p => p.style.display = 'none');
+      if (formPanes[type]) formPanes[type].style.display = 'block';
+
+      activeType = type;
+      syncFormFromState();
+      updateAll();
+    });
+
+    // Switch Output Format Tab
+    codeFormatBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        codeFormatBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        outputFormat = btn.dataset.fmt;
+        updateCodeOutput();
+      });
+    });
+
+    // Load Sample Data
+    btnLoadSample.addEventListener('click', () => {
+      state[activeType] = JSON.parse(JSON.stringify(Utils.SAMPLE_DATA[activeType]));
+      syncFormFromState();
+      updateAll();
+    });
+
+    // Clear Form
+    btnClearForm.addEventListener('click', () => {
+      if (activeType === 'faq') {
+        state.faq = [{ question: '', answer: '' }];
+      } else if (activeType === 'localbusiness') {
+        state.localbusiness = { businessType: 'LocalBusiness', name: '' };
+      } else if (activeType === 'howto') {
+        state.howto = { name: '', steps: [{ name: '', text: '' }] };
+      } else if (activeType === 'article') {
+        state.article = { articleType: 'BlogPosting', headline: '' };
+      } else if (activeType === 'product') {
+        state.product = { name: '', price: '', currency: 'USD' };
+      } else if (activeType === 'breadcrumb') {
+        state.breadcrumb = [{ name: 'Home', url: 'https://example.com' }, { name: '', url: '' }];
+      }
+      syncFormFromState();
+      updateAll();
+    });
+
+    // Set Date Modified to Today
+    btnSetToday.addEventListener('click', () => {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('artDateMod').value = today;
+      state.article.dateModified = today;
+      updateAll();
+    });
+
+    // --- Dynamic FAQ Rows ---
+    function renderFaqRows() {
+      faqItemsContainer.innerHTML = '';
+      state.faq.forEach((faq, index) => {
+        const item = document.createElement('div');
+        item.className = 'repeatable-item';
+        item.innerHTML = `
+          <div class="repeatable-header">
+            <span class="repeatable-title">Question #${index + 1}</span>
+            <div class="repeatable-actions">
+              ${index > 0 ? `<button type="button" class="btn-sm-icon btn-faq-up" data-idx="${index}">▲</button>` : ''}
+              ${index < state.faq.length - 1 ? `<button type="button" class="btn-sm-icon btn-faq-down" data-idx="${index}">▼</button>` : ''}
+              <button type="button" class="btn-sm-icon btn-sm-danger btn-faq-del" data-idx="${index}">✕</button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:var(--space-2);">
+            <input type="text" class="form-control faq-q-input" data-idx="${index}" placeholder="Enter question..." value="${escapeHtml(faq.question || '')}">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <textarea class="form-control faq-a-input" data-idx="${index}" placeholder="Enter detailed answer...">${escapeHtml(faq.answer || '')}</textarea>
+          </div>
+        `;
+        faqItemsContainer.appendChild(item);
+      });
+    }
+
+    btnAddFaq.addEventListener('click', () => {
+      state.faq.push({ question: '', answer: '' });
+      renderFaqRows();
+      updateAll();
+    });
+
+    faqItemsContainer.addEventListener('input', (e) => {
+      const idx = parseInt(e.target.dataset.idx, 10);
+      if (e.target.classList.contains('faq-q-input')) {
+        state.faq[idx].question = e.target.value;
+      } else if (e.target.classList.contains('faq-a-input')) {
+        state.faq[idx].answer = e.target.value;
+      }
+      updateAll();
+    });
+
+    faqItemsContainer.addEventListener('click', (e) => {
+      const upBtn = e.target.closest('.btn-faq-up');
+      const downBtn = e.target.closest('.btn-faq-down');
+      const delBtn = e.target.closest('.btn-faq-del');
+
+      if (upBtn) {
+        const idx = parseInt(upBtn.dataset.idx, 10);
+        if (idx > 0) {
+          const temp = state.faq[idx];
+          state.faq[idx] = state.faq[idx - 1];
+          state.faq[idx - 1] = temp;
+          renderFaqRows();
+          updateAll();
+        }
+      } else if (downBtn) {
+        const idx = parseInt(downBtn.dataset.idx, 10);
+        if (idx < state.faq.length - 1) {
+          const temp = state.faq[idx];
+          state.faq[idx] = state.faq[idx + 1];
+          state.faq[idx + 1] = temp;
+          renderFaqRows();
+          updateAll();
+        }
+      } else if (delBtn) {
+        const idx = parseInt(delBtn.dataset.idx, 10);
+        state.faq.splice(idx, 1);
+        if (state.faq.length === 0) {
+          state.faq.push({ question: '', answer: '' });
+        }
+        renderFaqRows();
+        updateAll();
+      }
+    });
+
+    // --- Dynamic HowTo Steps ---
+    function renderHowToSteps() {
+      htStepsContainer.innerHTML = '';
+      (state.howto.steps || []).forEach((step, index) => {
+        const item = document.createElement('div');
+        item.className = 'repeatable-item';
+        item.innerHTML = `
+          <div class="repeatable-header">
+            <span class="repeatable-title">Step #${index + 1}</span>
+            <div class="repeatable-actions">
+              ${index > 0 ? `<button type="button" class="btn-sm-icon btn-step-up" data-idx="${index}">▲</button>` : ''}
+              ${index < state.howto.steps.length - 1 ? `<button type="button" class="btn-sm-icon btn-step-down" data-idx="${index}">▼</button>` : ''}
+              <button type="button" class="btn-sm-icon btn-sm-danger btn-step-del" data-idx="${index}">✕</button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:var(--space-2);">
+            <input type="text" class="form-control step-name-input" data-idx="${index}" placeholder="Step Title / Action Name" value="${escapeHtml(step.name || '')}">
+          </div>
+          <div class="form-group" style="margin-bottom:var(--space-2);">
+            <textarea class="form-control step-text-input" data-idx="${index}" placeholder="Step instruction text...">${escapeHtml(step.text || '')}</textarea>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <input type="url" class="form-control step-img-input" data-idx="${index}" placeholder="Optional Step Image URL (https://...)" value="${escapeHtml(step.image || '')}">
+          </div>
+        `;
+        htStepsContainer.appendChild(item);
+      });
+    }
+
+    btnAddStep.addEventListener('click', () => {
+      if (!state.howto.steps) state.howto.steps = [];
+      state.howto.steps.push({ name: '', text: '', image: '' });
+      renderHowToSteps();
+      updateAll();
+    });
+
+    htStepsContainer.addEventListener('input', (e) => {
+      const idx = parseInt(e.target.dataset.idx, 10);
+      if (e.target.classList.contains('step-name-input')) {
+        state.howto.steps[idx].name = e.target.value;
+      } else if (e.target.classList.contains('step-text-input')) {
+        state.howto.steps[idx].text = e.target.value;
+      } else if (e.target.classList.contains('step-img-input')) {
+        state.howto.steps[idx].image = e.target.value;
+      }
+      updateAll();
+    });
+
+    htStepsContainer.addEventListener('click', (e) => {
+      const upBtn = e.target.closest('.btn-step-up');
+      const downBtn = e.target.closest('.btn-step-down');
+      const delBtn = e.target.closest('.btn-step-del');
+
+      if (upBtn) {
+        const idx = parseInt(upBtn.dataset.idx, 10);
+        if (idx > 0) {
+          const temp = state.howto.steps[idx];
+          state.howto.steps[idx] = state.howto.steps[idx - 1];
+          state.howto.steps[idx - 1] = temp;
+          renderHowToSteps();
+          updateAll();
+        }
+      } else if (downBtn) {
+        const idx = parseInt(downBtn.dataset.idx, 10);
+        if (idx < state.howto.steps.length - 1) {
+          const temp = state.howto.steps[idx];
+          state.howto.steps[idx] = state.howto.steps[idx + 1];
+          state.howto.steps[idx + 1] = temp;
+          renderHowToSteps();
+          updateAll();
+        }
+      } else if (delBtn) {
+        const idx = parseInt(delBtn.dataset.idx, 10);
+        state.howto.steps.splice(idx, 1);
+        if (state.howto.steps.length === 0) {
+          state.howto.steps.push({ name: '', text: '', image: '' });
+        }
+        renderHowToSteps();
+        updateAll();
+      }
+    });
+
+    // --- Dynamic Breadcrumb Rows ---
+    function renderBreadcrumbRows() {
+      breadcrumbItemsContainer.innerHTML = '';
+      state.breadcrumb.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'repeatable-item';
+        row.innerHTML = `
+          <div class="repeatable-header">
+            <span class="repeatable-title">Level #${index + 1}</span>
+            <div class="repeatable-actions">
+              ${index > 0 ? `<button type="button" class="btn-sm-icon btn-bc-up" data-idx="${index}">▲</button>` : ''}
+              ${index < state.breadcrumb.length - 1 ? `<button type="button" class="btn-sm-icon btn-bc-down" data-idx="${index}">▼</button>` : ''}
+              <button type="button" class="btn-sm-icon btn-sm-danger btn-bc-del" data-idx="${index}">✕</button>
+            </div>
+          </div>
+          <div class="row-grid-2">
+            <div class="form-group" style="margin-bottom:0;">
+              <input type="text" class="form-control bc-name-input" data-idx="${index}" placeholder="Page Name (e.g. Keyboards)" value="${escapeHtml(item.name || '')}">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <input type="url" class="form-control bc-url-input" data-idx="${index}" placeholder="URL (https://...)" value="${escapeHtml(item.url || '')}">
+            </div>
+          </div>
+        `;
+        breadcrumbItemsContainer.appendChild(row);
+      });
+    }
+
+    btnAddBreadcrumb.addEventListener('click', () => {
+      state.breadcrumb.push({ name: '', url: '' });
+      renderBreadcrumbRows();
+      updateAll();
+    });
+
+    breadcrumbItemsContainer.addEventListener('input', (e) => {
+      const idx = parseInt(e.target.dataset.idx, 10);
+      if (e.target.classList.contains('bc-name-input')) {
+        state.breadcrumb[idx].name = e.target.value;
+      } else if (e.target.classList.contains('bc-url-input')) {
+        state.breadcrumb[idx].url = e.target.value;
+      }
+      updateAll();
+    });
+
+    breadcrumbItemsContainer.addEventListener('click', (e) => {
+      const upBtn = e.target.closest('.btn-bc-up');
+      const downBtn = e.target.closest('.btn-bc-down');
+      const delBtn = e.target.closest('.btn-bc-del');
+
+      if (upBtn) {
+        const idx = parseInt(upBtn.dataset.idx, 10);
+        if (idx > 0) {
+          const temp = state.breadcrumb[idx];
+          state.breadcrumb[idx] = state.breadcrumb[idx - 1];
+          state.breadcrumb[idx - 1] = temp;
+          renderBreadcrumbRows();
+          updateAll();
+        }
+      } else if (downBtn) {
+        const idx = parseInt(downBtn.dataset.idx, 10);
+        if (idx < state.breadcrumb.length - 1) {
+          const temp = state.breadcrumb[idx];
+          state.breadcrumb[idx] = state.breadcrumb[idx + 1];
+          state.breadcrumb[idx + 1] = temp;
+          renderBreadcrumbRows();
+          updateAll();
+        }
+      } else if (delBtn) {
+        const idx = parseInt(delBtn.dataset.idx, 10);
+        state.breadcrumb.splice(idx, 1);
+        if (state.breadcrumb.length === 0) {
+          state.breadcrumb.push({ name: 'Home', url: 'https://example.com' });
+        }
+        renderBreadcrumbRows();
+        updateAll();
+      }
+    });
+
+    // Bind Static Form Inputs to State
+    function setupFormListeners() {
+      // LocalBusiness inputs
+      const lbFields = ['lbType', 'lbName', 'lbPhone', 'lbPriceRange', 'lbUrl', 'lbEmail', 'lbImage', 'lbDescription', 'lbStreet', 'lbCity', 'lbState', 'lbPostalCode', 'lbCountry', 'lbLat', 'lbLng'];
+      lbFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', () => {
+            state.localbusiness.businessType = document.getElementById('lbType').value;
+            state.localbusiness.name = document.getElementById('lbName').value;
+            state.localbusiness.telephone = document.getElementById('lbPhone').value;
+            state.localbusiness.priceRange = document.getElementById('lbPriceRange').value;
+            state.localbusiness.url = document.getElementById('lbUrl').value;
+            state.localbusiness.email = document.getElementById('lbEmail').value;
+            state.localbusiness.image = document.getElementById('lbImage').value;
+            state.localbusiness.description = document.getElementById('lbDescription').value;
+            state.localbusiness.streetAddress = document.getElementById('lbStreet').value;
+            state.localbusiness.city = document.getElementById('lbCity').value;
+            state.localbusiness.state = document.getElementById('lbState').value;
+            state.localbusiness.postalCode = document.getElementById('lbPostalCode').value;
+            state.localbusiness.country = document.getElementById('lbCountry').value;
+            state.localbusiness.latitude = document.getElementById('lbLat').value;
+            state.localbusiness.longitude = document.getElementById('lbLng').value;
+            updateAll();
+          });
+        }
+      });
+
+      // HowTo inputs
+      ['htName', 'htDesc', 'htImage', 'htHours', 'htMinutes', 'htCostCurrency', 'htCostValue', 'htSupplies', 'htTools'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', () => {
+            state.howto.name = document.getElementById('htName').value;
+            state.howto.description = document.getElementById('htDesc').value;
+            state.howto.image = document.getElementById('htImage').value;
+            state.howto.hours = document.getElementById('htHours').value;
+            state.howto.minutes = document.getElementById('htMinutes').value;
+            state.howto.costCurrency = document.getElementById('htCostCurrency').value;
+            state.howto.costValue = document.getElementById('htCostValue').value;
+
+            const suppVal = document.getElementById('htSupplies').value;
+            state.howto.supplies = suppVal ? suppVal.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+            const toolsVal = document.getElementById('htTools').value;
+            state.howto.tools = toolsVal ? toolsVal.split(',').map(t => t.trim()).filter(Boolean) : [];
+
+            updateIsoHint();
+            updateAll();
+          });
+        }
+      });
+
+      // Article inputs
+      ['artType', 'artHeadline', 'artDesc', 'artImage', 'artAuthorName', 'artAuthorUrl', 'artPubName', 'artPubLogo', 'artDatePub', 'artDateMod'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', () => {
+            state.article.articleType = document.getElementById('artType').value;
+            state.article.headline = document.getElementById('artHeadline').value;
+            state.article.description = document.getElementById('artDesc').value;
+            state.article.image = document.getElementById('artImage').value;
+            state.article.authorName = document.getElementById('artAuthorName').value;
+            state.article.authorUrl = document.getElementById('artAuthorUrl').value;
+            state.article.publisherName = document.getElementById('artPubName').value;
+            state.article.publisherLogo = document.getElementById('artPubLogo').value;
+            state.article.datePublished = document.getElementById('artDatePub').value;
+            state.article.dateModified = document.getElementById('artDateMod').value;
+            updateAll();
+          });
+        }
+      });
+
+      // Product inputs
+      ['prodName', 'prodBrand', 'prodImage', 'prodDesc', 'prodPrice', 'prodCurrency', 'prodAvail', 'prodSku', 'prodUrl', 'prodRating', 'prodReviews'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', () => {
+            state.product.name = document.getElementById('prodName').value;
+            state.product.brand = document.getElementById('prodBrand').value;
+            state.product.image = document.getElementById('prodImage').value;
+            state.product.description = document.getElementById('prodDesc').value;
+            state.product.price = document.getElementById('prodPrice').value;
+            state.product.currency = document.getElementById('prodCurrency').value;
+            state.product.availability = document.getElementById('prodAvail').value;
+            state.product.sku = document.getElementById('prodSku').value;
+            state.product.productUrl = document.getElementById('prodUrl').value;
+            state.product.ratingValue = document.getElementById('prodRating').value;
+            state.product.reviewCount = document.getElementById('prodReviews').value;
+            updateAll();
+          });
+        }
+      });
+    }
+
+    function updateIsoHint() {
+      const iso = Utils.durationToISO8601(htHours.value, htMinutes.value);
+      htIsoHint.textContent = iso ? `ISO 8601: ${iso}` : 'Duration: Not set';
+    }
+
+    // Populate Input Fields from In-Memory State
+    function syncFormFromState() {
+      if (activeType === 'faq') {
+        renderFaqRows();
+      } else if (activeType === 'localbusiness') {
+        const lb = state.localbusiness;
+        document.getElementById('lbType').value = lb.businessType || 'LocalBusiness';
+        document.getElementById('lbName').value = lb.name || '';
+        document.getElementById('lbPhone').value = lb.telephone || '';
+        document.getElementById('lbPriceRange').value = lb.priceRange || '';
+        document.getElementById('lbUrl').value = lb.url || '';
+        document.getElementById('lbEmail').value = lb.email || '';
+        document.getElementById('lbImage').value = lb.image || '';
+        document.getElementById('lbDescription').value = lb.description || '';
+        document.getElementById('lbStreet').value = lb.streetAddress || '';
+        document.getElementById('lbCity').value = lb.city || '';
+        document.getElementById('lbState').value = lb.state || '';
+        document.getElementById('lbPostalCode').value = lb.postalCode || '';
+        document.getElementById('lbCountry').value = lb.country || '';
+        document.getElementById('lbLat').value = lb.latitude || '';
+        document.getElementById('lbLng').value = lb.longitude || '';
+      } else if (activeType === 'howto') {
+        const ht = state.howto;
+        document.getElementById('htName').value = ht.name || '';
+        document.getElementById('htDesc').value = ht.description || '';
+        document.getElementById('htImage').value = ht.image || '';
+        document.getElementById('htHours').value = ht.hours !== undefined ? ht.hours : '';
+        document.getElementById('htMinutes').value = ht.minutes !== undefined ? ht.minutes : '';
+        document.getElementById('htCostCurrency').value = ht.costCurrency || 'USD';
+        document.getElementById('htCostValue').value = ht.costValue || '';
+        document.getElementById('htSupplies').value = Array.isArray(ht.supplies) ? ht.supplies.join(', ') : '';
+        document.getElementById('htTools').value = Array.isArray(ht.tools) ? ht.tools.join(', ') : '';
+        updateIsoHint();
+        renderHowToSteps();
+      } else if (activeType === 'article') {
+        const art = state.article;
+        document.getElementById('artType').value = art.articleType || 'BlogPosting';
+        document.getElementById('artHeadline').value = art.headline || '';
+        document.getElementById('artDesc').value = art.description || '';
+        document.getElementById('artImage').value = art.image || '';
+        document.getElementById('artAuthorName').value = art.authorName || '';
+        document.getElementById('artAuthorUrl').value = art.authorUrl || '';
+        document.getElementById('artPubName').value = art.publisherName || '';
+        document.getElementById('artPubLogo').value = art.publisherLogo || '';
+        document.getElementById('artDatePub').value = art.datePublished || '';
+        document.getElementById('artDateMod').value = art.dateModified || '';
+      } else if (activeType === 'product') {
+        const pr = state.product;
+        document.getElementById('prodName').value = pr.name || '';
+        document.getElementById('prodBrand').value = pr.brand || '';
+        document.getElementById('prodImage').value = pr.image || '';
+        document.getElementById('prodDesc').value = pr.description || '';
+        document.getElementById('prodPrice').value = pr.price !== undefined ? pr.price : '';
+        document.getElementById('prodCurrency').value = pr.currency || 'USD';
+        document.getElementById('prodAvail').value = pr.availability || 'InStock';
+        document.getElementById('prodSku').value = pr.sku || '';
+        document.getElementById('prodUrl').value = pr.productUrl || '';
+        document.getElementById('prodRating').value = pr.ratingValue !== undefined ? pr.ratingValue : '';
+        document.getElementById('prodReviews').value = pr.reviewCount !== undefined ? pr.reviewCount : '';
+      } else if (activeType === 'breadcrumb') {
+        renderBreadcrumbRows();
+      }
+    }
+
+    // Generate Current Schema Object
+    function getCurrentSchemaObject() {
+      switch (activeType) {
+        case 'faq':
+          return Utils.generateFAQSchema(state.faq);
+        case 'localbusiness':
+          return Utils.generateLocalBusinessSchema(state.localbusiness);
+        case 'howto':
+          return Utils.generateHowToSchema(state.howto);
+        case 'article':
+          return Utils.generateArticleSchema(state.article);
+        case 'product':
+          return Utils.generateProductSchema(state.product);
+        case 'breadcrumb':
+          return Utils.generateBreadcrumbSchema(state.breadcrumb);
+        default:
+          return {};
+      }
+    }
+
+    // Update SERP Mockup Box
+    function updateSerpPreview() {
+      serpRichBadges.style.display = 'none';
+      serpFaqAccordion.style.display = 'none';
+      serpHowToSteps.style.display = 'none';
+
+      if (activeType === 'faq') {
+        serpFavicon.textContent = 'Q';
+        serpSiteName.textContent = 'Help & FAQ Center';
+        serpBreadcrumb.textContent = 'https://example.com > support > faq';
+        serpTitle.textContent = 'Frequently Asked Questions & Answers';
+        serpSnippet.textContent = 'Find quick answers to common questions about products, services, delivery, and guarantees.';
+
+        const validFaqs = state.faq.filter(f => f && f.question);
+        if (validFaqs.length > 0) {
+          serpFaqAccordion.style.display = 'block';
+          serpFaqAccordion.innerHTML = validFaqs.slice(0, 3).map((f, i) => `
+            <div class="serp-faq-item">
+              <div class="serp-faq-q">${escapeHtml(f.question)} <span>▼</span></div>
+              <div class="serp-faq-a">${escapeHtml(f.answer || 'Detailed answer text...')}</div>
+            </div>
+          `).join('');
+        }
+
+      } else if (activeType === 'localbusiness') {
+        const lb = state.localbusiness;
+        serpFavicon.textContent = lb.name ? lb.name.charAt(0).toUpperCase() : 'B';
+        serpSiteName.textContent = lb.name || 'Local Business';
+        serpBreadcrumb.textContent = lb.url || 'https://example.com';
+        serpTitle.textContent = `${lb.name || 'Local Business'} — ${lb.city || 'Local Location'}`;
+        serpSnippet.textContent = lb.description || 'Welcome to our local business. View opening hours, address, phone numbers, and menu items.';
+
+        serpRichBadges.style.display = 'flex';
+        serpRichBadges.innerHTML = `
+          <span style="color:#137333; font-weight:600;">Open now</span>
+          ${lb.priceRange ? `<span>· Price: <b>${escapeHtml(lb.priceRange)}</b></span>` : ''}
+          ${lb.telephone ? `<span>· 📞 ${escapeHtml(lb.telephone)}</span>` : ''}
+          ${lb.streetAddress && lb.city ? `<span>· 📍 ${escapeHtml(lb.streetAddress)}, ${escapeHtml(lb.city)}</span>` : ''}
+        `;
+
+      } else if (activeType === 'howto') {
+        const ht = state.howto;
+        serpFavicon.textContent = 'H';
+        serpSiteName.textContent = 'DIY Guides & Tutorials';
+        serpBreadcrumb.textContent = 'https://example.com > guides';
+        serpTitle.textContent = ht.name || 'Step-by-Step DIY Guide';
+        serpSnippet.textContent = ht.description || 'Follow this easy tutorial with step-by-step instructions, supplies, and tools.';
+
+        serpRichBadges.style.display = 'flex';
+        let badgeHtml = '';
+        if (ht.hours || ht.minutes) {
+          const hStr = ht.hours ? `${ht.hours} hr ` : '';
+          const mStr = ht.minutes ? `${ht.minutes} min` : '';
+          badgeHtml += `<span>⏱️ <b>${hStr}${mStr}</b></span>`;
+        }
+        if (ht.costValue) {
+          badgeHtml += `<span>· 💰 <b>${ht.costCurrency || '$'}${ht.costValue}</b></span>`;
+        }
+        if (ht.steps && ht.steps.length > 0) {
+          badgeHtml += `<span>· <b>${ht.steps.length} Steps</b></span>`;
+        }
+        serpRichBadges.innerHTML = badgeHtml;
+
+        if (ht.steps && ht.steps.length > 0) {
+          serpHowToSteps.style.display = 'flex';
+          serpHowToSteps.innerHTML = ht.steps.map((s, idx) => `
+            <div class="serp-step-chip">Step ${idx + 1}: ${escapeHtml(s.name || 'Action')}</div>
+          `).join('');
+        }
+
+      } else if (activeType === 'article') {
+        const art = state.article;
+        serpFavicon.textContent = 'N';
+        serpSiteName.textContent = art.publisherName || 'News & Blog Insights';
+        serpBreadcrumb.textContent = 'https://example.com > blog';
+        serpTitle.textContent = art.headline || 'Article Headline';
+        serpSnippet.textContent = art.description || 'Read the full in-depth article exploring industry trends, best practices, and expert commentary.';
+
+        serpRichBadges.style.display = 'flex';
+        let badgeHtml = '';
+        if (art.authorName) {
+          badgeHtml += `<span>✍️ By <b>${escapeHtml(art.authorName)}</b></span>`;
+        }
+        if (art.datePublished) {
+          badgeHtml += `<span>· 📅 ${escapeHtml(art.datePublished)}</span>`;
+        }
+        serpRichBadges.innerHTML = badgeHtml;
+
+      } else if (activeType === 'product') {
+        const pr = state.product;
+        serpFavicon.textContent = 'P';
+        serpSiteName.textContent = pr.brand || 'Official Store';
+        serpBreadcrumb.textContent = pr.productUrl || 'https://example.com > product';
+        serpTitle.textContent = `${pr.name || 'Product Name'}${pr.brand ? ` — ${pr.brand}` : ''}`;
+        serpSnippet.textContent = pr.description || 'Shop this product online with direct shipping, warranty, and customer satisfaction guarantee.';
+
+        serpRichBadges.style.display = 'flex';
+        let badgeHtml = '';
+        if (pr.ratingValue) {
+          const stars = '★'.repeat(Math.min(5, Math.max(1, Math.round(pr.ratingValue))));
+          badgeHtml += `<span class="serp-stars">${stars} ${pr.ratingValue}</span>`;
+          if (pr.reviewCount) {
+            badgeHtml += `<span>(${pr.reviewCount} reviews)</span>`;
+          }
+        }
+        if (pr.price !== undefined && pr.price !== '') {
+          badgeHtml += `<span>· <b>${pr.currency || '$'}${pr.price}</b></span>`;
+        }
+        if (pr.availability) {
+          const availColor = pr.availability === 'InStock' ? '#137333' : '#b06000';
+          badgeHtml += `<span>· <span style="color:${availColor}; font-weight:600;">${pr.availability}</span></span>`;
+        }
+        serpRichBadges.innerHTML = badgeHtml;
+
+      } else if (activeType === 'breadcrumb') {
+        serpFavicon.textContent = 'B';
+        serpSiteName.textContent = 'Breadcrumb Hierarchy';
+        serpTitle.textContent = state.breadcrumb.length > 0 && state.breadcrumb[state.breadcrumb.length - 1].name
+          ? state.breadcrumb[state.breadcrumb.length - 1].name
+          : 'Target Category Page';
+        serpSnippet.textContent = 'Hierarchical category breadcrumb trail improves search snippet readability and click intent.';
+
+        const validBc = state.breadcrumb.filter(b => b && b.name);
+        if (validBc.length > 0) {
+          serpBreadcrumb.textContent = validBc.map(b => b.name).join(' > ');
+        }
+      }
+    }
+
+    // Update Property Validation Card
+    function updateValidation() {
+      const data = state[activeType];
+      const validation = Utils.validateSchema(activeType, data);
+
+      valList.innerHTML = '';
+
+      if (validation.missingRequired.length > 0) {
+        validationCard.className = 'validation-box validation-danger';
+        valTitle.innerHTML = `❌ Missing Google-Required Properties (${validation.missingRequired.length})`;
+        validation.missingRequired.forEach(req => {
+          const li = document.createElement('li');
+          li.textContent = req;
+          valList.appendChild(li);
+        });
+      } else if (validation.missingRecommended.length > 0) {
+        validationCard.className = 'validation-box validation-warning';
+        valTitle.innerHTML = `⚠️ Valid Schema, but Recommended Properties Missing (${validation.missingRecommended.length})`;
+        validation.missingRecommended.forEach(rec => {
+          const li = document.createElement('li');
+          li.textContent = rec;
+          valList.appendChild(li);
+        });
+      } else {
+        validationCard.className = 'validation-box validation-valid';
+        valTitle.innerHTML = `✓ Ready for Google Rich Results (All Core Properties Satisfied)`;
+        const li = document.createElement('li');
+        li.textContent = 'This schema complies with Google Search Central guidelines and is ready to deploy.';
+        valList.appendChild(li);
+      }
+    }
+
+    // Update Code Output
+    function updateCodeOutput() {
+      const schemaObj = getCurrentSchemaObject();
+      const formatted = Utils.formatOutput(schemaObj, outputFormat, 2);
+      outputCodeSnippet.textContent = formatted;
+    }
+
+    function updateAll() {
+      updateSerpPreview();
+      updateValidation();
+      updateCodeOutput();
+    }
+
+    // Copy Schema Code Action
+    btnCopyCode.addEventListener('click', () => {
+      const code = outputCodeSnippet.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const orig = btnCopyCode.innerHTML;
+        btnCopyCode.innerHTML = '✓ Copied!';
+        setTimeout(() => { btnCopyCode.innerHTML = orig; }, 2000);
+      }).catch(err => {
+        console.error('Copy failed:', err);
+      });
+    });
+
+    // Accordion Toggle for Educational FAQ section
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        item.classList.toggle('active');
+      });
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // Initialization
+    setupFormListeners();
+    syncFormFromState();
+    updateAll();
+  })();
+  </script>
+</body>
+</html>

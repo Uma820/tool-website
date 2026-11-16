@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curtain Fabric Calculator — Yardage, Fullness &amp; Pattern Repeat</title>
+  <meta name="description" content="Calculate fabric yardage and widths for single or paired curtain panels based on window rod width, finished drop, heading fullness, hems, and vertical pattern repeat.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/curtain-fabric-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/curtain-fabric-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/curtain-fabric-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Curtain Fabric Calculator",
+    "description": "Calculate exact fabric yardage and panel widths for bespoke drapery and curtains with fullness multipliers and pattern repeat matching.",
+    "url": "https://nexivo.com/tools/curtain-fabric-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is curtain fullness and how is it calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Fullness is the ratio of flat fabric width to the finished curtain track or pole width. A fullness multiplier of 2.0x means your flat fabric is twice as wide as the window rod, creating rich, deep folds when drawn closed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much allowance should be added for curtain hems and headers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Standard drapery construction recommends adding 14 inches (35 cm) to the finished drop: 4 inches for the top buckram header and 8 to 10 inches for a double-turned weighted bottom hem."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you match patterned fabric across curtain widths?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To align repeating motifs across multiple joined widths, each cut drop must be rounded up to the nearest exact multiple of the fabric's vertical pattern repeat. This ensures motifs align seamlessly across seams and between left and right panels."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where should half-widths be sewn on a pair of curtains?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Always join half-widths to the outer edges of the curtain panels (closest to the wall), rather than the leading center edges. When curtains are opened or closed, seams placed on the outside edge are hidden inside natural gathering folds."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#crafts">Crafts &amp; Sewing</a></li>
+      <li>/</li>
+      <li aria-current="page">Curtain Fabric Calculator</li>
+    </nav>
+
+    <!-- Sewing Suite Navigation -->
+    <div class="sewing-suite-nav">
+      <span class="sewing-suite-label">Sewing Suite:</span>
+      <a href="/tools/quilt-backing-calculator.html" class="sewing-pill">Quilt Backing</a>
+      <a href="/tools/quilt-binding-calculator.html" class="sewing-pill">Quilt Binding</a>
+      <a href="/tools/fabric-yardage-calculator.html" class="sewing-pill">Fabric Yardage</a>
+      <a href="/tools/curtain-fabric-calculator.html" class="sewing-pill active">Curtain Fabric</a>
+      <a href="/tools/fabric-shrinkage-calculator.html" class="sewing-pill">Fabric Shrinkage</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Curtain Fabric Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Calculate exact fabric yardage, number of widths, and cutting drops for single or paired curtains. Includes fullness presets, hems, and vertical pattern repeat matching.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-popular">Popular</span>
+        <span class="tool-badge">Drapery Widths</span>
+        <span class="tool-badge">Pattern Repeat</span>
+        <span class="tool-badge">100% In-Browser</span>
+      </div>
+    </div>
+
+    <!-- Calculator Main Panel -->
+    <div class="tool-panel">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); margin-block-end: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); margin: 0; color: var(--color-primary); display: flex; align-items: center; gap: var(--space-2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+          <span>Window &amp; Heading Specifications</span>
+        </h2>
+        
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <span style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-secondary);">Units:</span>
+          <div class="unit-toggle-group" role="radiogroup" aria-label="Measurement Units">
+            <button type="button" class="unit-toggle-btn active" id="btn-imperial" aria-checked="true">Imperial (in / yd)</button>
+            <button type="button" class="unit-toggle-btn" id="btn-metric" aria-checked="false">Metric (cm / m)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-5);">
+        <div class="form-group">
+          <label for="rod-width" class="form-label" id="label-rod">Track / Rod Width (in)</label>
+          <input type="number" id="rod-width" class="form-input" value="72" min="10" step="1">
+        </div>
+
+        <div class="form-group">
+          <label for="finished-drop" class="form-label" id="label-drop">Finished Curtain Drop (in)</label>
+          <input type="number" id="finished-drop" class="form-input" value="84" min="10" step="0.5">
+        </div>
+
+        <div class="form-group">
+          <label for="panel-config" class="form-label">Panel Configuration</label>
+          <select id="panel-config" class="form-select">
+            <option value="2" selected>Pair of Curtains (2 Panels)</option>
+            <option value="1">Single Panel (1 Panel)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fullness-preset" class="form-label">Heading Style &amp; Fullness</label>
+          <select id="fullness-preset" class="form-select">
+            <option value="2.0" selected>Pencil Pleat / Gathered (2.0x)</option>
+            <option value="2.5">Sheer / S-Fold / Wave (2.5x)</option>
+            <option value="1.8">Eyelet / Metal Grommet (1.8x)</option>
+            <option value="1.5">Tailored / Pinch Pleat / Flat (1.5x)</option>
+            <option value="custom">Custom Multiplier...</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="custom-fullness-group" style="display: none;">
+          <label for="custom-fullness" class="form-label">Custom Fullness Multiplier</label>
+          <input type="number" id="custom-fullness" class="form-input" value="2.0" min="1.0" max="3.5" step="0.1">
+        </div>
+
+        <div class="form-group">
+          <label for="fabric-width" class="form-label" id="label-fabric-width">Fabric Bolt Width (in)</label>
+          <select id="fabric-width" class="form-select">
+            <option value="54" selected>54" Standard Drapery Decorator</option>
+            <option value="44">44" Cotton / Apparel</option>
+            <option value="60">60" Wide Fabric</option>
+            <option value="custom">Custom Width...</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="custom-width-group" style="display: none;">
+          <label for="custom-fabric-width" class="form-label" id="label-custom-fabric-width">Custom Fabric Width (in)</label>
+          <input type="number" id="custom-fabric-width" class="form-input" value="54" min="20" step="1">
+        </div>
+
+        <div class="form-group">
+          <label for="hem-allowance" class="form-label" id="label-hems">Header + Hem Allowance (in)</label>
+          <input type="number" id="hem-allowance" class="form-input" value="14" min="4" step="0.5" title="Standard: 4 inches top header + 8 to 10 inches bottom double hem">
+        </div>
+
+        <div class="form-group">
+          <label for="side-hem-allowance" class="form-label" id="label-side-hems">Side Hems per Panel (in)</label>
+          <input type="number" id="side-hem-allowance" class="form-input" value="4" min="1" step="0.5" title="Standard: 1-inch double turned hem on both sides = 4 inches total">
+        </div>
+
+        <div class="form-group">
+          <label for="pattern-repeat" class="form-label" id="label-repeat">Vertical Pattern Repeat (in)</label>
+          <input type="number" id="pattern-repeat" class="form-input" value="0" min="0" step="0.5" title="Enter vertical pattern repeat size to align motifs, or 0 for plain fabric">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-block-end: var(--space-5);">
+        <button type="button" class="btn btn-secondary" id="btn-reset">Reset Defaults</button>
+        <button type="button" class="btn btn-primary" id="btn-copy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Shopping List</span>
+        </button>
+      </div>
+
+      <!-- Highlights Grid -->
+      <div class="utilization-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-block-end: var(--space-5);">
+        <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Total Fabric to Buy</div>
+          <div class="fractional-highlight" id="res-fractional" style="font-size: var(--font-size-xl);">0 yds</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-secondary);" id="res-subtext">0 yds / 0 m</div>
+        </div>
+
+        <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Total Widths (Cuts) Needed</div>
+          <div style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);" id="res-widths-needed">0 widths</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-secondary);" id="res-widths-per-panel">0 widths per panel</div>
+        </div>
+
+        <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Cut Drop per Width</div>
+          <div style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-text);" id="res-cut-drop">0 in</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-secondary);" id="res-drop-breakdown">Includes hems &amp; repeats</div>
+        </div>
+
+        <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Total Flat Gathered Width</div>
+          <div style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-text);" id="res-flat-width">0 in</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Fullness + side hems</div>
+        </div>
+      </div>
+
+      <!-- Panel Seaming & Cutting Breakdown Box -->
+      <div style="padding: var(--space-4); background: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: var(--radius-lg); margin-block-end: var(--space-5);">
+        <h3 style="font-size: var(--font-size-sm); margin: 0 0 var(--space-2) 0; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+          Panel Seaming &amp; Cutting Instructions
+        </h3>
+        <div id="cutting-instructions-text" style="font-size: var(--font-size-sm); color: var(--color-text); line-height: 1.6;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- 2D SVG Diagram -->
+      <div class="sewing-diagram-card">
+        <h3 style="font-size: var(--font-size-sm); margin: 0 0 var(--space-2) 0; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+          2D Curtain Drapery &amp; Window Scale Diagram
+        </h3>
+        <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">
+          Scale visual of curtain track, draped fullness widths, and finished drop.
+        </p>
+        <div class="sewing-svg-wrapper" id="svg-container">
+          <!-- Dynamic SVG inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational & SEO Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>
+          The <strong>Curtain Fabric Calculator</strong> calculates the total linear yardage, fabric widths (drops), and seam joining specifications required for custom curtains and drapery. It factors in curtain track or pole width, heading fullness styles, side hems, top header tape, bottom weighted hems, and vertical pattern repeat matching.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li><strong>Measure your curtain pole or track:</strong> Enter the full rod width across the window (not just the window glass width).</li>
+          <li><strong>Measure the finished drop:</strong> Measure from the top of your pole or track down to your desired sill or floor position.</li>
+          <li><strong>Select panel setup:</strong> Choose <em>Pair of Curtains (2 Panels)</em> or <em>Single Panel</em>.</li>
+          <li><strong>Select heading style &amp; fullness:</strong> Choose standard pencil pleat (2.0x), sheer/wave (2.5x), grommet/eyelet (1.8x), or tailored pinch pleat (1.5x).</li>
+          <li><strong>Specify fabric width &amp; pattern repeat:</strong> Select 54" drapery standard or enter custom width. If patterned, enter the vertical repeat.</li>
+          <li><strong>Copy shopping list:</strong> Click <em>"Copy Shopping List"</em> to copy panel cutting instructions and yardage to your clipboard.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Mathematical Formulas Used</h2>
+        <div class="example-box">
+          <p style="margin-block-end: var(--space-2); font-weight: 600;">Drapery Fullness &amp; Cut Drop Calculations:</p>
+          <pre class="example-pre">Total Flat Width = (Rod Width × Fullness Multiplier) + (Side Hems × Number of Panels)&#10;Widths Needed = ⌈Total Flat Width / Fabric Bolt Width⌉&#10;Unadjusted Cut Drop = Finished Drop + Header Allowance + Bottom Hem&#10;Cut Drop with Repeat = ⌈Unadjusted Cut Drop / Vertical Repeat⌉ × Vertical Repeat&#10;Total Linear Fabric = Widths Needed × Cut Drop&#10;Total Yardage = Total Linear Inches / 36</pre>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Curtain Heading Styles &amp; Recommended Fullness Reference Table</h2>
+        <div class="cargo-table-container">
+          <table class="cargo-table">
+            <thead>
+              <tr>
+                <th>Heading Style</th>
+                <th>Fullness Multiplier</th>
+                <th>Best Applications &amp; Visual Character</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Pencil Pleat / Gathered</strong></td>
+                <td>2.0x – 2.2x</td>
+                <td>Classic traditional tape heading, versatile for all fabrics and living spaces.</td>
+              </tr>
+              <tr>
+                <td><strong>Sheer / S-Fold / Wave</strong></td>
+                <td>2.5x</td>
+                <td>Fluid, continuous contemporary ripples. High fullness is essential for light voiles.</td>
+              </tr>
+              <tr>
+                <td><strong>Eyelet / Metal Grommet</strong></td>
+                <td>1.8x – 2.0x</td>
+                <td>Clean, structured deep folds that thread directly over a decorative curtain pole.</td>
+              </tr>
+              <tr>
+                <td><strong>Pinch Pleat / Flat Tailored</strong></td>
+                <td>1.5x – 1.8x</td>
+                <td>Formal, elegant tailored pleats (double or triple) sewn into stiffened buckram.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Living Room Floor-Length Drapery:</strong> Calculating yardage across large 72" or 96" sliding doors and picture windows.</li>
+          <li><strong>Sheer Voile Wave Curtains:</strong> Sizing high-fullness (2.5x) sheer curtains for daylight diffusion and privacy.</li>
+          <li><strong>Odd-Width Curtain Splits:</strong> Determining how to split an odd number of widths (such as 3 widths into two 1.5-width panels) and conceal seams against the outer wall.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">Track Width: 72" | Finished Drop: 84"&#10;Setup: Pair of Curtains (2 Panels)&#10;Fullness: 2.0x (Pencil Pleat)&#10;Fabric Width: 54" | Hems: 14" | Repeat: 0"</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">Flat Width: 152"&#10;Widths Needed: 3 widths (1.5 widths per panel)&#10;Cut Drop per Width: 98"&#10;Total Linear Length: 294"&#10;Fabric to Purchase: 8 1/4 yds (8.17 yds / 7.47 m)&#10;Cutting: Left &amp; Right panels each get 1 full width + 1 half width</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          Calculations include a default 14-inch total hem allowance (4 inches for top buckram heading plus 8 to 10 inches for a double-turned weighted bottom hem). If a vertical pattern repeat is entered, every drop length is automatically rounded up to the next integer multiple of the pattern repeat to guarantee horizontal motif alignment across seams.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Calculations assume standard straight poles or flat tracks. For angled bay windows or curved bow tracks, calculate each track section independently to determine panel widths per window segment.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All window dimensions and yardage figures are processed 100% locally inside your browser memory. No data is stored or transmitted to external servers.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>What if my calculation calls for 3 widths on a pair of curtains?</h3>
+          <p>
+            When a pair of curtains requires an odd number of widths (such as 3 widths total), each curtain panel gets 1.5 widths. Cut one full fabric width in half lengthwise down the center. Join each half-width to the outer edge of a full width so the seam is hidden against the wall when drawn.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Should curtains touch the floor or hover above it?</h3>
+          <p>
+            Floor-length curtains typically hover 1/2 inch (1.25 cm) above the floor so they clear dust and slide smoothly. For a romantic or luxurious look, "pooling" or "puddling" adds 2 to 4 inches of extra drop to rest elegantly on the floor.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Should I use curtain lining?</h3>
+          <p>
+            Yes. Lining protects face fabric from UV sun damage, improves thermal insulation, and adds body to help folds hang uniformly. Simply calculate identical yardage for your lining fabric.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/fabric-yardage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Fabric Yardage Calculator</span>
+          </a>
+          <a href="/tools/fabric-shrinkage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>Fabric Shrinkage Calculator</span>
+          </a>
+          <a href="/tools/quilt-backing-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            <span>Quilt Backing Calculator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 Free Online Tools. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/sewing-utils.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let isMetric = false;
+      let lastCalcResult = null;
+
+      const btnImperial = document.getElementById('btn-imperial');
+      const btnMetric = document.getElementById('btn-metric');
+      const rodInput = document.getElementById('rod-width');
+      const dropInput = document.getElementById('finished-drop');
+      const panelConfigSelect = document.getElementById('panel-config');
+      const fullnessPresetSelect = document.getElementById('fullness-preset');
+      const customFullnessGroup = document.getElementById('custom-fullness-group');
+      const customFullnessInput = document.getElementById('custom-fullness');
+      const fabricWidthSelect = document.getElementById('fabric-width');
+      const customWidthGroup = document.getElementById('custom-width-group');
+      const customWidthInput = document.getElementById('custom-fabric-width');
+      const hemInput = document.getElementById('hem-allowance');
+      const sideHemInput = document.getElementById('side-hem-allowance');
+      const repeatInput = document.getElementById('pattern-repeat');
+      const btnReset = document.getElementById('btn-reset');
+      const btnCopy = document.getElementById('btn-copy');
+
+      const labelRod = document.getElementById('label-rod');
+      const labelDrop = document.getElementById('label-drop');
+      const labelFabricWidth = document.getElementById('label-fabric-width');
+      const labelCustomWidth = document.getElementById('label-custom-fabric-width');
+      const labelHems = document.getElementById('label-hems');
+      const labelSideHems = document.getElementById('label-side-hems');
+      const labelRepeat = document.getElementById('label-repeat');
+
+      // Dropdown handlers
+      fullnessPresetSelect.addEventListener('change', function() {
+        customFullnessGroup.style.display = this.value === 'custom' ? 'block' : 'none';
+        calculate();
+      });
+
+      fabricWidthSelect.addEventListener('change', function() {
+        customWidthGroup.style.display = this.value === 'custom' ? 'block' : 'none';
+        calculate();
+      });
+
+      // Unit toggle
+      btnImperial.addEventListener('click', () => setUnitMode(false));
+      btnMetric.addEventListener('click', () => setUnitMode(true));
+
+      function setUnitMode(metric) {
+        if (isMetric === metric) return;
+        isMetric = metric;
+
+        btnImperial.classList.toggle('active', !isMetric);
+        btnImperial.setAttribute('aria-checked', !isMetric ? 'true' : 'false');
+        btnMetric.classList.toggle('active', isMetric);
+        btnMetric.setAttribute('aria-checked', isMetric ? 'true' : 'false');
+
+        const factor = isMetric ? SewingUtils.IN_TO_CM : SewingUtils.CM_TO_IN;
+        rodInput.value = SewingUtils.round(parseFloat(rodInput.value || 72) * factor, 1);
+        dropInput.value = SewingUtils.round(parseFloat(dropInput.value || 84) * factor, 1);
+        customWidthInput.value = SewingUtils.round(parseFloat(customWidthInput.value || 54) * factor, 1);
+        hemInput.value = SewingUtils.round(parseFloat(hemInput.value || 14) * factor, 1);
+        sideHemInput.value = SewingUtils.round(parseFloat(sideHemInput.value || 4) * factor, 1);
+        repeatInput.value = SewingUtils.round(parseFloat(repeatInput.value || 0) * factor, 1);
+
+        const unitLabel = isMetric ? '(cm)' : '(in)';
+        labelRod.textContent = `Track / Rod Width ${unitLabel}`;
+        labelDrop.textContent = `Finished Curtain Drop ${unitLabel}`;
+        labelFabricWidth.textContent = `Fabric Bolt Width ${unitLabel}`;
+        labelCustomWidth.textContent = `Custom Fabric Width ${unitLabel}`;
+        labelHems.textContent = `Header + Hem Allowance ${unitLabel}`;
+        labelSideHems.textContent = `Side Hems per Panel ${unitLabel}`;
+        labelRepeat.textContent = `Vertical Pattern Repeat ${unitLabel}`;
+
+        calculate();
+      }
+
+      function getFullness() {
+        if (fullnessPresetSelect.value === 'custom') {
+          return parseFloat(customFullnessInput.value) || 2.0;
+        }
+        return parseFloat(fullnessPresetSelect.value) || 2.0;
+      }
+
+      function getFabricWidth() {
+        if (fabricWidthSelect.value === 'custom') {
+          return parseFloat(customWidthInput.value) || (isMetric ? 137 : 54);
+        }
+        const val = parseFloat(fabricWidthSelect.value) || 54;
+        return isMetric ? (val * SewingUtils.IN_TO_CM) : val;
+      }
+
+      function calculate() {
+        const rw = parseFloat(rodInput.value) || 0;
+        const fd = parseFloat(dropInput.value) || 0;
+        const panels = parseInt(panelConfigSelect.value, 10) || 2;
+        const fullness = getFullness();
+        const fw = getFabricWidth();
+        const hems = parseFloat(hemInput.value) || 0;
+        const sideHems = parseFloat(sideHemInput.value) || 0;
+        const repeat = parseFloat(repeatInput.value) || 0;
+
+        if (rw <= 0 || fd <= 0 || fw <= 0) return;
+
+        const res = SewingUtils.calculateCurtainFabric({
+          rodWidth: rw,
+          finishedDrop: fd,
+          panelCount: panels,
+          fullnessMultiplier: fullness,
+          fabricWidth: fw,
+          hemAllowance: hems,
+          sideHemAllowance: sideHems,
+          patternRepeat: repeat,
+          isMetric: isMetric
+        });
+
+        if (!res) return;
+        lastCalcResult = res;
+
+        const unit = isMetric ? 'cm' : 'in';
+
+        // Stats
+        document.getElementById('res-fractional').textContent = res.yardage.fractionalYards;
+        document.getElementById('res-subtext').textContent = `${res.yardage.decimalYards} yds / ${res.yardage.meters} m`;
+        document.getElementById('res-widths-needed').textContent = `${res.widthsNeeded} widths total`;
+        document.getElementById('res-widths-per-panel').textContent = `${res.widthsPerPanel} widths per panel`;
+        document.getElementById('res-cut-drop').textContent = `${res.cutDrop} ${unit}`;
+        
+        let dropDesc = `Finished (${res.finishedDrop}) + Hems (${SewingUtils.round(hems, 1)})`;
+        if (res.patternWastePerDrop > 0) {
+          dropDesc += ` + Pattern Repeat Waste (${res.patternWastePerDrop} ${unit})`;
+        }
+        document.getElementById('res-drop-breakdown').textContent = dropDesc;
+        document.getElementById('res-flat-width').textContent = `${res.totalFlatWidth} ${unit}`;
+
+        // Seaming instructions
+        const instructEl = document.getElementById('cutting-instructions-text');
+        if (res.panelCount === 2) {
+          if (res.widthsNeeded % 2 === 0) {
+            const perSide = res.widthsNeeded / 2;
+            instructEl.innerHTML = `
+              <strong>Pair of Curtains Configuration:</strong> Cut <strong>${res.widthsNeeded} identical drops</strong> of length <strong>${res.cutDrop} ${unit}</strong>.<br>
+              • <strong>Left Curtain:</strong> Join ${perSide} full widths together.<br>
+              • <strong>Right Curtain:</strong> Join ${perSide} full widths together.
+            `;
+          } else {
+            const wholeWidthsPerSide = Math.floor(res.widthsPerPanel);
+            instructEl.innerHTML = `
+              <strong>Pair of Curtains Configuration (Odd Width Split):</strong> Cut <strong>${res.widthsNeeded} identical drops</strong> of length <strong>${res.cutDrop} ${unit}</strong>.<br>
+              • Cut ${res.widthsNeeded - 1} full widths, and cut 1 width in half lengthwise down the center.<br>
+              • <strong>Left Curtain:</strong> ${wholeWidthsPerSide} full width(s) + 1 half width (sew the half width on the outer wall edge).<br>
+              • <strong>Right Curtain:</strong> ${wholeWidthsPerSide} full width(s) + 1 half width (sew the half width on the outer wall edge).
+            `;
+          }
+        } else {
+          instructEl.innerHTML = `
+            <strong>Single Panel Configuration:</strong> Cut <strong>${res.widthsNeeded} drops</strong> of length <strong>${res.cutDrop} ${unit}</strong> and join side-by-side to cover the entire track width.
+          `;
+        }
+
+        renderDiagram(res);
+      }
+
+      function renderDiagram(res) {
+        const container = document.getElementById('svg-container');
+        if (!container) return;
+
+        const svgW = 440;
+        const svgH = 220;
+        const rodW = svgW - 60;
+        const isPair = res.panelCount === 2;
+        const panelW = isPair ? (rodW / 2 - 8) : rodW;
+
+        container.innerHTML = `
+          <svg viewBox="0 0 ${svgW} ${svgH}" width="100%" height="${svgH}" style="overflow: visible;">
+            <!-- Rod -->
+            <rect x="20" y="25" width="${svgW - 40}" height="8" rx="4" fill="#64748b"/>
+            <!-- Finials -->
+            <circle cx="20" cy="29" r="8" fill="#475569"/>
+            <circle cx="${svgW - 20}" cy="29" r="8" fill="#475569"/>
+
+            <!-- Window Frame Behind -->
+            <rect x="50" y="45" width="${svgW - 100}" height="140" fill="rgba(203, 213, 225, 0.2)" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <line x1="${svgW / 2}" y1="45" x2="${svgW / 2}" y2="185" stroke="#94a3b8" stroke-width="1"/>
+            <line x1="50" y1="115" x2="${svgW - 50}" y2="115" stroke="#94a3b8" stroke-width="1"/>
+
+            ${isPair ? `
+              <!-- Left Panel -->
+              <rect x="30" y="33" width="${panelW}" height="160" fill="rgba(37, 99, 235, 0.25)" stroke="#2563eb" stroke-width="2" rx="3"/>
+              <!-- Draped pleat lines -->
+              <line x1="${30 + panelW * 0.25}" y1="33" x2="${30 + panelW * 0.25}" y2="193" stroke="#2563eb" stroke-width="1" stroke-dasharray="2,2"/>
+              <line x1="${30 + panelW * 0.5}" y1="33" x2="${30 + panelW * 0.5}" y2="193" stroke="#2563eb" stroke-width="1" stroke-dasharray="2,2"/>
+              <line x1="${30 + panelW * 0.75}" y1="33" x2="${30 + panelW * 0.75}" y2="193" stroke="#2563eb" stroke-width="1" stroke-dasharray="2,2"/>
+              <text x="${30 + panelW / 2}" y="115" fill="#1e40af" font-size="10" font-weight="700" text-anchor="middle">Left (${res.widthsPerPanel} widths)</text>
+
+              <!-- Right Panel -->
+              <rect x="${30 + panelW + 16}" y="33" width="${panelW}" height="160" fill="rgba(37, 99, 235, 0.25)" stroke="#2563eb" stroke-width="2" rx="3"/>
+              <line x1="${30 + panelW + 16 + panelW * 0.25}" y1="33" x2="${30 + panelW + 16 + panelW * 0.25}" y2="193" stroke="#2563eb" stroke-width="1" stroke-dasharray="2,2"/>
+              <line x1="${30 + panelW + 16 + panelW * 0.5}" y1="33" x2="${30 + panelW + 16 + panelW * 0.5}" y2="193" stroke="#2563eb" stroke-width="1" stroke-dasharray="2,2"/>
+              <line x1="${30 + panelW + 16 + panelW * 0.75}" y1="33" x2="${30 + panelW + 16 + panelW * 0.75}" y2="193" stroke="#2563eb" stroke-width="1" stroke-dasharray="2,2"/>
+              <text x="${30 + panelW + 16 + panelW / 2}" y="115" fill="#1e40af" font-size="10" font-weight="700" text-anchor="middle">Right (${res.widthsPerPanel} widths)</text>
+            ` : `
+              <!-- Single Panel -->
+              <rect x="30" y="33" width="${rodW}" height="160" fill="rgba(37, 99, 235, 0.25)" stroke="#2563eb" stroke-width="2" rx="3"/>
+              <text x="${svgW / 2}" y="115" fill="#1e40af" font-size="11" font-weight="700" text-anchor="middle">Single Panel (${res.widthsNeeded} widths)</text>
+            `}
+
+            <!-- Annotations -->
+            <text x="${svgW / 2}" y="16" fill="var(--color-text-secondary)" font-size="10" font-weight="600" text-anchor="middle">
+              Rod Width: ${res.rodWidth} ${isMetric ? 'cm' : 'in'} | Cut Drop: ${res.cutDrop} ${isMetric ? 'cm' : 'in'}
+            </text>
+          </svg>
+        `;
+      }
+
+      // Copy Shopping List
+      btnCopy.addEventListener('click', function() {
+        if (!lastCalcResult) return;
+        const res = lastCalcResult;
+        const unit = isMetric ? 'cm' : 'in';
+
+        const text = [
+          '✂️ CURTAIN FABRIC SHOPPING LIST — FREE ONLINE TOOLS',
+          '==================================================',
+          `Window Rod Width: ${res.rodWidth} ${unit}`,
+          `Finished Curtain Drop: ${res.finishedDrop} ${unit}`,
+          `Panel Setup: ${res.panelCount === 2 ? 'Pair of Curtains (2 Panels)' : 'Single Panel'}`,
+          `Heading Style Fullness: ${fullnessPresetSelect.options[fullnessPresetSelect.selectedIndex].text}`,
+          `Fabric Widths (Cuts) Needed: ${res.widthsNeeded} (${res.widthsPerPanel} widths per panel)`,
+          `Cut Drop per Width: ${res.cutDrop} ${unit}`,
+          `Total Fabric to Buy: ${res.yardage.fractionalYards} (${res.yardage.decimalYards} yards / ${res.yardage.meters} meters)`,
+          '==================================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/curtain-fabric-calculator.html'
+        ].join('\n');
+
+        SewingUtils.copyTextToClipboard(text, btnCopy, 'Shopping List Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        if (isMetric) {
+          rodInput.value = 180;
+          dropInput.value = 215;
+          customWidthInput.value = 137;
+          hemInput.value = 35;
+          sideHemInput.value = 10;
+        } else {
+          rodInput.value = 72;
+          dropInput.value = 84;
+          customWidthInput.value = 54;
+          hemInput.value = 14;
+          sideHemInput.value = 4;
+        }
+        panelConfigSelect.value = '2';
+        fullnessPresetSelect.value = '2.0';
+        customFullnessGroup.style.display = 'none';
+        fabricWidthSelect.value = '54';
+        customWidthGroup.style.display = 'none';
+        repeatInput.value = 0;
+        calculate();
+      });
+
+      [rodInput, dropInput, panelConfigSelect, customFullnessInput, customWidthInput, hemInput, sideHemInput, repeatInput].forEach(inp => {
+        inp.addEventListener('input', calculate);
+      });
+
+      calculate();
+    })();
+  </script>
+</body>
+</html>

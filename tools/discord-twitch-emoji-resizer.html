@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord &amp; Twitch Custom Emoji &amp; Emote Resizer — 100% Client-Side</title>
+  <meta name="description" content="Resize, crop, trim transparent borders, add sticker white outlines, and optimize Discord emojis (128px), stickers (320px), and Twitch emotes (112/56/28px) with live dark/light chat previews.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/discord-twitch-emoji-resizer.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/discord-twitch-emoji-resizer.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/discord-twitch-emoji-resizer.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Discord & Twitch Custom Emoji & Emote Resizer",
+    "description": "Resize, auto-crop, trim transparent margins, add sticker white outlines, and optimize custom emojis and emotes for Discord and Twitch with live dark/light chat previews and 1-click ZIP bundle downloads.",
+    "url": "https://nexivo.com/tools/discord-twitch-emoji-resizer.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the recommended size and file limit for Discord custom emojis?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The standard upload size for Discord custom emojis is 128×128 pixels with a strict maximum file size of 256 KB. In chat, Discord renders emojis at 32×32 pixels (or 48×48 pixels when sent as a standalone jumbo emoji). Images should be square (1:1 ratio) PNG, WebP, or GIF."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the required dimensions for Twitch subscriber emotes and sub badges?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For Twitch emotes, Twitch accepts a single 112×112 px PNG (up to 1 MB) in auto-resize mode, or manual uploads in three sizes: 112×112 px, 56×56 px, and 28×28 px. For Twitch subscriber/bit loyalty badges, Twitch requires three square files: 72×72 px, 36×36 px, and 18×18 px with a strict 25 KB file size limit per badge."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do transparent PNG emojis appear tiny or unreadable in Discord chat?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Many PNG cutouts contain wide invisible transparent margins around the subject. When Discord scales a 128px image down to 32px in chat, empty margins shrink the visible subject into an unrecognizable blur. Enabling 'Smart Auto-Trim' removes invisible padding, maximizing visible character size."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why should I add a white sticker outline around custom Discord emojis?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Over 85% of Discord users use Dark Mode or Midnight (AMOLED) black themes. Dark hair, black clothing, or dark memes blend into the background and become invisible. Adding a clean 2px to 4px white die-cut outline provides high-contrast separation, keeping your emote sharp and legible across all themes."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .resizer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+    @media (min-width: 992px) {
+      .resizer-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+      }
+    }
+
+    /* Preset Tabs */
+    .preset-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: var(--space-3);
+    }
+    .preset-pill {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--border-radius);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      color: var(--color-text);
+    }
+    .preset-pill:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .preset-pill.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    /* Drop Zone */
+    .drop-box {
+      border: 2px dashed var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      text-align: center;
+      cursor: pointer;
+      background: var(--color-bg);
+      transition: all 0.2s ease;
+      margin-bottom: var(--space-3);
+      outline: none;
+    }
+    .drop-box:hover, .drop-box.drag-over, .drop-box:focus-visible {
+      border-color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.04);
+    }
+
+    /* Form Controls Section */
+    .control-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      margin-bottom: 0.5rem;
+      font-size: var(--font-size-xs);
+    }
+    .control-row:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Master Canvas Preview */
+    .canvas-preview-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: repeating-conic-gradient(#e2e8f0 0% 25%, #ffffff 0% 50%) 50% / 16px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      position: relative;
+      min-height: 220px;
+    }
+    [data-theme="dark"] .canvas-preview-wrap {
+      background: repeating-conic-gradient(#1e293b 0% 25%, #0f172a 0% 50%) 50% / 16px 16px;
+    }
+    #masterCanvas {
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+    }
+
+    /* Validation Specs Pill */
+    .spec-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      justify-content: center;
+      margin-top: var(--space-2);
+    }
+    .spec-pill {
+      font-size: 0.72rem;
+      font-family: monospace;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 700;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+    }
+    .spec-pill.spec-ok {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .spec-pill.spec-warn {
+      background: rgba(239, 68, 68, 0.15);
+      color: #dc2626;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    /* Live Chat Preview Simulator */
+    .chat-sim-card {
+      border-radius: var(--border-radius);
+      margin-top: var(--space-3);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      transition: background 0.2s;
+    }
+    .chat-sim-theme-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.6rem;
+      background: rgba(0, 0, 0, 0.25);
+      font-size: 0.72rem;
+      color: #ddd;
+    }
+    .btn-theme-chip {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 0.15rem 0.45rem;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.68rem;
+    }
+    .btn-theme-chip.active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    .chat-sim-body {
+      padding: var(--space-3);
+      font-family: 'gg sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .chat-msg {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+    .chat-msg:last-child {
+      margin-bottom: 0;
+    }
+    .chat-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: #5865F2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .chat-content {
+      flex: 1;
+    }
+    .chat-author {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .chat-timestamp {
+      font-size: 0.68rem;
+      color: #888;
+      font-weight: 400;
+    }
+    .chat-text {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .preview-inline-emoji {
+      display: inline-block;
+      vertical-align: middle;
+      image-rendering: -webkit-optimize-contrast;
+    }
+    .reaction-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 0.15rem 0.45rem;
+      margin-top: 0.35rem;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content" id="main-content">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <a href="/#images">Images</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <span class="breadcrumb-current">Discord &amp; Twitch Emoji Resizer</span>
+    </nav>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-title-row">
+          <h1 class="tool-title">Discord &amp; Twitch Custom Emoji &amp; Emote Resizer</h1>
+          <span class="badge badge-editorial">Images &amp; Social</span>
+        </div>
+        <p class="tool-desc">Resize and optimize custom emojis, server stickers, and channel emotes. Auto-trim invisible padding, add white sticker outlines for dark mode, test live chat legibility, and export multi-size Twitch bundles in 1-click.</p>
+        <div class="privacy-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>100% Client-Side — Your images and artwork are processed inside browser canvas memory and are never uploaded to any server.</span>
+        </div>
+      </div>
+
+      <!-- Main Resizer Layout -->
+      <div class="resizer-grid">
+        <!-- Left Panel: Presets & Controls -->
+        <div class="controls-panel">
+          <!-- Preset Selector Pills -->
+          <div class="preset-nav" role="tablist" aria-label="Platform preset">
+            <button type="button" class="preset-pill active" data-preset="discord-emoji" role="tab" aria-selected="true">
+              <span>🎮 Discord Emoji (128px)</span>
+            </button>
+            <button type="button" class="preset-pill" data-preset="discord-sticker" role="tab" aria-selected="false">
+              <span>✨ Discord Sticker (320px)</span>
+            </button>
+            <button type="button" class="preset-pill" data-preset="twitch-emote" role="tab" aria-selected="false">
+              <span>🟣 Twitch Emote (112px Bundle)</span>
+            </button>
+            <button type="button" class="preset-pill" data-preset="twitch-badge" role="tab" aria-selected="false">
+              <span>🎖️ Twitch Sub Badge (72px)</span>
+            </button>
+            <button type="button" class="preset-pill" data-preset="custom" role="tab" aria-selected="false">
+              <span>⚙️ Custom</span>
+            </button>
+          </div>
+
+          <!-- Drag and Drop Uploader -->
+          <div id="dropBox" class="drop-box" tabindex="0" role="button" aria-label="Upload image or paste from clipboard">
+            <input type="file" id="fileInput" accept="image/png, image/jpeg, image/webp, image/gif" style="display:none;" aria-label="File upload">
+            <div style="font-size:2rem; margin-bottom:0.25rem;">🖼️</div>
+            <div style="font-weight:700; font-size:var(--font-size-sm); margin-bottom:0.25rem;">
+              Click to upload, drag &amp; drop, or paste (Ctrl + V)
+            </div>
+            <div style="font-size:var(--font-size-xs); color:var(--color-text-muted);">
+              PNG, JPG, WebP, GIF supported. Transparent PNG recommended.
+            </div>
+            <div style="margin-top:0.6rem;">
+              <button type="button" id="btnLoadSample" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.25rem 0.6rem;">
+                ✨ Load Demo Pepe Emote
+              </button>
+            </div>
+          </div>
+
+          <!-- Fit & Crop Mode -->
+          <div class="control-card">
+            <div style="font-weight:700; font-size:var(--font-size-xs); text-transform:uppercase; letter-spacing:0.05em; color:var(--color-text-muted); margin-bottom:0.5rem;">
+              Crop &amp; Fit Alignment
+            </div>
+            <div class="control-row">
+              <label for="fitModeSelect" style="font-weight:600; margin:0;">Fitting Mode:</label>
+              <select id="fitModeSelect" class="form-select" style="font-size:var(--font-size-xs); padding:0.3rem 0.5rem; width:auto;">
+                <option value="contain" selected>Fit with Transparent Padding (Contain)</option>
+                <option value="cover">Square Crop to Fill (Cover)</option>
+              </select>
+            </div>
+
+            <!-- Zoom & Pan Controls (Active in Cover mode) -->
+            <div id="coverControlsWrap" style="display:none; margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed var(--color-border);">
+              <div class="control-row">
+                <label for="zoomSlider" style="margin:0;">Zoom (<span id="zoomVal">1.0x</span>):</label>
+                <input type="range" id="zoomSlider" class="form-range" min="1.0" max="3.0" step="0.1" value="1.0" style="width:130px;" aria-label="Image zoom level">
+              </div>
+              <div class="control-row">
+                <label for="panXSlider" style="margin:0;">Pan Horizontal:</label>
+                <input type="range" id="panXSlider" class="form-range" min="-50" max="50" step="1" value="0" style="width:130px;" aria-label="Horizontal position pan">
+              </div>
+              <div class="control-row">
+                <label for="panYSlider" style="margin:0;">Pan Vertical:</label>
+                <input type="range" id="panYSlider" class="form-range" min="-50" max="50" step="1" value="0" style="width:130px;" aria-label="Vertical position pan">
+              </div>
+            </div>
+          </div>
+
+          <!-- Smart Auto-Trim & Padding -->
+          <div class="control-card">
+            <div style="font-weight:700; font-size:var(--font-size-xs); text-transform:uppercase; letter-spacing:0.05em; color:var(--color-text-muted); margin-bottom:0.5rem;">
+              Smart Auto-Trim &amp; Padding
+            </div>
+            <div class="control-row">
+              <div>
+                <label for="autoTrimToggle" style="font-weight:600; margin:0; display:block;">Smart Auto-Trim Transparency</label>
+                <span style="font-size:0.7rem; color:var(--color-text-muted);">Crops away wasted invisible margins so emote appears bigger in chat.</span>
+              </div>
+              <input type="checkbox" id="autoTrimToggle" checked style="width:18px; height:18px; cursor:pointer;" aria-label="Enable smart auto-trim">
+            </div>
+
+            <div class="control-row" style="margin-top:0.5rem;">
+              <label for="safePaddingSlider" style="margin:0;">Inner Safe Padding (<span id="safePaddingVal">4%</span>):</label>
+              <input type="range" id="safePaddingSlider" class="form-range" min="0" max="20" step="1" value="4" style="width:130px;" aria-label="Inner safe padding percentage">
+            </div>
+          </div>
+
+          <!-- Sticker Die-Cut Outline -->
+          <div class="control-card">
+            <div style="font-weight:700; font-size:var(--font-size-xs); text-transform:uppercase; letter-spacing:0.05em; color:var(--color-text-muted); margin-bottom:0.5rem;">
+              Sticker White Outline (Dark Mode Pop)
+            </div>
+            <div class="control-row">
+              <div>
+                <label for="outlineToggle" style="font-weight:600; margin:0; display:block;">Add Die-Cut Sticker Outline</label>
+                <span style="font-size:0.7rem; color:var(--color-text-muted);">Adds crisp border around subject to prevent blending into dark chat.</span>
+              </div>
+              <input type="checkbox" id="outlineToggle" style="width:18px; height:18px; cursor:pointer;" aria-label="Enable sticker die-cut outline">
+            </div>
+
+            <div id="outlineControlsWrap" style="display:none; margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed var(--color-border);">
+              <div class="control-row">
+                <label for="outlineWidthSlider" style="margin:0;">Thickness (<span id="outlineWidthVal">3px</span>):</label>
+                <input type="range" id="outlineWidthSlider" class="form-range" min="1" max="8" step="1" value="3" style="width:130px;" aria-label="Outline stroke thickness">
+              </div>
+              <div class="control-row">
+                <label for="outlineColorPicker" style="margin:0;">Outline Color:</label>
+                <input type="color" id="outlineColorPicker" value="#ffffff" style="width:40px; height:28px; padding:0; border:none; border-radius:4px; cursor:pointer;" aria-label="Outline stroke color">
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom Dimension Settings (Shown in custom mode) -->
+          <div id="customSettingsWrap" class="control-card" style="display:none;">
+            <div style="font-weight:700; font-size:var(--font-size-xs); text-transform:uppercase; letter-spacing:0.05em; color:var(--color-text-muted); margin-bottom:0.5rem;">
+              Custom Dimensions &amp; Size Limit
+            </div>
+            <div class="control-row">
+              <label for="customPxInput" style="margin:0;">Target Square Size (px):</label>
+              <input type="number" id="customPxInput" class="form-input" value="128" min="32" max="1024" step="16" style="width:100px; font-size:var(--font-size-xs); padding:0.3rem;" aria-label="Custom pixel size">
+            </div>
+            <div class="control-row">
+              <label for="customMaxKbInput" style="margin:0;">Max Target Limit (KB):</label>
+              <input type="number" id="customMaxKbInput" class="form-input" value="256" min="10" max="5000" step="10" style="width:100px; font-size:var(--font-size-xs); padding:0.3rem;" aria-label="Custom maximum KB limit">
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel: Master Canvas, Live Chat Preview, & Downloads -->
+        <div class="preview-panel">
+          <!-- Canvas Master Preview Box -->
+          <div class="canvas-preview-wrap">
+            <canvas id="masterCanvas" width="128" height="128" aria-label="Processed custom emoji preview"></canvas>
+            
+            <div class="spec-badges-row">
+              <span id="specDimensions" class="spec-pill spec-ok">128 × 128 px</span>
+              <span id="specFileSize" class="spec-pill spec-ok">-- KB / 256 KB Max</span>
+              <span class="spec-pill spec-ok">Alpha Preserved</span>
+            </div>
+          </div>
+
+          <!-- Download Action Buttons -->
+          <div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:var(--space-3);">
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <button type="button" id="btnDownloadSingle" class="btn btn-primary" style="flex:1;">
+                💾 Download Optimized PNG
+              </button>
+              <button type="button" id="btnDownloadZip" class="btn btn-secondary" style="display:none; font-size:var(--font-size-xs);">
+                📦 Download All Sizes (.ZIP)
+              </button>
+              <button type="button" id="btnReset" class="btn btn-secondary" style="font-size:var(--font-size-xs);">
+                ↺ Reset
+              </button>
+            </div>
+
+            <!-- Optional Individual Size Download Row (for Twitch) -->
+            <div id="twitchSizesRow" style="display:none; gap:0.35rem; justify-content:center; flex-wrap:wrap; margin-top:0.25rem;">
+              <button type="button" id="btnDl112" class="btn btn-secondary" style="font-size:0.7rem; padding:0.2rem 0.5rem;">112px</button>
+              <button type="button" id="btnDl56" class="btn btn-secondary" style="font-size:0.7rem; padding:0.2rem 0.5rem;">56px</button>
+              <button type="button" id="btnDl28" class="btn btn-secondary" style="font-size:0.7rem; padding:0.2rem 0.5rem;">28px</button>
+            </div>
+          </div>
+
+          <!-- Killer Feature: Live Chat Simulator Preview -->
+          <div class="chat-sim-card" id="chatSimCard" style="background:#313338; color:#dbdee1;">
+            <div class="chat-sim-theme-bar">
+              <span style="font-weight:700;">Live Chat Simulator:</span>
+              <button type="button" class="btn-theme-chip active" data-theme="dark" style="margin-left:auto;">Discord Dark</button>
+              <button type="button" class="btn-theme-chip" data-theme="midnight">Midnight</button>
+              <button type="button" class="btn-theme-chip" data-theme="light">Light</button>
+              <button type="button" class="btn-theme-chip" data-theme="twitch">Twitch</button>
+            </div>
+
+            <div class="chat-sim-body">
+              <!-- Message 1: Inline Chat Emote -->
+              <div class="chat-msg">
+                <div class="chat-avatar" style="background:#5865F2;">GC</div>
+                <div class="chat-content">
+                  <div class="chat-author">
+                    <span style="color:#f2f3f5;">GamerCat</span>
+                    <span class="chat-timestamp">Today at 4:20 PM</span>
+                  </div>
+                  <div class="chat-text">
+                    <span>Look at the new server emote!</span>
+                    <img id="chatInlineImg" class="preview-inline-emoji" width="32" height="32" src="" alt="Custom emote in chat">
+                    <span>Clean in chat!</span>
+                  </div>
+                  <div class="reaction-pill">
+                    <img id="chatReactionImg" class="preview-inline-emoji" width="20" height="20" src="" alt="Emote reaction">
+                    <span style="font-weight:700; color:#fff;">14</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Message 2: Standalone Jumbo Emote / Hover Preview -->
+              <div class="chat-msg" style="margin-top:0.5rem;">
+                <div class="chat-avatar" style="background:#23a55a;">SK</div>
+                <div class="chat-content">
+                  <div class="chat-author">
+                    <span style="color:#f2f3f5;">StreamKing</span>
+                    <span class="chat-timestamp">Today at 4:21 PM</span>
+                  </div>
+                  <div class="chat-text">
+                    <img id="chatJumboImg" class="preview-inline-emoji" width="48" height="48" src="" alt="Jumbo standalone emote" style="margin-top:0.2rem;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEO Educational Guide & Documentation -->
+      <div class="tool-documentation" style="margin-top:var(--space-5);">
+        <h2>Discord &amp; Twitch Emote Dimension &amp; File-Size Standards</h2>
+        <p>
+          Both Discord and Twitch have strict technical constraints for custom emojis, animated emotes, stickers, and channel loyalty badges. Uploading files with improper dimensions or exceeding byte limits results in immediate rejected uploads or pixelated distortions.
+        </p>
+        <table style="width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:var(--font-size-sm);">
+          <thead>
+            <tr style="text-align:left; border-bottom:2px solid var(--color-border);">
+              <th style="padding:0.5rem;">Asset Type</th>
+              <th style="padding:0.5rem;">Target Upload Dimensions</th>
+              <th style="padding:0.5rem;">Actual Chat Render Size</th>
+              <th style="padding:0.5rem;">File Size Limit</th>
+              <th style="padding:0.5rem;">Formats Supported</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Discord Custom Emoji</strong></td>
+              <td style="padding:0.5rem;">128 × 128 px (1:1 Square)</td>
+              <td style="padding:0.5rem;">32 × 32 px (Inline) / 48 × 48 px (Jumbo)</td>
+              <td style="padding:0.5rem;">Strict 256 KB</td>
+              <td style="padding:0.5rem;">PNG, WebP, GIF</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Discord Server Sticker</strong></td>
+              <td style="padding:0.5rem;">320 × 320 px (1:1 Square)</td>
+              <td style="padding:0.5rem;">160 × 160 px</td>
+              <td style="padding:0.5rem;">Strict 512 KB</td>
+              <td style="padding:0.5rem;">PNG, APNG, Lottie</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Twitch Subscriber Emote</strong></td>
+              <td style="padding:0.5rem;">112 × 112 px (or 112, 56, 28 px bundle)</td>
+              <td style="padding:0.5rem;">28 × 28 px</td>
+              <td style="padding:0.5rem;">1 MB (Auto-resize)</td>
+              <td style="padding:0.5rem;">PNG with transparency</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Twitch Sub / Bit Badge</strong></td>
+              <td style="padding:0.5rem;">72 × 72 px, 36 × 36 px, 18 × 18 px</td>
+              <td style="padding:0.5rem;">18 × 18 px (Next to username)</td>
+              <td style="padding:0.5rem;">Strict 25 KB max</td>
+              <td style="padding:0.5rem;">PNG (transparent)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Why Small 32×32 px Emotes Disappear in Chat (The Transparency Trap)</h2>
+        <p>
+          A common pitfall creators encounter is designing an emote at 500×500 px with substantial transparent padding around the subject. While this looks balanced in Photoshop, when Discord rescales the file down to <strong>32×32 pixels</strong> in inline chat, the visible character shrinks down to less than 18 pixels—turning faces into unreadable smudges.
+        </p>
+        <p>
+          Our <strong>Smart Auto-Trim</strong> feature resolves this by scanning pixel alpha channels to automatically crop out invisible transparent gutters before scaling, ensuring your subject occupies 90–95% of the visible chat container.
+        </p>
+
+        <h2>Why Sticker Die-Cut White Outlines Save Dark Emojis on Dark Mode</h2>
+        <p>
+          More than 85% of active Discord and Twitch users operate in Dark Mode or Midnight (AMOLED) black. If your custom emoji features dark hair, black sunglasses, or dark shadows, the contours disappear completely against <code>#313338</code> and <code>#000000</code> backgrounds.
+        </p>
+        <p>
+          Enabling the <strong>Sticker Die-Cut Outline</strong> dynamically injects a clean, multi-pass white or custom stroke around the non-transparent silhouette. This creates maximum visual separation, allowing dark characters and memes to pop crisply across light, dark, and midnight themes.
+        </p>
+
+        <h2>Exporting Multi-Size Bundles for Twitch (112px, 56px, 28px)</h2>
+        <p>
+          While Twitch now supports single-file auto-resize mode for standard emotes, manual 3-file uploads remain mandatory for channel subscriber loyalty badges and bit tiers. Furthermore, auto-resizing can introduce blurriness on intricate pixel art. Our tool generates sharp, downscaled <code>112px</code>, <code>56px</code>, and <code>28px</code> (or <code>72px</code>, <code>36px</code>, <code>18px</code> for badges) and packages them into a clean <code>.zip</code> archive in a single click.
+        </p>
+
+        <h2>Client-Side Image Privacy &amp; Zero Server Upload Architecture</h2>
+        <p>
+          Your creative designs, proprietary brand logos, and exclusive subscriber art never touch an external server or API. All decoding, alpha trimming, canvas resampling, stroke generation, and ZIP archive packaging occur strictly in your local browser memory using native HTML5 Canvas and Web APIs.
+        </p>
+
+        <h2>Technical Canvas Mechanics &amp; Alpha Quantization</h2>
+        <ul>
+          <li><strong>Alpha Trimming Algorithm:</strong> Offscreen <code>ImageData</code> scan with an alpha threshold of <code>alpha &gt; 10</code> to prevent stray compression artifacts from distorting bounding boxes.</li>
+          <li><strong>Bicubic Downsampling:</strong> Multi-step canvas scaling guarantees high frequency edge retention and eliminates jagged artifacts when reducing 4000px source files to 128px.</li>
+          <li><strong>ZIP Archive Packaging:</strong> Built-in uncompressed PKZIP (RFC 1950) binary generator creating instant lossless archives without third-party cloud round-trips.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is the recommended size and file limit for Discord custom emojis?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            The standard upload size for Discord custom emojis is 128×128 pixels with a strict maximum file size of 256 KB. In chat, Discord renders emojis at 32×32 pixels (or 48×48 pixels when sent as a standalone jumbo emoji). Images should be square (1:1 ratio) PNG, WebP, or GIF.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What are the required dimensions for Twitch subscriber emotes and sub badges?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            For Twitch emotes, Twitch accepts a single 112×112 px PNG (up to 1 MB) in auto-resize mode, or manual uploads in three sizes: 112×112 px, 56×56 px, and 28×28 px. For Twitch subscriber/bit loyalty badges, Twitch requires three square files: 72×72 px, 36×36 px, and 18×18 px with a strict 25 KB file size limit per badge.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">Why do transparent PNG emojis appear tiny or unreadable in Discord chat?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Many PNG cutouts contain wide invisible transparent margins around the subject. When Discord scales a 128px image down to 32px in chat, empty margins shrink the visible subject into an unrecognizable blur. Enabling 'Smart Auto-Trim' removes invisible padding, maximizing visible character size.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">Why should I add a white sticker outline around custom Discord emojis?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Over 85% of Discord users use Dark Mode or Midnight (AMOLED) black themes. Dark hair, black clothing, or dark memes blend into the background and become invisible. Adding a clean 2px to 4px white die-cut outline provides high-contrast separation, keeping your emote sharp and legible across all themes.
+          </p>
+        </div>
+
+        <h2>Related Browser Tools</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2);">
+          <a href="/tools/image-dpi-checker.html" class="related-tool-chip">🔍 Image DPI &amp; Metadata Checker</a>
+          <a href="/tools/short-form-safe-zone-checker.html" class="related-tool-chip">🌐 All-in-One Safe-Zone Checker</a>
+          <a href="/tools/youtube-shorts-safe-zone-checker.html" class="related-tool-chip">▶️ YouTube Shorts Safe-Zone Preview</a>
+          <a href="/tools/tiktok-safe-zone-checker.html" class="related-tool-chip">🎵 TikTok Safe-Zone Preview</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top:var(--space-5); border-top:1px solid var(--color-border); padding:var(--space-4) 0; text-align:center; color:var(--color-text-muted); font-size:var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/emoji-resizer-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // State
+    let currentPreset = 'discord-emoji';
+    let targetSize = 128;
+    let maxKb = 256;
+    let fitMode = 'contain'; // 'contain' or 'cover'
+    let zoomLevel = 1.0;
+    let panX = 0;
+    let panY = 0;
+    let isAutoTrim = true;
+    let safePadding = 4; // percent
+    let isOutline = false;
+    let outlineWidth = 3;
+    let outlineColor = '#ffffff';
+
+    let loadedImage = null;
+    let currentBlob = null;
+    let originalFileName = 'custom-emoji';
+
+    // DOM Elements
+    const presetPills = document.querySelectorAll('.preset-pill');
+    const dropBox = document.getElementById('dropBox');
+    const fileInput = document.getElementById('fileInput');
+    const btnLoadSample = document.getElementById('btnLoadSample');
+
+    const fitModeSelect = document.getElementById('fitModeSelect');
+    const coverControlsWrap = document.getElementById('coverControlsWrap');
+    const zoomSlider = document.getElementById('zoomSlider');
+    const zoomVal = document.getElementById('zoomVal');
+    const panXSlider = document.getElementById('panXSlider');
+    const panYSlider = document.getElementById('panYSlider');
+
+    const autoTrimToggle = document.getElementById('autoTrimToggle');
+    const safePaddingSlider = document.getElementById('safePaddingSlider');
+    const safePaddingVal = document.getElementById('safePaddingVal');
+
+    const outlineToggle = document.getElementById('outlineToggle');
+    const outlineControlsWrap = document.getElementById('outlineControlsWrap');
+    const outlineWidthSlider = document.getElementById('outlineWidthSlider');
+    const outlineWidthVal = document.getElementById('outlineWidthVal');
+    const outlineColorPicker = document.getElementById('outlineColorPicker');
+
+    const customSettingsWrap = document.getElementById('customSettingsWrap');
+    const customPxInput = document.getElementById('customPxInput');
+    const customMaxKbInput = document.getElementById('customMaxKbInput');
+
+    const masterCanvas = document.getElementById('masterCanvas');
+    const specDimensions = document.getElementById('specDimensions');
+    const specFileSize = document.getElementById('specFileSize');
+
+    const btnDownloadSingle = document.getElementById('btnDownloadSingle');
+    const btnDownloadZip = document.getElementById('btnDownloadZip');
+    const btnReset = document.getElementById('btnReset');
+    const twitchSizesRow = document.getElementById('twitchSizesRow');
+    const btnDl112 = document.getElementById('btnDl112');
+    const btnDl56 = document.getElementById('btnDl56');
+    const btnDl28 = document.getElementById('btnDl28');
+
+    // Chat Simulator
+    const chatSimCard = document.getElementById('chatSimCard');
+    const themeChips = document.querySelectorAll('.btn-theme-chip');
+    const chatInlineImg = document.getElementById('chatInlineImg');
+    const chatReactionImg = document.getElementById('chatReactionImg');
+    const chatJumboImg = document.getElementById('chatJumboImg');
+
+    // Draw Demo Pepe Emote initially
+    function drawDemoPepe() {
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = 256;
+      tempCanvas.height = 256;
+      const ctx = tempCanvas.getContext('2d');
+
+      // Draw high-quality cute mascot face with transparent background
+      ctx.clearRect(0, 0, 256, 256);
+
+      // Head (Green frog/mascot style)
+      ctx.fillStyle = '#6ab04c';
+      ctx.beginPath();
+      ctx.arc(128, 138, 80, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Big Happy Eyes
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(92, 100, 32, 0, Math.PI * 2);
+      ctx.arc(164, 100, 32, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Pupils
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath();
+      ctx.arc(98, 100, 16, 0, Math.PI * 2);
+      ctx.arc(158, 100, 16, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Eye highlights
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(94, 94, 6, 0, Math.PI * 2);
+      ctx.arc(154, 94, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Big Smirk Smile
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 8;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.arc(128, 140, 50, 0.2 * Math.PI, 0.8 * Math.PI);
+      ctx.stroke();
+
+      // Pink Cheeks
+      ctx.fillStyle = 'rgba(235, 77, 75, 0.4)';
+      ctx.beginPath();
+      ctx.arc(75, 150, 14, 0, Math.PI * 2);
+      ctx.arc(181, 150, 14, 0, Math.PI * 2);
+      ctx.fill();
+
+      const img = new Image();
+      img.onload = () => {
+        loadedImage = img;
+        originalFileName = 'pepe-happy';
+        processEmote();
+      };
+      img.src = tempCanvas.toDataURL('image/png');
+    }
+
+    // Process & Render
+    function processEmote() {
+      if (!loadedImage) return;
+
+      // 1. Determine bounding box for auto-trim
+      let srcX = 0;
+      let srcY = 0;
+      let srcW = loadedImage.naturalWidth || loadedImage.width;
+      let srcH = loadedImage.naturalHeight || loadedImage.height;
+
+      if (isAutoTrim) {
+        // Offscreen canvas to scan alpha
+        const scanCanvas = document.createElement('canvas');
+        scanCanvas.width = srcW;
+        scanCanvas.height = srcH;
+        const scanCtx = scanCanvas.getContext('2d');
+        scanCtx.drawImage(loadedImage, 0, 0);
+
+        const imgData = scanCtx.getImageData(0, 0, srcW, srcH);
+        const bbox = EmojiResizerUtils.findBoundingBox(imgData, 10);
+        if (!bbox.isEmpty) {
+          srcX = bbox.x;
+          srcY = bbox.y;
+          srcW = bbox.width;
+          srcH = bbox.height;
+        }
+      }
+
+      // Master Canvas setup
+      masterCanvas.width = targetSize;
+      masterCanvas.height = targetSize;
+      const ctx = masterCanvas.getContext('2d');
+      ctx.clearRect(0, 0, targetSize, targetSize);
+
+      // Create intermediate canvas for the cropped subject
+      const subjectCanvas = document.createElement('canvas');
+      subjectCanvas.width = targetSize;
+      subjectCanvas.height = targetSize;
+      const subCtx = subjectCanvas.getContext('2d');
+      subCtx.imageSmoothingEnabled = true;
+      subCtx.imageSmoothingQuality = 'high';
+
+      // Safe padding calculation
+      const padPx = (safePadding / 100) * targetSize;
+      const drawAreaSize = targetSize - (padPx * 2);
+
+      if (fitMode === 'contain') {
+        // Scale to fit while maintaining aspect ratio
+        const scale = Math.min(drawAreaSize / srcW, drawAreaSize / srcH);
+        const dw = Math.round(srcW * scale);
+        const dh = Math.round(srcH * scale);
+        const dx = Math.round(padPx + (drawAreaSize - dw) / 2);
+        const dy = Math.round(padPx + (drawAreaSize - dh) / 2);
+
+        subCtx.drawImage(loadedImage, srcX, srcY, srcW, srcH, dx, dy, dw, dh);
+      } else {
+        // 'cover' mode: fills 1:1 square with zoom and pan
+        const baseScale = Math.max(targetSize / srcW, targetSize / srcH) * zoomLevel;
+        const dw = Math.round(srcW * baseScale);
+        const dh = Math.round(srcH * baseScale);
+
+        const offsetX = (panX / 100) * targetSize;
+        const offsetY = (panY / 100) * targetSize;
+
+        const dx = Math.round((targetSize - dw) / 2 + offsetX);
+        const dy = Math.round((targetSize - dh) / 2 + offsetY);
+
+        subCtx.drawImage(loadedImage, srcX, srcY, srcW, srcH, dx, dy, dw, dh);
+      }
+
+      // 2. Apply Outline if enabled
+      if (isOutline && outlineWidth > 0) {
+        EmojiResizerUtils.drawStickerOutline(masterCanvas, subjectCanvas, outlineWidth, outlineColor);
+      } else {
+        ctx.drawImage(subjectCanvas, 0, 0);
+      }
+
+      // 3. Export data URL for Chat Preview & Measure Blob Size
+      masterCanvas.toBlob(blob => {
+        if (!blob) return;
+        currentBlob = blob;
+        const kb = (blob.size / 1024).toFixed(1);
+
+        specDimensions.textContent = `${targetSize} × ${targetSize} px`;
+        specFileSize.textContent = `${kb} KB / ${maxKb} KB Max`;
+
+        if (blob.size / 1024 > maxKb) {
+          specFileSize.className = 'spec-pill spec-warn';
+          specFileSize.textContent = `${kb} KB (Exceeds ${maxKb} KB)`;
+        } else {
+          specFileSize.className = 'spec-pill spec-ok';
+        }
+
+        const dataUrl = masterCanvas.toDataURL('image/png');
+        chatInlineImg.src = dataUrl;
+        chatReactionImg.src = dataUrl;
+        chatJumboImg.src = dataUrl;
+      }, 'image/png');
+    }
+
+    // Set Platform Preset
+    function setPreset(presetKey) {
+      currentPreset = presetKey;
+      const p = EmojiResizerUtils.PRESETS[presetKey];
+      if (!p) return;
+
+      presetPills.forEach(pill => {
+        const isActive = pill.dataset.preset === presetKey;
+        pill.classList.toggle('active', isActive);
+        pill.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      if (presetKey === 'custom') {
+        customSettingsWrap.style.display = 'block';
+        targetSize = parseInt(customPxInput.value, 10) || 128;
+        maxKb = parseInt(customMaxKbInput.value, 10) || 512;
+        btnDownloadZip.style.display = 'none';
+        twitchSizesRow.style.display = 'none';
+      } else {
+        customSettingsWrap.style.display = 'none';
+        targetSize = p.targetSize;
+        maxKb = p.maxKb;
+
+        if (p.sizes && p.sizes.length > 1) {
+          btnDownloadZip.style.display = 'inline-flex';
+          twitchSizesRow.style.display = 'flex';
+          btnDl112.textContent = `${p.sizes[0]}px`;
+          btnDl56.textContent = `${p.sizes[1]}px`;
+          btnDl28.textContent = `${p.sizes[2]}px`;
+        } else {
+          btnDownloadZip.style.display = 'none';
+          twitchSizesRow.style.display = 'none';
+        }
+      }
+
+      processEmote();
+    }
+
+    // Event Listeners: Preset switching
+    presetPills.forEach(pill => {
+      pill.addEventListener('click', () => setPreset(pill.dataset.preset));
+    });
+
+    // File Input & Drag/Drop
+    function handleFile(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      originalFileName = file.name.replace(/\.[^/.]+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          loadedImage = img;
+          processEmote();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    dropBox.addEventListener('click', () => fileInput.click());
+    dropBox.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        fileInput.click();
+      }
+    });
+
+    dropBox.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropBox.classList.add('drag-over');
+    });
+    dropBox.addEventListener('dragleave', () => dropBox.classList.remove('drag-over'));
+    dropBox.addEventListener('drop', e => {
+      e.preventDefault();
+      dropBox.classList.remove('drag-over');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files && fileInput.files[0]) {
+        handleFile(fileInput.files[0]);
+      }
+    });
+
+    // Clipboard Paste (Ctrl + V)
+    document.addEventListener('paste', e => {
+      if (e.clipboardData && e.clipboardData.items) {
+        for (let i = 0; i < e.clipboardData.items.length; i++) {
+          const item = e.clipboardData.items[i];
+          if (item.type.indexOf('image') !== -1) {
+            const blob = item.getAsFile();
+            if (blob) {
+              originalFileName = 'clipboard-emote';
+              handleFile(blob);
+              break;
+            }
+          }
+        }
+      }
+    });
+
+    // Load Demo Button
+    btnLoadSample.addEventListener('click', e => {
+      e.stopPropagation();
+      drawDemoPepe();
+    });
+
+    // Controls: Fit Mode
+    fitModeSelect.addEventListener('change', () => {
+      fitMode = fitModeSelect.value;
+      coverControlsWrap.style.display = fitMode === 'cover' ? 'block' : 'none';
+      processEmote();
+    });
+
+    zoomSlider.addEventListener('input', () => {
+      zoomLevel = parseFloat(zoomSlider.value);
+      zoomVal.textContent = `${zoomLevel.toFixed(1)}x`;
+      processEmote();
+    });
+
+    panXSlider.addEventListener('input', () => {
+      panX = parseInt(panXSlider.value, 10);
+      processEmote();
+    });
+
+    panYSlider.addEventListener('input', () => {
+      panY = parseInt(panYSlider.value, 10);
+      processEmote();
+    });
+
+    // Controls: Auto-trim & Padding
+    autoTrimToggle.addEventListener('change', () => {
+      isAutoTrim = autoTrimToggle.checked;
+      processEmote();
+    });
+
+    safePaddingSlider.addEventListener('input', () => {
+      safePadding = parseInt(safePaddingSlider.value, 10);
+      safePaddingVal.textContent = `${safePadding}%`;
+      processEmote();
+    });
+
+    // Controls: Outline
+    outlineToggle.addEventListener('change', () => {
+      isOutline = outlineToggle.checked;
+      outlineControlsWrap.style.display = isOutline ? 'block' : 'none';
+      processEmote();
+    });
+
+    outlineWidthSlider.addEventListener('input', () => {
+      outlineWidth = parseInt(outlineWidthSlider.value, 10);
+      outlineWidthVal.textContent = `${outlineWidth}px`;
+      processEmote();
+    });
+
+    outlineColorPicker.addEventListener('input', () => {
+      outlineColor = outlineColorPicker.value;
+      processEmote();
+    });
+
+    // Custom px & KB
+    customPxInput.addEventListener('input', () => {
+      const val = parseInt(customPxInput.value, 10);
+      if (val >= 32 && val <= 1024) {
+        targetSize = val;
+        processEmote();
+      }
+    });
+
+    customMaxKbInput.addEventListener('input', () => {
+      const val = parseInt(customMaxKbInput.value, 10);
+      if (val >= 10) {
+        maxKb = val;
+        processEmote();
+      }
+    });
+
+    // Theme Switcher for Chat Simulator
+    themeChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        themeChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const theme = chip.dataset.theme;
+
+        if (theme === 'dark') {
+          chatSimCard.style.background = '#313338';
+          chatSimCard.style.color = '#dbdee1';
+        } else if (theme === 'midnight') {
+          chatSimCard.style.background = '#000000';
+          chatSimCard.style.color = '#dbdee1';
+        } else if (theme === 'light') {
+          chatSimCard.style.background = '#ffffff';
+          chatSimCard.style.color = '#313338';
+        } else if (theme === 'twitch') {
+          chatSimCard.style.background = '#0e0e10';
+          chatSimCard.style.color = '#efeff1';
+        }
+      });
+    });
+
+    // Downloads
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    btnDownloadSingle.addEventListener('click', () => {
+      if (!currentBlob) return;
+      downloadBlob(currentBlob, `${originalFileName}-${targetSize}x${targetSize}.png`);
+    });
+
+    // Helper to generate canvas at arbitrary size from masterCanvas
+    function renderCanvasAtSize(size) {
+      const c = document.createElement('canvas');
+      c.width = size;
+      c.height = size;
+      const ctx = c.getContext('2d');
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(masterCanvas, 0, 0, size, size);
+      return c;
+    }
+
+    // Individual Twitch Size buttons
+    function downloadSize(sz) {
+      const c = renderCanvasAtSize(sz);
+      c.toBlob(blob => {
+        if (blob) {
+          downloadBlob(blob, `${originalFileName}-${sz}x${sz}.png`);
+        }
+      }, 'image/png');
+    }
+
+    btnDl112.addEventListener('click', () => {
+      const p = EmojiResizerUtils.PRESETS[currentPreset];
+      if (p && p.sizes) downloadSize(p.sizes[0]);
+    });
+    btnDl56.addEventListener('click', () => {
+      const p = EmojiResizerUtils.PRESETS[currentPreset];
+      if (p && p.sizes && p.sizes[1]) downloadSize(p.sizes[1]);
+    });
+    btnDl28.addEventListener('click', () => {
+      const p = EmojiResizerUtils.PRESETS[currentPreset];
+      if (p && p.sizes && p.sizes[2]) downloadSize(p.sizes[2]);
+    });
+
+    // Download All as ZIP (Zero-dependency PKZIP)
+    btnDownloadZip.addEventListener('click', async () => {
+      const p = EmojiResizerUtils.PRESETS[currentPreset];
+      if (!p || !p.sizes || p.sizes.length < 2) return;
+
+      const files = [];
+      for (const sz of p.sizes) {
+        const c = renderCanvasAtSize(sz);
+        const dataUrl = c.toDataURL('image/png');
+        // Convert base64 dataUrl to Uint8Array
+        const base64Data = dataUrl.split(',')[1];
+        const binaryStr = atob(base64Data);
+        const bytes = new Uint8Array(binaryStr.length);
+        for (let i = 0; i < binaryStr.length; i++) {
+          bytes[i] = binaryStr.charCodeAt(i);
+        }
+        files.push({
+          name: `${originalFileName}-${sz}x${sz}.png`,
+          data: bytes
+        });
+      }
+
+      const zipBytes = EmojiResizerUtils.buildZip(files);
+      const zipBlob = new Blob([zipBytes], { type: 'application/zip' });
+      downloadBlob(zipBlob, `${originalFileName}-twitch-bundle.zip`);
+    });
+
+    // Reset button
+    btnReset.addEventListener('click', () => {
+      fitMode = 'contain';
+      fitModeSelect.value = 'contain';
+      coverControlsWrap.style.display = 'none';
+      zoomLevel = 1.0;
+      zoomSlider.value = 1.0;
+      zoomVal.textContent = '1.0x';
+      panX = 0;
+      panXSlider.value = 0;
+      panY = 0;
+      panYSlider.value = 0;
+
+      isAutoTrim = true;
+      autoTrimToggle.checked = true;
+      safePadding = 4;
+      safePaddingSlider.value = 4;
+      safePaddingVal.textContent = '4%';
+
+      isOutline = false;
+      outlineToggle.checked = false;
+      outlineControlsWrap.style.display = 'none';
+      outlineWidth = 3;
+      outlineWidthSlider.value = 3;
+      outlineWidthVal.textContent = '3px';
+      outlineColor = '#ffffff';
+      outlineColorPicker.value = '#ffffff';
+
+      setPreset('discord-emoji');
+      drawDemoPepe();
+    });
+
+    // Initial Load
+    setPreset('discord-emoji');
+    drawDemoPepe();
+  })();
+  </script>
+</body>
+</html>

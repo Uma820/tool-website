@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza Dough Calculator — Neapolitan, NY Style &amp; Sourdough</title>
+  <meta name="description" content="Calculate exact pizza dough ingredient weights, hydration percentages, dough ball sizes, and baker's percentages for Neapolitan, NY style, and Detroit pan pizzas.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/pizza-dough-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/pizza-dough-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/pizza-dough-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pizza Dough Calculator",
+    "description": "Calculate exact flour, water, salt, yeast, and olive oil weights for pizza dough batches using Baker's percentages and total batch weight back-calculation.",
+    "url": "https://nexivo.com/tools/pizza-dough-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the ideal dough ball weight for different pizza sizes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For thin-crust Neapolitan or NY pizzas: a 10-inch pizza uses roughly 200g, a standard 12-inch pizza uses 250g, a 14-inch pizza uses 330g, and an extra-large 16-inch pizza uses 420g to 450g of dough."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between Neapolitan and New York style dough?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "True Neapolitan dough contains only four ingredients: flour, water, salt, and yeast (no oil or sugar) and is baked in wood-fired ovens above 450°C (850°F). New York style dough incorporates 1% to 2% olive oil for tender chewiness and sugar/malt to assist browning at lower home oven temperatures (260°C / 500°F)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you substitute Active Dry Yeast (ADY) or Fresh Yeast for Instant Yeast (IDY)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Instant Dry Yeast (IDY) is the baseline standard. To use Active Dry Yeast (ADY), multiply by 1.25x. To substitute fresh cake yeast, multiply by 3.0x. Sourdough starter is typically used at 15% to 20% of total flour weight."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is Baker's Percentage used instead of standard culinary percentages?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In baker's percentages, the total flour weight is always established as 100%. Every other ingredient is expressed as a ratio of that flour weight. This allows professional pizzaiolos to scale recipes effortlessly regardless of batch size."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#food">Food &amp; Baking</a></li>
+      <li>/</li>
+      <li aria-current="page">Pizza Dough Calculator</li>
+    </nav>
+
+    <!-- Baking Suite Navigation -->
+    <div class="baking-suite-nav">
+      <span class="baking-suite-label">Baking Suite:</span>
+      <a href="/tools/pizza-dough-calculator.html" class="baking-pill active">Pizza Dough</a>
+      <a href="/tools/sourdough-hydration-calculator.html" class="baking-pill">Sourdough Hydration</a>
+      <a href="/tools/bakers-percentage-calculator.html" class="baking-pill">Baker's %</a>
+      <a href="/tools/bread-recipe-scaler.html" class="baking-pill">Recipe Scaler</a>
+      <a href="/tools/coffee-to-water-ratio-calculator.html" class="baking-pill">Coffee Ratios</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Pizza Dough Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Calculate exact ingredient weights for any number of pizza dough balls. Uses Baker's math and exact total weight back-calculation for Neapolitan, NY Style, and Detroit pan pizzas.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-popular">Popular</span>
+        <span class="tool-badge">Baker's Math</span>
+        <span class="tool-badge">0.1g Precision</span>
+        <span class="tool-badge">100% In-Browser</span>
+      </div>
+    </div>
+
+    <!-- Calculator Main Panel -->
+    <div class="tool-panel">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); margin-block-end: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); margin: 0; color: var(--color-primary); display: flex; align-items: center; gap: var(--space-2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20z"/></svg>
+          <span>Pizza Batch Parameters</span>
+        </h2>
+        
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <span style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-secondary);">Units:</span>
+          <div class="unit-toggle-group" role="radiogroup" aria-label="Measurement Units">
+            <button type="button" class="unit-toggle-btn active" id="btn-grams" aria-checked="true">Grams (g)</button>
+            <button type="button" class="unit-toggle-btn" id="btn-ounces" aria-checked="false">Ounces (oz)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-4);">
+        <div class="form-group">
+          <label for="style-preset" class="form-label">Pizza Style Preset</label>
+          <select id="style-preset" class="form-select">
+            <option value="neapolitan" selected>Neapolitan (62% Hydration, 3% Salt)</option>
+            <option value="new-york">New York Style (63% Hydration, Oil &amp; Sugar)</option>
+            <option value="detroit">Detroit / Sicilian Pan (70% Hydration)</option>
+            <option value="sourdough">Artisan Sourdough Pizza (65% Hydration, 15% Levain)</option>
+            <option value="custom">Custom Formula...</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dough-balls" class="form-label">Number of Dough Balls</label>
+          <input type="number" id="dough-balls" class="form-input" value="4" min="1" max="100" step="1">
+        </div>
+
+        <div class="form-group">
+          <label for="ball-weight" class="form-label" id="label-ball-weight">Target Ball Weight (g)</label>
+          <input type="number" id="ball-weight" class="form-input" value="250" min="50" step="5">
+          <div style="display: flex; gap: var(--space-1); margin-block-start: 0.25rem;">
+            <button type="button" class="btn btn-secondary btn-chip" data-weight="200" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">10" (200g)</button>
+            <button type="button" class="btn btn-secondary btn-chip" data-weight="250" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">12" (250g)</button>
+            <button type="button" class="btn btn-secondary btn-chip" data-weight="330" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">14" (330g)</button>
+            <button type="button" class="btn btn-secondary btn-chip" data-weight="430" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">16" (430g)</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="hydration-pct" class="form-label">Hydration (%)</label>
+          <input type="number" id="hydration-pct" class="form-input" value="62" min="45" max="95" step="0.5">
+        </div>
+
+        <div class="form-group">
+          <label for="salt-pct" class="form-label">Salt (%)</label>
+          <input type="number" id="salt-pct" class="form-input" value="3.0" min="0" max="6" step="0.1">
+        </div>
+
+        <div class="form-group">
+          <label for="yeast-type" class="form-label">Yeast Type</label>
+          <select id="yeast-type" class="form-select">
+            <option value="idy" selected>Instant Dry Yeast (IDY)</option>
+            <option value="ady">Active Dry Yeast (ADY — 1.25x)</option>
+            <option value="fresh">Fresh Yeast (Cake — 3.0x)</option>
+            <option value="starter">Sourdough Starter / Levain</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="yeast-pct" class="form-label">Yeast (%)</label>
+          <input type="number" id="yeast-pct" class="form-input" value="0.2" min="0" max="30" step="0.05">
+        </div>
+
+        <div class="form-group">
+          <label for="oil-pct" class="form-label">Olive Oil (%)</label>
+          <input type="number" id="oil-pct" class="form-input" value="0.0" min="0" max="10" step="0.5">
+        </div>
+
+        <div class="form-group">
+          <label for="sugar-pct" class="form-label">Sugar / Diastatic Malt (%)</label>
+          <input type="number" id="sugar-pct" class="form-input" value="0.0" min="0" max="10" step="0.5">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-block-end: var(--space-5);">
+        <button type="button" class="btn btn-secondary" id="btn-reset">Reset Defaults</button>
+        <button type="button" class="btn btn-primary" id="btn-copy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Recipe Formula</span>
+        </button>
+      </div>
+
+      <!-- Highlights Row -->
+      <div class="utilization-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-block-end: var(--space-5);">
+        <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Total Batch Dough Weight</div>
+          <div style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-primary);" id="stat-total-dough">1000 g</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-secondary);" id="stat-total-balls">4 balls × 250g</div>
+        </div>
+
+        <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Dough Hydration &amp; Texture</div>
+          <div style="font-size: var(--font-size-lg); font-weight: 700; color: #10b981;" id="stat-texture-badge">Easy to Handle</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-secondary);" id="stat-hydration-sub">62.0% water on flour</div>
+        </div>
+      </div>
+
+      <!-- Recipe Ingredient Table -->
+      <h3 style="font-size: var(--font-size-sm); margin: 0 0 var(--space-2) 0; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+        Dough Formula &amp; Ingredient Breakdown
+      </h3>
+
+      <div class="cargo-table-container">
+        <table class="cargo-table" id="recipe-table">
+          <thead>
+            <tr>
+              <th>Ingredient</th>
+              <th>Baker's %</th>
+              <th id="th-per-ball">Per Ball (g)</th>
+              <th id="th-batch-weight">Batch Weight (g)</th>
+            </tr>
+          </thead>
+          <tbody id="recipe-tbody">
+            <!-- Dynamic rows inserted here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Educational & SEO Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>
+          The <strong>Pizza Dough Calculator</strong> computes the exact gram or ounce measurements for homemade and commercial pizza dough batches. Instead of guessing flour amounts or struggling with messy fractions, it uses <em>exact total dough weight back-calculation</em>: you simply choose your pizza style, number of dough balls, and target weight, and the calculator mathematically back-calculates the exact flour baseline ($100\%$) and balances all water, salt, yeast, and fat ratios.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li><strong>Select your pizza style preset:</strong> Choose <em>Neapolitan (62%)</em> for high-heat wood ovens, <em>New York Style (63%)</em> for conventional home ovens, or <em>Detroit (70%)</em> for crispy, thick pan crusts.</li>
+          <li><strong>Specify dough balls and size:</strong> Enter how many pizzas you plan to bake and choose your desired ball weight (e.g. 250g for 12" pies).</li>
+          <li><strong>Choose your yeast type:</strong> Select Instant Dry Yeast (IDY), Active Dry Yeast (ADY), Fresh Cake Yeast, or Sourdough Starter. The calculator automatically adjusts yeast percentages.</li>
+          <li><strong>Fine-tune percentages (optional):</strong> Adjust hydration, salt, or oil if desired. The ingredients update instantaneously in real time.</li>
+          <li><strong>Copy your recipe formula:</strong> Click <em>"Copy Recipe Formula"</em> to copy formatted gram measurements directly to your notes or kitchen board.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Mathematical Formulas Used</h2>
+        <div class="example-box">
+          <p style="margin-block-end: var(--space-2); font-weight: 600;">Total Batch Back-Calculation Equations:</p>
+          <pre class="example-pre">Total Dough Weight = Number of Balls × Target Ball Weight&#10;Total Baker's % = 100% (Flour) + Hydration% + Salt% + Yeast% + Oil% + Sugar%&#10;Flour Weight (g) = Total Dough Weight / (Total Baker's % / 100)&#10;Water Weight (g) = Flour Weight × (Hydration% / 100)&#10;Salt Weight (g) = Flour Weight × (Salt% / 100)&#10;Yeast Weight (g) = Flour Weight × (Yeast% / 100)</pre>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Pizza Styles &amp; Baker's Percentages Reference Table</h2>
+        <div class="cargo-table-container">
+          <table class="cargo-table">
+            <thead>
+              <tr>
+                <th>Pizza Style</th>
+                <th>Hydration %</th>
+                <th>Salt %</th>
+                <th>Olive Oil %</th>
+                <th>Sugar / Malt %</th>
+                <th>Recommended Bake Temp</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Neapolitan (AVPN)</strong></td>
+                <td>58% – 64%</td>
+                <td>2.8% – 3.2%</td>
+                <td>0.0% (None)</td>
+                <td>0.0% (None)</td>
+                <td>430°C – 485°C (800°F – 900°F)</td>
+              </tr>
+              <tr>
+                <td><strong>New York Style</strong></td>
+                <td>62% – 65%</td>
+                <td>2.2% – 2.5%</td>
+                <td>1.5% – 2.5%</td>
+                <td>1.0% – 2.0%</td>
+                <td>260°C – 290°C (500°F – 550°F)</td>
+              </tr>
+              <tr>
+                <td><strong>Detroit / Sicilian Pan</strong></td>
+                <td>68% – 74%</td>
+                <td>2.2% – 2.5%</td>
+                <td>3.0% – 4.0%</td>
+                <td>1.0% – 1.5%</td>
+                <td>230°C – 260°C (450°F – 500°F)</td>
+              </tr>
+              <tr>
+                <td><strong>Artisan Sourdough</strong></td>
+                <td>64% – 70%</td>
+                <td>2.3% – 2.6%</td>
+                <td>1.0% – 2.0%</td>
+                <td>0.0%</td>
+                <td>260°C – 350°C (500°F – 660°F)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Home Pizza Parties:</strong> Instantly calculating exact ingredient weights whether hosting 2 guests (2 balls) or 20 guests (16 balls).</li>
+          <li><strong>Home Oven Adaptation:</strong> Adding 2% olive oil and 1.5% sugar to standard recipes so crusts brown beautifully at 500°F on a pizza steel.</li>
+          <li><strong>Commercial Pizzeria Batching:</strong> Accurately scaling daily 25kg and 50kg flour bag batches with 0.1g yeast precision.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input (4 Neapolitan Balls @ 250g)</div>
+              <pre class="example-pre">Balls: 4 | Ball Weight: 250g | Total: 1000g&#10;Hydration: 62% | Salt: 3.0% | IDY Yeast: 0.2%&#10;Oil: 0% | Sugar: 0%</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">Flour: 605g (151.3g / ball)&#10;Water: 375g (93.8g / ball)&#10;Salt: 18.2g (4.5g / ball)&#10;Instant Dry Yeast: 1.2g (0.3g / ball)&#10;Total Batch Weight: 1000g</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          The algorithm uses double-precision floating point arithmetic. Flour and water weights round to the nearest whole integer gram ($1\text{g}$), while fine ingredients like salt, instant yeast, and oil are rounded to tenths of a gram ($0.1\text{g}$) for high-precision digital kitchen scales.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Ambient room temperature and dough fermentation times (e.g. 2-hour warm ferment vs. 72-hour cold retard) influence the final proofing activity of the yeast. In warmer climates ($>26^\circ\text{C} / 78^\circ\text{F}$), reduce yeast percentages by 20% to 30% to prevent over-fermentation.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All pizza recipes, batch weights, and custom Baker's percentages are computed strictly in your local browser. Your formulas and secret recipes are never logged, tracked, or sent to cloud servers.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Why does my pizza dough tear when stretching?</h3>
+          <p>
+            Dough tearing is usually caused by under-developed gluten, cold dough (always let refrigerated dough balls warm up for 1.5 to 2 hours at room temperature before opening), or insufficient dough relaxation after balling.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I use all-purpose flour instead of Tipo 00 or Bread flour?</h3>
+          <p>
+            Yes, but unbleached Bread Flour (12.5% to 14% protein) or Italian Tipo 00 flour is strongly recommended. Higher protein flour develops the gluten network required to trap expanding steam and ferment gases, yielding an airy cornicione.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>How long should pizza dough ferment?</h3>
+          <p>
+            A 24 to 72 hour cold fermentation in the refrigerator develops deep aroma, organic acids, and micro-bubbles in the crust while breaking down complex carbohydrates for easier digestion.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/sourdough-hydration-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20z"/></svg>
+            <span>Sourdough Hydration Calculator</span>
+          </a>
+          <a href="/tools/bakers-percentage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+            <span>Baker's Percentage Calculator</span>
+          </a>
+          <a href="/tools/bread-recipe-scaler.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            <span>Bread Recipe Scaler</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 Free Online Tools. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/baking-utils.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let isOunces = false;
+      let lastCalcResult = null;
+
+      const btnGrams = document.getElementById('btn-grams');
+      const btnOunces = document.getElementById('btn-ounces');
+      const stylePreset = document.getElementById('style-preset');
+      const ballsInput = document.getElementById('dough-balls');
+      const ballWeightInput = document.getElementById('ball-weight');
+      const hydrationInput = document.getElementById('hydration-pct');
+      const saltInput = document.getElementById('salt-pct');
+      const yeastTypeSelect = document.getElementById('yeast-type');
+      const yeastPctInput = document.getElementById('yeast-pct');
+      const oilInput = document.getElementById('oil-pct');
+      const sugarInput = document.getElementById('sugar-pct');
+
+      const btnReset = document.getElementById('btn-reset');
+      const btnCopy = document.getElementById('btn-copy');
+      const tbody = document.getElementById('recipe-tbody');
+
+      const labelBallWeight = document.getElementById('label-ball-weight');
+      const thPerBall = document.getElementById('th-per-ball');
+      const thBatchWeight = document.getElementById('th-batch-weight');
+
+      // Preset Change
+      stylePreset.addEventListener('change', function() {
+        if (this.value === 'custom') return;
+        const preset = BakingUtils.PIZZA_PRESETS[this.value];
+        if (preset) {
+          hydrationInput.value = preset.hydration;
+          saltInput.value = preset.salt;
+          yeastPctInput.value = preset.yeast;
+          oilInput.value = preset.oil;
+          sugarInput.value = preset.sugar;
+          if (preset.yeastType) {
+            yeastTypeSelect.value = preset.yeastType;
+          } else {
+            yeastTypeSelect.value = 'idy';
+          }
+          calculate();
+        }
+      });
+
+      // Quick Weight Chips
+      document.querySelectorAll('.btn-chip').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const wt = parseFloat(this.getAttribute('data-weight'));
+          ballWeightInput.value = isOunces ? BakingUtils.round(wt * BakingUtils.G_TO_OZ, 1) : wt;
+          calculate();
+        });
+      });
+
+      // Unit Toggle
+      btnGrams.addEventListener('click', () => setUnitMode(false));
+      btnOunces.addEventListener('click', () => setUnitMode(true));
+
+      function setUnitMode(ozMode) {
+        if (isOunces === ozMode) return;
+        isOunces = ozMode;
+
+        btnGrams.classList.toggle('active', !isOunces);
+        btnGrams.setAttribute('aria-checked', !isOunces ? 'true' : 'false');
+        btnOunces.classList.toggle('active', isOunces);
+        btnOunces.setAttribute('aria-checked', isOunces ? 'true' : 'false');
+
+        const factor = isOunces ? BakingUtils.G_TO_OZ : BakingUtils.OZ_TO_G;
+        ballWeightInput.value = BakingUtils.round(parseFloat(ballWeightInput.value || 250) * factor, isOunces ? 1 : 0);
+
+        const unitLabel = isOunces ? '(oz)' : '(g)';
+        labelBallWeight.textContent = `Target Ball Weight ${unitLabel}`;
+        thPerBall.textContent = `Per Ball ${unitLabel}`;
+        thBatchWeight.textContent = `Batch Weight ${unitLabel}`;
+
+        calculate();
+      }
+
+      function calculate() {
+        const balls = parseInt(ballsInput.value, 10) || 4;
+        let bWeight = parseFloat(ballWeightInput.value) || 250;
+        if (isOunces) bWeight = bWeight * BakingUtils.OZ_TO_G;
+
+        const hydr = parseFloat(hydrationInput.value) || 62;
+        const salt = parseFloat(saltInput.value) || 2.5;
+        const yeast = parseFloat(yeastPctInput.value) || 0.2;
+        const yeastType = yeastTypeSelect.value;
+        const oil = parseFloat(oilInput.value) || 0;
+        const sugar = parseFloat(sugarInput.value) || 0;
+
+        const res = BakingUtils.calculatePizzaDough({
+          balls,
+          ballWeight: bWeight,
+          hydration: hydr,
+          salt,
+          yeast,
+          yeastType,
+          oil,
+          sugar
+        });
+
+        if (!res) return;
+        lastCalcResult = res;
+
+        // KPI Highlights
+        document.getElementById('stat-total-dough').textContent = BakingUtils.formatWeight(res.totalBatchGrams, isOunces, 0);
+        document.getElementById('stat-total-balls').textContent = `${res.balls} balls × ${BakingUtils.formatWeight(res.actualBallWeight, isOunces, 1)}`;
+        document.getElementById('stat-texture-badge').textContent = res.textureBadge;
+        document.getElementById('stat-hydration-sub').textContent = `${res.hydrationPct}% water on flour`;
+
+        // Render Table
+        tbody.innerHTML = res.ingredients.map(ing => `
+          <tr>
+            <td style="font-weight: 600; color: var(--color-text);">${ing.name}</td>
+            <td style="font-family: monospace; font-weight: 700; color: var(--color-primary);">${ing.pct}%</td>
+            <td>${BakingUtils.formatWeight(ing.perBallG, isOunces, ing.pct < 5 ? 2 : 1)}</td>
+            <td style="font-weight: 700;">${BakingUtils.formatWeight(ing.totalG, isOunces, ing.pct < 5 ? 2 : 1)}</td>
+          </tr>
+        `).join('');
+      }
+
+      // Copy Recipe
+      btnCopy.addEventListener('click', function() {
+        if (!lastCalcResult) return;
+        const res = lastCalcResult;
+        const presetName = stylePreset.options[stylePreset.selectedIndex].text;
+
+        const lines = [
+          '🍕 PIZZA DOUGH FORMULA — FREE ONLINE TOOLS',
+          '==========================================',
+          `Style: ${presetName}`,
+          `Dough Balls: ${res.balls} × ${BakingUtils.formatWeight(res.actualBallWeight, isOunces, 1)} each`,
+          `Total Batch Weight: ${BakingUtils.formatWeight(res.totalBatchGrams, isOunces, 0)}`,
+          `Hydration: ${res.hydrationPct}% (${res.textureBadge})`,
+          '',
+          'INGREDIENT LIST:'
+        ];
+
+        res.ingredients.forEach(ing => {
+          lines.push(`  • ${ing.name.padEnd(28)}: ${ing.pct.toFixed(1).padStart(5)}% | Total: ${BakingUtils.formatWeight(ing.totalG, isOunces, 1).padStart(8)} (${BakingUtils.formatWeight(ing.perBallG, isOunces, 1)} / ball)`);
+        });
+
+        lines.push('==========================================');
+        lines.push('Calculated 100% in-browser at https://nexivo.com/tools/pizza-dough-calculator.html');
+
+        BakingUtils.copyTextToClipboard(lines.join('\n'), btnCopy, 'Formula Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        stylePreset.value = 'neapolitan';
+        ballsInput.value = 4;
+        ballWeightInput.value = isOunces ? 8.8 : 250;
+        hydrationInput.value = 62;
+        saltInput.value = 3.0;
+        yeastTypeSelect.value = 'idy';
+        yeastPctInput.value = 0.2;
+        oilInput.value = 0;
+        sugarInput.value = 0;
+        calculate();
+      });
+
+      [ballsInput, ballWeightInput, hydrationInput, saltInput, yeastPctInput, oilInput, sugarInput, yeastTypeSelect].forEach(inp => {
+        inp.addEventListener('input', calculate);
+      });
+
+      calculate();
+    })();
+  </script>
+</body>
+</html>

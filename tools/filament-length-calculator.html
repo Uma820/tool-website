@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filament Length Calculator — Weight (g) to Length (m) Converter</title>
+  <meta name="description" content="Convert 3D printing filament weight (g) to length (meters/feet) and slicer length to weight. Supports 1.75mm and 2.85mm across PLA, PETG, ABS, TPU, and Nylon.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/filament-length-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/filament-length-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/filament-length-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Filament Length Calculator",
+    "description": "Two-way instant converter between 3D printing filament weight and length based on diameter and polymer density.",
+    "url": "https://nexivo.com/tools/filament-length-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many meters of 1.75mm filament are in a 1 kg spool of PLA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A standard 1 kg (1,000 g) spool of 1.75mm PLA has a cross-sectional area of approximately 0.02405 cm² and a density of 1.24 g/cm³. This yields approximately 335 meters (1,100 feet) of filament."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does ABS provide more meters per kilogram than PLA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ABS has a significantly lower density (1.04 g/cm³) than PLA (1.24 g/cm³). Because ABS is lighter per unit volume, a 1 kg spool contains roughly 394 meters of 1.75mm filament—nearly 60 meters (18%) more length than a 1 kg PLA spool."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does filament diameter affect length?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Filament volume scales with the square of the radius. A 2.85mm filament has more than 2.6 times the cross-sectional area of a 1.75mm filament. Consequently, a 1 kg spool of 2.85mm PLA yields only about 126 meters, compared to 335 meters for 1.75mm."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I convert slicer millimeters directly to grams?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Mode B (Length to Weight) lets you input millimeters or meters from your slicer's G-code preview to calculate exact required gram weight and material cost."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#printing">3D Printing</a></li>
+      <li>/</li>
+      <li aria-current="page">Filament Length Calculator</li>
+    </nav>
+
+    <!-- 3D Printing Suite Navigation -->
+    <div class="printing-suite-nav">
+      <span class="printing-suite-label">3D Printing Suite:</span>
+      <a href="/tools/3d-print-cost-calculator.html" class="printing-pill">Cost &amp; Quote</a>
+      <a href="/tools/filament-remaining-calculator.html" class="printing-pill">Filament Remaining</a>
+      <a href="/tools/filament-length-calculator.html" class="printing-pill active">Weight &harr; Length</a>
+      <a href="/tools/multi-color-waste-calculator.html" class="printing-pill">Multi-Color Waste</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Filament Length &amp; Weight Calculator</h1>
+      <p class="tool-header-desc">
+        Convert instantly between 3D printing filament weight (grams/ounces) and length (meters/feet) for 1.75mm and 2.85mm diameters across all major polymer densities.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Bidirectional Converter</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Standard 1kg Reference Chart</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Direction Tabs -->
+      <div style="margin-bottom: var(--space-4);">
+        <label style="font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-2); display: block;">Conversion Direction</label>
+        <div class="btn-group" role="tablist" style="display: flex; width: 100%;">
+          <button type="button" class="btn btn-secondary active" id="tab-w2l" role="tab" aria-selected="true" style="flex: 1; font-weight: 600; font-size: var(--font-size-sm); padding: 0.5rem;">
+            ⚖️ &rarr; 📏 Mode A: Filament Weight (g) &rarr; Length (m)
+          </button>
+          <button type="button" class="btn btn-secondary" id="tab-l2w" role="tab" aria-selected="false" style="flex: 1; font-weight: 600; font-size: var(--font-size-sm); padding: 0.5rem;">
+            📏 &rarr; ⚖️ Mode B: Slicer Length (m / mm) &rarr; Weight (g)
+          </button>
+        </div>
+      </div>
+
+      <!-- Mode A: Weight to Length Input -->
+      <div id="panel-w2l" class="form-section" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); margin-bottom: var(--space-4);">
+        <div style="display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px;">
+            <label for="input-weight-g" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Filament Weight (grams):</label>
+            <input type="number" id="input-weight-g" class="form-input" value="250" min="1" max="10000" step="5" style="font-weight: 700; font-size: var(--font-size-base); color: var(--color-primary);">
+          </div>
+          <div style="display: flex; gap: var(--space-1); flex-wrap: wrap; align-items: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-right: 0.25rem;">Quick Weights:</span>
+            <button type="button" class="btn btn-secondary btn-weight-quick" data-wt="50" style="padding: 0.25rem 0.5rem; font-size: var(--font-size-xs);">50g (Sample)</button>
+            <button type="button" class="btn btn-secondary btn-weight-quick active" data-wt="250" style="padding: 0.25rem 0.5rem; font-size: var(--font-size-xs);">250g (1/4)</button>
+            <button type="button" class="btn btn-secondary btn-weight-quick" data-wt="500" style="padding: 0.25rem 0.5rem; font-size: var(--font-size-xs);">500g (Half)</button>
+            <button type="button" class="btn btn-secondary btn-weight-quick" data-wt="1000" style="padding: 0.25rem 0.5rem; font-size: var(--font-size-xs);">1,000g (Full Spool)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode B: Length to Weight Input -->
+      <div id="panel-l2w" class="form-section" style="display: none; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); margin-bottom: var(--space-4);">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-3); align-items: center;">
+          <div>
+            <label for="input-length-val" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Slicer Filament Length:</label>
+            <input type="number" id="input-length-val" class="form-input" value="83.8" min="0.1" step="1" style="font-weight: 700; font-size: var(--font-size-base); color: var(--color-primary);">
+          </div>
+          <div>
+            <label for="select-length-unit" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Length Unit:</label>
+            <select id="select-length-unit" class="form-select" style="font-size: var(--font-size-sm); padding-block: 0.45rem;">
+              <option value="m" selected>Meters (m)</option>
+              <option value="mm">Millimeters (mm)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Material & Diameter Row -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4);">
+        <div>
+          <label for="material-select" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Material &amp; Density:</label>
+          <select id="material-select" class="form-select" style="font-size: var(--font-size-xs); padding-block: 0.45rem;">
+            <option value="1.24" selected>PLA (1.24 g/cm³)</option>
+            <option value="1.27">PETG (1.27 g/cm³)</option>
+            <option value="1.04">ABS (1.04 g/cm³)</option>
+            <option value="1.07">ASA (1.07 g/cm³)</option>
+            <option value="1.21">TPU 95A (1.21 g/cm³)</option>
+            <option value="1.14">Nylon / PA (1.14 g/cm³)</option>
+            <option value="1.20">Polycarbonate (1.20 g/cm³)</option>
+            <option value="1.30">PLA-CF Carbon (1.30 g/cm³)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Filament Diameter:</label>
+          <div class="btn-group" role="group" aria-label="Filament Diameter Selector" style="display: flex;">
+            <button type="button" class="btn btn-secondary active" id="btn-dia-175" style="flex: 1; font-size: var(--font-size-xs); padding: 0.45rem;">1.75 mm</button>
+            <button type="button" class="btn btn-secondary" id="btn-dia-285" style="flex: 1; font-size: var(--font-size-xs); padding: 0.45rem;">2.85 mm</button>
+          </div>
+        </div>
+
+        <div>
+          <label for="spool-price-kg" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Spool Price per kg ($):</label>
+          <input type="number" id="spool-price-kg" class="form-input" value="20" min="0" step="1" style="font-size: var(--font-size-sm);">
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4);">
+        <button type="button" class="btn btn-primary" id="btn-copy-calc" style="flex: 1; min-width: 180px;">
+          📋 Copy Length &amp; Weight Conversion
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-reset" style="min-width: 100px;">
+          Reset
+        </button>
+      </div>
+
+      <!-- Conversion Outputs KPI Cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4);">
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Filament Length</div>
+          <div id="kpi-length-m" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-primary); margin-top: 0.25rem;">83.8 m</div>
+          <div id="kpi-length-ft" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">275.0 feet</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Filament Weight</div>
+          <div id="kpi-weight-g" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-success); margin-top: 0.25rem;">250.0 g</div>
+          <div id="kpi-weight-oz" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">8.82 oz</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Solid Polymer Volume</div>
+          <div id="kpi-volume-cm3" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-text); margin-top: 0.25rem;">201.6 cm³</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">Cubic centimeters</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Estimated Value</div>
+          <div id="kpi-cost" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-text); margin-top: 0.25rem;">$5.00</div>
+          <div id="kpi-cost-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">@ $20/kg</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic Educational Guide Section -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Filament Length Calculator</strong> performs high-precision, two-way mathematical conversions between 3D printing filament <em>weight in grams</em> and <em>extrusion length in meters or feet</em>.
+      </p>
+      <p>
+        Filament is universally sold and purchased by <strong>weight</strong> (e.g., 1 kg spools), but 3D printer slicers (Bambu Studio, PrusaSlicer, OrcaSlicer, Cura) and G-code commands command feed rates in <strong>linear length</strong> (millimeters and meters). Because different polymers possess radically different physical densities—ABS is 16% lighter than PLA, and PLA is 5% lighter than PLA-CF—a 1 kg spool of ABS produces roughly 60 more meters of filament than PLA. This calculator ensures exact conversion between linear G-code commands and physical spool grams.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Select Conversion Direction:</strong>
+          <ul>
+            <li><strong>Mode A (Weight to Length):</strong> Enter physical filament weight in grams (e.g., 250g) to discover how many meters that yields.</li>
+            <li><strong>Mode B (Length to Weight):</strong> Enter the meters or millimeters generated by your slicer's preview screen to calculate how many grams of filament the print requires.</li>
+          </ul>
+        </li>
+        <li><strong>Choose Material &amp; Density:</strong> Pick from our calibrated polymer presets (PLA, PETG, ABS, ASA, TPU 95A, Nylon, PC, PLA-CF).</li>
+        <li><strong>Select Filament Diameter:</strong> Toggle between standard <strong>1.75 mm</strong> and large-format <strong>2.85 mm</strong>.</li>
+        <li><strong>Review Conversion Metrics:</strong> Instantly inspect equivalent meters, feet, grams, ounces, displacement volume ($\text{cm}^3$), and estimated material value.</li>
+        <li><strong>Copy Conversion:</strong> Tap <strong>Copy Length &amp; Weight Conversion</strong> to paste the metrics directly into your slicer notes or manufacturing log.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        Filament strand conversions model filament as an continuous cylindrical rod:
+      </p>
+      <ul>
+        <li>
+          <strong>Cross-Sectional Area ($A_{\text{filament}}$):</strong>
+          <br>
+          $$r = \frac{\text{Diameter (mm)}}{20} \quad (\text{radius in cm})$$
+          $$A = \pi \times r^2 \quad (\text{cm}^2)$$
+          <em>For 1.75 mm: $A = \pi \times 0.0875^2 \approx 0.0240528\text{ cm}^2$</em>
+          <br>
+          <em>For 2.85 mm: $A = \pi \times 0.1425^2 \approx 0.063794\text{ cm}^2$</em>
+        </li>
+        <li>
+          <strong>Weight to Length:</strong>
+          <br>
+          $$V_{\text{cm}^3} = \frac{\text{Weight (g)}}{\rho_{\text{density (g/cm}^3\text{)}}}$$
+          $$\text{Length (m)} = \frac{V_{\text{cm}^3}}{A \times 100}$$
+          $$\text{Length (ft)} = \text{Length (m)} \times 3.28084$$
+        </li>
+        <li>
+          <strong>Length to Weight:</strong>
+          <br>
+          $$V_{\text{cm}^3} = A \times (\text{Length (m)} \times 100)$$
+          $$\text{Weight (g)} = V_{\text{cm}^3} \times \rho_{\text{density}}$$
+          $$\text{Weight (oz)} = \text{Weight (g)} \times 0.035274$$
+        </li>
+      </ul>
+
+      <h2>Material Density &amp; Length Reference Matrix (1 kg Spool)</h2>
+      <p>
+        The table below demonstrates how physical polymer density directly determines the total usable extrusion length contained within a standard 1 kg (1,000 g) spool:
+      </p>
+      <div style="overflow-x: auto; margin: var(--space-3) 0;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-sm); border: 1px solid var(--color-border);">
+          <thead>
+            <tr style="background: var(--color-bg-secondary); border-bottom: 2px solid var(--color-border);">
+              <th style="padding: 0.5rem 0.75rem;">Material Type</th>
+              <th style="padding: 0.5rem 0.75rem;">Density (g/cm³)</th>
+              <th style="padding: 0.5rem 0.75rem;">1.75mm Length (Meters)</th>
+              <th style="padding: 0.5rem 0.75rem;">1.75mm Length (Feet)</th>
+              <th style="padding: 0.5rem 0.75rem;">2.85mm Length (Meters)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">ABS (Acrylonitrile Butadiene)</td>
+              <td style="padding: 0.5rem 0.75rem;">1.04</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 700;">399.8 m</td>
+              <td style="padding: 0.5rem 0.75rem;">1,311.7 ft</td>
+              <td style="padding: 0.5rem 0.75rem;">150.7 m</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">ASA (Acrylonitrile Styrene)</td>
+              <td style="padding: 0.5rem 0.75rem;">1.07</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 700;">388.6 m</td>
+              <td style="padding: 0.5rem 0.75rem;">1,274.9 ft</td>
+              <td style="padding: 0.5rem 0.75rem;">146.5 m</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Nylon / Polyamide (PA)</td>
+              <td style="padding: 0.5rem 0.75rem;">1.14</td>
+              <td style="padding: 0.5rem 0.75rem;">364.7 m</td>
+              <td style="padding: 0.5rem 0.75rem;">1,196.5 ft</td>
+              <td style="padding: 0.5rem 0.75rem;">137.5 m</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Polycarbonate (PC)</td>
+              <td style="padding: 0.5rem 0.75rem;">1.20</td>
+              <td style="padding: 0.5rem 0.75rem;">346.5 m</td>
+              <td style="padding: 0.5rem 0.75rem;">1,136.8 ft</td>
+              <td style="padding: 0.5rem 0.75rem;">130.6 m</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">TPU 95A (Flexible)</td>
+              <td style="padding: 0.5rem 0.75rem;">1.21</td>
+              <td style="padding: 0.5rem 0.75rem;">343.6 m</td>
+              <td style="padding: 0.5rem 0.75rem;">1,127.3 ft</td>
+              <td style="padding: 0.5rem 0.75rem;">129.5 m</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border); background: rgba(37, 99, 235, 0.04);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">PLA (Standard Polylactic Acid)</td>
+              <td style="padding: 0.5rem 0.75rem;">1.24</td>
+              <td style="padding: 0.5rem 0.75rem; font-weight: 700;">335.3 m</td>
+              <td style="padding: 0.5rem 0.75rem;">1,100.0 ft</td>
+              <td style="padding: 0.5rem 0.75rem;">126.4 m</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">PETG (Glycol Modified)</td>
+              <td style="padding: 0.5rem 0.75rem;">1.27</td>
+              <td style="padding: 0.5rem 0.75rem;">327.4 m</td>
+              <td style="padding: 0.5rem 0.75rem;">1,074.1 ft</td>
+              <td style="padding: 0.5rem 0.75rem;">123.4 m</td>
+            </tr>
+            <tr style="background: rgba(37, 99, 235, 0.08);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">PLA-CF (Carbon Fiber Reinforced)</td>
+              <td style="padding: 0.5rem 0.75rem;">1.30</td>
+              <td style="padding: 0.5rem 0.75rem;">319.8 m</td>
+              <td style="padding: 0.5rem 0.75rem;">1,049.2 ft</td>
+              <td style="padding: 0.5rem 0.75rem;">120.5 m</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>Slicer G-Code Length to Grams:</strong> Translating G-code preview output (e.g. <em>"Total filament used: 42,500 mm"</em>) into exact grams (approx 127g PLA) to verify spool capacity.</li>
+        <li><strong>Custom Spool Respooling:</strong> Measuring physical meters on a mechanical line counter when splitting 5kg bulk master spools into 500g personal spools.</li>
+        <li><strong>Cost per Meter Analysis:</strong> Calculating that standard $20/kg PLA costs approximately $0.06 per meter of extruded filament.</li>
+        <li><strong>3D Pen Filament Sizing:</strong> Sizing precut 5-meter filament strands for educational craft kits and 3D pen art.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        <strong>Scenario:</strong> You want to know how many meters of filament are in a 250g sample coil of PETG (1.75mm diameter, density 1.27 g/cm³).
+      </p>
+      <ul>
+        <li><strong>Weight:</strong> 250 g</li>
+        <li><strong>Density:</strong> 1.27 g/cm³</li>
+        <li><strong>Volume:</strong> $250 / 1.27 = 196.85\text{ cm}^3$</li>
+        <li><strong>Cross-Sectional Area (1.75mm):</strong> $0.02405\text{ cm}^2$</li>
+        <li><strong>Resulting Length:</strong> $\frac{196.85}{0.02405 \times 100} = 81.85\text{ meters}$ ($268.5\text{ feet}$).</li>
+      </ul>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <ul>
+        <li><strong>Zero API Calls:</strong> Calculations operate entirely in local memory via JavaScript double-precision primitives.</li>
+        <li><strong>Standard Diameter Calibration:</strong> Accommodates commercial filament tolerances (&plusmn;0.02mm) with exact geometric cylindrical math.</li>
+        <li><strong>Metric and Imperial Readouts:</strong> Provides meters, feet, grams, ounces, and volumetric displacement simultaneously.</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        Calculations assume a solid, uniform strand diameter along the entire length of filament. Filament with minor diameter fluctuations (&plusmn;0.03mm) will experience variations of less than 0.5% in total length.
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        No design files, dimensions, or usage statistics are uploaded or tracked. All conversions occur client-side on your device.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Why does 2.85mm filament have so few meters per spool?</h3>
+        <p>
+          Cross-sectional area is proportional to the square of the diameter ($r^2$). A 2.85mm cylinder has 2.65 times the cross-sectional area of a 1.75mm cylinder. Therefore, each meter of 2.85mm filament weighs 2.65 times more than a meter of 1.75mm.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>How does filament density change with carbon fiber additives?</h3>
+        <p>
+          Milled carbon fiber fragments increase polymer mass per volume, raising PLA density from 1.24 to ~1.30 g/cm³. This slightly decreases the total meters per kilogram, but significantly improves stiffness and heat resistance.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I use this tool for TPU flexible filament?</h3>
+        <p>
+          Yes! Select TPU 95A (density 1.21 g/cm³). Although TPU stretches during extrusion, its relaxed state before entering the extruder drive gears conforms exactly to standard volumetric geometry.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/3d-print-cost-calculator.html" class="related-tool-chip">💰 3D Print Cost Calculator</a>
+        <a href="/tools/filament-remaining-calculator.html" class="related-tool-chip">🧵 Filament Remaining Calculator</a>
+        <a href="/tools/multi-color-waste-calculator.html" class="related-tool-chip">🎨 Multi-Color Waste Calculator</a>
+        <a href="/tools/unit-converter.html" class="related-tool-chip">🔄 Universal Unit Converter</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/printing-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // State
+      let activeDirection = 'weight_to_length'; // 'weight_to_length' or 'length_to_weight'
+      let activeDia = 1.75;
+      let lastResult = null;
+
+      // DOM Elements
+      const tabW2L = document.getElementById('tab-w2l');
+      const tabL2W = document.getElementById('tab-l2w');
+      const panelW2L = document.getElementById('panel-w2l');
+      const panelL2W = document.getElementById('panel-l2w');
+
+      const weightInput = document.getElementById('input-weight-g');
+      const lengthInput = document.getElementById('input-length-val');
+      const lengthUnitSelect = document.getElementById('select-length-unit');
+      const weightQuickBtns = document.querySelectorAll('.btn-weight-quick');
+
+      const materialSelect = document.getElementById('material-select');
+      const btnDia175 = document.getElementById('btn-dia-175');
+      const btnDia285 = document.getElementById('btn-dia-285');
+      const spoolPriceInput = document.getElementById('spool-price-kg');
+
+      const kpiLengthM = document.getElementById('kpi-length-m');
+      const kpiLengthFt = document.getElementById('kpi-length-ft');
+      const kpiWeightG = document.getElementById('kpi-weight-g');
+      const kpiWeightOz = document.getElementById('kpi-weight-oz');
+      const kpiVolumeCm3 = document.getElementById('kpi-volume-cm3');
+      const kpiCost = document.getElementById('kpi-cost');
+      const kpiCostSub = document.getElementById('kpi-cost-sub');
+
+      const btnCopyCalc = document.getElementById('btn-copy-calc');
+      const btnReset = document.getElementById('btn-reset');
+
+      // Direction switch
+      tabW2L.addEventListener('click', () => setDirection('weight_to_length'));
+      tabL2W.addEventListener('click', () => setDirection('length_to_weight'));
+
+      function setDirection(dir) {
+        activeDirection = dir;
+        tabW2L.classList.toggle('active', dir === 'weight_to_length');
+        tabW2L.setAttribute('aria-selected', dir === 'weight_to_length' ? 'true' : 'false');
+        tabL2W.classList.toggle('active', dir === 'length_to_weight');
+        tabL2W.setAttribute('aria-selected', dir === 'length_to_weight' ? 'true' : 'false');
+
+        panelW2L.style.display = dir === 'weight_to_length' ? 'block' : 'none';
+        panelL2W.style.display = dir === 'length_to_weight' ? 'block' : 'none';
+        calculate();
+      }
+
+      // Quick Weight buttons
+      weightQuickBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          weightQuickBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          weightInput.value = this.dataset.wt;
+          calculate();
+        });
+      });
+      weightInput.addEventListener('input', function() {
+        weightQuickBtns.forEach(b => b.classList.remove('active'));
+        calculate();
+      });
+
+      // Diameter toggle
+      btnDia175.addEventListener('click', () => setDiameter(1.75));
+      btnDia285.addEventListener('click', () => setDiameter(2.85));
+
+      function setDiameter(d) {
+        activeDia = d;
+        btnDia175.classList.toggle('active', d === 1.75);
+        btnDia285.classList.toggle('active', d === 2.85);
+        calculate();
+      }
+
+      // Calculate
+      function calculate() {
+        const res = PrintingUtils.calculateFilamentLength({
+          direction: activeDirection,
+          weightG: parseFloat(weightInput.value) || 0,
+          lengthValue: parseFloat(lengthInput.value) || 0,
+          lengthUnit: lengthUnitSelect.value,
+          filamentDiameterMm: activeDia,
+          materialDensity: parseFloat(materialSelect.value) || 1.24,
+          spoolCostPerKg: parseFloat(spoolPriceInput.value) || 20
+        });
+
+        if (!res) return;
+        lastResult = res;
+
+        kpiLengthM.textContent = `${res.lengthMeters} m`;
+        kpiLengthFt.textContent = `${res.lengthFeet} feet`;
+        kpiWeightG.textContent = `${res.weightGrams} g`;
+        kpiWeightOz.textContent = `${res.weightOunces} oz`;
+        kpiVolumeCm3.textContent = `${res.volumeCm3} cm³`;
+        kpiCost.textContent = `$${res.estimatedCost.toFixed(2)}`;
+        kpiCostSub.textContent = `@ $${parseFloat(spoolPriceInput.value) || 20}/kg`;
+      }
+
+      // Copy Conversion
+      btnCopyCalc.addEventListener('click', function() {
+        if (!lastResult) return;
+        const res = lastResult;
+        const matName = materialSelect.options[materialSelect.selectedIndex].text;
+        const lines = [
+          '📏 3D PRINTING FILAMENT LENGTH & WEIGHT CONVERSION',
+          '==================================================',
+          `Material Type:        ${matName}`,
+          `Filament Diameter:    ${res.filamentDiameterMm} mm`,
+          `Linear Length:        ${res.lengthMeters} meters (${res.lengthFeet} feet)`,
+          `Mass / Weight:        ${res.weightGrams} grams (${res.weightOunces} oz)`,
+          `Solid Volume:         ${res.volumeCm3} cm³`,
+          `Estimated Cost:       $${res.estimatedCost.toFixed(2)} (@ $${parseFloat(spoolPriceInput.value) || 20}/kg)`,
+          '--------------------------------------------------',
+          `Standard 1kg Spool:   Contains ~${res.standard1kgLengthM} meters for this material`,
+          '==================================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/filament-length-calculator.html'
+        ];
+
+        PrintingUtils.copyTextToClipboard(lines.join('\n'), btnCopyCalc, 'Conversion Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        setDirection('weight_to_length');
+        weightInput.value = '250';
+        weightQuickBtns.forEach(b => b.classList.toggle('active', b.dataset.wt === '250'));
+        lengthInput.value = '83.8';
+        lengthUnitSelect.value = 'm';
+        materialSelect.value = '1.24';
+        setDiameter(1.75);
+        spoolPriceInput.value = '20';
+        calculate();
+      });
+
+      // Bindings
+      [lengthInput, lengthUnitSelect, materialSelect, spoolPriceInput].forEach(inp => {
+        inp.addEventListener('input', calculate);
+        inp.addEventListener('change', calculate);
+      });
+
+      // Init
+      calculate();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquarium Stocking Calculator — Fish Tank Bioload &amp; Compatibility Checker</title>
+  <meta name="description" content="Calculate aquarium fish stocking capacity, bioload percentage, schooling group minimums, and species temperature compatibility across 35+ aquarium species.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/aquarium-stocking-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/aquarium-stocking-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/aquarium-stocking-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Aquarium Stocking Calculator",
+    "description": "Calculate fish tank bioload percentage, species compatibility warnings, and recommended water change schedules based on aquarium size and filtration.",
+    "url": "https://nexivo.com/tools/aquarium-stocking-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why is the 'one inch of fish per gallon' rule considered flawed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The 1-inch-per-gallon rule only considers linear length and completely ignores three-dimensional body mass and metabolic waste output. For example, a single 10-inch Oscar produces vastly more waste and consumes hundreds of times more oxygen than ten 1-inch Neon Tetras. Our calculator uses species-calibrated biomass waste ratings adjusted by filtration capacity and surface area."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is an ideal aquarium stocking percentage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A stocking level between 70% and 85% is considered ideal for most home aquariums. This provides a vibrant, active display while leaving an essential biological buffer against unexpected power outages, missed water changes, or slight overfeeding."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do schooling fish like Neon Tetras and Corydoras require groups of 6 or more?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In nature, schooling fish rely on the collective group for predator deterrence and psychological safety. When kept alone or in pairs, schooling fish experience elevated stress hormones (cortisol), leading to clamped fins, anorexia, constant hiding, and compromised immune resistance to parasites."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you keep goldfish with tropical fish like Bettas or Tetras?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Goldfish are temperate coldwater fish (62°F–72°F) with high metabolic waste, while Bettas and tropical tetras require heated water (76°F–82°F). In warm water, goldfish metabolism runs unnaturally high, shortening lifespan, while tropical fish in unheated water suffer catastrophic immune system collapse."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#aquarium">Pets &amp; Aquarium</a></li>
+      <li>/</li>
+      <li aria-current="page">Aquarium Stocking Calculator</li>
+    </nav>
+
+    <!-- Aquarium Suite Navigation -->
+    <div class="aquarium-suite-nav">
+      <span class="aquarium-suite-label">Aquarium Suite:</span>
+      <a href="/tools/aquarium-volume-calculator.html" class="aquarium-pill">Tank Volume &amp; Weight</a>
+      <a href="/tools/aquarium-heater-calculator.html" class="aquarium-pill">Heater Sizing</a>
+      <a href="/tools/aquarium-water-change-calculator.html" class="aquarium-pill">Water Change &amp; Dosing</a>
+      <a href="/tools/aquarium-stocking-calculator.html" class="aquarium-pill active">Fish Stocking Guide</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Aquarium Stocking &amp; Bioload Calculator</h1>
+      <p class="tool-header-desc">
+        Evaluate your aquarium's biological capacity, stocking level percentage, species temperature compatibility, and schooling minimums with our curated 35+ species database.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Biomass Waste Rating</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Smart Compatibility Alerts</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Section 1: Tank & Filtration Parameters -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>🏠</span> 1. Aquarium Setup &amp; Filtration
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3);">
+          <!-- Tank Volume -->
+          <div>
+            <label for="tank-volume-input" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Tank Net Volume (US Gallons):</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="tank-volume-input" class="form-control" value="20" min="2" max="1000" step="1" aria-label="Aquarium net volume in gallons" style="font-weight: 700; max-width: 140px;">
+              <span style="font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text-muted);">Gallons</span>
+            </div>
+          </div>
+
+          <!-- Tank Length -->
+          <div>
+            <label for="tank-length-input" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Tank Horizontal Length (Inches):</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="tank-length-input" class="form-control" value="24" min="8" max="120" step="1" aria-label="Tank horizontal length in inches" style="font-weight: 700; max-width: 140px;">
+              <span style="font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text-muted);">Inches</span>
+            </div>
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              Used to check swimming territory minimums.
+            </span>
+          </div>
+
+          <!-- Filtration Level -->
+          <div>
+            <label for="filtration-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Filtration System Quality:</label>
+            <select id="filtration-select" class="form-select" aria-label="Filtration level multiplier">
+              <option value="1.0" selected>Standard HOB / Sponge Filter (100% capacity)</option>
+              <option value="1.25">Over-Filtered / Large Canister Filter (125% capacity)</option>
+              <option value="1.40">Heavily Planted + Canister Filter (140% capacity)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Species Picker & Community Builder -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+          <span>🐟</span> 2. Select Fish &amp; Invertebrate Species
+        </h2>
+        <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); display: block; margin-bottom: var(--space-3);">
+          Choose from 35+ popular aquarium species. Click "Add Species" to add them to your aquarium roster.
+        </span>
+
+        <!-- Species Search / Add Bar -->
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center; background: var(--color-bg-secondary); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="flex: 2; min-width: 240px;">
+            <label for="species-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Choose Species:</label>
+            <select id="species-select" class="form-select" aria-label="Select fish or invertebrate species">
+              <!-- Populated via JS -->
+            </select>
+          </div>
+
+          <div style="width: 100px;">
+            <label for="species-qty-input" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Quantity:</label>
+            <input type="number" id="species-qty-input" class="form-control" value="6" min="1" max="100" step="1" aria-label="Quantity of species to add">
+          </div>
+
+          <div style="align-self: flex-end;">
+            <button type="button" id="btn-add-species" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.85rem;">
+              <span>+ Add to Tank</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Active Stocking Table -->
+        <div style="margin-top: var(--space-3); overflow-x: auto;">
+          <table class="table" style="width: 100%; font-size: var(--font-size-sm); border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--color-border); text-align: left; background: var(--color-bg-secondary);">
+                <th style="padding: 0.6rem 0.5rem;">Species Name</th>
+                <th style="padding: 0.6rem 0.5rem; width: 120px;">Adult Size</th>
+                <th style="padding: 0.6rem 0.5rem; width: 110px;">Quantity</th>
+                <th style="padding: 0.6rem 0.5rem; text-align: right; width: 110px;">Bioload Pts</th>
+                <th style="padding: 0.6rem 0.5rem; text-align: center; width: 45px;"></th>
+              </tr>
+            </thead>
+            <tbody id="stocking-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+            <tfoot>
+              <tr style="border-top: 2px solid var(--color-border); font-weight: 700; background: var(--color-bg-secondary);">
+                <td id="tbl-total-count" style="padding: 0.6rem 0.5rem;">Total: 0 Fish</td>
+                <td colspan="2"></td>
+                <td id="tbl-total-bioload" style="padding: 0.6rem 0.5rem; text-align: right; color: var(--color-primary);">0 Pts</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-3); flex-wrap: wrap;">
+          <button type="button" id="btn-load-preset-community" class="btn btn-secondary" style="font-size: var(--font-size-xs);">Load Sample Community (10 Neons + 6 Corys)</button>
+          <button type="button" id="btn-clear-all" class="btn btn-secondary" style="font-size: var(--font-size-xs); color: #dc2626;">Clear All Species</button>
+        </div>
+      </div>
+
+      <!-- Section 3: Stocking Progress Gauge & Compatibility Alerts -->
+      <div style="margin-top: var(--space-5);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>📊</span> Stocking Capacity &amp; Bioload Level
+        </h2>
+
+        <!-- Bioload Visual Gauge -->
+        <div style="background: var(--color-bg-surface); border: 2px solid var(--color-primary); border-radius: var(--radius-md); padding: var(--space-3);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem;">
+            <span style="font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; color: var(--color-text-muted);">Stocking Level:</span>
+            <span id="kpi-stocking-pct" style="font-size: 1.75rem; font-weight: 800; color: #16a34a;">0.0%</span>
+          </div>
+
+          <div class="bioload-meter">
+            <div id="bioload-bar-fill" class="bioload-bar-fill" style="width: 0%; background-color: #16a34a;"></div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: var(--font-size-xs); margin-top: 0.25rem;">
+            <span id="kpi-status-label" style="font-weight: 700; color: #16a34a;">Understocked (Low Maintenance)</span>
+            <span style="color: var(--color-text-muted);">Recommended: 70% – 85%</span>
+          </div>
+
+          <div style="margin-top: var(--space-3); border-top: 1px solid var(--color-border); padding-top: var(--space-2); display: flex; justify-content: space-between; align-items: center; font-size: var(--font-size-xs); flex-wrap: wrap; gap: var(--space-2);">
+            <div>Total Waste Bioload: <strong id="kpi-bioload-pts" style="color: var(--color-primary);">0 Pts</strong> (Capacity: <span id="kpi-capacity-pts">44 Pts</span>)</div>
+            <div>Recommended Water Change: <strong id="kpi-rec-wc" style="color: #0284c7;">20% Weekly</strong></div>
+          </div>
+        </div>
+
+        <!-- Smart Compatibility Alerts Container -->
+        <div id="alerts-container" style="margin-top: var(--space-3);">
+          <!-- Rendered via JS -->
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-4); flex-wrap: wrap;">
+          <button type="button" id="btn-copy-report" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>Copy Tank Stocking Report</span>
+          </button>
+          <button type="button" id="btn-reset" class="btn btn-secondary">Reset to Defaults</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Documentation & Educational Guide -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Aquarium Stocking Calculator</strong> replaces outdated and dangerous "rules of thumb" (such as the notorious "one inch of fish per gallon" rule) with an authentic, biology-based biological load assessment. In aquatic biology, fish waste production scales with body volume and mass (cubic displacement) rather than simple linear length. Furthermore, fish have distinct psychological and territorial requirements: schooling fish suffer chronic stress if kept in groups smaller than 6, fast-swimming species require horizontal swimming length, and coldwater species cannot survive long-term in heated tropical aquariums. This tool computes biological capacity and alerts you to behavioral and water parameter incompatibilities before you purchase fish.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Set Aquarium Dimensions:</strong> Enter your tank's net volume in gallons and horizontal length in inches (e.g. 24" for a 20 Gallon High, 30" for a 20 Long or 29G, 48" for a 55G or 75G).</li>
+        <li><strong>Select Filtration Quality:</strong> Choose whether you have standard filtration (sponge/HOB), over-filtration (canister), or a heavily planted ecosystem.</li>
+        <li><strong>Add Species to Your Tank:</strong> Select fish, invertebrates, or amphibians from the 35+ species catalog, choose the desired quantity, and click <strong>+ Add to Tank</strong>.</li>
+        <li><strong>Inspect Bioload Progress Meter:</strong> Check your stocking level gauge:
+          <ul>
+            <li><strong>Understocked (&lt;70%):</strong> Very easy maintenance, forgiving of skipped water changes.</li>
+            <li><strong>Well-Stocked (70%–95%):</strong> Ideal balanced community aquarium.</li>
+            <li><strong>Fully Stocked (95%–105%):</strong> Maximum safe biological limit; requires faithful weekly maintenance.</li>
+            <li><strong>Overstocked (&gt;105%):</strong> Dangerous risk of sudden ammonia/nitrite spikes and oxygen depletion.</li>
+          </ul>
+        </li>
+        <li><strong>Review Compatibility Alerts:</strong> Pay close attention to any warning badges regarding schooling group minimums, fin-nipping risks, or temperature mismatches.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        Stocking biological capacity is formulated from surface area gas exchange, water volume, and species-calibrated waste scores:
+      </p>
+      <ul>
+        <li><strong>Base Biological Capacity:</strong> 
+          $$\text{Capacity (Points)} = V_{\text{gal}} \times 2.2 \times \text{Filtration Multiplier}$$
+        </li>
+        <li><strong>Species Bioload Contribution:</strong> 
+          $$\text{Total Bioload} = \sum (\text{Species Bioload Rating} \times \text{Quantity})$$
+        </li>
+        <li><strong>Stocking Level Percentage:</strong> 
+          $$\text{Stocking \%} = \frac{\text{Total Bioload}}{\text{Base Capacity}} \times 100$$
+        </li>
+        <li><strong>Recommended Weekly Water Change:</strong>
+          <ul>
+            <li>$\le 70\%\text{ Stocked}$: $15\%–20\%$ weekly</li>
+            <li>$70\%–95\%\text{ Stocked}$: $25\%$ weekly</li>
+            <li>$95\%–105\%\text{ Stocked}$: $35\%$ weekly</li>
+            <li>$&gt; 105\%\text{ Stocked}$: $50\%+\text{ weekly}$</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2>Reference Table: Popular Aquarium Species &amp; Care Matrix</h2>
+      <table class="table" style="width: 100%; font-size: var(--font-size-sm); margin-top: var(--space-3); border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--color-border); text-align: left;">
+            <th style="padding: 0.5rem;">Species Name</th>
+            <th style="padding: 0.5rem;">Adult Size</th>
+            <th style="padding: 0.5rem;">Bioload Pts</th>
+            <th style="padding: 0.5rem;">Min Tank Size</th>
+            <th style="padding: 0.5rem;">Schooling Min</th>
+            <th style="padding: 0.5rem;">Water Temp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Neon Tetra</td>
+            <td style="padding: 0.5rem;">1.5"</td>
+            <td style="padding: 0.5rem;">1.0</td>
+            <td style="padding: 0.5rem;">10 Gal (20" L)</td>
+            <td style="padding: 0.5rem;">6+ fish</td>
+            <td style="padding: 0.5rem;">72°F – 78°F</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Fancy Guppy</td>
+            <td style="padding: 0.5rem;">2.0"</td>
+            <td style="padding: 0.5rem;">1.3</td>
+            <td style="padding: 0.5rem;">10 Gal (20" L)</td>
+            <td style="padding: 0.5rem;">3+ fish</td>
+            <td style="padding: 0.5rem;">72°F – 82°F</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Bronze / Albino Corydoras</td>
+            <td style="padding: 0.5rem;">2.75"</td>
+            <td style="padding: 0.5rem;">2.5</td>
+            <td style="padding: 0.5rem;">20 Gal (24" L)</td>
+            <td style="padding: 0.5rem;">6+ fish</td>
+            <td style="padding: 0.5rem;">72°F – 78°F</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Bristlenose Pleco</td>
+            <td style="padding: 0.5rem;">5.0"</td>
+            <td style="padding: 0.5rem; color: #ea580c; font-weight: 700;">9.0</td>
+            <td style="padding: 0.5rem;">29 Gal (30" L)</td>
+            <td style="padding: 0.5rem;">1 (Solitary)</td>
+            <td style="padding: 0.5rem;">73°F – 80°F</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Freshwater Angelfish</td>
+            <td style="padding: 0.5rem;">6.0"</td>
+            <td style="padding: 0.5rem; color: #ea580c; font-weight: 700;">12.0</td>
+            <td style="padding: 0.5rem;">29 Gal (30" L)</td>
+            <td style="padding: 0.5rem;">1–2</td>
+            <td style="padding: 0.5rem;">76°F – 84°F</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; font-weight: 600;">Fancy Goldfish (Fantail)</td>
+            <td style="padding: 0.5rem;">8.0"</td>
+            <td style="padding: 0.5rem; color: #dc2626; font-weight: 700;">25.0</td>
+            <td style="padding: 0.5rem;">30 Gal (36" L)</td>
+            <td style="padding: 0.5rem;">2+ (Coldwater)</td>
+            <td style="padding: 0.5rem; color: #0284c7; font-weight: 700;">65°F – 74°F</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>New Aquarium Community Planning:</strong> Experimenting with fish stocking lists before spending money at the local aquarium shop.</li>
+        <li><strong>Preventing Overstocking &amp; Fish Deaths:</strong> Detecting when an aquarium has crossed into dangerous overstock territory.</li>
+        <li><strong>Verifying Schooling Minimums:</strong> Ensuring schooling species like Neons, Harlequin Rasboras, and Corydoras have sufficient group sizes to thrive without fear.</li>
+        <li><strong>Incompatibility Detection:</strong> Catching predatory risks (e.g. Angelfish eating small Cherry Shrimp) or fin-nipping hazards (Tiger Barbs with male Bettas).</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        <strong>Scenario:</strong> You stock a standard <strong>20 Gallon High</strong> aquarium ($24" \times 12" \times 16"$) with standard filtration using:
+      </p>
+      <ul>
+        <li>$10 \times\text{ Neon Tetras}$ ($10 \times 1.0 = 10.0\text{ Pts}$)</li>
+        <li>$6 \times\text{ Panda Corydoras}$ ($6 \times 2.0 = 12.0\text{ Pts}$)</li>
+        <li>$1 \times\text{ Honey Gourami}$ ($1 \times 2.0 = 2.0\text{ Pts}$)</li>
+        <li>$5 \times\text{ Cherry Shrimp}$ ($5 \times 0.1 = 0.5\text{ Pts}$)</li>
+      </ul>
+      <p>
+        <strong>Results:</strong> Total bioload = $\mathbf{24.5\text{ Points}}$. Tank biological capacity = $20 \times 2.2 \times 1.0 = \mathbf{44.0\text{ Points}}$. Stocking level is $\mathbf{55.7\%}$ (**Understocked / Peaceful Balance**). Zero compatibility warnings are triggered, and a standard $20\%$ weekly water change is recommended.
+      </p>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <ul>
+        <li><strong>Multi-Factor Bioload Matrix:</strong> Assigns distinct biological ratings to each species reflecting digestive anatomy and adult volumetric displacement.</li>
+        <li><strong>Cross-Category Alert Engine:</strong> Analyzes temperature overlaps, minimum group sizes, horizontal swimming lanes, and predatory behaviors across all selected species simultaneously.</li>
+        <li><strong>100% Client-Side Calculations:</strong> Zero remote API requests; instant updates on every quantity stepper adjustment.</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        Individual fish temperaments can vary. While our rules capture species-wide behaviors, individual fish (particularly male Bettas or cichlids) can occasionally exhibit heightened territoriality. Always monitor newly introduced fish closely during feeding times.
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        Your tank configurations and species lists remain entirely confidential inside your local browser. No data is stored, transmitted, or tracked.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Why do my fish stay at the bottom or hide constantly?</h3>
+        <p>
+          Schooling species (such as tetras, rasboras, and corydoras) kept in groups smaller than their social minimum (6+) perceive open water as unsafe. Adding more individuals of the same species and providing dense live plant cover gives them the collective confidence to swim openly.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>How does adding live plants affect my stocking capacity?</h3>
+        <p>
+          Heavily planted aquariums have substantially higher biological capacity. Fast-growing aquatic stem plants (such as Hornwort, Anacharis, and Water Wisteria) directly consume toxic ammonia and nitrate as fertilizer, acting as a living supplemental biological filter. Selecting "Heavily Planted + Canister" in our calculator grants a 40% boost to biological capacity.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I add all my fish at the same time?</h3>
+        <p>
+          No, never add an entire stocking list at once to a newly cycled tank. Adding too many fish simultaneously causes an ammonia spike that overwhelms your biological filter bacteria. Always add fish in small batches of 4 to 6 individuals spaced 1 to 2 weeks apart, testing water parameters regularly.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/aquarium-volume-calculator.html" class="related-tool-chip">🐠 Aquarium Volume Calculator</a>
+        <a href="/tools/aquarium-heater-calculator.html" class="related-tool-chip">🌡️ Aquarium Heater Calculator</a>
+        <a href="/tools/aquarium-water-change-calculator.html" class="related-tool-chip">💧 Aquarium Water Change Calculator</a>
+        <a href="/tools/unit-converter.html" class="related-tool-chip">🔄 Universal Unit Converter</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/aquarium-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // Default peaceful community preset
+      const DEFAULT_COMMUNITY = [
+        { id: 'neon_tetra', quantity: 10 },
+        { id: 'corydoras_panda', quantity: 6 }
+      ];
+
+      let selectedSpecies = JSON.parse(JSON.stringify(DEFAULT_COMMUNITY));
+      let lastResult = null;
+
+      // DOM Elements
+      const tankVolInput = document.getElementById('tank-volume-input');
+      const tankLenInput = document.getElementById('tank-length-input');
+      const filtrationSelect = document.getElementById('filtration-select');
+
+      const speciesSelect = document.getElementById('species-select');
+      const speciesQtyInput = document.getElementById('species-qty-input');
+      const btnAddSpecies = document.getElementById('btn-add-species');
+
+      const tbody = document.getElementById('stocking-tbody');
+      const tblTotalCount = document.getElementById('tbl-total-count');
+      const tblTotalBioload = document.getElementById('tbl-total-bioload');
+
+      const kpiStockingPct = document.getElementById('kpi-stocking-pct');
+      const bioloadBarFill = document.getElementById('bioload-bar-fill');
+      const kpiStatusLabel = document.getElementById('kpi-status-label');
+      const kpiBioloadPts = document.getElementById('kpi-bioload-pts');
+      const kpiCapacityPts = document.getElementById('kpi-capacity-pts');
+      const kpiRecWc = document.getElementById('kpi-rec-wc');
+
+      const alertsContainer = document.getElementById('alerts-container');
+      const btnPresetCommunity = document.getElementById('btn-load-preset-community');
+      const btnClearAll = document.getElementById('btn-clear-all');
+
+      const btnCopyReport = document.getElementById('btn-copy-report');
+      const btnReset = document.getElementById('btn-reset');
+
+      // Check URL query parameters (e.g. ?volume=20&length=24)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('volume')) {
+        const v = parseFloat(urlParams.get('volume'));
+        if (!isNaN(v) && v > 0) tankVolInput.value = v;
+      }
+      if (urlParams.has('length')) {
+        const l = parseFloat(urlParams.get('length'));
+        if (!isNaN(l) && l > 0) tankLenInput.value = l;
+      }
+
+      // Populate species dropdown
+      function populateSpeciesDropdown() {
+        speciesSelect.innerHTML = AquariumUtils.SPECIES_CATALOG.map(s => {
+          return `<option value="${s.id}">${s.name} (${s.adultSizeInch}" - ${s.type.toUpperCase()})</option>`;
+        }).join('');
+      }
+
+      // Render Active Stocking Table
+      function renderTable() {
+        if (selectedSpecies.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 1.5rem; color: var(--color-text-muted);">
+                No species in aquarium. Select a fish above and click "+ Add to Tank".
+              </td>
+            </tr>
+          `;
+          tblTotalCount.textContent = 'Total: 0 Fish';
+          tblTotalBioload.textContent = '0 Pts';
+          return;
+        }
+
+        tbody.innerHTML = selectedSpecies.map((item, idx) => {
+          const sp = AquariumUtils.SPECIES_CATALOG.find(s => s.id === item.id);
+          if (!sp) return '';
+          const subBioload = (sp.bioload * item.quantity).toFixed(1);
+
+          return `
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.5rem;">
+                <strong>${sp.name}</strong>
+                <div style="font-size: 11px; color: var(--color-text-muted); font-style: italic;">${sp.scientific}</div>
+              </td>
+              <td style="padding: 0.5rem 0.5rem; color: var(--color-text-muted);">
+                ${sp.adultSizeInch}" adult
+              </td>
+              <td style="padding: 0.5rem 0.5rem;">
+                <input type="number" class="form-control inp-qty" data-idx="${idx}" value="${item.quantity}" min="1" max="100" style="width: 75px; padding: 0.2rem 0.4rem; font-size: var(--font-size-xs);" aria-label="Quantity for ${sp.name}">
+              </td>
+              <td style="padding: 0.5rem 0.5rem; text-align: right; font-weight: 600;">
+                ${subBioload} Pts
+              </td>
+              <td style="padding: 0.5rem 0.5rem; text-align: center;">
+                <button type="button" class="btn btn-secondary btn-del-species" data-idx="${idx}" aria-label="Remove ${sp.name}" style="padding: 0.2rem 0.4rem; color: #dc2626; font-size: 11px;">✕</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        attachTableListeners();
+      }
+
+      function attachTableListeners() {
+        tbody.querySelectorAll('.inp-qty').forEach(inp => {
+          inp.addEventListener('input', function() {
+            const idx = parseInt(this.dataset.idx, 10);
+            if (selectedSpecies[idx]) {
+              selectedSpecies[idx].quantity = Math.max(1, parseInt(this.value, 10) || 1);
+              calculate();
+            }
+          });
+        });
+
+        tbody.querySelectorAll('.btn-del-species').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const idx = parseInt(this.dataset.idx, 10);
+            selectedSpecies.splice(idx, 1);
+            renderTable();
+            calculate();
+          });
+        });
+      }
+
+      // Add Species button
+      btnAddSpecies.addEventListener('click', function() {
+        const id = speciesSelect.value;
+        const qty = parseInt(speciesQtyInput.value, 10) || 1;
+
+        const existing = selectedSpecies.find(s => s.id === id);
+        if (existing) {
+          existing.quantity += qty;
+        } else {
+          selectedSpecies.push({ id, quantity: qty });
+        }
+
+        renderTable();
+        calculate();
+      });
+
+      // Clear all
+      btnClearAll.addEventListener('click', function() {
+        selectedSpecies = [];
+        renderTable();
+        calculate();
+      });
+
+      // Preset community
+      btnPresetCommunity.addEventListener('click', function() {
+        selectedSpecies = JSON.parse(JSON.stringify(DEFAULT_COMMUNITY));
+        renderTable();
+        calculate();
+      });
+
+      // Calculation Engine
+      function calculate() {
+        const res = AquariumUtils.calculateStocking({
+          tankVolumeGal: parseFloat(tankVolInput.value) || 20,
+          tankLengthInch: parseFloat(tankLenInput.value) || 24,
+          filtrationLevel: parseFloat(filtrationSelect.value) || 1.0,
+          selectedSpecies
+        });
+
+        if (!res) return;
+        lastResult = res;
+
+        // Table totals
+        tblTotalCount.textContent = `Total: ${res.totalFishCount} Livestock`;
+        tblTotalBioload.textContent = `${res.totalBioload} Pts`;
+
+        // Update KPIs
+        kpiStockingPct.textContent = `${res.stockingPct}%`;
+        kpiStockingPct.style.color = res.statusColor;
+
+        bioloadBarFill.style.width = `${Math.min(100, res.stockingPct)}%`;
+        bioloadBarFill.style.backgroundColor = res.statusColor;
+
+        kpiStatusLabel.textContent = res.statusLabel;
+        kpiStatusLabel.style.color = res.statusColor;
+
+        kpiBioloadPts.textContent = `${res.totalBioload} Pts`;
+        kpiCapacityPts.textContent = `${res.baseCapacity} Pts`;
+        kpiRecWc.textContent = `${res.recommendedWaterChangePct}% Weekly`;
+
+        // Render Alerts
+        if (res.alerts.length === 0) {
+          alertsContainer.innerHTML = `
+            <div class="aquarium-alert info">
+              <span>✅ <strong>Excellent Compatibility:</strong> No temperature conflicts, schooling deficiencies, or aggression risks detected in your stocking list.</span>
+            </div>
+          `;
+        } else {
+          alertsContainer.innerHTML = res.alerts.map(a => {
+            const icon = a.type === 'danger' ? '⛔' : '⚠️';
+            return `
+              <div class="aquarium-alert ${a.type}">
+                <span>${icon} ${a.text}</span>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // Copy Report
+      btnCopyReport.addEventListener('click', function() {
+        if (!lastResult) return;
+        const res = lastResult;
+        const lines = [
+          '🐟 AQUARIUM STOCKING & BIOLOAD REPORT',
+          '=====================================',
+          `Tank Specifications:       ${tankVolInput.value} US Gal (Length: ${tankLenInput.value}")`,
+          `Filtration Multiplier:     ${filtrationSelect.options[filtrationSelect.selectedIndex].text}`,
+          '-------------------------------------',
+          `TOTAL STOCKING LEVEL:      ${res.stockingPct}% (${res.statusLabel})`,
+          `Total Waste Bioload:       ${res.totalBioload} Pts / ${res.baseCapacity} Pts Capacity`,
+          `Recommended Water Change:  ${res.recommendedWaterChangePct}% Weekly`,
+          '-------------------------------------',
+          'ACTIVE SPECIES ROSTER:'
+        ];
+
+        res.speciesBreakdown.forEach((sp, i) => {
+          lines.push(`  ${i + 1}. ${sp.name} (Qty: ${sp.quantity}) -> ${sp.subtotalBioload} Pts`);
+        });
+
+        if (res.alerts.length > 0) {
+          lines.push('-------------------------------------', 'COMPATIBILITY & CARE WARNINGS:');
+          res.alerts.forEach(a => lines.push(`  • [${a.type.toUpperCase()}] ${a.text}`));
+        }
+
+        lines.push(
+          '=====================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/aquarium-stocking-calculator.html'
+        );
+
+        AquariumUtils.copyTextToClipboard(lines.join('\n'), btnCopyReport, 'Report Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        tankVolInput.value = '20';
+        tankLenInput.value = '24';
+        filtrationSelect.value = '1.0';
+        selectedSpecies = JSON.parse(JSON.stringify(DEFAULT_COMMUNITY));
+        renderTable();
+        calculate();
+      });
+
+      // Bind input events
+      [tankVolInput, tankLenInput, filtrationSelect].forEach(inp => {
+        inp.addEventListener('input', calculate);
+        inp.addEventListener('change', calculate);
+      });
+
+      // Init
+      populateSpeciesDropdown();
+      renderTable();
+      calculate();
+    })();
+  </script>
+</body>
+</html>

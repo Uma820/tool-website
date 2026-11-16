@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade Calculator &amp; Final Exam Target Score — Free Online Tools</title>
+  <meta name="description" content="Calculate weighted grades, GPA equivalents, letter grades, and target final exam scores. Fast, accurate, and 100% private in your browser.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/grade-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/grade-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/grade-calculator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Grade Calculator & Final Exam Target Score",
+    "description": "Calculate weighted grades, GPA equivalents, letter grades, and target final exam scores. Fast, accurate, and 100% private in your browser.",
+    "url": "https://nexivo.com/tools/grade-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#calc">Calculators</a></li>
+      <li>/</li>
+      <li aria-current="page">Grade Calculator</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Grade Calculator &amp; Final Exam Target</span>
+      </h1>
+      <p class="tool-header-lead">
+        Compute your current weighted class grade, GPA equivalent, and determine the exact score needed on your final exam to secure your target letter grade.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Weighted Averaging</span>
+        <span class="tool-badge">Final Exam Solver</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-add-row">+ Add Assignment</button>
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample Course</button>
+          <button type="button" class="btn btn-secondary" id="btn-reset">Reset All</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Auto-updates on change
+        </div>
+      </div>
+
+      <!-- Overall Grade Metrics Grid -->
+      <div class="stats-grid" style="margin-block-end: var(--space-4);">
+        <div class="stat-card">
+          <div class="stat-label">Current Weighted Grade</div>
+          <div class="stat-value" id="stat-overall-grade" style="color: var(--color-primary);">--</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="stat-total-weight">Total weight: 0%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Letter Grade</div>
+          <div class="stat-value" id="stat-letter-grade">--</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);">Standard Academic Scale</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">4.0 GPA Equivalent</div>
+          <div class="stat-value" id="stat-gpa">--</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);">Standard 4.0 Point Scale</div>
+        </div>
+      </div>
+
+      <!-- Assignment Rows Table -->
+      <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4); margin-block-end: var(--space-4); overflow-x: auto;">
+        <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-3);">Course Assignments &amp; Assessments</h3>
+        <table style="inline-size: 100%; border-collapse: collapse; font-size: var(--font-size-sm);" id="grades-table">
+          <thead>
+            <tr style="border-block-end: 2px solid var(--color-border); text-align: start;">
+              <th style="padding: 8px;">Assignment / Category</th>
+              <th style="padding: 8px; inline-size: 20%;">Grade (% or Points)</th>
+              <th style="padding: 8px; inline-size: 20%;">Weight (%)</th>
+              <th style="padding: 8px; inline-size: 60px; text-align: center;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="rows-container">
+            <!-- Dynamic Rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Final Exam Target Calculator -->
+      <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4);">
+        <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-2);">Final Exam Target Calculator</h3>
+        <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">
+          Determine what percentage score you need on your final exam to achieve your desired final letter grade in this course.
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); align-items: flex-end;">
+          <div>
+            <label for="target-grade" class="form-label" style="font-size: var(--font-size-xs);">Desired Course Grade (%):</label>
+            <input type="number" id="target-grade" class="form-input" value="90" min="0" max="100" step="0.5">
+          </div>
+          <div>
+            <label for="final-weight" class="form-label" style="font-size: var(--font-size-xs);">Final Exam Weight (%):</label>
+            <input type="number" id="final-weight" class="form-input" value="25" min="1" max="100" step="1">
+          </div>
+          <div style="background: var(--color-bg); padding: var(--space-3); border-radius: var(--radius-sm); border: 1px solid var(--color-border); text-align: center;">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Required Final Exam Score:</div>
+            <div id="required-final-score" style="font-size: var(--font-size-lg); font-weight: bold; color: var(--color-primary);">--</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Grade Calculator Do?</h2>
+        <p>
+          The <strong>Grade Calculator &amp; Final Exam Target</strong> computes weighted course grades across multiple homework assignments, quizzes, lab reports, midterm exams, and projects. Most high schools, colleges, and universities weight different components unequally (for example, homework might be 20%, midterms 30%, and the final exam 50%).
+        </p>
+        <p>
+          In addition to calculating your current weighted percentage, 4.0 GPA equivalent, and letter grade, it includes an intelligent <strong>Final Exam Target Calculator</strong> that calculates the exact percentage score you must achieve on your final test to reach an A, B, or passing grade.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Add Your Course Work:</strong> Click <strong>+ Add Assignment</strong> to create rows for each syllabus category (e.g., Homework, Midterm 1, Term Paper), or load the <strong>Sample Course</strong>.</li>
+          <li><strong>Input Grades &amp; Weights:</strong> Enter the percentage grade you received (or score out of 100) and the category weight assigned in your course syllabus.</li>
+          <li><strong>Inspect Overall Standing:</strong> Review the primary cards for your current weighted average, letter grade (A+, A, B, etc.), and 4.0 GPA equivalent.</li>
+          <li><strong>Solve for Final Exam:</strong> Enter your desired overall course grade and the final exam's weight percentage to calculate the minimum exam score required.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Mid-Semester Grade Check</h3>
+            <p>Track academic progress before the course drop deadline to evaluate standing in difficult STEM or humanities courses.</p>
+          </div>
+          <div class="card">
+            <h3>Finals Week Study Planning</h3>
+            <p>Prioritize study time by determining which classes require a high score on the final exam versus courses where an A is already mathematically secured.</p>
+          </div>
+          <div class="card">
+            <h3>GPA Projections</h3>
+            <p>Translate course percentages into unweighted 4.0 grade point averages for graduate school and internship applications.</p>
+          </div>
+          <div class="card">
+            <h3>Extra Credit Modeling</h3>
+            <p>Test hypothetical future scores to see how bonus points or project revisions affect your final standing.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Example Syllabus Breakdown:</div>
+          <pre class="example-pre">Homework: 92% (Weight: 20%)
+Midterm 1: 85% (Weight: 25%)
+Midterm 2: 88% (Weight: 25%)
+Final Exam: Weight 30%
+
+Current Standing (70% graded): 88.07% (B+)
+Target Course Grade: 90.0% (A-)
+Required Final Exam Score: 94.5% on the final exam to secure the A-.</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Weighted Formula:</strong> <code>Current Grade = &Sigma;(Grade_i &times; Weight_i) / &Sigma;(Weight_i)</code>.</li>
+          <li><strong>Final Exam Formula:</strong> <code>Required Score = (Desired Grade - Current Weighted Points) / Final Weight</code>.</li>
+          <li><strong>Standard Scale:</strong> Maps percentages to standard North American grades (93%+ = A, 90-92% = A-, 87-89% = B+, 83-86% = B, etc.).</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Grading policies vary by institution and professor. Some instructors employ curved distributions, drop lowest scores, or use unweighted total points systems. If your course uses curve adjustments or drops your lowest quiz, adjust your entered values accordingly.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All course grades, names, and target calculations remain strictly in your browser session. Your academic records are never uploaded to any cloud server or database.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">What if my syllabus weights don't add up to 100% yet?</summary>
+            <div class="faq-answer">
+              <p>The calculator automatically calculates your current grade based on the weight completed so far. If you have only finished 60% of the class, it normalizes your score to 100% so you know your exact standing.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What does a negative required final exam score mean?</summary>
+            <div class="faq-answer">
+              <p>If the final exam solver displays a negative number or 0%, congratulations! You have already earned enough points that you are mathematically guaranteed your target grade even with a 0% on the final.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What if the required final exam score is over 100%?</summary>
+            <div class="faq-answer">
+              <p>If the required score exceeds 100%, your target grade is mathematically impossible without extra credit or a grading curve.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/percentage-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Percentage Calculator</div>
+            <div class="related-tool-desc">Calculate percentage increase, discounts, ratios, and fractions.</div>
+          </a>
+          <a href="/tools/age-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Age Calculator</div>
+            <div class="related-tool-desc">Calculate exact age in years, months, days, hours, and minutes.</div>
+          </a>
+          <a href="/tools/birthday-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Birthday Calculator</div>
+            <div class="related-tool-desc">Countdown to your next birthday and discover milestone days.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const rowsContainer = document.getElementById('rows-container');
+    const statOverallGrade = document.getElementById('stat-overall-grade');
+    const statTotalWeight = document.getElementById('stat-total-weight');
+    const statLetterGrade = document.getElementById('stat-letter-grade');
+    const statGpa = document.getElementById('stat-gpa');
+
+    const targetGrade = document.getElementById('target-grade');
+    const finalWeight = document.getElementById('final-weight');
+    const requiredFinalScore = document.getElementById('required-final-score');
+
+    const btnAddRow = document.getElementById('btn-add-row');
+    const btnSample = document.getElementById('btn-sample');
+    const btnReset = document.getElementById('btn-reset');
+
+    function getLetterAndGpa(percent) {
+      if (percent >= 93) return { letter: 'A', gpa: '4.00' };
+      if (percent >= 90) return { letter: 'A-', gpa: '3.70' };
+      if (percent >= 87) return { letter: 'B+', gpa: '3.33' };
+      if (percent >= 83) return { letter: 'B', gpa: '3.00' };
+      if (percent >= 80) return { letter: 'B-', gpa: '2.70' };
+      if (percent >= 77) return { letter: 'C+', gpa: '2.30' };
+      if (percent >= 73) return { letter: 'C', gpa: '2.00' };
+      if (percent >= 70) return { letter: 'C-', gpa: '1.70' };
+      if (percent >= 67) return { letter: 'D+', gpa: '1.30' };
+      if (percent >= 60) return { letter: 'D', gpa: '1.00' };
+      return { letter: 'F', gpa: '0.00' };
+    }
+
+    function createRow(name = '', grade = '', weight = '') {
+      const tr = document.createElement('tr');
+      tr.style.borderBlockEnd = '1px solid var(--color-border)';
+      tr.innerHTML = `
+        <td style="padding: 6px;">
+          <input type="text" class="form-input row-name" value="${name}" placeholder="e.g. Midterm 1" style="font-size: var(--font-size-xs); padding: 0.35rem;">
+        </td>
+        <td style="padding: 6px;">
+          <input type="number" class="form-input row-grade" value="${grade}" placeholder="95" min="0" max="200" step="0.1" style="font-size: var(--font-size-xs); padding: 0.35rem;">
+        </td>
+        <td style="padding: 6px;">
+          <input type="number" class="form-input row-weight" value="${weight}" placeholder="20" min="0" max="100" step="0.5" style="font-size: var(--font-size-xs); padding: 0.35rem;">
+        </td>
+        <td style="padding: 6px; text-align: center;">
+          <button type="button" class="btn btn-secondary btn-del" style="padding: 0.2rem 0.5rem; font-size: 11px; color: var(--color-danger);" title="Remove">✕</button>
+        </td>
+      `;
+
+      tr.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', calculate);
+      });
+
+      tr.querySelector('.btn-del').addEventListener('click', () => {
+        tr.remove();
+        calculate();
+      });
+
+      rowsContainer.appendChild(tr);
+    }
+
+    function calculate() {
+      const rows = rowsContainer.querySelectorAll('tr');
+      let totalEarnedWeight = 0;
+      let totalWeightEntered = 0;
+
+      rows.forEach(r => {
+        const gradeVal = parseFloat(r.querySelector('.row-grade').value);
+        const weightVal = parseFloat(r.querySelector('.row-weight').value);
+
+        if (!isNaN(gradeVal) && !isNaN(weightVal) && weightVal > 0) {
+          totalEarnedWeight += (gradeVal * weightVal);
+          totalWeightEntered += weightVal;
+        }
+      });
+
+      if (totalWeightEntered > 0) {
+        const currentAvg = totalEarnedWeight / totalWeightEntered;
+        statOverallGrade.textContent = currentAvg.toFixed(2) + '%';
+        statTotalWeight.textContent = `Total weight: ${totalWeightEntered.toFixed(1)}%`;
+
+        const { letter, gpa } = getLetterAndGpa(currentAvg);
+        statLetterGrade.textContent = letter;
+        statGpa.textContent = gpa;
+      } else {
+        statOverallGrade.textContent = '--';
+        statTotalWeight.textContent = 'Total weight: 0%';
+        statLetterGrade.textContent = '--';
+        statGpa.textContent = '--';
+      }
+
+      // Calculate Final Exam Target
+      const target = parseFloat(targetGrade.value);
+      const fWeight = parseFloat(finalWeight.value);
+
+      if (!isNaN(target) && !isNaN(fWeight) && fWeight > 0) {
+        // Points currently banked (assuming 100% total course points)
+        // Banked points = sum of (grade * weight / 100)
+        let bankedPoints = 0;
+        rows.forEach(r => {
+          const g = parseFloat(r.querySelector('.row-grade').value);
+          const w = parseFloat(r.querySelector('.row-weight').value);
+          if (!isNaN(g) && !isNaN(w)) {
+            bankedPoints += (g * w / 100);
+          }
+        });
+
+        // Remaining points needed
+        const pointsNeeded = target - bankedPoints;
+        const requiredScore = (pointsNeeded / fWeight) * 100;
+
+        if (requiredScore <= 0) {
+          requiredFinalScore.textContent = '0% (Already Achieved!)';
+          requiredFinalScore.style.color = 'var(--color-success)';
+        } else if (requiredScore > 100) {
+          requiredFinalScore.textContent = requiredScore.toFixed(1) + '% (Extra Credit Needed)';
+          requiredFinalScore.style.color = 'var(--color-danger)';
+        } else {
+          requiredFinalScore.textContent = requiredScore.toFixed(1) + '%';
+          requiredFinalScore.style.color = 'var(--color-primary)';
+        }
+      } else {
+        requiredFinalScore.textContent = '--';
+      }
+    }
+
+    btnAddRow.addEventListener('click', () => {
+      createRow();
+    });
+
+    targetGrade.addEventListener('input', calculate);
+    finalWeight.addEventListener('input', calculate);
+
+    btnSample.addEventListener('click', () => {
+      rowsContainer.innerHTML = '';
+      createRow('Homework & Quizzes', '92', '20');
+      createRow('Midterm Exam 1', '85', '25');
+      createRow('Midterm Exam 2', '88', '25');
+      targetGrade.value = '90';
+      finalWeight.value = '30';
+      calculate();
+    });
+
+    btnReset.addEventListener('click', () => {
+      rowsContainer.innerHTML = '';
+      createRow();
+      createRow();
+      createRow();
+      calculate();
+    });
+
+    // Run sample on load
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

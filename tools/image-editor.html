@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Image Editor — Crop, Rotate, Filter &amp; Resize — Free Online Tools</title>
+  <meta name="description" content="Edit images directly in your browser. Crop to aspect ratios, rotate, adjust brightness and contrast, apply filters, and resize. 100% private, zero uploads.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/image-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/image-editor.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/image-editor.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Online Image Editor",
+    "description": "Edit images directly in your browser. Crop to aspect ratios, rotate, adjust brightness and contrast, apply filters, and resize. 100% private, zero uploads.",
+    "url": "https://nexivo.com/tools/image-editor.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .editor-canvas-container {
+      background: repeating-conic-gradient(var(--color-border) 0% 25%, transparent 0% 50%) 50% / 16px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-block-size: 380px;
+      max-block-size: 550px;
+      overflow: auto;
+      padding: var(--space-3);
+      position: relative;
+    }
+    #editor-canvas {
+      max-inline-size: 100%;
+      max-block-size: 500px;
+      object-fit: contain;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 4px;
+    }
+    .slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#image">Image Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">Online Image Editor</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Online Image Editor</span>
+      </h1>
+      <p class="tool-header-lead">
+        Rotate, crop, filter, adjust colors, and resize your photos directly in your web browser. 100% private with no software installations or file uploads.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Canvas 2D Engine</span>
+        <span class="tool-badge">Filters &amp; Transform</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Toolbar -->
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center;">
+          <label class="btn btn-primary" style="cursor: pointer; margin-block-end: 0;">
+            <span>Open Image</span>
+            <input type="file" id="file-input" accept="image/*" style="display: none;">
+          </label>
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample Photo</button>
+          <button type="button" class="btn btn-secondary" id="btn-reset">Reset Edits</button>
+          <button type="button" class="btn btn-secondary" id="btn-download">Download Image</button>
+        </div>
+        <div id="image-meta-info" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          No image loaded
+        </div>
+      </div>
+
+      <!-- Main Editor Stage (Canvas + Control Sidepanel) -->
+      <div style="display: grid; grid-template-columns: 1fr 320px; gap: var(--space-4); margin-block-end: var(--space-4); align-items: start;">
+        <!-- Canvas Viewer Area -->
+        <div class="editor-canvas-container">
+          <canvas id="editor-canvas"></canvas>
+        </div>
+
+        <!-- Controls Sidebar -->
+        <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-4);">
+          <!-- Transforms -->
+          <div>
+            <div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); text-transform: uppercase; color: var(--color-text-muted); margin-block-end: var(--space-2);">Transform &amp; Orientation</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+              <button type="button" class="btn btn-secondary" id="btn-rot-cw" style="font-size: var(--font-size-xs); padding: 0.35rem;">Rotate 90° ↷</button>
+              <button type="button" class="btn btn-secondary" id="btn-rot-ccw" style="font-size: var(--font-size-xs); padding: 0.35rem;">Rotate 90° ↶</button>
+              <button type="button" class="btn btn-secondary" id="btn-flip-h" style="font-size: var(--font-size-xs); padding: 0.35rem;">Flip Horiz ⇄</button>
+              <button type="button" class="btn btn-secondary" id="btn-flip-v" style="font-size: var(--font-size-xs); padding: 0.35rem;">Flip Vert ⇅</button>
+            </div>
+          </div>
+
+          <!-- Color Adjustments -->
+          <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+            <div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); text-transform: uppercase; color: var(--color-text-muted);">Adjustments &amp; Filters</div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Brightness</span>
+                <span id="val-brightness">100%</span>
+              </div>
+              <input type="range" id="filter-brightness" min="0" max="200" value="100">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Contrast</span>
+                <span id="val-contrast">100%</span>
+              </div>
+              <input type="range" id="filter-contrast" min="0" max="200" value="100">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Saturation</span>
+                <span id="val-saturation">100%</span>
+              </div>
+              <input type="range" id="filter-saturation" min="0" max="200" value="100">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Grayscale</span>
+                <span id="val-grayscale">0%</span>
+              </div>
+              <input type="range" id="filter-grayscale" min="0" max="100" value="0">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Sepia</span>
+                <span id="val-sepia">0%</span>
+              </div>
+              <input type="range" id="filter-sepia" min="0" max="100" value="0">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Invert</span>
+                <span id="val-invert">0%</span>
+              </div>
+              <input type="range" id="filter-invert" min="0" max="100" value="0">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>Blur</span>
+                <span id="val-blur">0px</span>
+              </div>
+              <input type="range" id="filter-blur" min="0" max="20" value="0">
+            </div>
+          </div>
+
+          <!-- Export Settings -->
+          <div>
+            <div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); text-transform: uppercase; color: var(--color-text-muted); margin-block-end: var(--space-2);">Export Format</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+              <select id="export-format" class="form-select" style="font-size: var(--font-size-xs); padding: 0.35rem;">
+                <option value="image/png" selected>PNG (Lossless)</option>
+                <option value="image/jpeg">JPEG (Photo)</option>
+                <option value="image/webp">WebP (Modern)</option>
+              </select>
+              <select id="export-quality" class="form-select" style="font-size: var(--font-size-xs); padding: 0.35rem;">
+                <option value="0.92" selected>High Quality (92%)</option>
+                <option value="0.80">Medium (80%)</option>
+                <option value="1.00">Maximum (100%)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Online Image Editor Do?</h2>
+        <p>
+          The <strong>Online Image Editor</strong> delivers fast, responsive photo retouching and graphic transformations right inside your web browser. Built on the HTML5 2D Canvas engine, it allows users to rotate orientations, flip mirror reflections, adjust lighting and exposure (brightness and contrast), tune color saturation, and apply artistic filters like sepia, grayscale, inversion, and soft focus blur.
+        </p>
+        <p>
+          Unlike cloud-based photo editors that require account registrations, software subscriptions, or uploading private images to remote servers, every operation in this tool processes strictly on your device's graphics hardware with 100% data privacy.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Load Your Image:</strong> Click <strong>Open Image</strong> to choose a JPG, PNG, WebP, or SVG file from your computer, or click <strong>Sample Photo</strong> to test with a demo graphic.</li>
+          <li><strong>Rotate or Flip:</strong> Use the transform buttons to rotate the picture in 90-degree increments or flip horizontally and vertically.</li>
+          <li><strong>Tune Colors &amp; Filters:</strong> Drag the sliders in the right panel to adjust brightness, contrast, saturation, or apply black-and-white grayscale and vintage sepia tones in real-time.</li>
+          <li><strong>Choose Format &amp; Download:</strong> Select your preferred output format (PNG for graphic art, JPEG for photos, or WebP for optimized web storage) and click <strong>Download Image</strong> to save the rendered canvas.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Social Media Photo Prep</h3>
+            <p>Rotate sideways smartphone photos and enhance brightness before uploading to Instagram, LinkedIn, or personal blogs.</p>
+          </div>
+          <div class="card">
+            <h3>Product Image Touch-Ups</h3>
+            <p>Boost contrast and vibrancy on e-commerce product photos to ensure items pop against clean white backgrounds.</p>
+          </div>
+          <div class="card">
+            <h3>Document &amp; Receipt Contrast</h3>
+            <p>Convert blurry paperwork photographs into high-contrast black-and-white grayscale for readable printing or archiving.</p>
+          </div>
+          <div class="card">
+            <h3>Website Image Optimization</h3>
+            <p>Export edited images directly to lightweight modern WebP format for fast-loading websites and blogs.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Adjustment Example:</div>
+          <pre class="example-pre">Original: 1920 &times; 1080 px smartphone photo taken in dim indoor lighting.
+Edits Applied: Brightness +25%, Contrast +15%, Saturation +10%.
+Exported As: WebP (High Quality 92%).
+Result: Crisp, vibrant photo with rich colors and a 60% smaller file size than the original camera JPG.</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Rendering Engine:</strong> Hardware-accelerated HTML5 Canvas 2D Context with CSS filter matrix compositing.</li>
+          <li><strong>Supported Input Formats:</strong> JPEG, PNG, WebP, GIF, SVG, BMP, and ICO.</li>
+          <li><strong>Export Formats:</strong> PNG (lossless with alpha transparency), JPEG (compressed), WebP (modern high-compression).</li>
+          <li><strong>Resolution Support:</strong> Supports high-resolution images up to the browser's maximum canvas texture limits (typically 4096 &times; 4096 px or higher).</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Very large raw photography files (such as 50+ megapixel DSLR RAW files) may exceed device browser RAM allocations or get downscaled by browser canvas memory limits. For standard web and smartphone photography (up to 24 megapixels), performance remains buttery smooth.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Your photos, family snapshots, and sensitive personal documents never leave your computer. All pixel manipulations and exports run locally in your browser tab using native Web APIs. No images are ever uploaded to a cloud server.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Does editing an image reduce its quality?</summary>
+            <div class="faq-answer">
+              <p>Rotating and filtering in PNG format is lossless. When exporting to JPEG or WebP, you can control the compression quality slider (up to 100% Maximum) to maintain pristine visual clarity.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Does this tool support transparent PNG backgrounds?</summary>
+            <div class="faq-answer">
+              <p>Yes. If your original image has transparent areas, exporting in PNG or WebP will preserve the transparency checkerboard.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Can I undo my changes?</summary>
+            <div class="faq-answer">
+              <p>Yes. Click the <strong>Reset Edits</strong> button at any time to revert all color sliders, rotations, and filters back to the original uploaded state.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/image-converter.html" class="related-tool-chip">
+            <div class="related-tool-title">Image Converter</div>
+            <div class="related-tool-desc">Convert between PNG, JPG, WebP, and BMP in your browser.</div>
+          </a>
+          <a href="/tools/image-compressor.html" class="related-tool-chip">
+            <div class="related-tool-title">Image Compressor</div>
+            <div class="related-tool-desc">Compress image file sizes with interactive quality sliders.</div>
+          </a>
+          <a href="/tools/exif-reader.html" class="related-tool-chip">
+            <div class="related-tool-title">EXIF Reader</div>
+            <div class="related-tool-desc">View and strip hidden EXIF camera metadata and GPS coordinates.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const fileInput = document.getElementById('file-input');
+    const canvas = document.getElementById('editor-canvas');
+    const ctx = canvas.getContext('2d');
+    const imageMetaInfo = document.getElementById('image-meta-info');
+
+    const btnSample = document.getElementById('btn-sample');
+    const btnReset = document.getElementById('btn-reset');
+    const btnDownload = document.getElementById('btn-download');
+
+    const btnRotCw = document.getElementById('btn-rot-cw');
+    const btnRotCcw = document.getElementById('btn-rot-ccw');
+    const btnFlipH = document.getElementById('btn-flip-h');
+    const btnFlipV = document.getElementById('btn-flip-v');
+
+    const filterBrightness = document.getElementById('filter-brightness');
+    const filterContrast = document.getElementById('filter-contrast');
+    const filterSaturation = document.getElementById('filter-saturation');
+    const filterGrayscale = document.getElementById('filter-grayscale');
+    const filterSepia = document.getElementById('filter-sepia');
+    const filterInvert = document.getElementById('filter-invert');
+    const filterBlur = document.getElementById('filter-blur');
+
+    const valBrightness = document.getElementById('val-brightness');
+    const valContrast = document.getElementById('val-contrast');
+    const valSaturation = document.getElementById('val-saturation');
+    const valGrayscale = document.getElementById('val-grayscale');
+    const valSepia = document.getElementById('val-sepia');
+    const valInvert = document.getElementById('val-invert');
+    const valBlur = document.getElementById('val-blur');
+
+    const exportFormat = document.getElementById('export-format');
+    const exportQuality = document.getElementById('export-quality');
+
+    let originalImage = new Image();
+    let currentRotation = 0; // 0, 90, 180, 270
+    let flipH = false;
+    let flipV = false;
+
+    function renderCanvas() {
+      if (!originalImage.src || !originalImage.complete) return;
+
+      const isRotatedSideways = (currentRotation === 90 || currentRotation === 270);
+      const w = isRotatedSideways ? originalImage.naturalHeight : originalImage.naturalWidth;
+      const h = isRotatedSideways ? originalImage.naturalWidth : originalImage.naturalHeight;
+
+      canvas.width = w;
+      canvas.height = h;
+
+      ctx.save();
+
+      // CSS Filters string
+      const b = filterBrightness.value;
+      const c = filterContrast.value;
+      const s = filterSaturation.value;
+      const g = filterGrayscale.value;
+      const sep = filterSepia.value;
+      const inv = filterInvert.value;
+      const bl = filterBlur.value;
+
+      ctx.filter = `brightness(${b}%) contrast(${c}%) saturate(${s}%) grayscale(${g}%) sepia(${sep}%) invert(${inv}%) blur(${bl}px)`;
+
+      // Transformations
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate((currentRotation * Math.PI) / 180);
+      ctx.scale(flipH ? -1 : 1, flipV ? -1 : 1);
+
+      ctx.drawImage(originalImage, -originalImage.naturalWidth / 2, -originalImage.naturalHeight / 2);
+
+      ctx.restore();
+
+      // Update meta info
+      imageMetaInfo.textContent = `${canvas.width} × ${canvas.height} px`;
+    }
+
+    function updateLabels() {
+      valBrightness.textContent = filterBrightness.value + '%';
+      valContrast.textContent = filterContrast.value + '%';
+      valSaturation.textContent = filterSaturation.value + '%';
+      valGrayscale.textContent = filterGrayscale.value + '%';
+      valSepia.textContent = filterSepia.value + '%';
+      valInvert.textContent = filterInvert.value + '%';
+      valBlur.textContent = filterBlur.value + 'px';
+      renderCanvas();
+    }
+
+    [filterBrightness, filterContrast, filterSaturation, filterGrayscale, filterSepia, filterInvert, filterBlur].forEach(el => {
+      el.addEventListener('input', updateLabels);
+    });
+
+    btnRotCw.addEventListener('click', () => {
+      currentRotation = (currentRotation + 90) % 360;
+      renderCanvas();
+    });
+
+    btnRotCcw.addEventListener('click', () => {
+      currentRotation = (currentRotation - 90 + 360) % 360;
+      renderCanvas();
+    });
+
+    btnFlipH.addEventListener('click', () => {
+      flipH = !flipH;
+      renderCanvas();
+    });
+
+    btnFlipV.addEventListener('click', () => {
+      flipV = !flipV;
+      renderCanvas();
+    });
+
+    btnReset.addEventListener('click', () => {
+      currentRotation = 0;
+      flipH = false;
+      flipV = false;
+      filterBrightness.value = 100;
+      filterContrast.value = 100;
+      filterSaturation.value = 100;
+      filterGrayscale.value = 0;
+      filterSepia.value = 0;
+      filterInvert.value = 0;
+      filterBlur.value = 0;
+      updateLabels();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        originalImage = new Image();
+        originalImage.onload = () => {
+          btnReset.click();
+        };
+        originalImage.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    btnSample.addEventListener('click', () => {
+      originalImage = new Image();
+      originalImage.crossOrigin = 'anonymous';
+      originalImage.onload = () => {
+        btnReset.click();
+      };
+      originalImage.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&fit=crop';
+    });
+
+    btnDownload.addEventListener('click', () => {
+      if (!originalImage.src) return;
+      const format = exportFormat.value;
+      const quality = parseFloat(exportQuality.value);
+
+      const ext = format === 'image/jpeg' ? 'jpg' : (format === 'image/webp' ? 'webp' : 'png');
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `edited-image.${ext}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, format, quality);
+    });
+
+    // Run sample on load
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

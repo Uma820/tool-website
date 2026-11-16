@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quilt Binding Calculator — Straight-Grain WOF &amp; Continuous Bias</title>
+  <meta name="description" content="Calculate quilt binding strip width, number of strips, total binding length, and fabric yardage for straight-grain WOF or continuous bias squares. Free client-side tool.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/quilt-binding-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/quilt-binding-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/quilt-binding-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Quilt Binding Calculator",
+    "description": "Calculate quilt binding yardage, strip counts, and continuous bias square requirements with live cutting diagrams.",
+    "url": "https://nexivo.com/tools/quilt-binding-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the standard width for quilt binding strips?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most popular width for double-fold French binding is 2.5 inches (6.35 cm). When folded in half lengthwise and stitched with a 1/4-inch seam allowance, it leaves a finished 3/8-inch edge. For a narrower binding, 2.25 inches is commonly used."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When should I use bias binding instead of straight-grain binding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Straight-grain (crosswise grain / WOF) binding is best for quilts with straight edges and 90-degree corners. Bias binding (cut at a 45-degree angle) has mechanical stretch and flexibility, making it mandatory for curved edges, scalloped borders, and circular placemats."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is a 12-inch extra allowance recommended for binding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 12-inch allowance ensures you have enough extra length to ease around all four mitered corners and leave overlapping tails to join the start and end of the binding neatly at a 45-degree angle."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the continuous bias square method work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The continuous bias method uses a single square of fabric. You cut the square diagonally into two triangles, seam them into a parallelogram, mark diagonal strip lines, and stitch into a tube to cut one unbroken binding strip in minutes."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#crafts">Crafts &amp; Sewing</a></li>
+      <li>/</li>
+      <li aria-current="page">Quilt Binding Calculator</li>
+    </nav>
+
+    <!-- Sewing Suite Navigation -->
+    <div class="sewing-suite-nav">
+      <span class="sewing-suite-label">Sewing Suite:</span>
+      <a href="/tools/quilt-backing-calculator.html" class="sewing-pill">Quilt Backing</a>
+      <a href="/tools/quilt-binding-calculator.html" class="sewing-pill active">Quilt Binding</a>
+      <a href="/tools/fabric-yardage-calculator.html" class="sewing-pill">Fabric Yardage</a>
+      <a href="/tools/curtain-fabric-calculator.html" class="sewing-pill">Curtain Fabric</a>
+      <a href="/tools/fabric-shrinkage-calculator.html" class="sewing-pill">Fabric Shrinkage</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Quilt Binding Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Calculate total binding perimeter, number of strips to cut across fabric width (WOF), or single square dimensions for continuous bias binding.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-essential">Essential</span>
+        <span class="tool-badge">Continuous Bias</span>
+        <span class="tool-badge">Fractional Yards</span>
+        <span class="tool-badge">100% In-Browser</span>
+      </div>
+    </div>
+
+    <!-- Calculator Main Panel -->
+    <div class="tool-panel">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); margin-block-end: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); margin: 0; color: var(--color-primary); display: flex; align-items: center; gap: var(--space-2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span>Binding Inputs</span>
+        </h2>
+        
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <span style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-secondary);">Units:</span>
+          <div class="unit-toggle-group" role="radiogroup" aria-label="Measurement Units">
+            <button type="button" class="unit-toggle-btn active" id="btn-imperial" aria-checked="true">Imperial (in / yd)</button>
+            <button type="button" class="unit-toggle-btn" id="btn-metric" aria-checked="false">Metric (cm / m)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-4);">
+        <div class="form-group">
+          <label for="quilt-preset" class="form-label">Quilt Preset</label>
+          <select id="quilt-preset" class="form-select">
+            <option value="throw" selected>Throw / Lap (50" × 65")</option>
+            <option value="crib">Crib / Baby (36" × 52")</option>
+            <option value="twin">Twin Bed (68" × 86")</option>
+            <option value="full">Full / Double (84" × 90")</option>
+            <option value="queen">Queen Bed (90" × 95")</option>
+            <option value="king">King Bed (108" × 95")</option>
+            <option value="custom">Custom Dimensions</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="quilt-width" class="form-label" id="label-width">Quilt Width (in)</label>
+          <input type="number" id="quilt-width" class="form-input" value="50" min="1" step="0.5">
+        </div>
+
+        <div class="form-group">
+          <label for="quilt-length" class="form-label" id="label-length">Quilt Length (in)</label>
+          <input type="number" id="quilt-length" class="form-input" value="65" min="1" step="0.5">
+        </div>
+
+        <div class="form-group">
+          <label for="strip-width" class="form-label" id="label-strip-width">Binding Strip Width</label>
+          <select id="strip-width" class="form-select">
+            <option value="2.0">2.0" (Narrow Binding)</option>
+            <option value="2.25">2.25" (Standard Domestic)</option>
+            <option value="2.5" selected>2.5" (Most Popular / French Fold)</option>
+            <option value="3.0">3.0" (Wide Flange Binding)</option>
+            <option value="custom">Custom Strip Width...</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="custom-strip-group" style="display: none;">
+          <label for="custom-strip-width" class="form-label" id="label-custom-strip">Custom Strip Width (in)</label>
+          <input type="number" id="custom-strip-width" class="form-input" value="2.5" min="1" step="0.125">
+        </div>
+
+        <div class="form-group">
+          <label for="bolt-width" class="form-label" id="label-bolt-width">Fabric Bolt Width (in)</label>
+          <input type="number" id="bolt-width" class="form-input" value="42" min="20" step="1" title="Quilting cotton is typically 42 inches wide">
+        </div>
+
+        <div class="form-group">
+          <label for="corner-allowance" class="form-label" id="label-allowance">Corner &amp; Joining Allowance (in)</label>
+          <input type="number" id="corner-allowance" class="form-input" value="12" min="4" step="1" title="12 inches recommended for mitered corners and joining tails">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-block-end: var(--space-5);">
+        <button type="button" class="btn btn-secondary" id="btn-reset">Reset Defaults</button>
+        <button type="button" class="btn btn-primary" id="btn-copy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Shopping List</span>
+        </button>
+      </div>
+
+      <!-- Highlight Summary Cards -->
+      <div class="utilization-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-block-end: var(--space-5);">
+        <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Quilt Perimeter</div>
+          <div style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-text);" id="stat-perimeter">0 in</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Finished edge distance</div>
+        </div>
+
+        <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Total Binding Needed</div>
+          <div style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);" id="stat-total-binding">0 in</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Includes +12" allowance</div>
+        </div>
+
+        <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Strip Width</div>
+          <div style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-text);" id="stat-strip-width">2.5 in</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Double-fold cut width</div>
+        </div>
+      </div>
+
+      <!-- Method 1: Straight-Grain (WOF) vs Method 2: Continuous Bias Grid -->
+      <div class="sewing-compare-grid">
+        <!-- Straight-Grain Card -->
+        <div class="sewing-compare-card" id="card-wof">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+            <h3 style="font-size: var(--font-size-base); margin: 0; color: var(--color-text);">Method A: Straight-Grain (WOF)</h3>
+            <span class="badge" style="background: rgba(37, 99, 235, 0.1); color: var(--color-primary); border: 1px solid rgba(37, 99, 235, 0.3);">Best for Straight Edges</span>
+          </div>
+          <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">
+            Cut strips across the Width of Fabric (selvage to selvage) and join diagonally at 45°.
+          </p>
+          <div style="margin-block-end: var(--space-3);">
+            <span class="fractional-highlight" id="wof-fractional">0 yds</span>
+            <div class="fractional-subtext" id="wof-subtext">0 yards / 0 meters</div>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: var(--font-size-sm); display: flex; flex-direction: column; gap: var(--space-1); color: var(--color-text-secondary);">
+            <li><strong>Strips to Cut:</strong> <span id="wof-strips" style="font-weight: 700; color: var(--color-text);">0 strips</span></li>
+            <li><strong>Usable Strip Length (WOF):</strong> <span id="wof-usable-len">40 in</span></li>
+            <li><strong>Total Linear Cut from Bolt:</strong> <span id="wof-linear-len">0 in</span></li>
+          </ul>
+        </div>
+
+        <!-- Continuous Bias Card -->
+        <div class="sewing-compare-card" id="card-bias">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+            <h3 style="font-size: var(--font-size-base); margin: 0; color: var(--color-text);">Method B: Continuous Bias Square</h3>
+            <span class="badge" style="background: rgba(245, 158, 11, 0.1); color: #b45309; border: 1px solid rgba(245, 158, 11, 0.3);">Best for Curves</span>
+          </div>
+          <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">
+            Cut from a single square of fabric sewn into a tube for unbroken 45° bias strip cutting.
+          </p>
+          <div style="margin-block-end: var(--space-3);">
+            <span class="fractional-highlight" id="bias-fractional">0 yds</span>
+            <div class="fractional-subtext" id="bias-subtext">0 yards / 0 meters</div>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: var(--font-size-sm); display: flex; flex-direction: column; gap: var(--space-1); color: var(--color-text-secondary);">
+            <li><strong>Single Fabric Square Needed:</strong> <span id="bias-square-size" style="font-weight: 700; color: var(--color-text);">0" × 0"</span></li>
+            <li><strong>Bolt Fit Status:</strong> <span id="bias-bolt-status">Fits single bolt width</span></li>
+            <li><strong>Cut Length from Bolt:</strong> <span id="bias-linear-len">0 in</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 2D SVG Cutting Diagram -->
+      <div class="sewing-diagram-card">
+        <h3 style="font-size: var(--font-size-sm); margin: 0 0 var(--space-2) 0; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+          2D Cutting Pattern Diagram
+        </h3>
+        <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">
+          Visual representation of WOF strips across fabric bolt width with 45° joining miters.
+        </p>
+        <div class="sewing-svg-wrapper" id="svg-container">
+          <!-- Dynamic SVG inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational & SEO Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>
+          The <strong>Quilt Binding Calculator</strong> computes the exact fabric requirements for edging your finished quilts. It accurately calculates the quilt perimeter, adds corner and diagonal joining allowances, and determines the exact number of strips needed for standard Straight-Grain (WOF) cutting or the fabric square size for Continuous Bias binding.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li><strong>Select a quilt size or enter dimensions:</strong> Choose from standard presets (Crib, Throw, Twin, Queen, King) or enter custom width and length.</li>
+          <li><strong>Select binding strip width:</strong> Choose 2.5" (most popular for French double-fold binding), 2.25", 2.0", or enter a custom width.</li>
+          <li><strong>Confirm fabric bolt width:</strong> Enter your fabric width (default 42" for standard quilting cotton).</li>
+          <li><strong>Choose cutting method:</strong> Compare <em>Method A (Straight-Grain WOF)</em> for rectangular straight-edge quilts versus <em>Method B (Continuous Bias)</em> for curved edges.</li>
+          <li><strong>Copy shopping list:</strong> Click <em>"Copy Shopping List"</em> to copy exact strip counts and yardage directly to your clipboard.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Mathematical Formulas Used</h2>
+        <div class="example-box">
+          <p style="margin-block-end: var(--space-2); font-weight: 600;">Perimeter &amp; WOF Strip Calculations:</p>
+          <pre class="example-pre">Perimeter = 2 × (Quilt Width + Quilt Length)&#10;Total Binding Length = Perimeter + 12" (corner &amp; joining allowance)&#10;Usable WOF = Bolt Width - 2" (selvage allowance)&#10;Strips to Cut = ⌈Total Binding Length / Usable WOF⌉&#10;Fabric Yardage = (Strips × Strip Width) / 36</pre>
+          <p style="margin-block-start: var(--space-3); margin-block-end: var(--space-2); font-weight: 600;">Continuous Bias Square Formula:</p>
+          <pre class="example-pre">Bias Binding Area = Total Binding Length × Strip Width&#10;Square Side Required = ⌈√(Bias Binding Area) + 2"⌉</pre>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Standard Quilt Sizes &amp; Binding Yardage Reference Table</h2>
+        <div class="cargo-table-container">
+          <table class="cargo-table">
+            <thead>
+              <tr>
+                <th>Quilt Size</th>
+                <th>Dimensions</th>
+                <th>Perimeter + 12"</th>
+                <th>Strips Needed (2.5" Cut)</th>
+                <th>Fabric Yardage to Buy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Baby / Crib</strong></td>
+                <td>36" × 52"</td>
+                <td>188"</td>
+                <td>5 strips</td>
+                <td>1/2 yd (0.35 yd)</td>
+              </tr>
+              <tr>
+                <td><strong>Lap / Throw</strong></td>
+                <td>50" × 65"</td>
+                <td>242"</td>
+                <td>7 strips</td>
+                <td>1/2 yd (0.49 yd)</td>
+              </tr>
+              <tr>
+                <td><strong>Twin Bed</strong></td>
+                <td>68" × 86"</td>
+                <td>320"</td>
+                <td>8 strips</td>
+                <td>5/8 yd (0.56 yd)</td>
+              </tr>
+              <tr>
+                <td><strong>Full / Double</strong></td>
+                <td>84" × 90"</td>
+                <td>360"</td>
+                <td>9 strips</td>
+                <td>3/4 yd (0.63 yd)</td>
+              </tr>
+              <tr>
+                <td><strong>Queen Bed</strong></td>
+                <td>90" × 95"</td>
+                <td>382"</td>
+                <td>10 strips</td>
+                <td>3/4 yd (0.70 yd)</td>
+              </tr>
+              <tr>
+                <td><strong>King Bed</strong></td>
+                <td>108" × 95"</td>
+                <td>418"</td>
+                <td>11 strips</td>
+                <td>7/8 yd (0.77 yd)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Straight-Grain Bed Quilts:</strong> Quickly estimating how many 2.5" WOF strips are required for throw, queen, and king bed quilts.</li>
+          <li><strong>Scalloped &amp; Curved Edge Quilts:</strong> Sizing continuous bias squares to bind rounded corners and circular baby playmats without puckering.</li>
+          <li><strong>Remnant &amp; Scrappy Bindings:</strong> Checking total binding perimeter to confirm whether remaining fabric scraps can complete the quilt edge.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">Quilt Dimensions: 50" × 65" (Throw Quilt)&#10;Strip Width: 2.5"&#10;Fabric Bolt Width: 42"&#10;Joining Allowance: 12"</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">Perimeter: 230"&#10;Total Binding Required: 242"&#10;WOF Strips: 7 strips&#10;Total Linear Length: 17.5"&#10;Fabric to Purchase: 1/2 yd (0.49 yds / 0.44 m)&#10;Continuous Bias Square: 27" × 27"</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          Straight-grain strip calculations use an effective usable width of $\text{Bolt Width} - 2''$ to ensure dense, fray-resistant selvages are never incorporated into the binding. All fractional yardage estimates round up to the nearest $1/8$ yard ($4.5\text{ in}$) to ensure safety at retail fabric counters.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Calculations assume standard double-fold French binding attached with 1/4" seam allowance. For extra-thick high-loft polyester battings, increase strip width to 2.75" or 3" to accommodate edge wrap without pulling the quilt border.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All measurements, geometry, and calculations execute entirely in client-side JavaScript. No quilt specs or user inputs are tracked or transmitted across the network.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Why join binding strips at a 45-degree angle instead of a straight seam?</h3>
+          <p>
+            Joining strips at a 45-degree angle distributes seam allowance bulk across a longer distance along the quilt edge. A straight 90-degree seam stacks multiple fabric layers in one spot, creating a thick ridge that sewing machine needles struggle to pass through.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>What is the difference between single-fold and double-fold binding?</h3>
+          <p>
+            Double-fold (French) binding is folded in half lengthwise with wrong sides together before stitching, giving two layers of protective fabric over the edge for durability. Single-fold binding is only one layer and is usually reserved for decorative placemats or apparel.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I use leftover backing fabric for my binding?</h3>
+          <p>
+            Yes! Self-binding with leftover backing fabric creates a clean, coordinated look. If you cut extra lengthwise or horizontal panels from your backing, you can often cut all your binding strips from the trimmed remnants.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/quilt-backing-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            <span>Quilt Backing Calculator</span>
+          </a>
+          <a href="/tools/fabric-yardage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Fabric Yardage Calculator</span>
+          </a>
+          <a href="/tools/fabric-shrinkage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>Fabric Shrinkage Calculator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 Free Online Tools. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/sewing-utils.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let isMetric = false;
+      let lastCalcResult = null;
+
+      const btnImperial = document.getElementById('btn-imperial');
+      const btnMetric = document.getElementById('btn-metric');
+      const quiltPreset = document.getElementById('quilt-preset');
+      const quiltWidthInput = document.getElementById('quilt-width');
+      const quiltLengthInput = document.getElementById('quilt-length');
+      const stripWidthSelect = document.getElementById('strip-width');
+      const customStripGroup = document.getElementById('custom-strip-group');
+      const customStripInput = document.getElementById('custom-strip-width');
+      const boltWidthInput = document.getElementById('bolt-width');
+      const allowanceInput = document.getElementById('corner-allowance');
+      const btnReset = document.getElementById('btn-reset');
+      const btnCopy = document.getElementById('btn-copy');
+
+      const labelW = document.getElementById('label-width');
+      const labelL = document.getElementById('label-length');
+      const labelCustomStrip = document.getElementById('label-custom-strip');
+      const labelBolt = document.getElementById('label-bolt-width');
+      const labelAllowance = document.getElementById('label-allowance');
+
+      // Presets
+      quiltPreset.addEventListener('change', function() {
+        if (this.value === 'custom') return;
+        const preset = SewingUtils.QUILT_PRESETS[this.value];
+        if (preset) {
+          if (isMetric) {
+            quiltWidthInput.value = SewingUtils.round(preset.width * SewingUtils.IN_TO_CM, 1);
+            quiltLengthInput.value = SewingUtils.round(preset.length * SewingUtils.IN_TO_CM, 1);
+          } else {
+            quiltWidthInput.value = preset.width;
+            quiltLengthInput.value = preset.length;
+          }
+          calculate();
+        }
+      });
+
+      stripWidthSelect.addEventListener('change', function() {
+        if (this.value === 'custom') {
+          customStripGroup.style.display = 'block';
+        } else {
+          customStripGroup.style.display = 'none';
+        }
+        calculate();
+      });
+
+      // Unit toggle
+      btnImperial.addEventListener('click', () => setUnitMode(false));
+      btnMetric.addEventListener('click', () => setUnitMode(true));
+
+      function setUnitMode(metric) {
+        if (isMetric === metric) return;
+        isMetric = metric;
+
+        btnImperial.classList.toggle('active', !isMetric);
+        btnImperial.setAttribute('aria-checked', !isMetric ? 'true' : 'false');
+        btnMetric.classList.toggle('active', isMetric);
+        btnMetric.setAttribute('aria-checked', isMetric ? 'true' : 'false');
+
+        const factor = isMetric ? SewingUtils.IN_TO_CM : SewingUtils.CM_TO_IN;
+        quiltWidthInput.value = SewingUtils.round(parseFloat(quiltWidthInput.value || 0) * factor, 1);
+        quiltLengthInput.value = SewingUtils.round(parseFloat(quiltLengthInput.value || 0) * factor, 1);
+        customStripInput.value = SewingUtils.round(parseFloat(customStripInput.value || 2.5) * factor, 2);
+        boltWidthInput.value = SewingUtils.round(parseFloat(boltWidthInput.value || 42) * factor, 1);
+        allowanceInput.value = SewingUtils.round(parseFloat(allowanceInput.value || 12) * factor, 1);
+
+        const unitLabel = isMetric ? '(cm)' : '(in)';
+        labelW.textContent = `Quilt Width ${unitLabel}`;
+        labelL.textContent = `Quilt Length ${unitLabel}`;
+        labelCustomStrip.textContent = `Custom Strip Width ${unitLabel}`;
+        labelBolt.textContent = `Fabric Bolt Width ${unitLabel}`;
+        labelAllowance.textContent = `Corner & Joining Allowance ${unitLabel}`;
+
+        calculate();
+      }
+
+      function getStripWidth() {
+        if (stripWidthSelect.value === 'custom') {
+          return parseFloat(customStripInput.value) || (isMetric ? 6.35 : 2.5);
+        }
+        const val = parseFloat(stripWidthSelect.value) || 2.5;
+        return isMetric ? (val * SewingUtils.IN_TO_CM) : val;
+      }
+
+      function calculate() {
+        const qw = parseFloat(quiltWidthInput.value) || 0;
+        const ql = parseFloat(quiltLengthInput.value) || 0;
+        const sw = getStripWidth();
+        const bw = parseFloat(boltWidthInput.value) || (isMetric ? 107 : 42);
+        const extra = parseFloat(allowanceInput.value) || (isMetric ? 30 : 12);
+
+        if (qw <= 0 || ql <= 0 || sw <= 0 || bw <= 0) return;
+
+        const res = SewingUtils.calculateQuiltBinding({
+          quiltWidth: qw,
+          quiltLength: ql,
+          stripWidth: sw,
+          boltWidth: bw,
+          cornerAllowance: extra,
+          isMetric: isMetric
+        });
+
+        if (!res) return;
+        lastCalcResult = res;
+
+        const unit = isMetric ? 'cm' : 'in';
+
+        // Stats summary
+        document.getElementById('stat-perimeter').textContent = `${res.perimeter} ${unit}`;
+        document.getElementById('stat-total-binding').textContent = `${res.totalBindingLength} ${unit}`;
+        document.getElementById('stat-strip-width').textContent = `${res.stripWidth} ${unit}`;
+
+        // Straight-Grain (WOF)
+        document.getElementById('wof-fractional').textContent = res.straightGrain.yardage.fractionalYards;
+        document.getElementById('wof-subtext').textContent = `${res.straightGrain.yardage.decimalYards} yds / ${res.straightGrain.yardage.meters} m`;
+        document.getElementById('wof-strips').textContent = `${res.straightGrain.stripsNeeded} strips`;
+        document.getElementById('wof-usable-len').textContent = `${res.straightGrain.usableWOF} ${unit}`;
+        document.getElementById('wof-linear-len').textContent = `${res.straightGrain.linearInches} ${unit}`;
+
+        // Continuous Bias Square
+        document.getElementById('bias-fractional').textContent = res.continuousBias.yardage.fractionalYards;
+        document.getElementById('bias-subtext').textContent = `${res.continuousBias.yardage.decimalYards} yds / ${res.continuousBias.yardage.meters} m`;
+        document.getElementById('bias-square-size').textContent = `${res.continuousBias.squareSide}" × ${res.continuousBias.squareSide}" (${res.continuousBias.squareSide} ${unit} square)`;
+        
+        const statusEl = document.getElementById('bias-bolt-status');
+        if (res.continuousBias.exceedsBolt) {
+          statusEl.textContent = 'Square exceeds standard bolt width (piecing required)';
+          statusEl.style.color = '#ef4444';
+        } else {
+          statusEl.textContent = 'Fits within single fabric bolt cut';
+          statusEl.style.color = '#10b981';
+        }
+        document.getElementById('bias-linear-len').textContent = `${res.continuousBias.linearInches} ${unit}`;
+
+        renderDiagram(res);
+      }
+
+      function renderDiagram(res) {
+        const container = document.getElementById('svg-container');
+        if (!container) return;
+
+        const strips = Math.min(12, res.straightGrain.stripsNeeded);
+        const svgW = 480;
+        const stripH = 18;
+        const totalH = Math.max(120, strips * (stripH + 4) + 30);
+
+        let stripsSvg = '';
+        for (let i = 0; i < strips; i++) {
+          const y = 15 + i * (stripH + 4);
+          stripsSvg += `
+            <g transform="translate(10, ${y})">
+              <!-- Strip Body -->
+              <rect x="0" y="0" width="${svgW - 20}" height="${stripH}" fill="rgba(37, 99, 235, 0.12)" stroke="#2563eb" stroke-width="1.5" rx="3"/>
+              <!-- 45-degree joining miter cut marks at ends -->
+              <line x1="0" y1="0" x2="${stripH}" y2="${stripH}" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,2"/>
+              <line x1="${svgW - 20 - stripH}" y1="0" x2="${svgW - 20}" y2="${stripH}" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,2"/>
+              <text x="30" y="${stripH / 2 + 3}" fill="#1e40af" font-size="10" font-weight="700">Strip #${i + 1} (${res.stripWidth} ${isMetric ? 'cm' : 'in'} wide × ${res.straightGrain.usableWOF} ${isMetric ? 'cm' : 'in'} WOF)</text>
+            </g>
+          `;
+        }
+
+        container.innerHTML = `
+          <svg viewBox="0 0 ${svgW} ${totalH}" width="100%" height="${Math.min(260, totalH)}" style="overflow: visible;">
+            <text x="10" y="10" fill="var(--color-text-secondary)" font-size="10" font-weight="600">Fabric Bolt Cut: ${strips} Straight-Grain WOF Strips with 45° Miter Ends</text>
+            ${stripsSvg}
+          </svg>
+        `;
+      }
+
+      // Copy Shopping List
+      btnCopy.addEventListener('click', function() {
+        if (!lastCalcResult) return;
+        const res = lastCalcResult;
+        const unit = isMetric ? 'cm' : 'in';
+
+        const text = [
+          '✂️ QUILT BINDING SHOPPING LIST — FREE ONLINE TOOLS',
+          '==================================================',
+          `Quilt Dimensions: ${quiltWidthInput.value} × ${quiltLengthInput.value} ${unit}`,
+          `Quilt Perimeter: ${res.perimeter} ${unit}`,
+          `Total Binding Required (+12" Extra): ${res.totalBindingLength} ${unit}`,
+          `Binding Strip Width: ${res.stripWidth} ${unit}`,
+          '',
+          'METHOD A: STRAIGHT-GRAIN WOF (Recommended for Straight Edges)',
+          `  - Number of Strips to Cut: ${res.straightGrain.stripsNeeded}`,
+          `  - Fabric to Buy: ${res.straightGrain.yardage.fractionalYards} (${res.straightGrain.yardage.decimalYards} yards / ${res.straightGrain.yardage.meters} meters)`,
+          '',
+          'METHOD B: CONTINUOUS BIAS SQUARE (Recommended for Curves)',
+          `  - Fabric Square Required: ${res.continuousBias.squareSide} × ${res.continuousBias.squareSide} ${unit}`,
+          `  - Fabric to Buy: ${res.continuousBias.yardage.fractionalYards} (${res.continuousBias.yardage.decimalYards} yards / ${res.continuousBias.yardage.meters} meters)`,
+          '==================================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/quilt-binding-calculator.html'
+        ].join('\n');
+
+        SewingUtils.copyTextToClipboard(text, btnCopy, 'Shopping List Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        quiltPreset.value = 'throw';
+        if (isMetric) {
+          quiltWidthInput.value = 127;
+          quiltLengthInput.value = 165;
+          customStripInput.value = 6.35;
+          boltWidthInput.value = 107;
+          allowanceInput.value = 30;
+        } else {
+          quiltWidthInput.value = 50;
+          quiltLengthInput.value = 65;
+          customStripInput.value = 2.5;
+          boltWidthInput.value = 42;
+          allowanceInput.value = 12;
+        }
+        stripWidthSelect.value = '2.5';
+        customStripGroup.style.display = 'none';
+        calculate();
+      });
+
+      [quiltWidthInput, quiltLengthInput, customStripInput, boltWidthInput, allowanceInput].forEach(inp => {
+        inp.addEventListener('input', calculate);
+      });
+
+      calculate();
+    })();
+  </script>
+</body>
+</html>

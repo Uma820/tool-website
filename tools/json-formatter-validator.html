@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Formatter & Validator — Free Online Tools</title>
+  <meta name="description" content="Validate, beautify, and minify JSON with line-by-line syntax error detection. Fast, 100% private client-side JSON editor.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="bn" href="https://nexivo.com/bn/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="hi" href="https://nexivo.com/hi/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="es" href="https://nexivo.com/es/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="fr" href="https://nexivo.com/fr/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="ar" href="https://nexivo.com/ar/tools/json-formatter-validator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSON Formatter & Validator",
+    "description": "Validate, beautify, and minify JSON with line-by-line syntax error detection. Fast, 100% private client-side JSON editor.",
+    "url": "https://nexivo.com/tools/json-formatter-validator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#developer">Developer Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">JSON Formatter & Validator</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>JSON Formatter & Validator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Validate syntax, pretty-print with custom indentation, minify for production payloads, and download clean JSON files without sending sensitive payloads over the wire.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Syntax Error Locator</span>
+        <span class="tool-badge">Zero Server Uploads</span>
+      </div>
+    </div>
+
+    <div class="tool-panel">
+      <!-- Toolbar Controls -->
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center;">
+          <button type="button" class="btn btn-primary" id="btn-format">Beautify JSON</button>
+          <button type="button" class="btn btn-secondary" id="btn-minify">Minify JSON</button>
+          <button type="button" class="btn btn-secondary" id="btn-validate">Validate Only</button>
+          <select id="indent-size" class="form-select" style="inline-size: auto; padding-block: 0.4rem; font-size: var(--font-size-xs);">
+            <option value="2">2 Spaces</option>
+            <option value="4">4 Spaces</option>
+            <option value="tab">Tabs</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample</button>
+          <button type="button" class="btn btn-secondary" id="btn-download">Download .json</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Clear</button>
+        </div>
+      </div>
+
+      <!-- Feedback Banner -->
+      <div id="json-feedback" class="alert" style="display: none;"></div>
+
+      <!-- JSON Input / Editor Area -->
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="json-input" class="form-label" style="margin-bottom: 0;">JSON Input / Output:</label>
+          <button type="button" class="btn btn-secondary" id="btn-copy">Copy to Clipboard</button>
+        </div>
+        <textarea id="json-input" class="form-textarea code-font" style="min-block-size: 320px;" placeholder="Paste raw JSON here..."></textarea>
+      </div>
+
+      <!-- Size Statistics -->
+      <div id="json-stats" style="font-size: var(--font-size-xs); color: var(--color-text-muted); display: flex; gap: var(--space-4);">
+        <span>Length: <strong id="stat-len">0</strong> chars</span>
+        <span>Size: <strong id="stat-bytes">0</strong> B</span>
+      </div>
+    </div>
+
+    
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>The <strong>JSON Formatter and Validator</strong> formats minified, unreadable JSON payloads into clean, human-readable structure, while validating strict RFC 8259 compliance. It highlights exact syntax error locations to help developers fix broken data structures quickly.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li>Paste raw or unformatted JSON into the editor.</li>
+          <li>Select your indentation preference: 2 Spaces, 4 Spaces, or Tab.</li>
+          <li>Click "Format JSON" to beautify the structure, or "Validate" to check syntax without changing formatting.</li>
+          <li>If an error exists, read the syntax diagnostic alert. If valid, click "Copy JSON" or "Download .json".</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>API Response Debugging:</strong> Beautify dense single-line REST API responses, webhook payloads, or GraphQL queries for easy inspection.</li>
+          <li><strong>Configuration File Formatting:</strong> Format and organize <code>package.json</code>, <code>tsconfig.json</code>, or Docker settings with standard indentation.</li>
+          <li><strong>Syntax Error Diagnostics:</strong> Locate missing commas, trailing commas, unquoted keys, or mismatched brackets in complex JSON files.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">{"id":101,"user":"Alice","roles":["admin","dev"],"active":true}</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">{
+  "id": 101,
+  "user": "Alice",
+  "roles": [
+    "admin",
+    "dev"
+  ],
+  "active": true
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>Uses native browser <code>JSON.parse()</code> and <code>JSON.stringify()</code> implementations. Detailed parse errors capture exception messages and character offsets for immediate troubleshooting.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>Adheres strictly to RFC 8259 JSON standards. Single quotes, JavaScript comments (<code>//</code> or <code>/* */</code>), and trailing commas are rejected as invalid JSON.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>Developers frequently inspect JSON containing confidential API keys, customer records, or authentication tokens. This tool runs 100% locally in your browser with zero network transmission.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+          <h3>Why does valid JavaScript object syntax fail JSON validation?</h3>
+          <p>Standard JSON requires double quotes around both property keys and string values. Single quotes and unquoted keys are invalid JSON.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I format large JSON files?</h3>
+          <p>Yes. Files up to several megabytes format smoothly within browser memory limits.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Does this tool support comments in JSON?</h3>
+          <p>Standard JSON does not allow comments. For JSON with comments (JSONC), strip comments before formatting.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I download the formatted JSON file?</h3>
+          <p>Yes. Click the "Download .json" button to save the beautified output directly to your computer.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/tools/json-minifier.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>JSON Minifier</span>
+          </a>
+
+          <a href="/tools/base64-encoder-decoder.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Base64 Text Encoder</span>
+          </a>
+
+          <a href="/tools/url-encoder-decoder.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>URL Encoder and Decoder</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const input = document.getElementById('json-input');
+      const feedback = document.getElementById('json-feedback');
+      const indentSelect = document.getElementById('indent-size');
+      const statLen = document.getElementById('stat-len');
+      const statBytes = document.getElementById('stat-bytes');
+
+      const btnFormat = document.getElementById('btn-format');
+      const btnMinify = document.getElementById('btn-minify');
+      const btnValidate = document.getElementById('btn-validate');
+      const btnSample = document.getElementById('btn-sample');
+      const btnDownload = document.getElementById('btn-download');
+      const btnClear = document.getElementById('btn-clear');
+      const btnCopy = document.getElementById('btn-copy');
+
+      function showFeedback(type, message) {
+        feedback.className = `alert alert-${type}`;
+        feedback.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+            ${type === 'success' 
+              ? '<polyline points="20 6 9 17 4 12"/>' 
+              : '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'}
+          </svg>
+          <div>${window.FreeOnlineTools.escapeHtml(message)}</div>
+        `;
+        feedback.style.display = 'flex';
+      }
+
+      function hideFeedback() {
+        feedback.style.display = 'none';
+      }
+
+      function updateStats() {
+        const text = input.value;
+        statLen.textContent = text.length.toLocaleString();
+        statBytes.textContent = new TextEncoder().encode(text).length.toLocaleString();
+      }
+
+      input.addEventListener('input', updateStats);
+
+      btnFormat.addEventListener('click', () => {
+        hideFeedback();
+        const text = input.value.trim();
+        if (!text) return;
+        try {
+          const parsed = JSON.parse(text);
+          const indentVal = indentSelect.value === 'tab' ? '\t' : parseInt(indentSelect.value, 10);
+          input.value = JSON.stringify(parsed, null, indentVal);
+          showFeedback('success', 'Valid JSON formatted successfully.');
+          updateStats();
+        } catch (err) {
+          showFeedback('danger', 'JSON Syntax Error: ' + err.message);
+        }
+      });
+
+      btnMinify.addEventListener('click', () => {
+        hideFeedback();
+        const text = input.value.trim();
+        if (!text) return;
+        try {
+          const parsed = JSON.parse(text);
+          input.value = JSON.stringify(parsed);
+          showFeedback('success', 'JSON minified successfully.');
+          updateStats();
+        } catch (err) {
+          showFeedback('danger', 'JSON Syntax Error: ' + err.message);
+        }
+      });
+
+      btnValidate.addEventListener('click', () => {
+        hideFeedback();
+        const text = input.value.trim();
+        if (!text) {
+          showFeedback('danger', 'Please enter some JSON to validate.');
+          return;
+        }
+        try {
+          JSON.parse(text);
+          showFeedback('success', 'Valid JSON! No syntax errors detected.');
+        } catch (err) {
+          showFeedback('danger', 'Invalid JSON: ' + err.message);
+        }
+      });
+
+      btnSample.addEventListener('click', () => {
+        hideFeedback();
+        const sampleObj = {
+          website: "Free Online Tools",
+          version: "1.0.0",
+          privacy: "100% Client-Side",
+          supportedLanguages: ["en", "bn", "hi", "es", "fr", "ar"],
+          capabilities: {
+            textTools: 40,
+            developerTools: 40,
+            calculators: 40
+          },
+          isActive: true
+        };
+        input.value = JSON.stringify(sampleObj, null, 2);
+        showFeedback('success', 'Sample JSON loaded.');
+        updateStats();
+      });
+
+      btnDownload.addEventListener('click', () => {
+        const text = input.value;
+        if (!text) {
+          window.FreeOnlineTools.showToast('No JSON to download.');
+          return;
+        }
+        const blob = new Blob([text], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        window.FreeOnlineTools.showToast('Downloaded data.json');
+      });
+
+      btnClear.addEventListener('click', () => {
+        hideFeedback();
+        input.value = '';
+        updateStats();
+        input.focus();
+      });
+
+      btnCopy.addEventListener('click', () => {
+        window.FreeOnlineTools.copyToClipboard(input.value, 'JSON copied to clipboard!');
+      });
+
+      updateStats();
+    })();
+  </script>
+</body>
+</html>

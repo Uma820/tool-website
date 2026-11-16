@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inverter Backup Calculator — Home UPS Sizing &amp; Battery Capacity</title>
+  <meta name="description" content="Calculate the right home inverter VA rating and battery Ah capacity based on your appliance load, desired backup hours, and system voltage (12V, 24V, 48V).">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/inverter-backup-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/inverter-backup-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/inverter-backup-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Inverter Backup Calculator",
+    "description": "Calculate required home inverter VA capacity and battery Ah sizing based on electrical appliance wattage and backup hours.",
+    "url": "https://nexivo.com/tools/inverter-backup-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between Watts (W) and Volt-Amps (VA) in inverters?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Watts measure real power consumed by appliances, while Volt-Amps (VA) measure apparent power supplied by the inverter. Because inductive loads (fans, motors, compressors) cause alternating current to fall out of phase, inverters are rated in VA using an assumed power factor (typically 0.8). For example, an 800W load requires an inverter rated at least 1,000 VA (800 / 0.8)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I choose a 12V, 24V, or 48V inverter system?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For total loads under 800W, a 12V single-battery system is economical and compact. For loads between 800W and 2,000W, a 24V double-battery system halves DC cabling current, minimizing heat and resistive power loss. For whole-home setups or loads above 2,000W, a 48V system is strongly recommended."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does battery Ah capacity relate to backup hours?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Battery capacity in Amp-Hours (Ah) dictates total energy storage. Battery Energy (Wh) = Voltage × Ah. Usable backup energy is determined by Depth of Discharge (50% for lead-acid, 85% for lithium). Required Ah = (Total Watts × Desired Hours) / (System Voltage × DoD × Inverter Efficiency)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is a 25% safety headroom recommended when sizing an inverter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Running an inverter continuously at 100% capacity produces excessive heat, degrades internal transformers and MOSFET switches, and trips thermal protection circuits. Adding a 25% headroom buffer ensures reliable continuous operation and accommodates minor startup surges."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#solar">Solar &amp; Energy</a></li>
+      <li>/</li>
+      <li aria-current="page">Inverter Backup Calculator</li>
+    </nav>
+
+    <!-- Solar & Energy Suite Navigation -->
+    <div class="solar-suite-nav">
+      <span class="solar-suite-label">Solar &amp; Energy Suite:</span>
+      <a href="/tools/battery-runtime-calculator.html" class="solar-pill">Battery Runtime</a>
+      <a href="/tools/inverter-backup-calculator.html" class="solar-pill active">Inverter Backup</a>
+      <a href="/tools/solar-panel-size-calculator.html" class="solar-pill">Solar Array Size</a>
+      <a href="/tools/generator-size-calculator.html" class="solar-pill">Generator Sizing</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Home Inverter &amp; Battery Sizing Calculator</h1>
+      <p class="tool-header-desc">
+        Determine the exact inverter capacity (VA / kVA) and battery bank rating (Ah) required to power your home appliances during outages for your desired backup duration.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Interactive Appliance Builder</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Commercial Standard Ratings</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Section 1: Quick Appliance Builder -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2); flex-wrap: wrap; gap: var(--space-2);">
+          <h2 style="font-size: var(--font-size-base); font-weight: 700; margin: 0; display: flex; align-items: center; gap: var(--space-2);">
+            <span>⚡</span> 1. Interactive Household Appliance Load Builder
+          </h2>
+          <button type="button" class="btn btn-secondary" id="btn-add-custom-app" style="padding: 0.35rem 0.75rem; font-size: var(--font-size-xs);">
+            + Add Custom Appliance
+          </button>
+        </div>
+
+        <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0; margin-bottom: var(--space-2);">
+          Tap any quick-add preset below to add or increase appliance counts:
+        </p>
+
+        <div class="appliance-preset-grid">
+          <button type="button" class="appliance-chip-btn" data-name="Ceiling Fan" data-w="75">
+            <span>🌀 Ceiling Fan</span>
+            <span style="color: var(--color-text-muted); font-size: 11px;">75W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-name="LED Light Bulb" data-w="12">
+            <span>💡 LED Bulb</span>
+            <span style="color: var(--color-text-muted); font-size: 11px;">12W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-name="Smart LED TV" data-w="100">
+            <span>📺 LED TV 50"</span>
+            <span style="color: var(--color-text-muted); font-size: 11px;">100W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-name="Wi-Fi Router" data-w="15">
+            <span>📶 Wi-Fi Router</span>
+            <span style="color: var(--color-text-muted); font-size: 11px;">15W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-name="Laptop Charger" data-w="65">
+            <span>💻 Laptop Charger</span>
+            <span style="color: var(--color-text-muted); font-size: 11px;">65W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-name="Refrigerator" data-w="150">
+            <span>🧊 Refrigerator</span>
+            <span style="color: var(--color-text-muted); font-size: 11px;">150W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-name="Desktop PC" data-w="250">
+            <span>🖥️ Desktop PC</span>
+            <span style="color: var(--color-text-muted); font-size: 11px;">250W</span>
+          </button>
+        </div>
+
+        <!-- Appliance Table -->
+        <div style="overflow-x: auto; border: 1px solid var(--color-border); border-radius: var(--border-radius-md); margin-top: var(--space-3);">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-sm);">
+            <thead>
+              <tr style="background: var(--color-bg-secondary); border-bottom: 1px solid var(--color-border);">
+                <th style="padding: 0.6rem 0.75rem;">Appliance Name</th>
+                <th style="padding: 0.6rem 0.75rem;">Power (Watts)</th>
+                <th style="padding: 0.6rem 0.75rem;">Quantity</th>
+                <th style="padding: 0.6rem 0.75rem;">Total Load (W)</th>
+                <th style="padding: 0.6rem 0.75rem;">% Share</th>
+                <th style="padding: 0.6rem 0.5rem; text-align: center; width: 44px;"></th>
+              </tr>
+            </thead>
+            <tbody id="appliance-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+            <tfoot>
+              <tr style="background: var(--color-bg-secondary); border-top: 2px solid var(--color-border); font-weight: 700;">
+                <td style="padding: 0.6rem 0.75rem;">Total Running Load</td>
+                <td colspan="2"></td>
+                <td style="padding: 0.6rem 0.75rem; color: var(--color-primary); font-size: var(--font-size-base);" id="tbl-total-watts">400 W</td>
+                <td style="padding: 0.6rem 0.75rem;">100%</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 2: Backup Requirements & System Specs -->
+      <div class="form-section" style="margin-bottom: var(--space-4); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>⚙️</span> 2. Backup Duration &amp; Inverter System Architecture
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3);">
+          <div>
+            <label for="backup-hours-input" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Desired Backup Duration (Hours):</label>
+            <input type="number" id="backup-hours-input" class="form-input" value="4" min="0.5" max="24" step="0.5" style="font-weight: 700; font-size: var(--font-size-base); color: var(--color-primary);">
+            <small style="color: var(--color-text-muted); font-size: 11px;">Average load shedding outage hours</small>
+          </div>
+
+          <div>
+            <label for="system-voltage-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Inverter DC Voltage Architecture:</label>
+            <select id="system-voltage-select" class="form-select" style="font-size: var(--font-size-xs); padding-block: 0.45rem;">
+              <option value="12" selected>12V (Single Battery - Best under 800W)</option>
+              <option value="24">24V (2 Batteries - Best 800W–2000W)</option>
+              <option value="48">48V (4 Batteries - Heavy / Whole Home)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="battery-type-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Battery Chemistry &amp; DoD:</label>
+            <select id="battery-type-select" class="form-select" style="font-size: var(--font-size-xs); padding-block: 0.45rem;">
+              <option value="tubular_lead_acid" selected>Tall Tubular Lead-Acid (50% DoD)</option>
+              <option value="agm_gel">AGM / Gel Sealed (60% DoD)</option>
+              <option value="lifepo4">LiFePO4 Lithium Iron Phosphate (85% DoD)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4);">
+        <button type="button" class="btn btn-primary" id="btn-copy-loadsheet" style="flex: 1; min-width: 180px;">
+          📋 Copy System Sizing Report
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-reset" style="min-width: 100px;">
+          Reset
+        </button>
+      </div>
+
+      <!-- Recommendation KPI Cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4);">
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Recommended Inverter Rating</div>
+          <div id="kpi-inverter-va" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-primary); margin-top: 0.25rem;">700 VA</div>
+          <div id="kpi-inverter-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">Raw: 625 VA (+25% Headroom)</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Recommended Battery Size</div>
+          <div id="kpi-battery-ah" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-success); margin-top: 0.25rem;">160 Ah</div>
+          <div id="kpi-battery-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">2 x 12V 160Ah batteries</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Total Energy Required</div>
+          <div id="kpi-energy-wh" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-text); margin-top: 0.25rem;">1,882 Wh</div>
+          <div id="kpi-energy-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">For 4 hours backup @ 85% eff</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Battery Bank Config</div>
+          <div id="kpi-config-text" style="font-size: var(--font-size-base); font-weight: 700; color: var(--color-text); margin-top: 0.35rem;">1 in series x 2 parallel</div>
+          <div id="kpi-config-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">12V System</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic Educational Guide Section -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Inverter Backup Calculator</strong> helps homeowners, small businesses, and solar technicians size the two most critical components of an emergency backup power system: the <strong>Inverter Capacity (rated in Volt-Amps / VA)</strong> and the <strong>Battery Bank Capacity (rated in Amp-Hours / Ah)</strong>.
+      </p>
+      <p>
+        Undersizing an inverter causes overload beeps, thermal tripping, and failure to start motorized appliances like fans and refrigerators. Conversely, undersizing the battery bank means your lights cut out after only 45 minutes instead of the desired 4 to 6 hours. This tool uses professional electrical standards—incorporating power factors ($0.8\text{ PF}$), a $25\%$ safety headroom multiplier, and Depth of Discharge limits—to recommend commercial hardware configurations that guarantee dependable runtime.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Build Your Household Load:</strong> Tap the quick-add buttons (<em>Ceiling Fan</em>, <em>LED Bulb</em>, <em>TV</em>, <em>Router</em>, <em>Fridge</em>) or click <strong>+ Add Custom Appliance</strong> to specify custom wattages and counts.</li>
+        <li><strong>Set Desired Backup Duration:</strong> Enter how many continuous hours of backup you require during power cuts (e.g. 4 hours).</li>
+        <li><strong>Choose System Voltage Architecture:</strong>
+          <ul>
+            <li><strong>12V System (1 Battery):</strong> Recommended for total loads under 800W.</li>
+            <li><strong>24V System (2 Batteries in Series):</strong> Recommended for loads between 800W and 2,000W. Halves DC current, reducing heavy copper wire gauge requirements.</li>
+            <li><strong>48V System (4 Batteries in Series):</strong> Standard for heavy loads, air conditioners, and whole-house solar inverters.</li>
+          </ul>
+        </li>
+        <li><strong>Select Battery Chemistry:</strong> Choose between traditional <em>Tubular Lead-Acid (50% DoD)</em>, <em>AGM Sealed (60% DoD)</em>, or modern <em>LiFePO4 Lithium (85% DoD)</em>.</li>
+        <li><strong>Review Hardware Recommendations:</strong> Check the recommended commercial inverter rating (e.g. 1100VA or 1500VA) and battery Ah capacity.</li>
+        <li><strong>Copy Load Sheet:</strong> Tap <strong>Copy System Sizing Report</strong> to save or share your complete calculation.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        Sizing calculations conform to modern IEEE and NEC standards:
+      </p>
+      <ul>
+        <li>
+          <strong>Total Running Load ($P_{\text{load}}$):</strong>
+          <br>
+          $$P_{\text{load (Watts)}} = \sum (\text{Wattage}_i \times \text{Quantity}_i)$$
+        </li>
+        <li>
+          <strong>Recommended Inverter Rating ($\text{VA}_{\text{inverter}}$):</strong>
+          <br>
+          $$\text{VA} = \left( \frac{P_{\text{load}}}{\text{Power Factor (0.8)}} \right) \times 1.25 \quad (\text{safety headroom})$$
+          <em>(Rounded up to nearest commercial rating: 700VA, 900VA, 1100VA, 1500VA, 2kVA, 3kVA, etc.)</em>
+        </li>
+        <li>
+          <strong>Total Energy Needed from Battery ($E_{\text{battery}}$):</strong>
+          <br>
+          $$E_{\text{battery (Wh)}} = \frac{P_{\text{load}} \times T_{\text{hours}}}{\eta_{\text{inverter efficiency (0.85)}}}$$
+        </li>
+        <li>
+          <strong>Required Battery Bank Capacity ($C_{\text{Ah}}$):</strong>
+          <br>
+          $$C_{\text{Ah}} = \frac{E_{\text{battery (Wh)}}}{V_{\text{system}} \times (\text{DoD \%} / 100)}$$
+        </li>
+      </ul>
+
+      <h2>Common Household Appliance Wattage &amp; Backup Guide</h2>
+      <p>
+        The table below lists standard operational wattages and surge characteristics across common residential appliances:
+      </p>
+      <div style="overflow-x: auto; margin: var(--space-3) 0;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-sm); border: 1px solid var(--color-border);">
+          <thead>
+            <tr style="background: var(--color-bg-secondary); border-bottom: 2px solid var(--color-border);">
+              <th style="padding: 0.5rem 0.75rem;">Appliance</th>
+              <th style="padding: 0.5rem 0.75rem;">Running Watts (Avg)</th>
+              <th style="padding: 0.5rem 0.75rem;">Startup Surge (Watts)</th>
+              <th style="padding: 0.5rem 0.75rem;">Can Run on 12V Inverter?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Ceiling Fan (Standard Induction)</td>
+              <td style="padding: 0.5rem 0.75rem;">75 W</td>
+              <td style="padding: 0.5rem 0.75rem;">150 W</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 600;">Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Ceiling Fan (BLDC Energy Saver)</td>
+              <td style="padding: 0.5rem 0.75rem;">28 W – 32 W</td>
+              <td style="padding: 0.5rem 0.75rem;">35 W</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 600;">Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">LED Light Bulb (9W – 12W)</td>
+              <td style="padding: 0.5rem 0.75rem;">12 W</td>
+              <td style="padding: 0.5rem 0.75rem;">12 W</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 600;">Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Wi-Fi Router &amp; Fiber Modem</td>
+              <td style="padding: 0.5rem 0.75rem;">15 W</td>
+              <td style="padding: 0.5rem 0.75rem;">15 W</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 600;">Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Smart LED TV (50"–55")</td>
+              <td style="padding: 0.5rem 0.75rem;">100 W</td>
+              <td style="padding: 0.5rem 0.75rem;">120 W</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 600;">Yes</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Inverter Refrigerator (250L)</td>
+              <td style="padding: 0.5rem 0.75rem;">150 W</td>
+              <td style="padding: 0.5rem 0.75rem;">600 W</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 600;">Yes (requires Pure Sine Wave)</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border); background: rgba(37, 99, 235, 0.05);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">1 HP Submersible Water Pump</td>
+              <td style="padding: 0.5rem 0.75rem;">750 W</td>
+              <td style="padding: 0.5rem 0.75rem;">2,200 W</td>
+              <td style="padding: 0.5rem 0.75rem; color: #f59e0b; font-weight: 600;">Requires 24V / 2kVA+</td>
+            </tr>
+            <tr style="background: rgba(37, 99, 235, 0.08);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">1.5 Ton Inverter AC</td>
+              <td style="padding: 0.5rem 0.75rem;">1,500 W</td>
+              <td style="padding: 0.5rem 0.75rem;">3,200 W</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-danger); font-weight: 600;">Requires 48V / 3.5kVA+</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>Apartment Inverter Sizing:</strong> Sizing an inverter to run 3 ceiling fans, 5 LED lights, a TV, and Wi-Fi during 3-hour evening blackouts.</li>
+        <li><strong>Pure Sine Wave vs. Square Wave Decision:</strong> Verifying whether your load contains delicate electronics (laptops, TVs) or motors (refrigerators, fans) that strictly require Pure Sine Wave inverters to avoid buzzing and motor overheating.</li>
+        <li><strong>Commercial Shop Backup:</strong> Sizing battery storage to keep point-of-sale (POS) terminals, security cameras, and LED lighting active during daytime grid cuts.</li>
+        <li><strong>BLDC Fan Energy Transition:</strong> Seeing how swapping standard 75W induction fans for 28W BLDC fans doubles your backup runtime with the exact same battery bank.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        <strong>Scenario:</strong> You want 4 hours of backup for: 3 Ceiling Fans ($3 \times 75\text{W} = 225\text{W}$), 5 LED Bulbs ($5 \times 12\text{W} = 60\text{W}$), 1 TV ($100\text{W}$), and 1 Wi-Fi router ($15\text{W}$) = 400W total running load on a 12V system with Tubular Lead-Acid (50% DoD).
+      </p>
+      <ul>
+        <li><strong>Inverter VA Rating:</strong> $(400 / 0.8) \times 1.25 = 625\text{ VA} \implies \mathbf{700\text{ VA}}$ or $\mathbf{900\text{ VA}}$ commercial rating.</li>
+        <li><strong>Energy Required:</strong> $(400\text{W} \times 4\text{h}) / 0.85\text{ eff} = 1,882\text{ Wh}$.</li>
+        <li><strong>Battery Bank Capacity:</strong> $\frac{1,882\text{ Wh}}{12\text{V} \times 0.50} = \mathbf{313.7\text{ Ah}}$.</li>
+        <li><strong>Hardware Recommendation:</strong> Two 12V 160Ah batteries connected in parallel (or upgrade to a 24V system with two 150Ah batteries in series).</li>
+      </ul>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <ul>
+        <li><strong>Power Factor Standard:</strong> Applies industry-standard $0.8\text{ PF}$ lagging compensation for alternating current inductive appliance loads.</li>
+        <li><strong>Dynamic Share Apportionment:</strong> Computes the exact percentage burden each household appliance places on the system so users can shed non-essential loads.</li>
+        <li><strong>Commercial Sizing Snapping:</strong> Automatically rounds mathematical values up to commercial off-the-shelf inverter and battery SKUs.</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        Heavier appliances with non-inverter reciprocating compressors (e.g., older air conditioners or refrigerators) can pull up to 4x to 6x running watts at startup. When sizing for non-inverter compressors, ensure the inverter's surge rating accommodates the peak startup surge.
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        Your household inventory, appliance wattages, and backup requirements are calculated strictly in your local browser session. No data is stored, tracked, or sent to external servers.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>What is a Pure Sine Wave inverter and do I need one?</h3>
+        <p>
+          Yes, modern households should always choose Pure Sine Wave inverters. Cheaper "Modified Sine Wave" or square wave inverters cause ceiling fans to emit an annoying humming noise, cause motors to run hot, and can damage sensitive electronics like televisions and laptops.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I run an air conditioner on a home inverter?</h3>
+        <p>
+          Yes, but it requires a large system. A 1.5 Ton Inverter AC draws roughly 1,500W continuously. Running it for 4 hours requires a 48V inverter rated at least 3.5 kVA and approximately 400Ah of battery capacity.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>How many years does an inverter battery last?</h3>
+        <p>
+          Standard flooded tubular lead-acid batteries last 3 to 5 years when maintained with distilled water and kept above 50% DoD. Modern LiFePO4 lithium batteries last 8 to 12 years (3,500+ cycles) with zero maintenance.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/battery-runtime-calculator.html" class="related-tool-chip">🔋 Battery Runtime Calculator</a>
+        <a href="/tools/solar-panel-size-calculator.html" class="related-tool-chip">☀️ Solar Panel Size Calculator</a>
+        <a href="/tools/generator-size-calculator.html" class="related-tool-chip">⚙️ Generator Size Calculator</a>
+        <a href="/tools/percentage-calculator.html" class="related-tool-chip">🔢 Percentage Calculator</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/solar-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // Default appliances
+      let appliances = [
+        { id: 'app-1', name: 'Ceiling Fan', wattage: 75, quantity: 3 },
+        { id: 'app-2', name: 'LED Light Bulb', wattage: 12, quantity: 5 },
+        { id: 'app-3', name: 'Smart LED TV', wattage: 100, quantity: 1 },
+        { id: 'app-4', name: 'Wi-Fi Router', wattage: 15, quantity: 1 }
+      ];
+      let lastResult = null;
+
+      // DOM Elements
+      const appTbody = document.getElementById('appliance-tbody');
+      const tblTotalWatts = document.getElementById('tbl-total-watts');
+      const btnAddCustomApp = document.getElementById('btn-add-custom-app');
+      const presetBtns = document.querySelectorAll('.appliance-chip-btn');
+
+      const backupHoursInput = document.getElementById('backup-hours-input');
+      const systemVoltSelect = document.getElementById('system-voltage-select');
+      const batteryTypeSelect = document.getElementById('battery-type-select');
+
+      const kpiInverterVa = document.getElementById('kpi-inverter-va');
+      const kpiInverterSub = document.getElementById('kpi-inverter-sub');
+      const kpiBatteryAh = document.getElementById('kpi-battery-ah');
+      const kpiBatterySub = document.getElementById('kpi-battery-sub');
+      const kpiEnergyWh = document.getElementById('kpi-energy-wh');
+      const kpiEnergySub = document.getElementById('kpi-energy-sub');
+      const kpiConfigText = document.getElementById('kpi-config-text');
+      const kpiConfigSub = document.getElementById('kpi-config-sub');
+
+      const btnCopyLoadsheet = document.getElementById('btn-copy-loadsheet');
+      const btnReset = document.getElementById('btn-reset');
+
+      // Quick add presets
+      presetBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const name = this.dataset.name;
+          const w = parseFloat(this.dataset.w);
+          const existing = appliances.find(a => a.name.toLowerCase() === name.toLowerCase());
+          if (existing) {
+            existing.quantity += 1;
+          } else {
+            appliances.push({ id: 'app-' + Date.now(), name, wattage: w, quantity: 1 });
+          }
+          renderAppliances();
+          calculate();
+        });
+      });
+
+      // Add Custom
+      btnAddCustomApp.addEventListener('click', () => {
+        appliances.push({
+          id: 'app-' + Date.now(),
+          name: 'Custom Appliance',
+          wattage: 100,
+          quantity: 1
+        });
+        renderAppliances();
+        calculate();
+      });
+
+      // Render table
+      function renderAppliances() {
+        appTbody.innerHTML = appliances.map((app, idx) => `
+          <tr data-index="${idx}">
+            <td style="padding: 0.5rem 0.75rem;">
+              <input type="text" class="form-input app-name" value="${app.name}" placeholder="Appliance name" aria-label="Appliance Name" style="font-size: var(--font-size-xs); padding: 0.35rem 0.5rem; width: 100%;">
+            </td>
+            <td style="padding: 0.5rem 0.75rem;">
+              <input type="number" class="form-input app-watt" value="${app.wattage}" min="0" step="5" aria-label="Appliance power in watts" style="font-size: var(--font-size-xs); padding: 0.35rem 0.5rem; max-width: 90px;">
+            </td>
+            <td style="padding: 0.5rem 0.75rem;">
+              <input type="number" class="form-input app-qty" value="${app.quantity}" min="0" max="100" step="1" aria-label="Appliance quantity" style="font-size: var(--font-size-xs); padding: 0.35rem 0.5rem; max-width: 70px;">
+            </td>
+            <td style="padding: 0.5rem 0.75rem; font-weight: 700; font-family: monospace;" class="app-subtotal">
+              ${app.wattage * app.quantity} W
+            </td>
+            <td style="padding: 0.5rem 0.75rem; font-size: var(--font-size-xs); color: var(--color-text-muted);" class="app-share">
+              0%
+            </td>
+            <td style="padding: 0.5rem 0.5rem; text-align: center;">
+              <button type="button" class="btn btn-icon btn-del-app" title="Remove" aria-label="Remove appliance" style="color: var(--color-danger); padding: 0.25rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+
+        attachApplianceEvents();
+      }
+
+      function attachApplianceEvents() {
+        appTbody.querySelectorAll('.app-name').forEach((inp, idx) => inp.addEventListener('input', () => { appliances[idx].name = inp.value; calculate(); }));
+        appTbody.querySelectorAll('.app-watt').forEach((inp, idx) => inp.addEventListener('input', () => { appliances[idx].wattage = parseFloat(inp.value) || 0; calculate(); }));
+        appTbody.querySelectorAll('.app-qty').forEach((inp, idx) => inp.addEventListener('input', () => { appliances[idx].quantity = parseInt(inp.value, 10) || 0; calculate(); }));
+        appTbody.querySelectorAll('.btn-del-app').forEach((btn, idx) => btn.addEventListener('click', () => {
+          if (appliances.length > 1) {
+            appliances.splice(idx, 1);
+            renderAppliances();
+            calculate();
+          }
+        }));
+      }
+
+      // Calculate
+      function calculate() {
+        const res = SolarUtils.calculateInverterBackup({
+          appliances,
+          backupHours: parseFloat(backupHoursInput.value) || 4,
+          systemVoltage: parseFloat(systemVoltSelect.value) || 12,
+          batteryType: batteryTypeSelect.value,
+          inverterEfficiencyPct: 85,
+          powerFactor: 0.8
+        });
+
+        if (!res) return;
+        lastResult = res;
+
+        // Total in table
+        tblTotalWatts.textContent = `${res.totalRunningWatts} W`;
+
+        // Update rows subtotal & share
+        const rows = appTbody.querySelectorAll('tr');
+        res.appliances.forEach((app, idx) => {
+          if (rows[idx]) {
+            const subCell = rows[idx].querySelector('.app-subtotal');
+            const shareCell = rows[idx].querySelector('.app-share');
+            if (subCell) subCell.textContent = `${app.subtotalWatts} W`;
+            if (shareCell) shareCell.textContent = `${app.percentage}%`;
+          }
+        });
+
+        // Update KPIs
+        kpiInverterVa.textContent = res.recommendedInverterVA >= 1000 ? `${(res.recommendedInverterVA/1000).toFixed(1)} kVA` : `${res.recommendedInverterVA} VA`;
+        kpiInverterSub.textContent = `Raw: ${res.rawInverterVA} VA (+25% Headroom)`;
+
+        kpiBatteryAh.textContent = `${res.recommendedBatteryAh} Ah`;
+        kpiBatterySub.textContent = `${res.recommendedBatteriesCount} x 12V ${res.recommendedBatteryAh}Ah battery bank`;
+
+        kpiEnergyWh.textContent = `${res.energyRequiredWh.toLocaleString()} Wh`;
+        kpiEnergySub.textContent = `For ${res.backupHours} hrs backup @ 85% eff`;
+
+        kpiConfigText.textContent = res.batteryConfiguration;
+        kpiConfigSub.textContent = `${res.systemVoltage}V System Architecture`;
+      }
+
+      // Copy Loadsheet
+      btnCopyLoadsheet.addEventListener('click', function() {
+        if (!lastResult) return;
+        const res = lastResult;
+        const lines = [
+          '⚡ HOME INVERTER & BATTERY SIZING REPORT',
+          '========================================',
+          `Connected Running Load:     ${res.totalRunningWatts} Watts`,
+          `Target Backup Duration:     ${res.backupHours} Hours`,
+          `System Architecture:        ${res.systemVoltage}V DC`,
+          `Battery Chemistry:          ${batteryTypeSelect.options[batteryTypeSelect.selectedIndex].text}`,
+          '----------------------------------------',
+          'CONNECTED APPLIANCE LOAD BREAKDOWN:',
+          ...res.appliances.map(a => `  • ${a.name.padEnd(24)}: ${String(a.wattage).padStart(4)}W x ${a.quantity} = ${String(a.subtotalWatts).padStart(5)}W (${a.percentage}%)`),
+          '----------------------------------------',
+          'RECOMMENDED HARDWARE SPECIFICATIONS:',
+          `  • Inverter Capacity:      ${res.recommendedInverterVA >= 1000 ? `${(res.recommendedInverterVA/1000).toFixed(1)} kVA` : `${res.recommendedInverterVA} VA`} (Minimum)`,
+          `  • Total Energy Required:  ${res.energyRequiredWh} Watt-hours`,
+          `  • Battery Bank Capacity:  ${res.recommendedBatteryAh} Ah per battery`,
+          `  • Total Batteries Needed: ${res.recommendedBatteriesCount} unit(s) (${res.batteryConfiguration})`,
+          '========================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/inverter-backup-calculator.html'
+        ];
+
+        SolarUtils.copyTextToClipboard(lines.join('\n'), btnCopyLoadsheet, 'Report Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        appliances = [
+          { id: 'app-1', name: 'Ceiling Fan', wattage: 75, quantity: 3 },
+          { id: 'app-2', name: 'LED Light Bulb', wattage: 12, quantity: 5 },
+          { id: 'app-3', name: 'Smart LED TV', wattage: 100, quantity: 1 },
+          { id: 'app-4', name: 'Wi-Fi Router', wattage: 15, quantity: 1 }
+        ];
+        backupHoursInput.value = '4';
+        systemVoltSelect.value = '12';
+        batteryTypeSelect.value = 'tubular_lead_acid';
+        renderAppliances();
+        calculate();
+      });
+
+      // Bindings
+      [backupHoursInput, systemVoltSelect, batteryTypeSelect].forEach(inp => {
+        inp.addEventListener('input', calculate);
+        inp.addEventListener('change', calculate);
+      });
+
+      // Init
+      renderAppliances();
+      calculate();
+    })();
+  </script>
+</body>
+</html>

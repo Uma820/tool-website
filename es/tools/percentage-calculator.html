@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Porcentajes y Descuentos — Herramientas Online Gratuitas</title>
+  <meta name="description" content="Calcule porcentajes, descuentos comerciales, impuestos y variaciones porcentuales con fórmulas paso a paso.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/es/tools/percentage-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/percentage-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/percentage-calculator.html">
+  <link rel="alternate" hreflang="bn" href="https://nexivo.com/bn/tools/percentage-calculator.html">
+  <link rel="alternate" hreflang="hi" href="https://nexivo.com/hi/tools/percentage-calculator.html">
+  <link rel="alternate" hreflang="es" href="https://nexivo.com/es/tools/percentage-calculator.html">
+  <link rel="alternate" hreflang="fr" href="https://nexivo.com/fr/tools/percentage-calculator.html">
+  <link rel="alternate" hreflang="ar" href="https://nexivo.com/ar/tools/percentage-calculator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Porcentajes y Descuentos",
+    "description": "Calcule porcentajes, descuentos comerciales, impuestos y variaciones porcentuales con fórmulas paso a paso.",
+    "url": "https://nexivo.com/es/tools/percentage-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/es/index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Herramientas Online Gratuitas</span>
+      </a>
+      <div class="header-actions">
+        <!-- Language Selector -->
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en">English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es" selected>Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/es/index.html" class="btn btn-secondary">Todas las herramientas</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Cambiar tema">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/es/index.html">Inicio</a></li>
+      <li>/</li>
+      <li><a href="/es/index.html">Calculadoras y Matemáticas</a></li>
+      <li>/</li>
+      <li aria-current="page">Calculadora de Porcentajes y Descuentos</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Calculadora de Porcentajes y Descuentos</span>
+      </h1>
+      <p class="tool-header-lead">
+        Calcule porcentajes, descuentos comerciales, impuestos y variaciones porcentuales con fórmulas paso a paso.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Nivel 1: Nativo del Navegador</span>
+        <span class="tool-badge">100% Privado</span>
+        <span class="tool-badge">Ejecución Instantánea</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel" style="margin-block-end: 0;">
+        <h2 style="font-size: var(--font-size-base); margin-block-end: var(--space-3); color: var(--color-primary);">1. Calcular Percentage of a Value</h2>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-block-end: var(--space-3);">
+          <span>What is</span>
+          <input type="number" id="calc1-p" class="form-input" style="inline-size: 110px;" value="15" step="any">
+          <span>% of</span>
+          <input type="number" id="calc1-x" class="form-input" style="inline-size: 140px;" value="120" step="any">
+          <span>?</span>
+        </div>
+        <div style="background: var(--color-bg-subtle); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Result:</div>
+            <div id="calc1-result" style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--color-text-primary);">18</div>
+          </div>
+          <div id="calc1-formula" style="font-size: var(--font-size-xs); color: var(--color-text-secondary); text-align: right;">Formula: (15 / 100) × 120 = 18</div>
+        </div>
+      </div>
+
+      <!-- Mode 2: X is what percentage of Y? -->
+      <div class="tool-panel" style="margin-block-end: 0;">
+        <h2 style="font-size: var(--font-size-base); margin-block-end: var(--space-3); color: var(--color-primary);">2. What Percentage is X of Y?</h2>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-block-end: var(--space-3);">
+          <input type="number" id="calc2-x" class="form-input" style="inline-size: 110px;" value="25" step="any">
+          <span>is what percentage of</span>
+          <input type="number" id="calc2-y" class="form-input" style="inline-size: 140px;" value="200" step="any">
+          <span>?</span>
+        </div>
+        <div style="background: var(--color-bg-subtle); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Result:</div>
+            <div id="calc2-result" style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--color-text-primary);">12.5%</div>
+          </div>
+          <div id="calc2-formula" style="font-size: var(--font-size-xs); color: var(--color-text-secondary); text-align: right;">Formula: (25 / 200) × 100 = 12.5%</div>
+        </div>
+      </div>
+
+      <!-- Mode 3: Aumento / Disminución porcentual -->
+      <div class="tool-panel" style="margin-block-end: 0;">
+        <h2 style="font-size: var(--font-size-base); margin-block-end: var(--space-3); color: var(--color-primary);">3. Percentage Increase or Decrease</h2>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-block-end: var(--space-3);">
+          <span>From</span>
+          <input type="number" id="calc3-from" class="form-input" style="inline-size: 120px;" value="80" step="any">
+          <span>to</span>
+          <input type="number" id="calc3-to" class="form-input" style="inline-size: 120px;" value="100" step="any">
+        </div>
+        <div style="background: var(--color-bg-subtle); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Change:</div>
+            <div id="calc3-result" style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--color-success);">+25% (Increase)</div>
+          </div>
+          <div id="calc3-formula" style="font-size: var(--font-size-xs); color: var(--color-text-secondary); text-align: right;">Formula: ((100 - 80) / 80) × 100 = 25%</div>
+        </div>
+      </div>
+
+      <!-- Mode 4: Retail Discount & Savings Calculator -->
+      <div class="tool-panel">
+        <h2 style="font-size: var(--font-size-base); margin-block-end: var(--space-3); color: var(--color-primary);">4. Discount & Sale Price Calculator</h2>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-block-end: var(--space-3);">
+          <span>Precio original ($):</span>
+          <input type="number" id="calc4-price" class="form-input" style="inline-size: 120px;" value="99.99" step="any">
+          <span>Discount (%):</span>
+          <input type="number" id="calc4-discount" class="form-input" style="inline-size: 110px;" value="20" step="any">
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="calc4-final" style="color: var(--color-success);">$79.99</div>
+            <div class="stat-label">Final Sale Price</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="calc4-savings" style="color: var(--color-primary);">$20.00</div>
+            <div class="stat-label">You Save</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>Qué hace esta herramienta y qué problema resuelve</h2>
+        <p>La <strong>Calculadora de Porcentajes y Descuentos</strong> resuelve operaciones matemáticas de descuentos en compras, impuestos sobre ventas y tasas de crecimiento de forma inmediata y sin errores.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Instrucciones paso a paso</h2>
+        <ol class="doc-steps">
+          <li>Seleccione el modo de cálculo (ej. "¿Cuánto es el X% de Y?", aumento/disminución o descuento).</li>
+          <li>Introduzca las cifras en los campos correspondientes.</li>
+          <li>El resultado y la fórmula aplicada se muestran al instante.</li>
+          <li>Haga clic en "Copiar Respuesta" para guardarla en el portapapeles.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Casos de uso prácticos comunes</h2>
+        <ul>
+          <li><strong>Compras y Ofertas de Temporada:</strong> Calcular el precio final exacto cuando un artículo tiene un 25% de descuento más impuestos.</li>
+          <li><strong>Métricas de Crecimiento Empresarial:</strong> Determinar el porcentaje de aumento o disminución de ventas trimestrales.</li>
+          <li><strong>Calificaciones y Exámenes:</strong> Calcular el porcentaje obtenido en un examen sobre el total de puntos posibles.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Ejemplo realista y resultado esperado</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Entrada de ejemplo</div>
+              <pre class="example-pre" dir="ltr">¿Cuánto es el 15% de 240?</pre>
+            </div>
+            <div>
+              <div class="example-title">Resultado esperado</div>
+              <pre class="example-pre" dir="ltr">Resultado: 36 | Fórmula: (15 / 100) * 240 = 36</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Especificaciones técnicas y mecánica</h2>
+        <p>Aritmética de punto flotante con compensación de redondeo para evitar inexactitudes binarias. La división entre cero está protegida con advertencias claras.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitaciones y fronteras del navegador</h2>
+        <p>Diseñado para números reales estándar; entradas no numéricas activan una alerta explicativa.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Garantía de privacidad y seguridad</h2>
+        <p>Cálculos 100% locales en su navegador. No se almacena ninguna cifra financiera o personal.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Preguntas Frecuentes (FAQs)</h2>
+        
+        <div class="faq-item">
+          <h3>¿Cómo se calcula el porcentaje de aumento?</h3>
+          <p>Reste el valor anterior del nuevo valor, divida entre el valor anterior y multiplique por 100: ((Nuevo - Anterior) / Anterior) * 100.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Herramientas de Navegador Relacionadas</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/es/tools/word-counter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Contador de Palabras y Caracteres</span>
+          </a>
+
+          <a href="/es/tools/case-converter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Conversor de Mayúsculas y Minúsculas</span>
+          </a>
+
+          <a href="/es/tools/pdf-merger.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Unir PDF (PDF Merger)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Herramientas Online Gratuitas. Client-side browser utilities.</p>
+      <a href="/es/index.html">Volver al Inicio</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // Calc 1
+      const c1p = document.getElementById('calc1-p');
+      const c1x = document.getElementById('calc1-x');
+      const c1res = document.getElementById('calc1-result');
+      const c1form = document.getElementById('calc1-formula');
+
+      function updateC1() {
+        const p = parseFloat(c1p.value);
+        const x = parseFloat(c1x.value);
+        if (isNaN(p) || isNaN(x)) {
+          c1res.textContent = '-';
+          return;
+        }
+        const ans = (p / 100) * x;
+        c1res.textContent = parseFloat(ans.toFixed(4)).toLocaleString();
+        c1form.textContent = `Formula: (${p} / 100) × ${x} = ${parseFloat(ans.toFixed(4))}`;
+      }
+
+      // Calc 2
+      const c2x = document.getElementById('calc2-x');
+      const c2y = document.getElementById('calc2-y');
+      const c2res = document.getElementById('calc2-result');
+      const c2form = document.getElementById('calc2-formula');
+
+      function updateC2() {
+        const x = parseFloat(c2x.value);
+        const y = parseFloat(c2y.value);
+        if (isNaN(x) || isNaN(y) || y === 0) {
+          c2res.textContent = '-';
+          return;
+        }
+        const ans = (x / y) * 100;
+        c2res.textContent = `${parseFloat(ans.toFixed(4)).toLocaleString()}%`;
+        c2form.textContent = `Formula: (${x} / ${y}) × 100 = ${parseFloat(ans.toFixed(4))}%`;
+      }
+
+      // Calc 3
+      const c3from = document.getElementById('calc3-from');
+      const c3to = document.getElementById('calc3-to');
+      const c3res = document.getElementById('calc3-result');
+      const c3form = document.getElementById('calc3-formula');
+
+      function updateC3() {
+        const from = parseFloat(c3from.value);
+        const to = parseFloat(c3to.value);
+        if (isNaN(from) || isNaN(to) || from === 0) {
+          c3res.textContent = '-';
+          return;
+        }
+        const diff = to - from;
+        const change = (diff / Math.abs(from)) * 100;
+        const isInc = change >= 0;
+        c3res.textContent = `${isInc ? '+' : ''}${parseFloat(change.toFixed(4))}% (${isInc ? 'Increase' : 'Decrease'})`;
+        c3res.style.color = isInc ? 'var(--color-success)' : 'var(--color-danger)';
+        c3form.textContent = `Formula: ((${to} - ${from}) / ${Math.abs(from)}) × 100 = ${parseFloat(change.toFixed(4))}%`;
+      }
+
+      // Calc 4
+      const c4price = document.getElementById('calc4-price');
+      const c4disc = document.getElementById('calc4-discount');
+      const c4final = document.getElementById('calc4-final');
+      const c4savings = document.getElementById('calc4-savings');
+
+      function updateC4() {
+        const price = parseFloat(c4price.value);
+        const disc = parseFloat(c4disc.value);
+        if (isNaN(price) || isNaN(disc)) {
+          c4final.textContent = '-';
+          c4savings.textContent = '-';
+          return;
+        }
+        const saved = (disc / 100) * price;
+        const final = price - saved;
+        c4final.textContent = `$${final.toFixed(2)}`;
+        c4savings.textContent = `$${saved.toFixed(2)}`;
+      }
+
+      c1p.addEventListener('input', updateC1);
+      c1x.addEventListener('input', updateC1);
+      c2x.addEventListener('input', updateC2);
+      c2y.addEventListener('input', updateC2);
+      c3from.addEventListener('input', updateC3);
+      c3to.addEventListener('input', updateC3);
+      c4price.addEventListener('input', updateC4);
+      c4disc.addEventListener('input', updateC4);
+
+      updateC1();
+      updateC2();
+      updateC3();
+      updateC4();
+    })();
+  </script>
+</body>
+</html>

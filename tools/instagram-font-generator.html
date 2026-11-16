@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Font Generator — Free Online Tools</title>
+  <meta name="description" content="Convert normal text into 25+ cool aesthetic fancy Unicode fonts for Instagram bio, captions, TikTok, Twitter, and gaming tags. Free instant copy.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/instagram-font-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/instagram-font-generator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/instagram-font-generator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Instagram Font Generator",
+    "description": "Convert normal text into 25+ cool aesthetic fancy Unicode fonts for Instagram bio, captions, TikTok, Twitter, and gaming tags. Free instant copy.",
+    "url": "https://nexivo.com/tools/instagram-font-generator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#social">Social &amp; Link Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">Instagram Font Generator</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Instagram Font Generator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Transform standard text into 25+ aesthetic, fancy Unicode font styles for Instagram bios, TikTok captions, Discord handles, and Twitter posts.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">25+ Styles</span>
+        <span class="tool-badge">Instant Copy</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample Bio</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Clear Input</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Converts in real-time as you type
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-block-end: var(--space-6);">
+        <label for="font-input" class="form-label" style="font-size: var(--font-size-base); font-weight: 700;">Type or Paste Your Text Here:</label>
+        <textarea 
+          id="font-input" 
+          class="form-textarea" 
+          rows="3" 
+          placeholder="e.g. Dream big, stay focused and make it happen ✨"
+          style="font-size: var(--font-size-base);"
+        ></textarea>
+      </div>
+
+      <!-- Generated Font Styles List -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-3);">
+        <h2 style="font-size: var(--font-size-md); font-weight: 700; margin: 0;">Select &amp; Copy Aesthetic Styles:</h2>
+        <span id="styles-count" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">26 styles available</span>
+      </div>
+
+      <div id="font-results" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: var(--space-3);">
+        <!-- Generated dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- Educational Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>User Problem &amp; Purpose</h2>
+        <p>
+          Instagram, TikTok, Twitter (X), and Discord do not offer built-in font pickers in user profile bios or post captions. However, modern operating systems support millions of unique characters in the international Unicode standard. This tool converts standard Latin letters into stylistic Unicode mathematical symbols, script glyphs, and accented characters that render across all modern mobile apps.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol style="padding-inline-start: 1.5rem; line-height: 1.8;">
+          <li>Type or paste your bio phrase, name, quote, or caption into the top input box.</li>
+          <li>Scroll through the generated list of aesthetic font variations below.</li>
+          <li>Click the <strong>Copy</strong> button beside your favorite style.</li>
+          <li>Open Instagram, TikTok, or Twitter, go to <strong>Edit Profile</strong> &rarr; <strong>Bio</strong>, and paste.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul style="padding-inline-start: 1.5rem; line-height: 1.8;">
+          <li><strong>Social Media Bios:</strong> Making your profile headline stand out with cursive script or bold gothic styling.</li>
+          <li><strong>Gaming Tags &amp; Discord Nicknames:</strong> Customizing gamer tags with circled bubbles, small caps, or brackets.</li>
+          <li><strong>Article Captions &amp; Highlights:</strong> Emphasizing critical announcements or special sale promotions in social media posts.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Normal Input Text</div>
+              <pre class="example-pre">Free Online Tools</pre>
+            </div>
+            <div>
+              <div class="example-title">Generated Bold Script Output</div>
+              <pre class="example-pre">𝓕𝓻𝓮𝓮 𝓞𝓷𝓵𝓲𝓷𝓮 𝓣𝓸𝓸𝓵𝓼</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          This tool does not install custom font files (<code>.ttf</code> or <code>.woff</code>). Instead, it swaps ASCII character code points with corresponding characters in Unicode blocks such as:
+        </p>
+        <ul style="padding-inline-start: 1.5rem; line-height: 1.6;">
+          <li><strong>Mathematical Alphanumeric Symbols:</strong> <code>U+1D400</code> through <code>U+1D7FF</code> (Bold, Italic, Script, Fraktur, Double-struck, Sans-serif, Monospace).</li>
+          <li><strong>Enclosed Alphanumerics:</strong> <code>U+2460</code> through <code>U+24FF</code> (Circled/Bubble letters).</li>
+          <li><strong>Combining Diacritical Marks:</strong> <code>U+0336</code> (Strikethrough) and <code>U+0332</code> (Underline).</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Because these symbols are mathematical Unicode glyphs rather than true font typography, screen readers for visually impaired users may pronounce them as individual mathematical symbols rather than continuous English words. Use them for short decorative headers and names rather than long paragraphs of critical information.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Character mapping is executed entirely client-side using JavaScript string replacement arrays in browser RAM. Your phrases are never recorded, logged, or uploaded to any server.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Why do some fonts look like square boxes on older phones?</h3>
+          <p>Very old operating systems (such as Android 7 or iOS 10) may lack glyph definitions for newer Unicode mathematical symbols. Modern smartphones from the last 7 years render all styles seamlessly.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Will these fonts work in Instagram Stories?</h3>
+          <p>Yes. You can paste these characters into Instagram Stories, Reels captions, DMs, highlights, and profile bios.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I use numbers and spaces?</h3>
+          <p>Yes. Styles with corresponding number maps (such as Double-Struck, Monospace, and Circled) convert numbers automatically while preserving spaces and standard emojis.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/case-converter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Text Case Converter</span>
+          </a>
+          <a href="/tools/text-reverser.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Text Reverser</span>
+          </a>
+          <a href="/tools/word-counter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Word &amp; Character Counter</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    const fontInput = document.getElementById('font-input');
+    const fontResults = document.getElementById('font-results');
+    const btnSample = document.getElementById('btn-sample');
+    const btnClear = document.getElementById('btn-clear');
+
+    const BASE_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    const FONT_MAPS = [
+      {
+        name: "Bold Serif",
+        map: "𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗"
+      },
+      {
+        name: "Bold Sans",
+        map: "𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵"
+      },
+      {
+        name: "Italic Serif",
+        map: "𝑎𝑏𝑐𝑑𝑒𝑓𝑔ℎ𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍0123456789"
+      },
+      {
+        name: "Italic Sans",
+        map: "𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡0123456789"
+      },
+      {
+        name: "Bold Italic",
+        map: "𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁0123456789"
+      },
+      {
+        name: "Script / Cursive",
+        map: "𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵0123456789"
+      },
+      {
+        name: "Bold Script",
+        map: "𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩0123456789"
+      },
+      {
+        name: "Gothic / Fraktur",
+        map: "𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ0123456789"
+      },
+      {
+        name: "Bold Gothic",
+        map: "𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅0123456789"
+      },
+      {
+        name: "Double-Struck",
+        map: "𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡"
+      },
+      {
+        name: "Bubble / Circled",
+        map: "ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ⓪①②③④⑤⑥⑦⑧⑨"
+      },
+      {
+        name: "Dark Bubble (Negative Circled)",
+        map: "🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩⓿➊➋➌➍➎➏➐➑➒"
+      },
+      {
+        name: "Square",
+        map: "🅂🅀🅄🄰🅁🄴🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉0123456789"
+      },
+      {
+        name: "Dark Square",
+        map: "🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉0123456789"
+      },
+      {
+        name: "Small Caps",
+        map: "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴩǫʀꜱᴛᴜᴠᴡxʏᴢABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      },
+      {
+        name: "Monospace",
+        map: "𝚖𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚠𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿"
+      },
+      {
+        name: "Fullwidth",
+        map: "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ０１２３４５６７８９"
+      }
+    ];
+
+    // Combining / Dynamic Transformers
+    function transformWithMap(text, mapStr) {
+      const mapArr = Array.from(mapStr);
+      let res = "";
+      for (const ch of text) {
+        const idx = BASE_CHARS.indexOf(ch);
+        if (idx !== -1 && idx < mapArr.length) {
+          res += mapArr[idx];
+        } else {
+          res += ch;
+        }
+      }
+      return res;
+    }
+
+    function strikethrough(text) {
+      return text.split('').map(c => c + '\u0336').join('');
+    }
+
+    function underline(text) {
+      return text.split('').map(c => c + '\u0332').join('');
+    }
+
+    function doubleUnderline(text) {
+      return text.split('').map(c => c + '\u0333').join('');
+    }
+
+    function slashThrough(text) {
+      return text.split('').map(c => c + '\u0338').join('');
+    }
+
+    function aestheticSpaced(text) {
+      return text.split('').join(' ');
+    }
+
+    function flipUpsideDown(text) {
+      const normal = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890?!.,";
+      const flipped = "ɐqɔpǝɟƃɥıɾʞlɯuodbɹsʇnʌʍxʎz∀ᗺƆᗡƎℲ⅁HIſʞ˥WNOԀÒᴚS⊥∩ΛMX⅄ZƖᄅƐㄣϛ9ㄥ860¿¡˙'";
+      return text.split('').reverse().map(c => {
+        const idx = normal.indexOf(c);
+        return idx !== -1 ? flipped[idx] : c;
+      }).join('');
+    }
+
+    function renderAllStyles() {
+      const text = fontInput.value || "Dream Big ✨";
+      let html = "";
+
+      // 1. Static mapped fonts
+      FONT_MAPS.forEach(fm => {
+        const converted = transformWithMap(text, fm.map);
+        html += createCard(fm.name, converted);
+      });
+
+      // 2. Dynamic decorators
+      html += createCard("Strikethrough", strikethrough(text));
+      html += createCard("Single Underline", underline(text));
+      html += createCard("Double Underline", doubleUnderline(text));
+      html += createCard("Slash Through", slashThrough(text));
+      html += createCard("A e s t h e t i c  S p a c e d", aestheticSpaced(text));
+      html += createCard("Upside Down", flipUpsideDown(text));
+      html += createCard("Sparkles Decor", "✨ " + text + " ✨");
+      html += createCard("Stars Decor", "★彡 " + text + " 彡★");
+      html += createCard("Hearts Decor", "♡ " + text + " ♡");
+
+      fontResults.innerHTML = html;
+
+      // Attach copy listeners
+      fontResults.querySelectorAll('.btn-copy-style').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const content = btn.getAttribute('data-content');
+          window.FreeOnlineTools.copyToClipboard(content, 'Copied style to clipboard!');
+        });
+      });
+    }
+
+    function createCard(title, content) {
+      const escaped = window.FreeOnlineTools.escapeHtml(content);
+      return `
+        <div class="stat-card" style="text-align: left; padding: var(--space-4); display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="margin-block-end: var(--space-3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+              <span style="font-weight: 700; font-size: var(--font-size-xs); color: var(--color-text-muted); text-transform: uppercase;">${window.FreeOnlineTools.escapeHtml(title)}</span>
+            </div>
+            <div style="font-size: var(--font-size-base); line-height: 1.4; color: var(--color-text-primary); word-break: break-word; min-block-size: 2.2rem;">
+              ${escaped}
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-copy-style" data-content="${escaped}" style="font-size: var(--font-size-xs); inline-size: 100%;">
+            Copy Style
+          </button>
+        </div>
+      `;
+    }
+
+    fontInput.addEventListener('input', renderAllStyles);
+
+    btnSample.addEventListener('click', () => {
+      fontInput.value = "Digital Creator | Making cool things happen 🚀";
+      renderAllStyles();
+    });
+
+    btnClear.addEventListener('click', () => {
+      fontInput.value = '';
+      renderAllStyles();
+      fontInput.focus();
+    });
+
+    // Initial render
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

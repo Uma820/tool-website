@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Extractor — Free Online Tools</title>
+  <meta name="description" content="Extract, clean, filter, and export URLs and web links from any text, HTML, Markdown, or logs instantly. 100% private in-browser tool.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/url-extractor.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/url-extractor.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/url-extractor.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "URL Extractor",
+    "description": "Extract, clean, filter, and export URLs and web links from any text, HTML, Markdown, or logs instantly. 100% private in-browser tool.",
+    "url": "https://nexivo.com/tools/url-extractor.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#text">Text Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">URL Extractor</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>URL Extractor</span>
+      </h1>
+      <p class="tool-header-lead">
+        Find, extract, and clean every web link and hyperlink from raw text, HTML documents, Markdown notes, or server logs. Remove query strings, deduplicate, and export clean lists.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">HTML &amp; Text Parsing</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample Text</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Clear</button>
+          <button type="button" class="btn btn-secondary" id="btn-copy">Copy Result</button>
+          <button type="button" class="btn btn-secondary" id="btn-download-txt">Download (.txt)</button>
+          <button type="button" class="btn btn-secondary" id="btn-download-csv">Download (.csv)</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Extracts instantly on input
+        </div>
+      </div>
+
+      <!-- Controls Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-3); margin-block-end: var(--space-4); background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+        <div>
+          <label for="output-format" class="form-label" style="font-size: var(--font-size-xs);">Output Format:</label>
+          <select id="output-format" class="form-select" style="font-size: var(--font-size-sm);">
+            <option value="newline" selected>One URL per line</option>
+            <option value="comma">Comma-separated</option>
+            <option value="markdown">Markdown links (- [url](url))</option>
+            <option value="html">HTML list (&lt;li&gt;&lt;a&gt;...)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="extract-mode" class="form-label" style="font-size: var(--font-size-xs);">Extract Scope:</label>
+          <select id="extract-mode" class="form-select" style="font-size: var(--font-size-sm);">
+            <option value="full" selected>Full URL Path</option>
+            <option value="domain">Root Domain Only (hostname)</option>
+            <option value="origin">Origin (Protocol + Domain)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="sort-order" class="form-label" style="font-size: var(--font-size-xs);">Sort Order:</label>
+          <select id="sort-order" class="form-select" style="font-size: var(--font-size-sm);">
+            <option value="appearance" selected>Order of Appearance</option>
+            <option value="az">Alphabetical (A &rarr; Z)</option>
+            <option value="za">Reverse Alphabetical (Z &rarr; A)</option>
+            <option value="domain">Group by Hostname</option>
+          </select>
+        </div>
+
+        <div style="display: flex; flex-direction: column; justify-content: flex-end; gap: var(--space-2);">
+          <label class="form-checkbox-label" style="font-size: var(--font-size-xs);">
+            <input type="checkbox" id="opt-dedupe" checked>
+            <span>Deduplicate URLs</span>
+          </label>
+          <label class="form-checkbox-label" style="font-size: var(--font-size-xs);">
+            <input type="checkbox" id="opt-strip-params">
+            <span>Strip query parameters (?...)</span>
+          </label>
+          <label class="form-checkbox-label" style="font-size: var(--font-size-xs);">
+            <input type="checkbox" id="opt-strip-anchors">
+            <span>Strip anchor tags (#...)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Side-by-Side Textarea Layout -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4);">
+        <div class="form-group" style="margin-block-end: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+            <label for="input-text" class="form-label" style="margin-block-end: 0; font-weight: var(--font-weight-semibold);">Raw Text / HTML Source:</label>
+            <span id="input-stats" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">0 chars</span>
+          </div>
+          <textarea id="input-text" class="form-textarea" rows="12" placeholder="Paste webpage HTML, Markdown, raw document, or text logs here..." style="font-family: var(--font-family-mono); font-size: var(--font-size-sm);"></textarea>
+        </div>
+
+        <div class="form-group" style="margin-block-end: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+            <label for="output-text" class="form-label" style="margin-block-end: 0; font-weight: var(--font-weight-semibold);">Extracted URLs:</label>
+            <span id="output-stats" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">0 found</span>
+          </div>
+          <textarea id="output-text" class="form-textarea" rows="12" readonly placeholder="Extracted URLs will appear here..." style="font-family: var(--font-family-mono); font-size: var(--font-size-sm); background: var(--color-bg-subtle);"></textarea>
+        </div>
+      </div>
+
+      <!-- Extraction Stats Grid -->
+      <div class="stats-grid" style="margin-block-start: var(--space-4);">
+        <div class="stat-card">
+          <div class="stat-label">Total URLs Found</div>
+          <div class="stat-value" id="stat-total">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Unique URLs</div>
+          <div class="stat-value" id="stat-unique">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Unique Hostnames</div>
+          <div class="stat-value" id="stat-hosts">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Duplicate URLs</div>
+          <div class="stat-value" id="stat-dupes">0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the URL Extractor Do?</h2>
+        <p>
+          The <strong>URL Extractor</strong> scans text blocks, HTML documents, XML sitemaps, Markdown files, and error logs to extract all valid web links and URLs. It identifies links regardless of whether they are standalone HTTP/HTTPS addresses, embedded within anchor tags (<code>&lt;a href="https://example.com"&gt;</code>), source attributes (<code>&lt;img src="https://example.com/image.png"&gt;</code>), or formatted in Markdown syntax (<code>[text](url)</code>).
+        </p>
+        <p>
+          With built-in cleaning utilities, you can easily strip query parameters (tracking UTM tags), remove hash anchors, filter by domain, or reduce a massive list of deep web links down to their primary parent domains.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Input Raw Content:</strong> Paste your unstructured text or HTML source code into the left text box, or click <strong>Sample Text</strong> to load an example.</li>
+          <li><strong>Choose Extraction Scope:</strong> Select <em>Full URL Path</em> to keep complete paths, <em>Root Domain Only</em> to pull just hostnames, or <em>Origin</em> to preserve protocol and host without path folders.</li>
+          <li><strong>Configure Cleaning Options:</strong> Toggle <em>Strip query parameters</em> to remove Google Analytics UTM tags or session IDs, and toggle <em>Strip anchor tags</em> to clean on-page fragment identifiers.</li>
+          <li><strong>Format &amp; Export:</strong> Select your preferred output formatting (plain list, Markdown bullets, or HTML list items) and click <strong>Copy Result</strong> or download as <code>.txt</code> / <code>.csv</code>.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>SEO &amp; Sitemap Audits</h3>
+            <p>Extract all internal and external hyperlinks from webpage source code to inspect for broken links or redundant redirects.</p>
+          </div>
+          <div class="card">
+            <h3>Marketing Link Cleanup</h3>
+            <p>Strip unnecessary tracking parameters like <code>?utm_source=...</code> and <code>?fbclid=...</code> from lists of promotional links.</p>
+          </div>
+          <div class="card">
+            <h3>Content Migration</h3>
+            <p>Harvest all asset URLs (images, documents, external citations) when migrating from older CMS systems or WordPress posts.</p>
+          </div>
+          <div class="card">
+            <h3>Cybersecurity &amp; IT Logs</h3>
+            <p>Extract suspicious external destinations and outbound connection targets from firewall or proxy logs for IP/domain reputation checks.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Example Input Text:</div>
+          <pre class="example-pre">Check out our resources:
+&lt;a href="https://example.com/blog/article-1?utm_source=newsletter#comments"&gt;Read Article&lt;/a&gt;
+Also visit https://docs.example.org/api/v1/auth and https://example.com/blog/article-1?utm_source=twitter
+Follow us on https://x.com/team</pre>
+          <div class="example-title" style="margin-block-start: var(--space-3);">Extracted Output (Strip Query Params &amp; Deduplicated):</div>
+          <pre class="example-pre">https://example.com/blog/article-1
+https://docs.example.org/api/v1/auth
+https://x.com/team</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>URL Parsing:</strong> Supports standard schemes including <code>http://</code>, <code>https://</code>, <code>ftp://</code>, and protocol-relative <code>//</code> links.</li>
+          <li><strong>Attribute Extraction:</strong> Automatically detects URLs nested within HTML attributes like <code>href</code>, <code>src</code>, <code>data-src</code>, <code>action</code>, and <code>content</code>.</li>
+          <li><strong>DOM URL Validation:</strong> Employs native browser <code>new URL()</code> parsing for hostname decomposition, origin identification, and parameter stripping.</li>
+          <li><strong>Zero Latency:</strong> Executes purely in browser memory with instant interactive updates.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Relative links that do not specify a domain or root (such as <code>/about</code> or <code>../images/pic.png</code>) are extracted if they follow standard HTML attribute patterns, but cannot have hostnames calculated unless a base URL is present. Malformed URLs with spaces or unencoded illegal characters are sanitized or flagged.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All URL extraction and analysis occurs 100% locally on your computer inside your web browser. No text, source code, internal intranet URLs, or confidential links are ever uploaded to our servers or external services.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Can I extract links directly from HTML source code?</summary>
+            <div class="faq-answer">
+              <p>Yes. Simply right-click on any webpage, select "View Page Source", copy the HTML, and paste it into the extractor. It will automatically harvest all URLs.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What does "Strip query parameters" do?</summary>
+            <div class="faq-answer">
+              <p>It deletes everything after the question mark <code>?</code> in each URL. This is ideal for cleaning up marketing URLs that contain long tracking codes such as <code>utm_source</code>, <code>utm_medium</code>, or session IDs.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">How are duplicates handled when query strings differ?</summary>
+            <div class="faq-answer">
+              <p>If you enable "Strip query parameters" and "Deduplicate", two URLs that point to the same page with different tracking codes (e.g. <code>?ref=fb</code> vs <code>?ref=tw</code>) will be cleaned first and merged into a single unique link.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/email-extractor.html" class="related-tool-chip">
+            <div class="related-tool-title">Email Extractor</div>
+            <div class="related-tool-desc">Extract all email addresses from text, HTML, or logs instantly.</div>
+          </a>
+          <a href="/tools/text-separator.html" class="related-tool-chip">
+            <div class="related-tool-title">Text Separator</div>
+            <div class="related-tool-desc">Split and join lists by custom delimiters with quote formatting.</div>
+          </a>
+          <a href="/tools/text-diff-checker.html" class="related-tool-chip">
+            <div class="related-tool-title">Text Diff Checker</div>
+            <div class="related-tool-desc">Compare two text files side-by-side with line-by-line diffing.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const inputText = document.getElementById('input-text');
+    const outputText = document.getElementById('output-text');
+    const inputStats = document.getElementById('input-stats');
+    const outputStats = document.getElementById('output-stats');
+    const outputFormat = document.getElementById('output-format');
+    const extractMode = document.getElementById('extract-mode');
+    const sortOrder = document.getElementById('sort-order');
+    const optDedupe = document.getElementById('opt-dedupe');
+    const optStripParams = document.getElementById('opt-strip-params');
+    const optStripAnchors = document.getElementById('opt-strip-anchors');
+
+    const statTotal = document.getElementById('stat-total');
+    const statUnique = document.getElementById('stat-unique');
+    const statHosts = document.getElementById('stat-hosts');
+    const statDupes = document.getElementById('stat-dupes');
+
+    const btnSample = document.getElementById('btn-sample');
+    const btnClear = document.getElementById('btn-clear');
+    const btnCopy = document.getElementById('btn-copy');
+    const btnDownloadTxt = document.getElementById('btn-download-txt');
+    const btnDownloadCsv = document.getElementById('btn-download-csv');
+
+    // Comprehensive URL extraction regex (HTTP, HTTPS, FTP, or href/src attributes)
+    const URL_REGEX = /(?:(?:https?|ftp):\/\/|www\.)[^\s<>"'{}|\\^`\[\]]+/gi;
+    const HTML_ATTR_REGEX = /(?:href|src|action|content)=["']((?:https?|ftp):\/\/[^"']+)["']/gi;
+
+    function extract() {
+      const raw = inputText.value || '';
+      inputStats.textContent = raw.length.toLocaleString() + ' chars';
+
+      if (!raw.trim()) {
+        outputText.value = '';
+        outputStats.textContent = '0 found';
+        statTotal.textContent = '0';
+        statUnique.textContent = '0';
+        statHosts.textContent = '0';
+        statDupes.textContent = '0';
+        return;
+      }
+
+      const rawUrls = [];
+      let match;
+
+      // Check standard URLs
+      while ((match = URL_REGEX.exec(raw)) !== null) {
+        let u = match[0];
+        // Clean trailing punctuation often caught in sentences
+        u = u.replace(/[.,;:)]+$/, '');
+        if (u.startsWith('www.')) {
+          u = 'https://' + u;
+        }
+        rawUrls.push(u);
+      }
+
+      // Check HTML attributes
+      while ((match = HTML_ATTR_REGEX.exec(raw)) !== null) {
+        let u = match[1];
+        if (!rawUrls.includes(u)) {
+          rawUrls.push(u);
+        }
+      }
+
+      const totalCount = rawUrls.length;
+
+      // Clean & transform URLs
+      const cleanedUrls = [];
+      const hostsSet = new Set();
+      const uniqueMap = new Map();
+
+      rawUrls.forEach(urlStr => {
+        try {
+          // Normalize URL
+          const parsed = new URL(urlStr);
+          hostsSet.add(parsed.hostname.toLowerCase());
+
+          if (optStripParams.checked) {
+            parsed.search = '';
+          }
+          if (optStripAnchors.checked) {
+            parsed.hash = '';
+          }
+
+          let formattedUrl = parsed.toString();
+
+          if (extractMode.value === 'domain') {
+            formattedUrl = parsed.hostname;
+          } else if (extractMode.value === 'origin') {
+            formattedUrl = parsed.origin;
+          }
+
+          cleanedUrls.push(formattedUrl);
+          const key = formattedUrl.toLowerCase();
+          if (!uniqueMap.has(key)) {
+            uniqueMap.set(key, formattedUrl);
+          }
+        } catch (e) {
+          // If URL constructor fails, treat as raw string
+          let str = urlStr;
+          if (optStripParams.checked && str.includes('?')) {
+            str = str.split('?')[0];
+          }
+          if (optStripAnchors.checked && str.includes('#')) {
+            str = str.split('#')[0];
+          }
+          cleanedUrls.push(str);
+          const key = str.toLowerCase();
+          if (!uniqueMap.has(key)) {
+            uniqueMap.set(key, str);
+          }
+        }
+      });
+
+      let results = optDedupe.checked ? Array.from(uniqueMap.values()) : cleanedUrls;
+      const dupeCount = totalCount - uniqueMap.size;
+
+      // Sorting
+      const sort = sortOrder.value;
+      if (sort === 'az') {
+        results.sort((a, b) => a.localeCompare(b));
+      } else if (sort === 'za') {
+        results.sort((a, b) => b.localeCompare(a));
+      } else if (sort === 'domain') {
+        results.sort((a, b) => {
+          let hostA = a, hostB = b;
+          try { hostA = new URL(a).hostname; } catch(e) {}
+          try { hostB = new URL(b).hostname; } catch(e) {}
+          return hostA.localeCompare(hostB) || a.localeCompare(b);
+        });
+      }
+
+      // Format output
+      let output = '';
+      if (outputFormat.value === 'newline') {
+        output = results.join('\n');
+      } else if (outputFormat.value === 'comma') {
+        output = results.join(', ');
+      } else if (outputFormat.value === 'markdown') {
+        output = results.map(u => `- [${u}](${u})`).join('\n');
+      } else if (outputFormat.value === 'html') {
+        output = '<ul>\n' + results.map(u => `  <li><a href="${u}" target="_blank" rel="noopener">${u}</a></li>`).join('\n') + '\n</ul>';
+      }
+
+      outputText.value = output;
+      outputStats.textContent = results.length + ' URL' + (results.length === 1 ? '' : 's');
+
+      statTotal.textContent = totalCount.toLocaleString();
+      statUnique.textContent = uniqueMap.size.toLocaleString();
+      statHosts.textContent = hostsSet.size.toLocaleString();
+      statDupes.textContent = Math.max(0, dupeCount).toLocaleString();
+    }
+
+    [inputText, outputFormat, extractMode, sortOrder, optDedupe, optStripParams, optStripAnchors].forEach(el => {
+      el.addEventListener('input', extract);
+      el.addEventListener('change', extract);
+    });
+
+    btnSample.addEventListener('click', () => {
+      inputText.value = `Useful Developer & Design Resources:
+1. Documentation: https://developer.mozilla.org/en-US/docs/Web/HTML?utm_source=tutorial#basics
+2. Icons & UI: <a href="https://lucide.dev/icons?search=code">Lucide Icons</a>
+3. Testing endpoints: https://httpbin.org/get?user=test&token=12345
+4. Blog: https://example.com/posts/getting-started?utm_source=newsletter&utm_medium=email
+5. Direct link: www.github.com/trending
+6. Duplicate link: https://example.com/posts/getting-started?utm_source=twitter`;
+      outputFormat.value = 'newline';
+      extractMode.value = 'full';
+      sortOrder.value = 'domain';
+      optDedupe.checked = true;
+      optStripParams.checked = true;
+      optStripAnchors.checked = true;
+      extract();
+    });
+
+    btnClear.addEventListener('click', () => {
+      inputText.value = '';
+      extract();
+      inputText.focus();
+    });
+
+    btnCopy.addEventListener('click', () => {
+      if (outputText.value) {
+        window.FreeOnlineTools.copyToClipboard(outputText.value, 'Extracted URLs copied to clipboard!');
+      }
+    });
+
+    btnDownloadTxt.addEventListener('click', () => {
+      if (!outputText.value) return;
+      const blob = new Blob([outputText.value], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'extracted-urls.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    btnDownloadCsv.addEventListener('click', () => {
+      if (!outputText.value) return;
+      const lines = outputText.value.split(/[\r\n]+/).map(s => s.trim()).filter(Boolean);
+      let csvContent = "URL,Hostname,Protocol\n";
+      lines.forEach(urlStr => {
+        let host = '', proto = '';
+        try {
+          const u = new URL(urlStr);
+          host = u.hostname;
+          proto = u.protocol.replace(':', '');
+        } catch(e) {}
+        csvContent += `"${urlStr.replace(/"/g, '""')}","${host}","${proto}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'extracted-urls.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // Run sample on load
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>জেএসন ফরম্যাটার ও ভ্যালিডেটর — ফ্রি অনলাইন টুলস</title>
+  <meta name="description" content="জেএসন কোড সাজান, সিনট্যাক্স যাচাই করুন, সুন্দর ইন্ডেন্টেশন দিন এবং ত্রুটি শনাক্ত করুন ১০০% অফলাইনে।">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/bn/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="bn" href="https://nexivo.com/bn/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="hi" href="https://nexivo.com/hi/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="es" href="https://nexivo.com/es/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="fr" href="https://nexivo.com/fr/tools/json-formatter-validator.html">
+  <link rel="alternate" hreflang="ar" href="https://nexivo.com/ar/tools/json-formatter-validator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "জেএসন ফরম্যাটার ও ভ্যালিডেটর",
+    "description": "জেএসন কোড সাজান, সিনট্যাক্স যাচাই করুন, সুন্দর ইন্ডেন্টেশন দিন এবং ত্রুটি শনাক্ত করুন ১০০% অফলাইনে।",
+    "url": "https://nexivo.com/bn/tools/json-formatter-validator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/bn/index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>ফ্রি অনলাইন টুলস</span>
+      </a>
+      <div class="header-actions">
+        <!-- Language Selector -->
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en">English</option>
+          <option value="bn" selected>বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/bn/index.html" class="btn btn-secondary">সব টুলস</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="থিম পরিবর্তন করুন">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/bn/index.html">হোম</a></li>
+      <li>/</li>
+      <li><a href="/bn/index.html">ডেভেলপার টুলস</a></li>
+      <li>/</li>
+      <li aria-current="page">জেএসন ফরম্যাটার ও ভ্যালিডেটর</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>জেএসন ফরম্যাটার ও ভ্যালিডেটর</span>
+      </h1>
+      <p class="tool-header-lead">
+        জেএসন কোড সাজান, সিনট্যাক্স যাচাই করুন, সুন্দর ইন্ডেন্টেশন দিন এবং ত্রুটি শনাক্ত করুন ১০০% অফলাইনে।
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">টিয়ার ১: ব্রাউজার নেটিভ</span>
+        <span class="tool-badge">১০০% ব্যক্তিগত</span>
+        <span class="tool-badge">তাত্ক্ষণিক কার্যকারিতা</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Toolbar Controls -->
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center;">
+          <button type="button" class="btn btn-primary" id="btn-format">Beautify JSON</button>
+          <button type="button" class="btn btn-secondary" id="btn-minify">কম্প্যাক্ট করুন (Minify)</button>
+          <button type="button" class="btn btn-secondary" id="btn-validate">যাচাই করুন (Validate) Only</button>
+          <select id="indent-size" class="form-select" style="inline-size: auto; padding-block: 0.4rem; font-size: var(--font-size-xs);">
+            <option value="2">২ স্পেস</option>
+            <option value="4">৪ স্পেস</option>
+            <option value="tab">ট্যাবs</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample</button>
+          <button type="button" class="btn btn-secondary" id="btn-download">ডাউনলোড (.json)</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">মুছে ফেলুন</button>
+        </div>
+      </div>
+
+      <!-- Feedback Banner -->
+      <div id="json-feedback" class="alert" style="display: none;"></div>
+
+      <!-- JSON Input / Editor Area -->
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="json-input" class="form-label" style="margin-bottom: 0;">জেএসন ইনপুট / আউটপুট:</label>
+          <button type="button" class="btn btn-secondary" id="btn-copy">Copy to Clipboard</button>
+        </div>
+        <textarea id="json-input" class="form-textarea code-font" style="min-block-size: 320px;" placeholder="Paste raw JSON here..."></textarea>
+      </div>
+
+      <!-- Size Statistics -->
+      <div id="json-stats" style="font-size: var(--font-size-xs); color: var(--color-text-muted); display: flex; gap: var(--space-4);">
+        <span>Length: <strong id="stat-len">0</strong> chars</span>
+        <span>Size: <strong id="stat-bytes">0</strong> B</span>
+      </div>
+    </div>
+
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>এই টুলটি কী করে এবং কীভাবে সাহায্য করে</h2>
+        <p><strong>জেএসন ফরম্যাটার ও ভ্যালিডেটর</strong> অবিন্যস্ত বা কম্প্রেসড JSON কোডকে সুন্দর এবং পাঠযোগ্য আকারে সাজায় এবং RFC 8259 স্ট্যান্ডার্ড অনুযায়ী সিনট্যাক্স সঠিক আছে কি না তা যাচাই করে।</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>ধাপে ধাপে ব্যবহারের নির্দেশিকা</h2>
+        <ol class="doc-steps">
+          <li>এডিটরে আপনার কাঁচা JSON কোড পেস্ট করুন।</li>
+          <li>ইন্ডেন্ট সাইজ নির্ধারণ করুন (২ স্পেস, ৪ স্পেস, অথবা ট্যাব)।</li>
+          <li>"ফরম্যাট করুন" বাটনে ক্লিক করে সুন্দরভাবে সাজান, অথবা "যাচাই করুন" দিয়ে ভুল আছে কি না দেখুন।</li>
+          <li>বৈধ হলে "কপি করুন" বা "ডাউনলোড" বাটনে ক্লিক করুন।</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>ব্যবহারিক প্রয়োগক্ষেত্র</h2>
+        <ul>
+          <li><strong>ওয়েব API ডিবাগিং:</strong> ওয়েব সার্ভার বা মোবাইল অ্যাপের API রেসপন্স দ্রুত পড়ে বোঝার জন্য ফরম্যাট করা।</li>
+          <li><strong>কনফিগারেশন ফাইল সম্পাদনা:</strong> package.json বা সেটিংস ফাইলের কাঠামোগত ত্রুটি বা মিসিং কমা শনাক্ত করা।</li>
+          <li><strong>ডেটা মিনিফাই করা:</strong> নেটওয়ার্ক ডেটা কমাতে অপ্রয়োজনীয় স্পেস ও লাইন ব্রেক বাদ দেওয়া।</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>বাস্তবসম্মত উদাহরণ ও ফলাফল</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">ইনপুট উদাহরণ</div>
+              <pre class="example-pre" dir="ltr">{"id":101,"user":"Alice","active":true}</pre>
+            </div>
+            <div>
+              <div class="example-title">প্রত্যাশিত ফলাফল</div>
+              <pre class="example-pre" dir="ltr">{
+  "id": 101,
+  "user": "Alice",
+  "active": true
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>প্রযুক্তিগত বৈশিষ্ট্য ও কাজের পদ্ধতি</h2>
+        <p>ব্রাউজারের বিল্ট-ইন <code>JSON.parse()</code> এবং <code>JSON.stringify()</code> ইঞ্জিন ব্যবহার করে। ত্রুটি হলে ঠিক কোন লাইনে ও ক্যারেক্টারে ভুল রয়েছে তা প্রদর্শন করে।</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>সীমাবদ্ধতা ও ব্রাউজার সীমা</h2>
+        <p>কঠোর RFC 8259 নিয়ম প্রযোজ্য; সিঙ্গেল কোটেশন বা কমেন্ট যুক্ত থাকলে তা অবৈধ হিসেবে চিহ্নিত হবে।</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>গোপনীয়তা ও নিরাপত্তার নিশ্চয়তা</h2>
+        <p>কোনো ডেটা সার্ভারে যায় না। আপনার গোপনীয় API টোকেন বা গ্রাহক ডেটা আপনার ব্রাউজারেই নিরাপদ থাকে।</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>সাধারণ জিজ্ঞাস্য (FAQs)</h2>
+        
+        <div class="faq-item">
+          <h3>JSON-এ কমেন্ট ব্যবহার করা যায় কি?</h3>
+          <p>আদর্শ JSON স্ট্যান্ডার্ডে কমেন্ট সমর্থিত নয়। কমেন্ট থাকলে ফরম্যাট করার আগে তা সরিয়ে নিতে হবে।</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>কেন সিঙ্গেল কোটেশনের কারণে ত্রুটি দেখায়?</h3>
+          <p>JSON স্পেসিফিকেশন অনুযায়ী সমস্ত কি (keys) এবং স্ট্রিং ডাবল কোটেশন (") দিয়ে আবদ্ধ হতে হবে।</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>সম্পর্কিত ব্রাউজার টুলস</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/bn/tools/word-counter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>ওয়ার্ড ও ক্যারেক্টার কাউন্টার</span>
+          </a>
+
+          <a href="/bn/tools/case-converter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>টেক্সট কেস কনভার্টার</span>
+          </a>
+
+          <a href="/bn/tools/percentage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>শতকরা ও ডিসকাউন্ট ক্যালকুলেটর</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 ফ্রি অনলাইন টুলস. Client-side browser utilities.</p>
+      <a href="/bn/index.html">হোমে ফিরে যান</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const input = document.getElementById('json-input');
+      const feedback = document.getElementById('json-feedback');
+      const indentSelect = document.getElementById('indent-size');
+      const statLen = document.getElementById('stat-len');
+      const statBytes = document.getElementById('stat-bytes');
+
+      const btnFormat = document.getElementById('btn-format');
+      const btnMinify = document.getElementById('btn-minify');
+      const btnযাচাই করুন (Validate) = document.getElementById('btn-validate');
+      const btnSample = document.getElementById('btn-sample');
+      const btnDownload = document.getElementById('btn-download');
+      const btnমুছে ফেলুন = document.getElementById('btn-clear');
+      const btnCopy = document.getElementById('btn-copy');
+
+      function showFeedback(type, message) {
+        feedback.className = `alert alert-${type}`;
+        feedback.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+            ${type === 'success' 
+              ? '<polyline points="20 6 9 17 4 12"/>' 
+              : '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'}
+          </svg>
+          <div>${window.FreeOnlineTools.escapeHtml(message)}</div>
+        `;
+        feedback.style.display = 'flex';
+      }
+
+      function hideFeedback() {
+        feedback.style.display = 'none';
+      }
+
+      function updateStats() {
+        const text = input.value;
+        statLen.textContent = text.length.toLocaleString();
+        statBytes.textContent = new TextEncoder().encode(text).length.toLocaleString();
+      }
+
+      input.addEventListener('input', updateStats);
+
+      btnFormat.addEventListener('click', () => {
+        hideFeedback();
+        const text = input.value.trim();
+        if (!text) return;
+        try {
+          const parsed = JSON.parse(text);
+          const indentVal = indentSelect.value === 'tab' ? '\t' : parseInt(indentSelect.value, 10);
+          input.value = JSON.stringify(parsed, null, indentVal);
+          showFeedback('success', 'Valid JSON formatted successfully.');
+          updateStats();
+        } catch (err) {
+          showFeedback('danger', 'JSON Syntax Error: ' + err.message);
+        }
+      });
+
+      btnMinify.addEventListener('click', () => {
+        hideFeedback();
+        const text = input.value.trim();
+        if (!text) return;
+        try {
+          const parsed = JSON.parse(text);
+          input.value = JSON.stringify(parsed);
+          showFeedback('success', 'JSON minified successfully.');
+          updateStats();
+        } catch (err) {
+          showFeedback('danger', 'JSON Syntax Error: ' + err.message);
+        }
+      });
+
+      btnযাচাই করুন (Validate).addEventListener('click', () => {
+        hideFeedback();
+        const text = input.value.trim();
+        if (!text) {
+          showFeedback('danger', 'Please enter some JSON to validate.');
+          return;
+        }
+        try {
+          JSON.parse(text);
+          showFeedback('success', 'Valid JSON! No syntax errors detected.');
+        } catch (err) {
+          showFeedback('danger', 'Invalid JSON: ' + err.message);
+        }
+      });
+
+      btnSample.addEventListener('click', () => {
+        hideFeedback();
+        const sampleObj = {
+          website: "Free Online Tools",
+          version: "1.0.0",
+          privacy: "100% Client-Side",
+          supportedLanguages: ["en", "bn", "hi", "es", "fr", "ar"],
+          capabilities: {
+            textTools: 40,
+            developerTools: 40,
+            calculators: 40
+          },
+          isActive: true
+        };
+        input.value = JSON.stringify(sampleObj, null, 2);
+        showFeedback('success', 'Sample JSON loaded.');
+        updateStats();
+      });
+
+      btnDownload.addEventListener('click', () => {
+        const text = input.value;
+        if (!text) {
+          window.FreeOnlineTools.showToast('No JSON to download.');
+          return;
+        }
+        const blob = new Blob([text], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        window.FreeOnlineTools.showToast('Downloaded data.json');
+      });
+
+      btnমুছে ফেলুন.addEventListener('click', () => {
+        hideFeedback();
+        input.value = '';
+        updateStats();
+        input.focus();
+      });
+
+      btnCopy.addEventListener('click', () => {
+        window.FreeOnlineTools.copyToClipboard(input.value, 'JSON copied to clipboard!');
+      });
+
+      updateStats();
+    })();
+  </script>
+</body>
+</html>

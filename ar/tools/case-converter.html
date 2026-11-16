@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محول حالة الأحرف للنصوص — أدوات مجانية عبر الإنترنت</title>
+  <meta name="description" content="حول نصوص اللغات اللاتينية وأسماء المتغيرات البرمجية إلى أحرف كبيرة أو صغيرة أو حالة العنوان أو camelCase أو snake_case بنقرة واحدة.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/ar/tools/case-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/case-converter.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/case-converter.html">
+  <link rel="alternate" hreflang="bn" href="https://nexivo.com/bn/tools/case-converter.html">
+  <link rel="alternate" hreflang="hi" href="https://nexivo.com/hi/tools/case-converter.html">
+  <link rel="alternate" hreflang="es" href="https://nexivo.com/es/tools/case-converter.html">
+  <link rel="alternate" hreflang="fr" href="https://nexivo.com/fr/tools/case-converter.html">
+  <link rel="alternate" hreflang="ar" href="https://nexivo.com/ar/tools/case-converter.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "محول حالة الأحرف للنصوص",
+    "description": "حول نصوص اللغات اللاتينية وأسماء المتغيرات البرمجية إلى أحرف كبيرة أو صغيرة أو حالة العنوان أو camelCase أو snake_case بنقرة واحدة.",
+    "url": "https://nexivo.com/ar/tools/case-converter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/ar/index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>أدوات مجانية عبر الإنترنت</span>
+      </a>
+      <div class="header-actions">
+        <!-- Language Selector -->
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en">English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar" selected>العربية (Arabic)</option>
+        </select>
+        <a href="/ar/index.html" class="btn btn-secondary">جميع الأدوات</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="تبديل المظهر">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/ar/index.html">الرئيسية</a></li>
+      <li>/</li>
+      <li><a href="/ar/index.html">أدوات النصوص</a></li>
+      <li>/</li>
+      <li aria-current="page">محول حالة الأحرف للنصوص</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>محول حالة الأحرف للنصوص</span>
+      </h1>
+      <p class="tool-header-lead">
+        حول نصوص اللغات اللاتينية وأسماء المتغيرات البرمجية إلى أحرف كبيرة أو صغيرة أو حالة العنوان أو camelCase أو snake_case بنقرة واحدة.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">المستوى 1: مدمج بالمتصفح</span>
+        <span class="tool-badge">خصوصية تامة 100%</span>
+        <span class="tool-badge">تنفيذ فوري محلي</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel">
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="case-input" class="form-label" style="margin-bottom: 0;">Enter or paste your text:</label>
+          <div style="display: flex; gap: var(--space-2);">
+            <button type="button" class="btn btn-secondary" id="btn-sample">Sample</button>
+            <button type="button" class="btn btn-secondary" id="btn-clear">مسح</button>
+          </div>
+        </div>
+        <textarea id="case-input" class="form-textarea" placeholder="Paste your text or code variables here..."></textarea>
+      </div>
+
+      <!-- Conversion Action Buttons -->
+      <label class="form-label">Choose Target Transformation:</label>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block-end: var(--space-6);">
+        <button type="button" class="btn btn-primary" data-case="upper">UPPERCASE</button>
+        <button type="button" class="btn btn-primary" data-case="lower">lowercase</button>
+        <button type="button" class="btn btn-primary" data-case="title">Title Case</button>
+        <button type="button" class="btn btn-primary" data-case="sentence">Sentence case</button>
+        <button type="button" class="btn btn-secondary" data-case="camel">camelCase</button>
+        <button type="button" class="btn btn-secondary" data-case="snake">snake_case</button>
+        <button type="button" class="btn btn-secondary" data-case="kebab">kebab-case</button>
+        <button type="button" class="btn btn-secondary" data-case="alternating">aLtErNaTiNg</button>
+      </div>
+
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="case-output" class="form-label" style="margin-bottom: 0;">Converted Output:</label>
+          <button type="button" class="btn btn-secondary" id="btn-copy-output">Copy Output</button>
+        </div>
+        <textarea id="case-output" class="form-textarea" readonly placeholder="Transformed output will appear here..."></textarea>
+      </div>
+    </div>
+
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>ماذا تفعل هذه الأداة والمشكلة التي تحلها</h2>
+        <p>يقوم <strong>محول حالة الأحرف للنصوص</strong> بتغيير حالة الأحرف للأبجديات اللاتينية والإنجليزية وصيغ المعرفات البرمجية دون الحاجة لإعادة كتابتها يدوياً.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>إرشادات الاستخدام خطوة بخطوة</h2>
+        <ol class="doc-steps">
+          <li>الصق النص في حقل الإدخال.</li>
+          <li>انقر على زر التنسيق المطلوب (مثل: UPPERCASE أو Title Case أو camelCase).</li>
+          <li>ستظهر النتيجة فوراً على الشاشة.</li>
+          <li>انقر على "نسخ النتيجة" لحفظها في الحافظة.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>حالات الاستخدام العملية الشائعة</h2>
+        <ul>
+          <li><strong>إعادة صياغة المتغيرات البرمجية:</strong> تحويل العبارات العادية إلى صيغ camelCase أو snake_case لاستخدامها في الشيفرات البرمجية.</li>
+          <li><strong>عناوين المقالات والمدونات:</strong> تنسيق العناوين الإنجليزية وفق صيغة Title Case الرسمية.</li>
+          <li><strong>تصحيح مفتاح Caps Lock:</strong> تصحيح النصوص المكتوبة بالخطأ بحالة الأحرف الكبيرة وتحويلها إلى جمل عادية.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>مثال واقعي والنتيجة المتوقعة</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">مثال الإدخال</div>
+              <pre class="example-pre" dir="ltr">client side utilities</pre>
+            </div>
+            <div>
+              <div class="example-title">النتيجة المتوقعة</div>
+              <pre class="example-pre" dir="ltr">Title Case: "Client Side Utilities"
+kebab-case: "client-side-utilities"</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>المواصفات التقنية وآلية العمل</h2>
+        <p>يعتمد على دوال تحويل السلاسل النصية المحلية في جافاسكريبت (<code>toLocaleLowerCase()</code> و <code>toLocaleUpperCase()</code>) مع تقسيم الكلمات بالتعابير النمطية.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>القيود وحدود المتصفح</h2>
+        <p>تغيير حالة الأحرف الكبيرة والصغيرة يختص بالأبجديات اللاتينية؛ النصوص العربية التي لا تحتوي حروفاً كبيرة/صغيرة تبقى حروفها كما هي.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>ضمان الخصوصية والأمان</h2>
+        <p>يعمل بنسبة 100% على جانب العميل دون مشاركة أي بيانات عبر الشبكة.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>الأسئلة الشائعة (FAQs)</h2>
+        
+        <div class="faq-item">
+          <h3>ما الفرق بين camelCase و kebab-case؟</h3>
+          <p>تبدأ صيغة camelCase بحرف صغير وتتصل الكلمات بحرف كبير لاحق، بينما تفصل صيغة kebab-case الكلمات بواصلة (-).</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>أدوات متصفح ذات صلة</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/ar/tools/word-counter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>عداد الكلمات والأحرف</span>
+          </a>
+
+          <a href="/ar/tools/percentage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>حاسبة النسبة المئوية والخصم</span>
+          </a>
+
+          <a href="/ar/tools/pdf-merger.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>دمج ملفات PDF (PDF Merger)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 أدوات مجانية عبر الإنترنت. Client-side browser utilities.</p>
+      <a href="/ar/index.html">العودة للرئيسية</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const input = document.getElementById('case-input');
+      const output = document.getElementById('case-output');
+      const btnSample = document.getElementById('btn-sample');
+      const btnمسح = document.getElementById('btn-clear');
+      const btnCopy = document.getElementById('btn-copy-output');
+
+      const stopWords = new Set(['a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'at', 'to', 'from', 'by', 'in', 'of']);
+
+      function toTitleCase(str) {
+        return str.replace(/\w\S*/g, (txt, offset) => {
+          const lower = txt.toLowerCase();
+          if (offset > 0 && stopWords.has(lower)) {
+            return lower;
+          }
+          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+      }
+
+      function toSentenceCase(str) {
+        return str.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g, c => c.toUpperCase());
+      }
+
+      function cleanWords(str) {
+        return str.replace(/[^a-zA-Z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
+      }
+
+      function toCamelCase(str) {
+        const words = cleanWords(str);
+        if (!words.length) return '';
+        return words[0].toLowerCase() + words.slice(1).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
+      }
+
+      function toSnakeCase(str) {
+        return cleanWords(str).map(w => w.toLowerCase()).join('_');
+      }
+
+      function toKebabCase(str) {
+        return cleanWords(str).map(w => w.toLowerCase()).join('-');
+      }
+
+      function toAlternatingCase(str) {
+        let toggle = true;
+        return str.split('').map(ch => {
+          if (/[a-zA-Z]/.test(ch)) {
+            const res = toggle ? ch.toLowerCase() : ch.toUpperCase();
+            toggle = !toggle;
+            return res;
+          }
+          return ch;
+        }).join('');
+      }
+
+      function convertCase(type) {
+        const val = input.value;
+        if (!val) {
+          output.value = '';
+          return;
+        }
+
+        switch (type) {
+          case 'upper':
+            output.value = val.toUpperCase();
+            break;
+          case 'lower':
+            output.value = val.toLowerCase();
+            break;
+          case 'title':
+            output.value = toTitleCase(val);
+            break;
+          case 'sentence':
+            output.value = toSentenceCase(val);
+            break;
+          case 'camel':
+            output.value = toCamelCase(val);
+            break;
+          case 'snake':
+            output.value = toSnakeCase(val);
+            break;
+          case 'kebab':
+            output.value = toKebabCase(val);
+            break;
+          case 'alternating':
+            output.value = toAlternatingCase(val);
+            break;
+        }
+      }
+
+      document.querySelectorAll('[data-case]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          convertCase(btn.getAttribute('data-case'));
+        });
+      });
+
+      btnSample.addEventListener('click', () => {
+        input.value = "modern web utilities build fast, responsive client-side web tools. THIS IS A SAMPLE DEMONSTRATION!";
+        convertCase('title');
+      });
+
+      btnمسح.addEventListener('click', () => {
+        input.value = '';
+        output.value = '';
+        input.focus();
+      });
+
+      btnCopy.addEventListener('click', () => {
+        window.FreeOnlineTools.copyToClipboard(output.value, 'Converted text copied!');
+      });
+    })();
+  </script>
+</body>
+</html>

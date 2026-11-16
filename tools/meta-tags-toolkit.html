@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta Tags Toolkit &amp; HTML Generator — Free Online Tools</title>
+  <meta name="description" content="Generate, validate, and optimize HTML meta tags, Open Graph tags, and Twitter Cards for peak SEO ranking and social sharing. 100% free and client-side.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/meta-tags-toolkit.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/meta-tags-toolkit.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/meta-tags-toolkit.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Meta Tags Toolkit & HTML Generator",
+    "description": "Generate, validate, and optimize HTML meta tags, Open Graph tags, and Twitter Cards for peak SEO ranking and social sharing. 100% free and client-side.",
+    "url": "https://nexivo.com/tools/meta-tags-toolkit.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#website">Website &amp; SEO Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">Meta Tags Toolkit</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Meta Tags Toolkit &amp; Generator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Build high-performance, validated HTML meta tags, Open Graph protocols, and Twitter Card headers to maximize click-through rates and search ranking.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Open Graph &amp; Twitter Cards</span>
+        <span class="tool-badge">Character Limit Validation</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample Website</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Clear Form</button>
+          <button type="button" class="btn btn-secondary" id="btn-copy">Copy HTML Code</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Generates code in real-time
+        </div>
+      </div>
+
+      <!-- Main Form & Code Output Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-5);">
+        <!-- Input Form -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+          <div class="form-group" style="margin-block-end: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-1);">
+              <label for="meta-title" class="form-label" style="font-weight: var(--font-weight-semibold); margin-block-end: 0;">Page Title:</label>
+              <span id="title-counter" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">0 / 60 chars</span>
+            </div>
+            <input type="text" id="meta-title" class="form-input" placeholder="e.g. Free Online PDF Tools — Fast & Secure">
+            <div id="title-hint" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: 2px;">Target 50–60 characters for optimal Google SERP display.</div>
+          </div>
+
+          <div class="form-group" style="margin-block-end: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-1);">
+              <label for="meta-desc" class="form-label" style="font-weight: var(--font-weight-semibold); margin-block-end: 0;">Meta Description:</label>
+              <span id="desc-counter" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">0 / 160 chars</span>
+            </div>
+            <textarea id="meta-desc" class="form-textarea" rows="3" placeholder="e.g. Merge, split, rotate, and compress PDF documents right in your browser. No registration, 100% private."></textarea>
+            <div id="desc-hint" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: 2px;">Target 150–160 characters to avoid snippet truncation.</div>
+          </div>
+
+          <div class="form-group" style="margin-block-end: 0;">
+            <label for="canonical-url" class="form-label" style="font-weight: var(--font-weight-semibold);">Canonical Page URL:</label>
+            <input type="url" id="canonical-url" class="form-input" placeholder="https://example.com/tools/pdf-merger">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group" style="margin-block-end: 0;">
+              <label for="site-name" class="form-label" style="font-weight: var(--font-weight-semibold);">Site Name:</label>
+              <input type="text" id="site-name" class="form-input" placeholder="Free Online Tools">
+            </div>
+            <div class="form-group" style="margin-block-end: 0;">
+              <label for="og-type" class="form-label" style="font-weight: var(--font-weight-semibold);">Content Type:</label>
+              <select id="og-type" class="form-select">
+                <option value="website" selected>website</option>
+                <option value="article">article</option>
+                <option value="product">product</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-block-end: 0;">
+            <label for="og-image" class="form-label" style="font-weight: var(--font-weight-semibold);">Social Preview Image URL:</label>
+            <input type="url" id="og-image" class="form-input" placeholder="https://example.com/assets/images/og-banner.jpg">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: 2px;">Recommended: 1200 &times; 630 pixels (JPG or PNG).</div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group" style="margin-block-end: 0;">
+              <label for="twitter-card" class="form-label" style="font-weight: var(--font-weight-semibold);">Twitter Card Type:</label>
+              <select id="twitter-card" class="form-select">
+                <option value="summary_large_image" selected>summary_large_image</option>
+                <option value="summary">summary</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-block-end: 0;">
+              <label for="twitter-handle" class="form-label" style="font-weight: var(--font-weight-semibold);">Twitter @Handle:</label>
+              <input type="text" id="twitter-handle" class="form-input" placeholder="@FreeToolsOnline">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group" style="margin-block-end: 0;">
+              <label for="robots-index" class="form-label" style="font-weight: var(--font-weight-semibold);">Search Indexing:</label>
+              <select id="robots-index" class="form-select">
+                <option value="index, follow" selected>index, follow (Standard)</option>
+                <option value="noindex, follow">noindex, follow</option>
+                <option value="noindex, nofollow">noindex, nofollow (Private)</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-block-end: 0;">
+              <label for="author-name" class="form-label" style="font-weight: var(--font-weight-semibold);">Author / Publisher:</label>
+              <input type="text" id="author-name" class="form-input" placeholder="Webmaster / Team">
+            </div>
+          </div>
+        </div>
+
+        <!-- Generated Code Preview -->
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+            <label for="output-code" class="form-label" style="font-weight: var(--font-weight-semibold); margin-block-end: 0;">Generated HTML &lt;head&gt; Code:</label>
+            <span style="font-size: var(--font-size-xs); color: var(--color-success); font-weight: var(--font-weight-semibold);">Ready to Paste</span>
+          </div>
+          <textarea id="output-code" class="form-textarea" rows="20" readonly style="font-family: var(--font-family-mono); font-size: var(--font-size-xs); line-height: 1.5; background: var(--color-bg-subtle); flex-grow: 1;"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Meta Tags Toolkit Do?</h2>
+        <p>
+          The <strong>Meta Tags Toolkit &amp; HTML Generator</strong> constructs clean, search-engine-ready HTML headers for modern websites. It bridges the gap between traditional search crawler directives (Googlebot, Bingbot) and social graph crawlers (Facebook, X/Twitter, LinkedIn, Discord, and Slack) by generating validated <code>&lt;meta&gt;</code> tags, canonical links, and Open Graph protocol tags.
+        </p>
+        <p>
+          With interactive character length counters and best-practice alerts, it helps webmasters avoid common SEO penalties like truncated search snippets, missing social share images, or accidental <code>noindex</code> directives.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Enter Page Metadata:</strong> Fill in your page title and meta description. The real-time counters guide you to ideal lengths (50–60 characters for titles, 150–160 characters for descriptions).</li>
+          <li><strong>Add Canonical &amp; Social Properties:</strong> Provide your absolute canonical URL, website brand name, and the URL to a 1200 &times; 630 px Open Graph banner image.</li>
+          <li><strong>Configure Robots &amp; Twitter:</strong> Set crawl directives (such as <code>index, follow</code>) and configure Twitter summary card formats and author handles.</li>
+          <li><strong>Copy and Paste:</strong> Click <strong>Copy HTML Code</strong> and paste the generated block directly into the <code>&lt;head&gt;</code> section of your HTML template or CMS.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>New Website &amp; Landing Page Launches</h3>
+            <p>Generate comprehensive metadata boilerplate quickly for fresh static pages, blogs, and SaaS landing pages.</p>
+          </div>
+          <div class="card">
+            <h3>Social Media Share Optimization</h3>
+            <p>Ensure Facebook, LinkedIn, and Discord show crisp card images and compelling headlines when users share your links.</p>
+          </div>
+          <div class="card">
+            <h3>Duplicate Content Prevention</h3>
+            <p>Specify canonical URL tags to prevent search engines from penalizing parameterized or paginated URLs.</p>
+          </div>
+          <div class="card">
+            <h3>Robots Directives Management</h3>
+            <p>Generate accurate <code>noindex</code> tags for staging environments, private dashboards, or utility pages.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Generated Meta Tags Block:</div>
+          <pre class="example-pre">&lt;!-- Primary Meta Tags --&gt;
+&lt;title&gt;Free Online Tools — 100% Client-Side Web Utilities&lt;/title&gt;
+&lt;meta name="title" content="Free Online Tools — 100% Client-Side Web Utilities"&gt;
+&lt;meta name="description" content="Fast, private, and unlimited online tools for developers, designers, and creators. No downloads or cloud uploads required."&gt;
+&lt;link rel="canonical" href="https://example.com/"&gt;
+
+&lt;!-- Open Graph / Facebook --&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:url" content="https://example.com/"&gt;
+&lt;meta property="og:title" content="Free Online Tools — 100% Client-Side Web Utilities"&gt;
+&lt;meta property="og:description" content="Fast, private, and unlimited online tools for developers, designers, and creators."&gt;
+&lt;meta property="og:image" content="https://example.com/assets/og-cover.png"&gt;
+
+&lt;!-- Twitter --&gt;
+&lt;meta property="twitter:card" content="summary_large_image"&gt;
+&lt;meta property="twitter:title" content="Free Online Tools"&gt;</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Standards Compliance:</strong> Generates W3C HTML5 compliant markup and Open Graph Protocol (OGP) version 2.0 specifications.</li>
+          <li><strong>Character Optimization:</strong> Alerts when titles exceed 60 characters or descriptions exceed 160 characters based on desktop SERP pixel constraints.</li>
+          <li><strong>Security:</strong> All user input is escaped automatically, preventing HTML injection into the generated preview.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Meta tags provide recommendations and structured hints to search engines and social networks; however, Google and Bing reserve the right to dynamically rewrite page titles or replace meta descriptions with relevant on-page excerpts if they determine another snippet better matches the user's specific query.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All meta tag generation and character validation happen completely inside your browser using client-side JavaScript. None of your unpublished URLs, titles, or marketing drafts are sent to an external server.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">What is the optimal size for an Open Graph image?</summary>
+            <div class="faq-answer">
+              <p>The recommended dimensions for <code>og:image</code> are <strong>1200 &times; 630 pixels</strong> (a 1.91:1 aspect ratio). Images should be under 5 MB in JPG, PNG, or WebP format for reliable rendering across Facebook, Twitter, and LinkedIn.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Why is the Canonical tag important?</summary>
+            <div class="faq-answer">
+              <p>The <code>&lt;link rel="canonical"&gt;</code> tag tells search engines which URL represents the master version of a page. This prevents duplicate content penalties if your page can be reached via HTTP, HTTPS, tracking query strings (<code>?utm_source=...</code>), or trailing slashes.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Where should I paste these tags?</summary>
+            <div class="faq-answer">
+              <p>Paste the entire generated snippet between the opening <code>&lt;head&gt;</code> and closing <code>&lt;/head&gt;</code> tags of your HTML document.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/serp-preview-tool.html" class="related-tool-chip">
+            <div class="related-tool-title">SERP Preview Tool</div>
+            <div class="related-tool-desc">Simulate Google search results with pixel width limits and snippet testing.</div>
+          </a>
+          <a href="/tools/open-graph-previewer.html" class="related-tool-chip">
+            <div class="related-tool-title">Open Graph Previewer</div>
+            <div class="related-tool-desc">Preview social media sharing cards for Facebook, Twitter, and LinkedIn.</div>
+          </a>
+          <a href="/tools/user-agent-parser.html" class="related-tool-chip">
+            <div class="related-tool-title">User-Agent Parser</div>
+            <div class="related-tool-desc">Decode browser and bot User-Agent strings into structured device specs.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const metaTitle = document.getElementById('meta-title');
+    const metaDesc = document.getElementById('meta-desc');
+    const canonicalUrl = document.getElementById('canonical-url');
+    const siteName = document.getElementById('site-name');
+    const ogType = document.getElementById('og-type');
+    const ogImage = document.getElementById('og-image');
+    const twitterCard = document.getElementById('twitter-card');
+    const twitterHandle = document.getElementById('twitter-handle');
+    const robotsIndex = document.getElementById('robots-index');
+    const authorName = document.getElementById('author-name');
+    const outputCode = document.getElementById('output-code');
+
+    const titleCounter = document.getElementById('title-counter');
+    const descCounter = document.getElementById('desc-counter');
+    const titleHint = document.getElementById('title-hint');
+    const descHint = document.getElementById('desc-hint');
+
+    const btnSample = document.getElementById('btn-sample');
+    const btnClear = document.getElementById('btn-clear');
+    const btnCopy = document.getElementById('btn-copy');
+
+    function escapeHtml(str) {
+      return (str || '').replace(/"/g, '&quot;');
+    }
+
+    function generate() {
+      const title = metaTitle.value.trim();
+      const desc = metaDesc.value.trim();
+      const url = canonicalUrl.value.trim();
+      const site = siteName.value.trim();
+      const type = ogType.value;
+      const img = ogImage.value.trim();
+      const twCard = twitterCard.value;
+      const handle = twitterHandle.value.trim();
+      const robots = robotsIndex.value;
+      const author = authorName.value.trim();
+
+      // Title length check
+      const tLen = title.length;
+      titleCounter.textContent = `${tLen} / 60 chars`;
+      if (tLen > 60) {
+        titleCounter.style.color = 'var(--color-danger)';
+        titleHint.textContent = `Warning: Title exceeds 60 characters (${tLen}) and may be truncated on Google desktop SERP.`;
+      } else if (tLen > 0 && tLen < 30) {
+        titleCounter.style.color = 'var(--color-warning)';
+        titleHint.textContent = 'Notice: Title is relatively short. Consider adding key brand or value phrases.';
+      } else {
+        titleCounter.style.color = 'var(--color-text-muted)';
+        titleHint.textContent = 'Target 50–60 characters for optimal Google SERP display.';
+      }
+
+      // Description length check
+      const dLen = desc.length;
+      descCounter.textContent = `${dLen} / 160 chars`;
+      if (dLen > 160) {
+        descCounter.style.color = 'var(--color-danger)';
+        descHint.textContent = `Warning: Description exceeds 160 characters (${dLen}) and may be truncated by search engines.`;
+      } else if (dLen > 0 && dLen < 70) {
+        descCounter.style.color = 'var(--color-warning)';
+        descHint.textContent = 'Notice: Description is short. Elaborate to improve click-through rates.';
+      } else {
+        descCounter.style.color = 'var(--color-text-muted)';
+        descHint.textContent = 'Target 150–160 characters to avoid snippet truncation.';
+      }
+
+      let tags = `<!-- Primary Meta Tags -->\n`;
+      tags += `<title>${escapeHtml(title || 'Your Page Title')}</title>\n`;
+      tags += `<meta name="title" content="${escapeHtml(title || 'Your Page Title')}">\n`;
+      if (desc) tags += `<meta name="description" content="${escapeHtml(desc)}">\n`;
+      if (author) tags += `<meta name="author" content="${escapeHtml(author)}">\n`;
+      tags += `<meta name="robots" content="${escapeHtml(robots)}">\n`;
+      if (url) tags += `<link rel="canonical" href="${escapeHtml(url)}">\n`;
+
+      tags += `\n<!-- Open Graph / Facebook -->\n`;
+      tags += `<meta property="og:type" content="${escapeHtml(type)}">\n`;
+      if (url) tags += `<meta property="og:url" content="${escapeHtml(url)}">\n`;
+      tags += `<meta property="og:title" content="${escapeHtml(title || 'Your Page Title')}">\n`;
+      if (desc) tags += `<meta property="og:description" content="${escapeHtml(desc)}">\n`;
+      if (img) tags += `<meta property="og:image" content="${escapeHtml(img)}">\n`;
+      if (site) tags += `<meta property="og:site_name" content="${escapeHtml(site)}">\n`;
+
+      tags += `\n<!-- Twitter Cards -->\n`;
+      tags += `<meta property="twitter:card" content="${escapeHtml(twCard)}">\n`;
+      if (url) tags += `<meta property="twitter:url" content="${escapeHtml(url)}">\n`;
+      tags += `<meta property="twitter:title" content="${escapeHtml(title || 'Your Page Title')}">\n`;
+      if (desc) tags += `<meta property="twitter:description" content="${escapeHtml(desc)}">\n`;
+      if (img) tags += `<meta property="twitter:image" content="${escapeHtml(img)}">\n`;
+      if (handle) tags += `<meta property="twitter:site" content="${escapeHtml(handle)}">\n`;
+
+      outputCode.value = tags;
+    }
+
+    [metaTitle, metaDesc, canonicalUrl, siteName, ogType, ogImage, twitterCard, twitterHandle, robotsIndex, authorName].forEach(el => {
+      el.addEventListener('input', generate);
+      el.addEventListener('change', generate);
+    });
+
+    btnSample.addEventListener('click', () => {
+      metaTitle.value = 'Free Online Tools — Fast, Private Web Utilities';
+      metaDesc.value = 'Universal suite of browser-based tools for developers, designers, and professionals. 100% private client-side processing with zero cloud uploads.';
+      canonicalUrl.value = 'https://example.com/tools';
+      siteName.value = 'Free Online Tools';
+      ogType.value = 'website';
+      ogImage.value = 'https://example.com/assets/images/og-banner.jpg';
+      twitterCard.value = 'summary_large_image';
+      twitterHandle.value = '@FreeToolsHQ';
+      robotsIndex.value = 'index, follow';
+      authorName.value = 'Free Online Tools Team';
+      generate();
+    });
+
+    btnClear.addEventListener('click', () => {
+      metaTitle.value = '';
+      metaDesc.value = '';
+      canonicalUrl.value = '';
+      siteName.value = '';
+      ogImage.value = '';
+      twitterHandle.value = '';
+      authorName.value = '';
+      generate();
+      metaTitle.focus();
+    });
+
+    btnCopy.addEventListener('click', () => {
+      if (outputCode.value) {
+        window.FreeOnlineTools.copyToClipboard(outputCode.value, 'Meta tags HTML copied to clipboard!');
+      }
+    });
+
+    // Populate with sample on initial load
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

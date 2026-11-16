@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross-Border Freelance &amp; Creator Fee Reverse Calculator — Guaranteed Net Payout</title>
+  <meta name="description" content="Calculate exact client invoices to guarantee your target take-home payout across PayPal, Stripe, Wise, Payoneer, and Gumroad. Reverse-engineers hidden FX spreads, platform fees, and GST/VAT client-side.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/freelance-fee-reverse-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/freelance-fee-reverse-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/freelance-fee-reverse-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Cross-Border Freelance & Creator Fee Reverse Calculator",
+    "description": "Calculate exact client invoice amounts to guarantee your target net take-home pay. Reverse-engineers payment processing fees, hidden foreign exchange spread markups, and GST/VAT on fees across PayPal, Stripe, Wise, Payoneer, and Gumroad.",
+    "url": "https://nexivo.com/tools/freelance-fee-reverse-calculator.html",
+    "applicationCategory": "FinancialApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why does my international client payment always arrive significantly lower than invoiced?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cross-border payouts suffer from a 'double deduction': first, the payment processor charges commercial merchant and international card fees (ranging from 2.9% to 4.4% + fixed fee). Second, when converting funds into your local bank currency, platforms apply a hidden FX conversion markup (typically 2.0% to 3.75% below the real mid-market exchange rate), plus any local taxes like GST/VAT on processing fees."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the mathematical reverse fee formula work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because processors deduct percentage fees from the gross invoice rather than the net payout, a simple markup leaves you short. The exact reverse formula is: Required Invoice = (Net Target Before FX + Fixed Fee * (1 + Tax)) / (1 - Total Fee % * (1 + Tax)). Where hidden FX spread exists, the net target before FX is: Target Client Currency / (1 - FX Spread %)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a hidden FX markup spread, and which platform is cheapest?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The FX markup spread is the difference between Google's interbank mid-market exchange rate and the rate your payment provider actually gives you. PayPal charges ~3.75-4.0% hidden markup, Payoneer ~2.0-2.5%, and Stripe ~2.0%. Wise uses the transparent real mid-market rate with an upfront fee of only ~0.45-0.55%, making it typically 3-4x cheaper for global freelancers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I add processing fees to my client's invoice or bake them into my rate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most international enterprise clients prefer all-inclusive professional invoices without surprise line-item fee surcharges. Use this reverse fee calculator during your contract negotiation to quote an all-inclusive rate that ensures you receive 100% of your desired net compensation."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Mode Toggle */
+    .mode-toggle-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+    .segmented-control {
+      display: inline-flex;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 30px;
+      padding: 4px;
+      gap: 4px;
+    }
+    .segmented-btn {
+      padding: 0.5rem 1.25rem;
+      border: none;
+      background: transparent;
+      color: var(--color-text-muted);
+      border-radius: 24px;
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .segmented-btn:hover {
+      color: var(--color-text);
+    }
+    .segmented-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Top Controls Grid */
+    .calc-controls-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .quick-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+    .quick-chip {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .quick-chip:hover, .quick-chip.active {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    /* Platform Presets Row */
+    .platform-presets-section {
+      margin-top: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 1px dashed var(--color-border);
+    }
+    .platform-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+    }
+    .platform-pill {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+    }
+    .platform-pill:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .platform-pill.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+    }
+    .platform-desc-badge {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      margin-top: 0.35rem;
+      font-style: italic;
+    }
+
+    /* Advanced Fee Configuration Drawer */
+    .advanced-settings-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .advanced-settings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .advanced-inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* Result Hero Banner */
+    .result-hero-box {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+      text-align: center;
+      position: relative;
+    }
+    [data-theme="dark"] .result-hero-box {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(16, 185, 129, 0.15) 100%);
+      border-color: #3b82f6;
+    }
+    .hero-eyebrow {
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-primary);
+      margin-bottom: 0.25rem;
+    }
+    .hero-main-val {
+      font-size: 2.75rem;
+      font-weight: 900;
+      font-family: monospace;
+      color: var(--color-text);
+      line-height: 1.1;
+      margin-bottom: 0.35rem;
+    }
+    .hero-sub-val {
+      font-size: var(--font-size-base);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .hero-sub-val strong {
+      color: #10b981;
+    }
+    .hero-badges-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: var(--space-3);
+    }
+    .hero-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .pill-fee { background: rgba(239, 68, 68, 0.12); color: #dc2626; }
+    .pill-payout { background: rgba(16, 185, 129, 0.12); color: #059669; }
+    .pill-fx { background: rgba(245, 158, 11, 0.12); color: #d97706; }
+
+    /* Fee Waterfall Component */
+    .waterfall-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .waterfall-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: var(--space-3);
+    }
+    .waterfall-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0.85rem;
+      border-radius: 6px;
+      font-size: var(--font-size-sm);
+      background: var(--color-bg);
+      border-left: 4px solid var(--color-border);
+    }
+    .waterfall-row.row-gross { border-left-color: var(--color-primary); font-weight: 700; }
+    .waterfall-row.row-fee { border-left-color: #ef4444; }
+    .waterfall-row.row-fx { border-left-color: #f59e0b; }
+    .waterfall-row.row-net { border-left-color: #10b981; background: rgba(16, 185, 129, 0.08); font-weight: 800; }
+    .waterfall-val {
+      font-family: monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .val-negative { color: #dc2626; }
+    .val-positive { color: #059669; }
+
+    /* Visual Proportion Bar */
+    .prop-bar-container {
+      display: flex;
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 0.75rem;
+      background: #e2e8f0;
+    }
+    .prop-bar-net { background: #10b981; }
+    .prop-bar-platform { background: #ef4444; }
+    .prop-bar-fx { background: #f59e0b; }
+
+    /* Comparison Table */
+    .comparison-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      margin-top: var(--space-3);
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--font-size-sm);
+      text-align: left;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--color-border);
+      white-space: nowrap;
+    }
+    .comparison-table th {
+      background: var(--color-bg);
+      font-weight: 700;
+      color: var(--color-text);
+      font-size: var(--font-size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    .comparison-table tr:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    [data-theme="dark"] .comparison-table tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .best-rail-row {
+      background: rgba(16, 185, 129, 0.06) !important;
+      font-weight: 700;
+    }
+    .badge-best-value {
+      background: #10b981;
+      color: #fff;
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 0.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .savings-banner {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid #10b981;
+      border-radius: 6px;
+      padding: 0.65rem 1rem;
+      margin-top: var(--space-3);
+      font-size: var(--font-size-sm);
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Documentation FAQs */
+    .faq-item {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .related-tool-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      font-size: var(--font-size-xs);
+      color: var(--color-text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .related-tool-chip:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content" id="main-content">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <a href="/#calculators">Calculators</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <span class="breadcrumb-current">Freelance Fee Reverse Calculator</span>
+    </nav>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-title-row">
+          <h1 class="tool-title">Cross-Border Freelance &amp; Creator Fee Reverse Calculator</h1>
+          <span class="badge badge-editorial">Calculators &amp; Business</span>
+        </div>
+        <p class="tool-desc">Calculate the exact gross invoice to bill your international clients so you receive 100% of your desired net compensation. Reverse-engineers payment processing fees, hidden FX spread markups, and GST/VAT deductions across PayPal, Stripe, Wise, Payoneer, and Gumroad.</p>
+        <div class="privacy-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>100% Client-Side — Financial figures, currency exchange rates, and fee formulas run entirely in your browser with zero analytics tracking.</span>
+        </div>
+      </div>
+
+      <!-- Mode Toggle: Reverse Mode vs Forward Mode -->
+      <div class="mode-toggle-container">
+        <div class="segmented-control" role="group" aria-label="Calculation Mode">
+          <button type="button" class="segmented-btn active" id="btnModeReverse" data-mode="reverse">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Reverse Mode (I want Net $X &rarr; Invoice $Y)
+          </button>
+          <button type="button" class="segmented-btn" id="btnModeForward" data-mode="forward">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            Forward Mode (I invoice $X &rarr; Take-Home $Y)
+          </button>
+        </div>
+      </div>
+
+      <!-- Top Calculation Controls -->
+      <div class="calc-controls-card">
+        <div class="controls-grid">
+          <!-- 1. Amount Input -->
+          <div class="form-group" style="margin:0;">
+            <label for="amountInput" id="lblAmount" class="form-label" style="font-size:var(--font-size-xs); font-weight:700;">Target Net Take-Home ($ USD):</label>
+            <div style="position:relative;">
+              <span id="amountCurrencySymbol" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); font-weight:700; color:var(--color-text-muted);">$</span>
+              <input type="number" id="amountInput" class="form-input" value="1000" min="1" max="1000000" step="1" style="padding-left:26px; font-weight:700; font-family:monospace;" aria-label="Transaction Amount">
+            </div>
+            <div class="quick-chips-row" aria-label="Quick pick amounts">
+              <button type="button" class="quick-chip" data-val="100">$100</button>
+              <button type="button" class="quick-chip" data-val="500">$500</button>
+              <button type="button" class="quick-chip active" data-val="1000">$1,000</button>
+              <button type="button" class="quick-chip" data-val="2500">$2,500</button>
+              <button type="button" class="quick-chip" data-val="5000">$5,000</button>
+            </div>
+          </div>
+
+          <!-- 2. Client Invoice Currency -->
+          <div class="form-group" style="margin:0;">
+            <label for="invoiceCurrency" class="form-label" style="font-size:var(--font-size-xs); font-weight:700;">Client Invoicing Currency:</label>
+            <select id="invoiceCurrency" class="form-select" style="font-weight:600;">
+              <option value="USD" selected>USD ($) — US Dollar</option>
+              <option value="EUR">EUR (€) — Euro</option>
+              <option value="GBP">GBP (£) — British Pound</option>
+              <option value="AUD">AUD (A$) — Australian Dollar</option>
+              <option value="CAD">CAD (C$) — Canadian Dollar</option>
+              <option value="SGD">SGD (S$) — Singapore Dollar</option>
+              <option value="AED">AED (AED) — UAE Dirham</option>
+            </select>
+            <div style="font-size:0.75rem; color:var(--color-text-muted); margin-top:0.35rem;">
+              The currency currency billed to your international client.
+            </div>
+          </div>
+
+          <!-- 3. Local Payout Currency -->
+          <div class="form-group" style="margin:0;">
+            <label for="payoutCurrency" class="form-label" style="font-size:var(--font-size-xs); font-weight:700;">Local Bank Payout Currency:</label>
+            <select id="payoutCurrency" class="form-select" style="font-weight:600;">
+              <option value="INR" selected>INR (₹) — Indian Rupee</option>
+              <option value="EUR">EUR (€) — Euro</option>
+              <option value="GBP">GBP (£) — British Pound</option>
+              <option value="PHP">PHP (₱) — Philippine Peso</option>
+              <option value="BRL">BRL (R$) — Brazilian Real</option>
+              <option value="NGN">NGN (₦) — Nigerian Naira</option>
+              <option value="PKR">PKR (Rs) — Pakistani Rupee</option>
+              <option value="BDT">BDT (৳) — Bangladeshi Taka</option>
+              <option value="CAD">CAD (C$) — Canadian Dollar</option>
+              <option value="AUD">AUD (A$) — Australian Dollar</option>
+              <option value="USD">USD ($) — Same as invoice (No FX)</option>
+            </select>
+            <div style="font-size:0.75rem; color:var(--color-text-muted); margin-top:0.35rem;">
+              The currency deposited into your domestic bank account.
+            </div>
+          </div>
+
+          <!-- 4. Mid-Market Exchange Rate -->
+          <div class="form-group" style="margin:0;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label for="exchangeRate" class="form-label" style="font-size:var(--font-size-xs); font-weight:700;">Exchange Rate (Mid-Market):</label>
+              <button type="button" id="btnResetRate" class="btn-quick-pick" style="font-size:0.7rem; padding:1px 5px;" title="Reset to standard mid-market baseline">Reset</button>
+            </div>
+            <div style="position:relative;">
+              <span id="ratePrefix" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); font-size:0.8rem; font-weight:700; color:var(--color-text-muted);">1 USD =</span>
+              <input type="number" id="exchangeRate" class="form-input" value="84.50" min="0.0001" step="0.01" style="padding-left:72px; font-weight:700; font-family:monospace;" aria-label="Mid-market Exchange Rate">
+            </div>
+            <div style="font-size:0.75rem; color:var(--color-text-muted); margin-top:0.35rem;" id="effectiveRateHint">
+              Effective payout rate: <strong id="valEffectiveRate">81.33 INR</strong> (after FX markup)
+            </div>
+          </div>
+        </div>
+
+        <!-- Target Currency Radio (Only shown in Reverse Mode) -->
+        <div id="targetCurrencyToggleGroup" style="display:flex; align-items:center; gap:0.75rem; margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed var(--color-border); font-size:var(--font-size-xs);">
+          <span style="font-weight:700;">I want my net target in:</span>
+          <label style="display:inline-flex; align-items:center; gap:0.3rem; cursor:pointer;">
+            <input type="radio" name="targetNetType" value="client" checked>
+            <span id="lblTargetClientCurrency">Client Currency ($ USD)</span>
+          </label>
+          <label style="display:inline-flex; align-items:center; gap:0.3rem; cursor:pointer;">
+            <input type="radio" name="targetNetType" value="local">
+            <span id="lblTargetLocalCurrency">Local Bank Currency (₹ INR)</span>
+          </label>
+        </div>
+
+        <!-- Platform Presets Selector -->
+        <div class="platform-presets-section">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label class="form-label" style="font-size:var(--font-size-xs); font-weight:700; margin:0;">Select Payment Platform Preset:</label>
+            <span style="font-size:0.75rem; color:var(--color-text-muted);">Click to load verified fee structure</span>
+          </div>
+          <div class="platform-chips-row" role="group" aria-label="Payment Platforms">
+            <button type="button" class="platform-pill active" data-platform="paypal">
+              <span>💳</span> PayPal International
+            </button>
+            <button type="button" class="platform-pill" data-platform="stripe">
+              <span>⚡</span> Stripe International
+            </button>
+            <button type="button" class="platform-pill" data-platform="wise">
+              <span>🌐</span> Wise Business
+            </button>
+            <button type="button" class="platform-pill" data-platform="payoneer">
+              <span>🏦</span> Payoneer
+            </button>
+            <button type="button" class="platform-pill" data-platform="gumroad">
+              <span>🛒</span> Gumroad
+            </button>
+            <button type="button" class="platform-pill" data-platform="custom">
+              <span>⚙️</span> Custom Rail
+            </button>
+          </div>
+          <div class="platform-desc-badge" id="platformDescText">
+            PayPal: 4.40% commercial transaction fee + $0.30 fixed + ~3.75% hidden FX markup spread.
+          </div>
+        </div>
+      </div>
+
+      <!-- Advanced Fee Configuration Drawer (Collapsible) -->
+      <div class="advanced-settings-card">
+        <div class="advanced-settings-header" id="toggleAdvancedSettings">
+          <div style="display:flex; align-items:center; gap:0.4rem; font-weight:700; font-size:var(--font-size-sm);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            Fee Breakdown &amp; GST/VAT Settings
+          </div>
+          <span style="font-size:0.75rem; color:var(--color-primary); font-weight:600;" id="toggleText">Customize Fee % &amp; Tax &or;</span>
+        </div>
+        <div class="advanced-inputs-grid" id="advancedInputsGrid" style="display:none;">
+          <div class="form-group" style="margin:0;">
+            <label for="inputBaseFee" class="form-label" style="font-size:var(--font-size-xs);">Base Platform Fee (%):</label>
+            <input type="number" id="inputBaseFee" class="form-input" value="4.40" min="0" max="50" step="0.05" style="font-weight:600;">
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="inputIntlSurcharge" class="form-label" style="font-size:var(--font-size-xs);">Cross-Border Surcharge (%):</label>
+            <input type="number" id="inputIntlSurcharge" class="form-input" value="0.00" min="0" max="20" step="0.05" style="font-weight:600;">
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="inputFixedFee" class="form-label" style="font-size:var(--font-size-xs);">Fixed Transaction Fee ($):</label>
+            <input type="number" id="inputFixedFee" class="form-input" value="0.30" min="0" max="100" step="0.05" style="font-weight:600;">
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="inputFxMarkup" class="form-label" style="font-size:var(--font-size-xs);">Hidden FX Spread (%):</label>
+            <input type="number" id="inputFxMarkup" class="form-input" value="3.75" min="0" max="20" step="0.05" style="font-weight:600;">
+          </div>
+          <div class="form-group" style="margin:0; grid-column:span 2;">
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer; font-size:var(--font-size-xs); font-weight:700; margin-top:0.5rem;">
+              <input type="checkbox" id="chkTaxOnFee">
+              <span>Apply GST / VAT on Payment Processing Fees (e.g. 18% GST in India, 20% UK VAT)</span>
+            </label>
+            <div id="taxRateInputWrapper" style="display:none; margin-top:0.35rem; display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:0.75rem; color:var(--color-text-muted);">Tax Rate (%):</span>
+              <input type="number" id="inputTaxRate" class="form-input" value="18.0" min="0" max="50" step="0.5" style="width:100px; padding:0.25rem 0.5rem; font-size:var(--font-size-xs);">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Hero Card -->
+      <div class="result-hero-box" id="resultHeroBox">
+        <div class="hero-eyebrow" id="heroEyebrow">Recommended Invoice Amount to Bill Client</div>
+        <div class="hero-main-val" id="heroMainVal">$1,090.87 USD</div>
+        <div class="hero-sub-val" id="heroSubVal">
+          Guaranteed Net Bank Deposit: <strong id="heroNetLocalVal">₹84,500.00 INR</strong> (<span id="heroNetClientVal">$1,000.00 USD</span>)
+        </div>
+        <div class="hero-badges-row">
+          <span class="hero-pill pill-fee" id="pillTotalFees">-$90.87 Platform &amp; FX Fees</span>
+          <span class="hero-pill pill-fx" id="pillEffectiveDeduction">8.3% Total Deduction Rate</span>
+          <span class="hero-pill pill-payout" id="pillRailName">PayPal International Rail</span>
+        </div>
+        <div style="display:flex; justify-content:center; gap:0.5rem; margin-top:0.75rem;">
+          <button type="button" class="btn btn-primary" id="btnCopyBreakdown" style="padding:0.45rem 1.25rem; font-size:var(--font-size-sm); display:inline-flex; align-items:center; gap:0.4rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Copy Invoice Breakdown
+          </button>
+        </div>
+      </div>
+
+      <!-- Visual Fee Waterfall Breakdown -->
+      <div class="waterfall-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 style="font-size:var(--font-size-base); font-weight:700; margin:0;">Visual Fee Waterfall &amp; Loss Breakdown</h2>
+          <span style="font-size:0.75rem; color:var(--color-text-muted);">From Client Payment to Your Bank Deposit</span>
+        </div>
+
+        <div class="prop-bar-container" title="Green: Net Payout | Red: Platform Fees | Orange: FX Loss">
+          <div class="prop-bar-net" id="barNet" style="width: 91.7%;"></div>
+          <div class="prop-bar-platform" id="barPlatform" style="width: 4.5%;"></div>
+          <div class="prop-bar-fx" id="barFx" style="width: 3.8%;"></div>
+        </div>
+
+        <div class="waterfall-flow">
+          <div class="waterfall-row row-gross">
+            <div>
+              <div style="font-weight:700;">1. Gross Client Invoice Amount</div>
+              <div style="font-size:0.75rem; color:var(--color-text-muted);">Total billed in client's native invoicing currency</div>
+            </div>
+            <div class="waterfall-val" id="wfGrossVal">$1,090.87 USD</div>
+          </div>
+
+          <div class="waterfall-row row-fee">
+            <div>
+              <div style="font-weight:700;">2. Platform Commercial &amp; Surcharge Fees</div>
+              <div style="font-size:0.75rem; color:var(--color-text-muted);" id="wfPlatformFeeDesc">4.40% Base + $0.30 Fixed Fee (plus GST)</div>
+            </div>
+            <div class="waterfall-val val-negative" id="wfPlatformFeeVal">-$48.30 USD</div>
+          </div>
+
+          <div class="waterfall-row row-fx">
+            <div>
+              <div style="font-weight:700;">3. Hidden Foreign Exchange Spread Loss</div>
+              <div style="font-size:0.75rem; color:var(--color-text-muted);" id="wfFxSpreadDesc">~3.75% currency conversion spread (Mid-market: 84.50 vs Payout: 81.33)</div>
+            </div>
+            <div class="waterfall-val val-negative" id="wfFxSpreadVal">-$40.91 USD (₹3,456.89)</div>
+          </div>
+
+          <div class="waterfall-row row-net">
+            <div>
+              <div style="font-weight:800; color:#059669;">4. Net Amount Deposited to Bank</div>
+              <div style="font-size:0.75rem; color:var(--color-text-muted);">Actual cleared funds received in local domestic bank</div>
+            </div>
+            <div class="waterfall-val val-positive" id="wfNetVal">₹84,500.00 INR ($1,000.00 USD)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side-by-Side Platform Comparison Table -->
+      <div class="comparison-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 style="font-size:var(--font-size-base); font-weight:700; margin:0;">Side-by-Side Payment Rail Comparison</h2>
+          <span style="font-size:0.75rem; color:var(--color-text-muted);">Simulated for this exact transaction amount</span>
+        </div>
+
+        <div class="table-container">
+          <table class="comparison-table" id="comparisonTable">
+            <thead>
+              <tr>
+                <th>Payment Rail</th>
+                <th id="thInvoiceCol">Invoice Required</th>
+                <th>Platform Fee</th>
+                <th>FX Spread Loss</th>
+                <th>Net Bank Payout</th>
+                <th>Effective Deduction</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="savings-banner" id="savingsBanner">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          <span id="savingsBannerText">Switching from PayPal to Wise saves <strong>$38.20 (₹3,227.90)</strong> in total deductions on this invoice!</span>
+        </div>
+      </div>
+
+      <!-- SEO Documentation & In-Depth Guide -->
+      <div class="tool-documentation" style="margin-top:var(--space-5);">
+        <h2>The Hidden Cost of Cross-Border Freelancing: Why 5% Usually Means 8-10%</h2>
+        <p>
+          Global freelancers, remote software engineers, and digital creators billing clients across borders frequently encounter the <em>"Disappearing Payout Dilemma."</em> When signing an agreement for \$1,000, they anticipate roughly \$950 to \$970 landing in their domestic bank accounts. In reality, they often receive only \$905 to \$918.
+        </p>
+        <p>
+          This gap is not an accounting accident; it is the compound result of payment processing tiers, foreign exchange spreads, and local digital services taxes. This calculator reverse-engineers every layer so you can quote accurate client fees and protect your profit margins.
+        </p>
+
+        <h2>The Mathematical Reverse Fee Formula Explained</h2>
+        <p>
+          A common mistake made by creators is multiplying their desired net amount by the fee percentage (for example, quoting \(\$1,000 \times 1.05 = \$1,050\)). However, processors deduct fees from the <strong>gross total</strong>. If PayPal charges 5%, they deduct 5% from \$1,050 (\$52.50), leaving you with \$997.50, falling short of your \$1,000 goal.
+        </p>
+        <p>
+          To calculate the exact gross invoice \((I)\) required to guarantee a target net amount \((N)\) with a percentage fee \((F_{\text{pct}})\) and fixed fee \((F_{\text{fixed}})\), we solve:
+        </p>
+        <pre style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); font-family:monospace; font-size:0.85rem; overflow-x:auto;">
+Invoice = (Target Net + Fixed Fee * (1 + Tax)) / (1 - Total Fee % * (1 + Tax))
+        </pre>
+        <p>
+          When hidden currency conversion markups are present, the target amount before FX must first be normalized by dividing by \((1 - \text{FX Spread \%})\).
+        </p>
+
+        <h2>How Hidden FX Spread Markups Work (Mid-Market vs. Platform Rates)</h2>
+        <p>
+          Foreign exchange (FX) markup is the silent profit center of legacy international payment rails. While financial sites show the mid-market interbank rate (e.g. \(1 \text{ USD} = 84.50 \text{ INR}\)), processors like PayPal convert your incoming US Dollars at roughly \(81.33 \text{ INR}\). That 3.75% difference never appears on your invoice as a line item; it is quietly absorbed inside the exchange rate.
+        </p>
+        <ul>
+          <li><strong>Mid-Market Interbank Rate:</strong> The genuine midpoint between global wholesale buy and sell rates.</li>
+          <li><strong>Platform Conversion Rate:</strong> The discounted rate offered by consumer processors, pocketing a 2% to 4% margin.</li>
+          <li><strong>Direct Bank Rails (Wise, ACH, SEPA):</strong> Transparent pricing models that trade at the real mid-market rate and charge an upfront 0.45% to 0.55% transfer fee.</li>
+        </ul>
+
+        <h2>PayPal vs. Stripe vs. Wise vs. Payoneer vs. Gumroad: In-Depth Comparison</h2>
+        <p>
+          Depending on your client's payment preference, each payment rail carries distinct trade-offs:
+        </p>
+        <ul>
+          <li><strong>Wise Business Account:</strong> The undisputed gold standard for B2B cross-border freelance invoicing. Gives you local domestic account numbers in the US (ACH/wire), UK (Sort code), Europe (IBAN), and Canada. Clients pay you via zero-fee domestic bank transfers, and Wise converts to your home currency at pure mid-market rates with a tiny 0.45-0.55% fee.</li>
+          <li><strong>Stripe International Card Invoicing:</strong> Ideal for white-label credit card checkout and recurring SaaS subscriptions. Standard 2.9% + 1.5% international card surcharge + \$0.30 fixed + ~2.0% currency payout spread.</li>
+          <li><strong>Payoneer Receiving Accounts:</strong> Popular for marketplaces like Upwork and Fiverr. Charges a ~1.0% receiving fee plus a 2.0% to 2.5% FX withdrawal spread to your local bank.</li>
+          <li><strong>PayPal International:</strong> High consumer trust and ubiquitous client adoption, but the most expensive cross-border rail: 4.40% commercial fee + \$0.30 fixed + 3.75% hidden FX markup.</li>
+          <li><strong>Gumroad Creator Sales:</strong> For digital product sales, templates, and courses. Charges 10% platform fee + \$0.50 + 2.9% credit card processing + 2.0% FX conversion.</li>
+        </ul>
+
+        <h2>How to Handle GST/VAT on Payment Gateway Processing Fees</h2>
+        <p>
+          In jurisdictions like India (18% GST) or Europe (20% VAT), tax authorities levy service taxes on payment processing fees. For example, if a payment gateway charges a \$44 fee on a \$1,000 invoice, an 18% GST charge adds another \$7.92, increasing your fee deduction to \$51.92. You can toggle this setting in our Advanced Drawer to ensure 100% net accuracy.
+        </p>
+
+        <h2>Best Invoicing Practices: Negotiating Payment Rail Fees with International Clients</h2>
+        <p>
+          Avoid adding aggressive line-item fee surcharges like <em>"PayPal Processing Fee: \$48.50"</em> to client invoices, which can create friction. Instead, consider these proven strategies:
+        </p>
+        <ul>
+          <li><strong>Bake Fees into Your Quoted Rate:</strong> Use this reverse calculator to set your project price. If your milestone requires \$1,000 net, quote \$1,090 upfront.</li>
+          <li><strong>Offer a Dual-Payment Incentive:</strong> Offer a 3% to 5% discount if the client agrees to pay via Wise ACH or direct bank wire rather than corporate credit card or PayPal.</li>
+          <li><strong>Annual Retainer Agreements:</strong> For long-term clients, set up recurring ACH transfers to eliminate card processing fees entirely.</li>
+        </ul>
+
+        <h2>Currency Risk &amp; Mitigating FX Volatility for Remote Contractors</h2>
+        <p>
+          When invoicing foreign clients on net-30 terms, exchange rates can fluctuate by 2% to 4% between project kickoff and payment clearing. Holding multiple foreign currency balances in a Wise or Revolut Business multi-currency wallet allows you to convert funds strategically when rates are favorable.
+        </p>
+
+        <h2>100% Client-Side Privacy Guarantee</h2>
+        <p>
+          All invoice calculations, currency conversions, fee adjustments, and comparison simulations are computed entirely within your browser's JavaScript engine. No client names, project totals, or financial figures are transmitted to or stored on any remote servers.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">Why does my international client payment always arrive significantly lower than invoiced?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Cross-border payouts suffer from a 'double deduction': first, the payment processor charges commercial merchant and international card fees (ranging from 2.9% to 4.4% + fixed fee). Second, when converting funds into your local bank currency, platforms apply a hidden FX conversion markup (typically 2.0% to 3.75% below the real mid-market exchange rate), plus any local taxes like GST/VAT on processing fees.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How does the mathematical reverse fee formula work?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Because processors deduct percentage fees from the gross invoice rather than the net payout, a simple markup leaves you short. The exact reverse formula is: Required Invoice = (Net Target Before FX + Fixed Fee * (1 + Tax)) / (1 - Total Fee % * (1 + Tax)). Where hidden FX spread exists, the net target before FX is: Target Client Currency / (1 - FX Spread %).
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is a hidden FX markup spread, and which platform is cheapest?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            The FX markup spread is the difference between Google's interbank mid-market exchange rate and the rate your payment provider actually gives you. PayPal charges ~3.75-4.0% hidden markup, Payoneer ~2.0-2.5%, and Stripe ~2.0%. Wise uses the transparent real mid-market rate with an upfront fee of only ~0.45-0.55%, making it typically 3-4x cheaper for global freelancers.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">Should I add processing fees to my client's invoice or bake them into my rate?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Most international enterprise clients prefer all-inclusive professional invoices without surprise line-item fee surcharges. Use this reverse fee calculator during your contract negotiation to quote an all-inclusive rate that ensures you receive 100% of your desired net compensation.
+          </p>
+        </div>
+
+        <h2>Related Browser Tools</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2);">
+          <a href="/tools/ppp-price-calculator.html" class="related-tool-chip">🌐 PPP SaaS Price Calculator</a>
+          <a href="/tools/percentage-calculator.html" class="related-tool-chip">🔢 Percentage Calculator</a>
+          <a href="/tools/youtube-money-calculator.html" class="related-tool-chip">💰 YouTube Revenue Calculator</a>
+          <a href="/tools/unit-converter.html" class="related-tool-chip">🔄 Unit Converter</a>
+          <a href="/tools/paypal-link-generator.html" class="related-tool-chip">🔗 PayPal Link Generator</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top:var(--space-5); border-top:1px solid var(--color-border); padding:var(--space-4) 0; text-align:center; color:var(--color-text-muted); font-size:var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/freelance-fee-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const Utils = window.FreelanceFeeUtils;
+    if (!Utils) {
+      console.error('FreelanceFeeUtils failed to load.');
+      return;
+    }
+
+    // State
+    let mode = 'reverse'; // 'reverse' | 'forward'
+    let selectedPlatformKey = 'paypal';
+    let targetNetType = 'client'; // 'client' | 'local'
+
+    // DOM References
+    const btnModeReverse = document.getElementById('btnModeReverse');
+    const btnModeForward = document.getElementById('btnModeForward');
+    const lblAmount = document.getElementById('lblAmount');
+    const amountInput = document.getElementById('amountInput');
+    const amountCurrencySymbol = document.getElementById('amountCurrencySymbol');
+    const invoiceCurrencySelect = document.getElementById('invoiceCurrency');
+    const payoutCurrencySelect = document.getElementById('payoutCurrency');
+    const exchangeRateInput = document.getElementById('exchangeRate');
+    const btnResetRate = document.getElementById('btnResetRate');
+    const ratePrefix = document.getElementById('ratePrefix');
+    const valEffectiveRate = document.getElementById('valEffectiveRate');
+    const targetCurrencyToggleGroup = document.getElementById('targetCurrencyToggleGroup');
+    const lblTargetClientCurrency = document.getElementById('lblTargetClientCurrency');
+    const lblTargetLocalCurrency = document.getElementById('lblTargetLocalCurrency');
+
+    // Advanced Drawer
+    const toggleAdvancedSettings = document.getElementById('toggleAdvancedSettings');
+    const advancedInputsGrid = document.getElementById('advancedInputsGrid');
+    const toggleText = document.getElementById('toggleText');
+    const inputBaseFee = document.getElementById('inputBaseFee');
+    const inputIntlSurcharge = document.getElementById('inputIntlSurcharge');
+    const inputFixedFee = document.getElementById('inputFixedFee');
+    const inputFxMarkup = document.getElementById('inputFxMarkup');
+    const chkTaxOnFee = document.getElementById('chkTaxOnFee');
+    const taxRateInputWrapper = document.getElementById('taxRateInputWrapper');
+    const inputTaxRate = document.getElementById('inputTaxRate');
+    const platformDescText = document.getElementById('platformDescText');
+
+    // Hero Box
+    const heroEyebrow = document.getElementById('heroEyebrow');
+    const heroMainVal = document.getElementById('heroMainVal');
+    const heroSubVal = document.getElementById('heroSubVal');
+    const heroNetLocalVal = document.getElementById('heroNetLocalVal');
+    const heroNetClientVal = document.getElementById('heroNetClientVal');
+    const pillTotalFees = document.getElementById('pillTotalFees');
+    const pillEffectiveDeduction = document.getElementById('pillEffectiveDeduction');
+    const pillRailName = document.getElementById('pillRailName');
+    const btnCopyBreakdown = document.getElementById('btnCopyBreakdown');
+
+    // Waterfall
+    const barNet = document.getElementById('barNet');
+    const barPlatform = document.getElementById('barPlatform');
+    const barFx = document.getElementById('barFx');
+    const wfGrossVal = document.getElementById('wfGrossVal');
+    const wfPlatformFeeDesc = document.getElementById('wfPlatformFeeDesc');
+    const wfPlatformFeeVal = document.getElementById('wfPlatformFeeVal');
+    const wfFxSpreadDesc = document.getElementById('wfFxSpreadDesc');
+    const wfFxSpreadVal = document.getElementById('wfFxSpreadVal');
+    const wfNetVal = document.getElementById('wfNetVal');
+
+    // Comparison Table
+    const thInvoiceCol = document.getElementById('thInvoiceCol');
+    const comparisonTableBody = document.getElementById('comparisonTableBody');
+    const savingsBanner = document.getElementById('savingsBanner');
+    const savingsBannerText = document.getElementById('savingsBannerText');
+
+    // Currency Formatting Helpers
+    function getCurrencySymbol(code) {
+      const data = Utils.DEFAULT_CURRENCY_RATES[code];
+      return data ? data.symbol : code;
+    }
+
+    function formatMoney(amount, code) {
+      const sym = getCurrencySymbol(code);
+      const isWhole = code === 'INR' || code === 'PHP' || code === 'NGN' || code === 'PKR' || code === 'BDT';
+      const formatted = amount.toLocaleString('en-US', {
+        minimumFractionDigits: isWhole ? 0 : 2,
+        maximumFractionDigits: isWhole ? 0 : 2
+      });
+      return `${sym}${formatted} ${code}`;
+    }
+
+    // Update Exchange Rate Baseline when currencies change
+    function updateExchangeRateBaseline() {
+      const invCode = invoiceCurrencySelect.value;
+      const payCode = payoutCurrencySelect.value;
+
+      ratePrefix.textContent = `1 ${invCode} =`;
+      lblTargetClientCurrency.textContent = `Client Currency (${getCurrencySymbol(invCode)} ${invCode})`;
+      lblTargetLocalCurrency.textContent = `Local Bank Currency (${getCurrencySymbol(payCode)} ${payCode})`;
+
+      if (invCode === payCode) {
+        exchangeRateInput.value = '1.00';
+        exchangeRateInput.disabled = true;
+      } else {
+        exchangeRateInput.disabled = false;
+        // Estimate rate relative to USD
+        const invRate = Utils.DEFAULT_CURRENCY_RATES[invCode]?.ratePerUsd || 1.0;
+        const payRate = Utils.DEFAULT_CURRENCY_RATES[payCode]?.ratePerUsd || 1.0;
+        const crossRate = payRate / invRate;
+        exchangeRateInput.value = (Math.round(crossRate * 100) / 100).toFixed(2);
+      }
+    }
+
+    // Set Platform Preset
+    function setPlatform(key) {
+      selectedPlatformKey = key;
+      const p = Utils.PLATFORMS[key];
+      if (!p) return;
+
+      document.querySelectorAll('.platform-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.platform === key);
+      });
+
+      inputBaseFee.value = p.baseFeePct.toFixed(2);
+      inputIntlSurcharge.value = p.intlSurchargePct.toFixed(2);
+      inputFixedFee.value = p.fixedFee.toFixed(2);
+      inputFxMarkup.value = p.fxMarkupPct.toFixed(2);
+      platformDescText.textContent = `${p.name}: ${p.description}`;
+
+      render();
+    }
+
+    // Main Render Routine
+    function render() {
+      const invCode = invoiceCurrencySelect.value;
+      const payCode = payoutCurrencySelect.value;
+      const isSameCurrency = invCode === payCode;
+      const rawRate = parseFloat(exchangeRateInput.value) || 1.0;
+
+      // Update currency symbol on amount input
+      const amountVal = Math.max(0, parseFloat(amountInput.value) || 0);
+      const isTargetLocal = (mode === 'reverse' && targetNetType === 'local' && !isSameCurrency);
+
+      if (isTargetLocal) {
+        amountCurrencySymbol.textContent = getCurrencySymbol(payCode);
+        lblAmount.textContent = `Target Net Take-Home (${getCurrencySymbol(payCode)} ${payCode}):`;
+      } else {
+        amountCurrencySymbol.textContent = getCurrencySymbol(invCode);
+        lblAmount.textContent = mode === 'reverse'
+          ? `Target Net Take-Home (${getCurrencySymbol(invCode)} ${invCode}):`
+          : `Invoice Gross Billed (${getCurrencySymbol(invCode)} ${invCode}):`;
+      }
+
+      // Config Object
+      const config = {
+        baseFeePct: parseFloat(inputBaseFee.value) || 0,
+        intlSurchargePct: parseFloat(inputIntlSurcharge.value) || 0,
+        fixedFee: parseFloat(inputFixedFee.value) || 0,
+        fxMarkupPct: parseFloat(inputFxMarkup.value) || 0,
+        taxOnFeePct: chkTaxOnFee.checked ? (parseFloat(inputTaxRate.value) || 0) : 0,
+        exchangeRate: rawRate,
+        isSameCurrency
+      };
+
+      // 1. Calculate Single Selected Rail
+      let result;
+      if (mode === 'reverse') {
+        result = Utils.calculateReverse(amountVal, isTargetLocal, config);
+      } else {
+        result = Utils.calculateForward(amountVal, config);
+      }
+
+      // Update Effective Exchange Rate Hint
+      const effRateVal = isSameCurrency ? 1.0 : rawRate * (1 - config.fxMarkupPct / 100);
+      valEffectiveRate.textContent = isSameCurrency
+        ? `1.00 ${payCode} (Same currency)`
+        : `${(Math.round(effRateVal * 100) / 100).toFixed(2)} ${payCode} (-${config.fxMarkupPct}% markup)`;
+
+      // 2. Update Hero Banner
+      const pName = Utils.PLATFORMS[selectedPlatformKey]?.name || 'Custom Rail';
+      pillRailName.textContent = pName;
+
+      if (mode === 'reverse') {
+        heroEyebrow.textContent = 'Recommended Invoice Amount to Bill Client';
+        heroMainVal.textContent = formatMoney(result.gross, invCode);
+        heroNetLocalVal.textContent = formatMoney(result.netLocalCurrency, payCode);
+        heroNetClientVal.textContent = formatMoney(result.netClientCurrency, invCode);
+        heroSubVal.innerHTML = `Guaranteed Net Bank Deposit: <strong style="color:#059669;">${formatMoney(result.netLocalCurrency, payCode)}</strong> (${formatMoney(result.netClientCurrency, invCode)})`;
+      } else {
+        heroEyebrow.textContent = 'Net Cash Deposited Into Your Bank';
+        heroMainVal.textContent = formatMoney(result.netLocalCurrency, payCode);
+        heroSubVal.innerHTML = `Invoiced Gross: <strong>${formatMoney(result.gross, invCode)}</strong> &bull; Client Net: <strong>${formatMoney(result.netClientCurrency, invCode)}</strong>`;
+      }
+
+      const totalDeductionsClient = result.gross - result.netClientCurrency;
+      pillTotalFees.textContent = `-${formatMoney(totalDeductionsClient, invCode)} Platform & FX Fees`;
+      pillEffectiveDeduction.textContent = `${result.effectiveDeductionPct}% Total Deduction Rate`;
+
+      // 3. Update Waterfall
+      wfGrossVal.textContent = formatMoney(result.gross, invCode);
+
+      const feePctTotal = (config.baseFeePct + config.intlSurchargePct).toFixed(2);
+      const taxNotice = config.taxOnFeePct > 0 ? ` (+${config.taxOnFeePct}% tax)` : '';
+      wfPlatformFeeDesc.textContent = `${feePctTotal}% fee + ${formatMoney(config.fixedFee, invCode)} fixed${taxNotice}`;
+      wfPlatformFeeVal.textContent = `-${formatMoney(result.totalPlatformFee, invCode)}`;
+
+      if (isSameCurrency) {
+        wfFxSpreadDesc.textContent = '0% FX spread (Domestic payout in same currency)';
+        wfFxSpreadVal.textContent = '$0.00 (No conversion)';
+      } else {
+        wfFxSpreadDesc.textContent = `${config.fxMarkupPct}% currency spread (Mid-market: ${rawRate.toFixed(2)} vs Payout: ${effRateVal.toFixed(2)})`;
+        wfFxSpreadVal.textContent = `-${formatMoney(result.fxSpreadCost, invCode)} (${formatMoney(result.fxSpreadCostLocal, payCode)})`;
+      }
+
+      wfNetVal.textContent = `${formatMoney(result.netLocalCurrency, payCode)} (${formatMoney(result.netClientCurrency, invCode)})`;
+
+      // Visual proportion bar
+      if (result.gross > 0) {
+        const netPct = Math.max(0, (result.netClientCurrency / result.gross) * 100);
+        const feePct = Math.max(0, (result.totalPlatformFee / result.gross) * 100);
+        const fxPct = Math.max(0, 100 - netPct - feePct);
+        barNet.style.width = `${netPct}%`;
+        barPlatform.style.width = `${feePct}%`;
+        barFx.style.width = `${fxPct}%`;
+      } else {
+        barNet.style.width = '100%';
+        barPlatform.style.width = '0%';
+        barFx.style.width = '0%';
+      }
+
+      // 4. Update Comparison Table
+      const comp = Utils.compareAllPlatforms(amountVal, mode === 'reverse', isTargetLocal, {
+        exchangeRate: rawRate,
+        isSameCurrency,
+        taxOnFeePct: config.taxOnFeePct
+      });
+
+      thInvoiceCol.textContent = mode === 'reverse' ? 'Invoice Required' : 'Gross Invoiced';
+
+      comparisonTableBody.innerHTML = '';
+      comp.results.forEach((r, idx) => {
+        const isBest = (idx === comp.bestIndex);
+        const tr = document.createElement('tr');
+        if (isBest) tr.classList.add('best-rail-row');
+
+        const bestBadge = isBest ? '<span class="badge-best-value">★ Lowest Fee</span>' : '';
+
+        tr.innerHTML = `
+          <td><strong>${r.platform.name}</strong>${bestBadge}</td>
+          <td><span style="font-family:monospace; font-weight:700;">${formatMoney(r.gross, invCode)}</span></td>
+          <td style="color:#dc2626;">-${formatMoney(r.totalPlatformFee, invCode)}</td>
+          <td style="color:#d97706;">${isSameCurrency ? '$0.00' : '-' + formatMoney(r.fxSpreadCost, invCode)}</td>
+          <td><strong style="color:#059669; font-family:monospace;">${formatMoney(r.netLocalCurrency, payCode)}</strong></td>
+          <td><span class="hero-pill ${r.effectiveDeductionPct > 7 ? 'pill-fee' : (r.effectiveDeductionPct < 3 ? 'pill-payout' : 'pill-fx')}">${r.effectiveDeductionPct}%</span></td>
+        `;
+        comparisonTableBody.appendChild(tr);
+      });
+
+      // Update Savings Banner
+      if (comp.maxSavingsClient > 0 && amountVal > 0) {
+        savingsBanner.style.display = 'flex';
+        const bestName = comp.bestPlatform.name;
+        const savingsFormatted = `${formatMoney(comp.maxSavingsClient, invCode)} (${formatMoney(comp.maxSavingsLocal, payCode)})`;
+        savingsBannerText.innerHTML = `Switching to <strong>${bestName}</strong> saves up to <strong>${savingsFormatted}</strong> in fees compared to higher-cost rails on this transaction!`;
+      } else {
+        savingsBanner.style.display = 'none';
+      }
+    }
+
+    // Event Listeners: Mode toggle
+    btnModeReverse.addEventListener('click', () => {
+      mode = 'reverse';
+      btnModeReverse.classList.add('active');
+      btnModeForward.classList.remove('active');
+      targetCurrencyToggleGroup.style.display = 'flex';
+      render();
+    });
+
+    btnModeForward.addEventListener('click', () => {
+      mode = 'forward';
+      btnModeForward.classList.add('active');
+      btnModeReverse.classList.remove('active');
+      targetCurrencyToggleGroup.style.display = 'none';
+      render();
+    });
+
+    // Target currency radio
+    document.querySelectorAll('input[name="targetNetType"]').forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        targetNetType = e.target.value;
+        render();
+      });
+    });
+
+    // Currency Selectors
+    invoiceCurrencySelect.addEventListener('change', () => {
+      updateExchangeRateBaseline();
+      render();
+    });
+
+    payoutCurrencySelect.addEventListener('change', () => {
+      updateExchangeRateBaseline();
+      render();
+    });
+
+    // Reset exchange rate
+    btnResetRate.addEventListener('click', () => {
+      updateExchangeRateBaseline();
+      render();
+    });
+
+    // Amount & Rate Inputs
+    amountInput.addEventListener('input', render);
+    exchangeRateInput.addEventListener('input', render);
+
+    // Quick Pick Chips
+    document.querySelectorAll('.quick-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.quick-chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        amountInput.value = btn.dataset.val;
+        render();
+      });
+    });
+
+    // Platform Presets
+    document.querySelectorAll('.platform-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setPlatform(btn.dataset.platform);
+      });
+    });
+
+    // Advanced Drawer Toggle
+    toggleAdvancedSettings.addEventListener('click', () => {
+      const isHidden = advancedInputsGrid.style.display === 'none';
+      advancedInputsGrid.style.display = isHidden ? 'grid' : 'none';
+      toggleText.innerHTML = isHidden ? 'Hide Advanced &and;' : 'Customize Fee % &amp; Tax &or;';
+    });
+
+    // Custom fee inputs
+    inputBaseFee.addEventListener('input', render);
+    inputIntlSurcharge.addEventListener('input', render);
+    inputFixedFee.addEventListener('input', render);
+    inputFxMarkup.addEventListener('input', render);
+    chkTaxOnFee.addEventListener('change', () => {
+      taxRateInputWrapper.style.display = chkTaxOnFee.checked ? 'flex' : 'none';
+      render();
+    });
+    inputTaxRate.addEventListener('input', render);
+
+    // Copy Breakdown Action
+    btnCopyBreakdown.addEventListener('click', () => {
+      const invCode = invoiceCurrencySelect.value;
+      const payCode = payoutCurrencySelect.value;
+      const isSameCurrency = invCode === payCode;
+      const rawRate = parseFloat(exchangeRateInput.value) || 1.0;
+      const amountVal = parseFloat(amountInput.value) || 0;
+      const isTargetLocal = (mode === 'reverse' && targetNetType === 'local' && !isSameCurrency);
+
+      const config = {
+        baseFeePct: parseFloat(inputBaseFee.value) || 0,
+        intlSurchargePct: parseFloat(inputIntlSurcharge.value) || 0,
+        fixedFee: parseFloat(inputFixedFee.value) || 0,
+        fxMarkupPct: parseFloat(inputFxMarkup.value) || 0,
+        taxOnFeePct: chkTaxOnFee.checked ? (parseFloat(inputTaxRate.value) || 0) : 0,
+        exchangeRate: rawRate,
+        isSameCurrency
+      };
+
+      const res = (mode === 'reverse')
+        ? Utils.calculateReverse(amountVal, isTargetLocal, config)
+        : Utils.calculateForward(amountVal, config);
+
+      const pName = Utils.PLATFORMS[selectedPlatformKey]?.name || 'Custom Rail';
+
+      const summaryText = [
+        `===========================================`,
+        `FREELANCE INVOICE & FEE BREAKDOWN`,
+        `===========================================`,
+        `Platform Rail: ${pName}`,
+        `Client Invoice Currency: ${invCode}`,
+        `Local Bank Currency: ${payCode}`,
+        `Mid-Market Exchange Rate: 1 ${invCode} = ${rawRate.toFixed(2)} ${payCode}`,
+        `Effective Conversion Rate: 1 ${invCode} = ${res.effectiveExchangeRate.toFixed(2)} ${payCode}`,
+        `-------------------------------------------`,
+        `Gross Invoiced Amount: ${formatMoney(res.gross, invCode)}`,
+        `Platform Fees (${(config.baseFeePct + config.intlSurchargePct).toFixed(2)}% + ${formatMoney(config.fixedFee, invCode)}): -${formatMoney(res.totalPlatformFee, invCode)}`,
+        `Hidden FX Markup Loss (${config.fxMarkupPct}%): -${formatMoney(res.fxSpreadCost, invCode)} (${formatMoney(res.fxSpreadCostLocal, payCode)})`,
+        `-------------------------------------------`,
+        `Net Deposited to Bank: ${formatMoney(res.netLocalCurrency, payCode)} (${formatMoney(res.netClientCurrency, invCode)})`,
+        `Effective Deduction Rate: ${res.effectiveDeductionPct}%`,
+        `===========================================`,
+        `Generated with Free Online Tools (100% Client-Side)`
+      ].join('\n');
+
+      navigator.clipboard.writeText(summaryText).then(() => {
+        const origText = btnCopyBreakdown.innerHTML;
+        btnCopyBreakdown.innerHTML = `✓ Breakdown Copied!`;
+        setTimeout(() => { btnCopyBreakdown.innerHTML = origText; }, 2000);
+      });
+    });
+
+    // Initial setup
+    updateExchangeRateBaseline();
+    setPlatform('paypal');
+  })();
+  </script>
+</body>
+</html>

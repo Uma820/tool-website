@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compteur de Mots et de Caractères — Outils En Ligne Gratuits</title>
+  <meta name="description" content="Analysez la longueur du texte, comptez les caractères avec et sans espaces, détectez les phrases et paragraphes, et estimez le temps de lecture en temps réel.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/fr/tools/word-counter.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/word-counter.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/word-counter.html">
+  <link rel="alternate" hreflang="bn" href="https://nexivo.com/bn/tools/word-counter.html">
+  <link rel="alternate" hreflang="hi" href="https://nexivo.com/hi/tools/word-counter.html">
+  <link rel="alternate" hreflang="es" href="https://nexivo.com/es/tools/word-counter.html">
+  <link rel="alternate" hreflang="fr" href="https://nexivo.com/fr/tools/word-counter.html">
+  <link rel="alternate" hreflang="ar" href="https://nexivo.com/ar/tools/word-counter.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Compteur de Mots et de Caractères",
+    "description": "Analysez la longueur du texte, comptez les caractères avec et sans espaces, détectez les phrases et paragraphes, et estimez le temps de lecture en temps réel.",
+    "url": "https://nexivo.com/fr/tools/word-counter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/fr/index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Outils En Ligne Gratuits</span>
+      </a>
+      <div class="header-actions">
+        <!-- Language Selector -->
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en">English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr" selected>Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/fr/index.html" class="btn btn-secondary">Tous les outils</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Changer de thème">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/fr/index.html">Accueil</a></li>
+      <li>/</li>
+      <li><a href="/fr/index.html">Outils de Texte</a></li>
+      <li>/</li>
+      <li aria-current="page">Compteur de Mots et de Caractères</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Compteur de Mots et de Caractères</span>
+      </h1>
+      <p class="tool-header-lead">
+        Analysez la longueur du texte, comptez les caractères avec et sans espaces, détectez les phrases et paragraphes, et estimez le temps de lecture en temps réel.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Niveau 1: Natif Navigateur</span>
+        <span class="tool-badge">100% Privé</span>
+        <span class="tool-badge">Exécution Instantanée</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Charger un exemple</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Effacer l’entrée</button>
+          <button type="button" class="btn btn-secondary" id="btn-copy">Copier le texte</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Mise à jour automatique pendant la frappe
+        </div>
+      </div>
+
+      <!-- Real-Time Statistics Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-words">0</div>
+          <div class="stat-label">Mots</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-chars">0</div>
+          <div class="stat-label">Caractères</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-chars-no-space">0</div>
+          <div class="stat-label">Caractères (sans espace)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-sentences">0</div>
+          <div class="stat-label">Phrases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-paragraphs">0</div>
+          <div class="stat-label">Paragraphes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-lines">0</div>
+          <div class="stat-label">Lignes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-reading-time">0m 0s</div>
+          <div class="stat-label">Temps de lecture</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-speaking-time">0m 0s</div>
+          <div class="stat-label">Temps de parole</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-block-start: var(--space-5);">
+        <label for="text-input" class="form-label">Tapez ou collez votre texte ci-dessous :</label>
+        <textarea id="text-input" class="form-textarea" placeholder="Collez votre dissertation, article, projet ou code ici..." autofocus></textarea>
+      </div>
+    </div>
+
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>Ce que fait cet outil et le problème résolu</h2>
+        <p>Le <strong>Compteur de Mots et de Caractères</strong> fournit une analyse statistique instantanée et détaillée de n’importe quel texte. Il répond aux exigences strictes de longueur pour les dissertations universitaires ou les réseaux sociaux sans jamais envoyer vos brouillons sur un serveur externe.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Instructions étape par étape</h2>
+        <ol class="doc-steps">
+          <li>Saisissez ou collez votre texte dans la zone d’édition.</li>
+          <li>Les statistiques se mettent à jour automatiquement en temps réel.</li>
+          <li>Consultez la grille : mots, caractères, phrases, paragraphes et durées estimées.</li>
+          <li>Cliquez sur "Copier le texte" ou "Effacer l’entrée" selon vos besoins.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Cas d’usage pratiques courants</h2>
+        <ul>
+          <li><strong>Travaux et Rédactions Académiques:</strong> Vérifiez les seuils minimums et plafonds de mots imposés par les universités ou éditeurs.</li>
+          <li><strong>Réseaux Sociaux et Référencement (SEO):</strong> Optimisez les méta-descriptions sous 160 caractères et les posts X/Twitter sous 280 caractères.</li>
+          <li><strong>Préparation d’un Discours:</strong> Estimez la durée d’un discours sur la base d’une cadence oratoire de 130 mots par minute.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Exemple réaliste et résultat attendu</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Exemple d’entrée</div>
+              <pre class="example-pre" dir="ltr">Portez ce vieux whisky au juge blond qui fume.</pre>
+            </div>
+            <div>
+              <div class="example-title">Résultat attendu</div>
+              <pre class="example-pre" dir="ltr">Mots : 9 | Caractères : 46 | Caractères (sans espaces) : 38 | Phrases : 1 | Paragraphes : 1</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Spécifications techniques et fonctionnement</h2>
+        <p>Segmentation Unicode des limites de mots (<code>/\s+/</code>) et filtrage des glyphes visibles (<code>/\S/g</code>). Vitesse de lecture silencieuse moyenne estimée à 225 mots par minute (MPM) et locution à 130 MPM.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations et contraintes du navigateur</h2>
+        <p>Pour les écritures non segmentées par des espaces (comme le chinois ou le thaï), la statistique des caractères sans espace reste la métrique la plus fiable.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Garantie de confidentialité et sécurité</h2>
+        <p>100% exécuté dans la mémoire de votre navigateur. Vos textes ne quittent jamais votre ordinateur.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Foire Aux Questions (FAQs)</h2>
+        
+        <div class="faq-item">
+          <h3>Combien de mots contient un discours de 5 minutes ?</h3>
+          <p>À un rythme de parole naturel de 130 mots par minute, un discours de 5 minutes compte environ 650 mots.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Cet outil enregistre-t-il mes écrits ?</h3>
+          <p>Non. Dès que vous fermez ou actualisez l’onglet, vos données sont immédiatement effacées de la mémoire.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Outils Navigateur Associés</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/fr/tools/case-converter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Convertisseur de Casse de Texte</span>
+          </a>
+
+          <a href="/fr/tools/percentage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Calculatrice de Pourcentages et Remises</span>
+          </a>
+
+          <a href="/fr/tools/pdf-merger.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Fusionner des PDF (PDF Merger)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Outils En Ligne Gratuits. Client-side browser utilities.</p>
+      <a href="/fr/index.html">Retour à l'accueil</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const textInput = document.getElementById('text-input');
+      const statWords = document.getElementById('stat-words');
+      const statChars = document.getElementById('stat-chars');
+      const statCharsNoSpace = document.getElementById('stat-chars-no-space');
+      const statSentences = document.getElementById('stat-sentences');
+      const statParagraphs = document.getElementById('stat-paragraphs');
+      const statLines = document.getElementById('stat-lines');
+      const statReadingTime = document.getElementById('stat-reading-time');
+      const statSpeakingTime = document.getElementById('stat-speaking-time');
+
+      const btnSample = document.getElementById('btn-sample');
+      const btnEffacer = document.getElementById('btn-clear');
+      const btnCopy = document.getElementById('btn-copy');
+
+      function updateStats() {
+        const text = textInput.value;
+        const totalChars = text.length;
+        const charsNoSpace = text.replace(/\s/g, '').length;
+
+        // Words: split by whitespace and filter out blanks
+        const trimmed = text.trim();
+        const wordsArray = trimmed ? trimmed.split(/\s+/) : [];
+        const wordCount = wordsArray.length;
+
+        // Sentences: match . ! ? followed by space or end
+        const sentences = trimmed ? (trimmed.match(/[^.!?]+[.!?]+(\s|$)/g) || [trimmed]).length : 0;
+
+        // Paragraphs: non-empty chunks separated by newlines
+        const paragraphs = trimmed ? trimmed.split(/\n+/).filter(p => p.trim().length > 0).length : 0;
+
+        // Lines: count linebreaks
+        const lines = text ? text.split('\n').length : 0;
+
+        // Reading time: ~225 wpm
+        const readSeconds = Math.round((wordCount / 225) * 60);
+        const readMin = Math.floor(readSeconds / 60);
+        const readSec = readSeconds % 60;
+
+        // Speaking time: ~130 wpm
+        const speakSeconds = Math.round((wordCount / 130) * 60);
+        const speakMin = Math.floor(speakSeconds / 60);
+        const speakSec = speakSeconds % 60;
+
+        statWords.textContent = wordCount.toLocaleString();
+        statChars.textContent = totalChars.toLocaleString();
+        statCharsNoSpace.textContent = charsNoSpace.toLocaleString();
+        statSentences.textContent = sentences.toLocaleString();
+        statParagraphs.textContent = paragraphs.toLocaleString();
+        statLines.textContent = lines.toLocaleString();
+        statReadingTime.textContent = `${readMin}m ${readSec}s`;
+        statSpeakingTime.textContent = `${speakMin}m ${speakSec}s`;
+      }
+
+      textInput.addEventListener('input', updateStats);
+
+      btnSample.addEventListener('click', () => {
+        textInput.value = "The quick brown fox jumps over the lazy dog.\n\nFree Online Tools provides fast, completely private browser utilities. Everything is calculated on your device without transmitting text over the network.";
+        updateStats();
+        textInput.focus();
+      });
+
+      btnEffacer.addEventListener('click', () => {
+        textInput.value = '';
+        updateStats();
+        textInput.focus();
+      });
+
+      btnCopy.addEventListener('click', () => {
+        window.FreeOnlineTools.copyToClipboard(textInput.value, 'Text copied to clipboard!');
+      });
+
+      // Initial stats on load
+      updateStats();
+    })();
+  </script>
+</body>
+</html>

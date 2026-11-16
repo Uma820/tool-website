@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Chapter Formatter &amp; Timestamp Validator — Free Client-Side Tool</title>
+  <meta name="description" content="Validate, auto-format, and time-shift YouTube chapters and timestamps in seconds. Fix missing 0:00, sort ascending, enforce 10s rules, and preview mobile scrubbers. 100% client-side.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/youtube-chapter-formatter.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/youtube-chapter-formatter.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/youtube-chapter-formatter.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "YouTube Chapter Formatter & Timestamp Validator",
+    "description": "Format, validate, fix, and time-shift YouTube video chapters against official YouTube rules with real-time video scrubber preview.",
+    "url": "https://nexivo.com/tools/youtube-chapter-formatter.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why are my YouTube video chapters not appearing or working?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most common reasons are: 1) The first chapter does not begin at 0:00 (or 00:00); 2) You listed fewer than 3 chapters; 3) At least one chapter duration is shorter than 10 seconds; 4) Timestamps are not in ascending chronological order; or 5) Your channel has active copyright or community guideline strikes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the official minimum duration for a YouTube chapter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every chapter must be at least 10 seconds long. If two timestamps are placed within 9 seconds of each other, YouTube's algorithm ignores the entire chapter list."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long should YouTube chapter titles be?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Keep chapter titles under 45-50 characters. On mobile devices, the YouTube video player scrubber truncates long titles with ellipses (...), obscuring important keywords for viewers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does global time shifting help when editing videos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If you trim an intro, cut a sponsor segment, or insert an animated intro clip, all subsequent timestamps shift. The Global Time Shift tool lets you add or subtract seconds across all chapters with a single click while automatically keeping the 0:00 intro anchored."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+    @media (min-width: 992px) {
+      .chapter-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+    }
+
+    /* Tabs */
+    .tab-nav {
+      display: flex;
+      gap: var(--space-2);
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: var(--space-3);
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: var(--space-2) var(--space-3);
+      font-weight: 600;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover {
+      color: var(--color-primary);
+    }
+    .tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* Validation Banner */
+    .val-banner {
+      padding: var(--space-3);
+      border-radius: var(--border-radius);
+      margin-bottom: var(--space-3);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      border: 1px solid transparent;
+    }
+    .val-banner.status-ready {
+      background: rgba(34, 197, 94, 0.1);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: #15803d;
+    }
+    [data-theme="dark"] .val-banner.status-ready {
+      color: #4ade80;
+    }
+    .val-banner.status-issues {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.35);
+      color: #b91c1c;
+    }
+    [data-theme="dark"] .val-banner.status-issues {
+      color: #f87171;
+    }
+    .val-banner.status-warning {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #b45309;
+    }
+    [data-theme="dark"] .val-banner.status-warning {
+      color: #fbbf24;
+    }
+
+    .val-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      font-weight: 700;
+      font-size: var(--font-size-base);
+    }
+    .val-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      font-size: var(--font-size-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .val-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+    .btn-fix {
+      background: var(--color-surface);
+      border: 1px solid currentColor;
+      color: inherit;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--border-radius-sm);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .btn-fix:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Builder Row */
+    .builder-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 0.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      margin-bottom: 0.5rem;
+      background: var(--color-surface);
+      transition: background 0.15s;
+    }
+    .builder-row:hover {
+      border-color: var(--color-primary);
+    }
+    .row-time-input {
+      width: 85px;
+      font-family: monospace;
+      font-weight: 600;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .row-title-wrap {
+      flex: 1;
+      position: relative;
+    }
+    .row-title-input {
+      width: 100%;
+      padding-right: 48px;
+    }
+    .char-badge {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.65rem;
+      font-family: monospace;
+      padding: 2px 4px;
+      border-radius: 3px;
+      background: var(--color-bg);
+      color: var(--color-text-muted);
+      pointer-events: none;
+    }
+    .char-badge.warn {
+      color: #e11d48;
+      font-weight: bold;
+    }
+    .row-dur-badge {
+      font-size: 0.72rem;
+      font-family: monospace;
+      color: var(--color-text-muted);
+      background: var(--color-bg);
+      padding: 4px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      min-width: 55px;
+      text-align: center;
+    }
+    .row-controls {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+    .btn-ctrl {
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 4px 6px;
+      cursor: pointer;
+      color: var(--color-text);
+      font-size: 0.75rem;
+      line-height: 1;
+    }
+    .btn-ctrl:hover {
+      background: var(--color-bg);
+      border-color: var(--color-primary);
+    }
+    .btn-ctrl.btn-del:hover {
+      color: #ef4444;
+      border-color: #ef4444;
+    }
+
+    /* YouTube Simulated Player */
+    .yt-mock-player {
+      background: #0f0f0f;
+      color: #fff;
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-top: var(--space-3);
+      position: relative;
+    }
+    .yt-mock-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-2);
+      font-size: var(--font-size-xs);
+      color: #aaa;
+    }
+    .yt-progress-container {
+      position: relative;
+      background: #333;
+      height: 10px;
+      border-radius: 5px;
+      display: flex;
+      cursor: pointer;
+      overflow: hidden;
+      margin-bottom: var(--space-2);
+    }
+    .yt-segment {
+      height: 100%;
+      background: #ff0000;
+      position: relative;
+      border-right: 2px solid #0f0f0f;
+      transition: filter 0.15s;
+    }
+    .yt-segment:nth-child(even) {
+      background: #cc0000;
+    }
+    .yt-segment:hover {
+      filter: brightness(1.3);
+    }
+    .yt-tooltip {
+      position: absolute;
+      top: -38px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 10;
+      border: 1px solid #444;
+    }
+    .yt-segment:hover .yt-tooltip {
+      opacity: 1;
+    }
+    .yt-stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: var(--space-2);
+      margin-top: var(--space-2);
+    }
+    .yt-stat-box {
+      background: #1a1a1a;
+      padding: 0.5rem;
+      border-radius: 4px;
+      text-align: center;
+      border: 1px solid #2a2a2a;
+    }
+    .yt-stat-val {
+      font-size: var(--font-size-base);
+      font-weight: 700;
+      color: #fff;
+      font-family: monospace;
+    }
+    .yt-stat-lbl {
+      font-size: 0.68rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Output Pre / Textarea */
+    .output-area {
+      font-family: monospace;
+      font-size: var(--font-size-sm);
+      line-height: 1.6;
+      width: 100%;
+      height: 200px;
+      resize: vertical;
+      background: var(--color-bg);
+      color: var(--color-text);
+      padding: var(--space-3);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--color-border);
+      white-space: pre;
+    }
+
+    .toolbar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-2);
+      margin-top: var(--space-3);
+      margin-bottom: var(--space-3);
+      padding: var(--space-3);
+      background: var(--color-bg);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--color-border);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content" id="main-content">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <a href="/#social">Social</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <span class="breadcrumb-current">YouTube Chapter Formatter</span>
+    </nav>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-title-row">
+          <h1 class="tool-title">YouTube Chapter Formatter &amp; Timestamp Validator</h1>
+          <span class="badge badge-editorial">Social &amp; Video</span>
+        </div>
+        <p class="tool-desc">Paste messy notes, NLE marker exports, or draft timestamps. Instantly enforce official YouTube guidelines: auto-prepend 0:00, sort chronologically, merge &lt;10s segments, apply global time-shifts, and preview video scrubbers.</p>
+        <div class="privacy-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>100% Client-Side — Timestamps and video notes are parsed in your browser with zero external API calls.</span>
+        </div>
+      </div>
+
+      <!-- Real-Time Validation Status Banner -->
+      <div id="validationBanner" class="val-banner status-ready" role="region" aria-live="polite">
+        <div class="val-header">
+          <span id="bannerTitle">✅ Ready for YouTube</span>
+          <button type="button" id="btnFixAll" class="btn-fix" style="display:none;">⚡ Fix All Issues Automatically</button>
+        </div>
+        <ul id="bannerIssueList" class="val-list">
+          <li>All 4 official YouTube rules satisfied. Timestamps start at 0:00, chapters are &ge;10s, and ordered ascendingly.</li>
+        </ul>
+        <div id="bannerActions" class="val-actions"></div>
+      </div>
+
+      <!-- Chapter Suite Container -->
+      <div class="chapter-grid">
+        <!-- Left / Top Column: Input Modes -->
+        <div class="input-panel">
+          <div class="tab-nav" role="tablist" aria-label="Chapter Input Mode">
+            <button type="button" id="tabRawBtn" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tabRawPanel">📝 Raw Text / Paste</button>
+            <button type="button" id="tabBuilderBtn" class="tab-btn" role="tab" aria-selected="false" aria-controls="tabBuilderPanel">📋 Row Builder</button>
+          </div>
+
+          <!-- Tab 1: Raw Text Mode -->
+          <div id="tabRawPanel" role="tabpanel" aria-labelledby="tabRawBtn">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <label for="rawChaptersInput" style="font-weight:600; font-size:var(--font-size-sm); margin:0;">Paste Timestamps or Notes:</label>
+              <div style="display:flex; gap:0.5rem;">
+                <button type="button" id="btnLoadSample" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.25rem 0.6rem;">Load Sample Messy</button>
+                <button type="button" id="btnClear" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.25rem 0.6rem;">Clear</button>
+              </div>
+            </div>
+            <textarea id="rawChaptersInput" class="form-input" style="font-family:monospace; font-size:var(--font-size-sm); min-height:220px; line-height:1.5;" placeholder="0.00 Intro&#10;1:5 Setup &amp; Tools&#10;[05:20] Main Coding Tutorial&#10;08-30 Testing &amp; Bug Fixing&#10;00:11:15:10 Production Deployment&#10;14.05 Final Recap &amp; Outro" aria-label="Raw timestamps and chapter text"></textarea>
+            <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin-top:0.35rem;">
+              Supports periods (<code>2.30</code>), hyphens (<code>2-30</code>), single digits (<code>1:5</code> &rarr; <code>1:05</code>), brackets (<code>[02:30]</code>), and SMPTE frames (<code>00:02:30:15</code>).
+            </p>
+          </div>
+
+          <!-- Tab 2: Row Builder Mode -->
+          <div id="tabBuilderPanel" role="tabpanel" aria-labelledby="tabBuilderBtn" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <span style="font-weight:600; font-size:var(--font-size-sm);">Interactive Chapter Rows:</span>
+              <button type="button" id="btnAddRow" class="btn btn-primary" style="font-size:var(--font-size-xs); padding:0.25rem 0.6rem;">+ Add Chapter</button>
+            </div>
+            <div id="builderList" style="max-height:360px; overflow-y:auto; padding-right:4px;">
+              <!-- Dynamic Rows Injected Here -->
+            </div>
+          </div>
+
+          <!-- Creator Power Tools Bar -->
+          <div class="toolbar-grid">
+            <div class="form-group" style="margin:0;">
+              <label for="separatorStyle" class="form-label" style="font-size:var(--font-size-xs);">Separator Style</label>
+              <select id="separatorStyle" class="form-select" style="font-size:var(--font-size-xs); padding:0.35rem;">
+                <option value="space">Space (02:30 Intro)</option>
+                <option value="hyphen" selected>Hyphen (02:30 - Intro)</option>
+                <option value="emdash">Em-Dash (02:30 — Intro)</option>
+                <option value="colon">Colon (02:30: Intro)</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin:0;">
+              <label for="timestampFormat" class="form-label" style="font-size:var(--font-size-xs);">Time Format</label>
+              <select id="timestampFormat" class="form-select" style="font-size:var(--font-size-xs); padding:0.35rem;">
+                <option value="auto" selected>Auto (m:ss / h:mm:ss)</option>
+                <option value="force_mmss">Force mm:ss (02:30)</option>
+                <option value="force_hmmss">Force h:mm:ss (0:02:30)</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin:0;">
+              <label for="caseFormat" class="form-label" style="font-size:var(--font-size-xs);">Title Case Format</label>
+              <select id="caseFormat" class="form-select" style="font-size:var(--font-size-xs); padding:0.35rem;">
+                <option value="original" selected>Keep Original</option>
+                <option value="title">Title Case</option>
+                <option value="sentence">Sentence case</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin:0;">
+              <label for="totalVideoDuration" class="form-label" style="font-size:var(--font-size-xs);">Total Length (Optional)</label>
+              <input type="text" id="totalVideoDuration" class="form-input" style="font-size:var(--font-size-xs); padding:0.35rem;" placeholder="e.g. 15:30 or 930" aria-label="Total video duration">
+            </div>
+          </div>
+
+          <!-- Global Time Shift Tool -->
+          <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--border-radius); padding:var(--space-3); margin-top:var(--space-2);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">
+              <label for="timeOffsetSeconds" style="font-weight:600; font-size:var(--font-size-xs); margin:0;">Global Time Shift / Offset (+/- Seconds):</label>
+              <span style="font-size:0.7rem; color:var(--color-text-muted);">Keeps 0:00 Intro anchored</span>
+            </div>
+            <div style="display:flex; gap:0.5rem;">
+              <input type="number" id="timeOffsetSeconds" class="form-input" style="width:110px; font-size:var(--font-size-xs); padding:0.35rem;" placeholder="e.g. +15 or -10" step="1" aria-label="Seconds to shift chapters">
+              <button type="button" id="btnShiftPlus10" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.35rem 0.6rem;">+10s</button>
+              <button type="button" id="btnShiftMinus10" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.35rem 0.6rem;">-10s</button>
+              <button type="button" id="btnApplyShift" class="btn btn-primary" style="font-size:var(--font-size-xs); padding:0.35rem 0.75rem;">Apply Shift</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right / Bottom Column: Output & Simulated YouTube Scrubber -->
+        <div class="output-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <label for="formattedOutput" style="font-weight:600; font-size:var(--font-size-sm); margin:0;">Formatted YouTube Description Text:</label>
+            <span id="outputCharCount" style="font-size:var(--font-size-xs); color:var(--color-text-muted);">0 lines</span>
+          </div>
+          <textarea id="formattedOutput" class="output-area" readonly aria-label="Formatted chapters ready for YouTube description"></textarea>
+
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem;">
+            <button type="button" id="btnCopyOutput" class="btn btn-primary" style="flex:1;">📋 Copy Chapters for YouTube</button>
+            <button type="button" id="btnDownloadTxt" class="btn btn-secondary" style="font-size:var(--font-size-xs);">💾 Download .txt</button>
+            <button type="button" id="btnResetAll" class="btn btn-secondary" style="font-size:var(--font-size-xs);">↺ Reset</button>
+          </div>
+
+          <!-- YouTube Player Scrubber Simulator -->
+          <div class="yt-mock-player">
+            <div class="yt-mock-header">
+              <span>▶️ YouTube Player Scrubber Simulation</span>
+              <span id="ytTotalDurationDisplay">Total: 0:00</span>
+            </div>
+
+            <div id="mockProgressBar" class="yt-progress-container" aria-label="Simulated video scrubber bar">
+              <!-- Proportional segments injected here -->
+            </div>
+
+            <div class="yt-stats-row">
+              <div class="yt-stat-box">
+                <div id="statChapterCount" class="yt-stat-val">0</div>
+                <div class="yt-stat-lbl">Chapters</div>
+              </div>
+              <div class="yt-stat-box">
+                <div id="statAvgDuration" class="yt-stat-val">0s</div>
+                <div class="yt-stat-lbl">Avg Length</div>
+              </div>
+              <div class="yt-stat-box">
+                <div id="statShortest" class="yt-stat-val">0s</div>
+                <div class="yt-stat-lbl">Shortest</div>
+              </div>
+              <div class="yt-stat-box">
+                <div id="statLongest" class="yt-stat-val">0s</div>
+                <div class="yt-stat-lbl">Longest</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEO Educational Guide & Documentation -->
+      <div class="tool-documentation" style="margin-top:var(--space-5);">
+        <h2>YouTube Chapter Requirements &amp; Algorithm Benefits</h2>
+        <p>
+          YouTube video chapters divide long-form videos into distinct, clickable sections with personalized titles and visual thumbnails on the playback bar. Adding structured chapters significantly enhances your video's search engine optimization (SEO) by allowing Google Search to index individual segments as <strong>Key Moments</strong> directly in desktop and mobile Google Search results.
+        </p>
+        <p>
+          Beyond search visibility, chapters dramatically improve viewer retention and watch time by letting users jump directly to answers, code walkthroughs, or recipe steps. Videos with accurate chapters consistently earn higher satisfaction ratings and reduced bounce rates.
+        </p>
+
+        <h2>Official YouTube Chapter Rules Checklist</h2>
+        <p>For YouTube's automated parser to generate chapter splits on your video player, your video description must satisfy every one of the following requirements:</p>
+        <table style="width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:var(--font-size-sm);">
+          <thead>
+            <tr style="text-align:left; border-bottom:2px solid var(--color-border);">
+              <th style="padding:0.5rem;">Requirement</th>
+              <th style="padding:0.5rem;">Official Rule</th>
+              <th style="padding:0.5rem;">Why It Matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Starting Timestamp</strong></td>
+              <td style="padding:0.5rem;">First timestamp MUST start at <code>0:00</code> (or <code>00:00</code>)</td>
+              <td style="padding:0.5rem;">If the first chapter starts at 0:01 or later, the player ignores the entire list.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Minimum Count</strong></td>
+              <td style="padding:0.5rem;">Must contain at least <strong>3 chapters</strong> in ascending order</td>
+              <td style="padding:0.5rem;">A 2-part video cannot trigger the chapter segmenting engine.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Minimum Duration</strong></td>
+              <td style="padding:0.5rem;">Every chapter must be at least <strong>10 seconds</strong> long</td>
+              <td style="padding:0.5rem;">Rapid timestamps placed 5 seconds apart will break chapter rendering.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Chronological Order</strong></td>
+              <td style="padding:0.5rem;">Timestamps must increase monotonically (e.g. <code>0:00</code>, <code>2:15</code>, <code>5:40</code>)</td>
+              <td style="padding:0.5rem;">Out-of-order timecodes or duplicates cause parsing failure.</td>
+            </tr>
+            <tr>
+              <td style="padding:0.5rem;"><strong>Channel Standing</strong></td>
+              <td style="padding:0.5rem;">Zero active copyright or community guideline strikes</td>
+              <td style="padding:0.5rem;">Channels with copyright strikes occasionally have chapters restricted.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Common Timestamp Errors &amp; Troubleshooting</h2>
+        <p>If your chapters fail to display on YouTube despite pasting timestamps in your description, check these frequent culprits:</p>
+        <ul>
+          <li><strong>Using Periods Instead of Colons:</strong> Typing <code>2.30 Introduction</code> instead of <code>2:30 Introduction</code>. Our formatter automatically normalizes period and hyphen delimiters into clean colons.</li>
+          <li><strong>Single-Digit Second Formatting:</strong> Writing <code>1:5</code> instead of <code>1:05</code>. YouTube requires standard zero-padded 2-digit seconds.</li>
+          <li><strong>Accidentally Starting at 0:05:</strong> Creators often start their first chapter when their spoken intro finishes. YouTube mandates that chapter 1 start at <code>0:00</code>.</li>
+          <li><strong>Duplicate Timestamps:</strong> Listing two topics that begin in the same second causes the parser to fail.</li>
+          <li><strong>Square Brackets:</strong> Copying raw edit markers like <code>[04:20] Topic</code> is accepted by YouTube, but can look cluttered. Our tool cleans surrounding brackets while keeping the timestamps intact.</li>
+        </ul>
+
+        <h2>Best Practices for Chapter Titles &amp; Mobile Scrubber Optimization</h2>
+        <p>
+          On smartphone screens, YouTube's video player scrubber truncates long titles after approximately <strong>45 to 50 characters</strong>. If your chapter title is <em>"How to Set Up Webpack, Babel, PostCSS, and Docker in 2026"</em>, mobile viewers will only see <em>"How to Set Up Webpack, Babel, PostCSS..."</em>.
+        </p>
+        <ul>
+          <li><strong>Front-load essential keywords:</strong> Put the topic or action verb at the start (e.g., <em>"Installing Node.js"</em> rather than <em>"In This Section We Will Install Node.js"</em>).</li>
+          <li><strong>Avoid timestamps in the title string:</strong> Don't repeat the time in the title text (e.g., avoid <code>02:30 2:30 Intro</code>).</li>
+          <li><strong>Use Title Case or Sentence Case:</strong> Clean, capitalized titles appear more authoritative in Google Key Moments carousels.</li>
+        </ul>
+
+        <h2>Step-by-Step Workflow Guide for Video Editors</h2>
+        <p>Exporting markers from major Non-Linear Video Editing (NLE) software:</p>
+        <ul>
+          <li><strong>Adobe Premiere Pro:</strong> Export markers via <em>File &gt; Export &gt; Markers (.csv or .txt)</em>, or copy timeline marker timecodes directly. Paste them into our <strong>Raw Text</strong> tab to strip frames and clean delimiters.</li>
+          <li><strong>DaVinci Resolve:</strong> In the Edit page, right-click the timeline marker ruler, choose <em>Export &gt; Timeline Markers to EDL</em> or copy marker text. Our parser handles SMPTE timecodes (<code>01:02:15:24</code>) automatically.</li>
+          <li><strong>Final Cut Pro:</strong> Export chapter markers into your master video or chapter XML, or paste your marker list into our formatter to convert to description-ready text.</li>
+          <li><strong>CapCut &amp; Descript:</strong> Copy transcript section headings or exported timecodes and paste directly.</li>
+        </ul>
+
+        <h2>Ready-to-Use Chapter Templates</h2>
+        <p>Copy and customize these standardized templates for your YouTube channel niches:</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:var(--space-3); margin-top:0.5rem;">
+          <div style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border);">
+            <div style="font-weight:700; margin-bottom:0.35rem;">🎙️ Podcast / Interview</div>
+            <pre style="margin:0; font-size:0.75rem; font-family:monospace; white-space:pre-wrap;">0:00 - Guest Introduction
+01:45 - Early Career &amp; Breakthrough
+08:20 - Overcoming Major Obstacles
+18:40 - Industry Trends &amp; Predictions
+29:15 - Audience Q&amp;A
+35:00 - Final Advice &amp; Wrap Up</pre>
+          </div>
+          <div style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border);">
+            <div style="font-weight:700; margin-bottom:0.35rem;">💻 Coding / Tutorial</div>
+            <pre style="margin:0; font-size:0.75rem; font-family:monospace; white-space:pre-wrap;">0:00 - Project Overview &amp; Demo
+00:50 - Prerequisites &amp; Setup
+03:10 - Folder Structure &amp; Config
+06:45 - Writing the Core Logic
+12:20 - Testing &amp; Bug Fixing
+16:40 - Production Deployment</pre>
+          </div>
+          <div style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border);">
+            <div style="font-weight:700; margin-bottom:0.35rem;">🎮 Gaming Walkthrough</div>
+            <pre style="margin:0; font-size:0.75rem; font-family:monospace; white-space:pre-wrap;">0:00 - Quest Intro &amp; Gear Loadout
+02:10 - Dungeon Entrance Puzzle
+05:30 - Mini-Boss Fight Strategy
+09:15 - Hidden Chests &amp; Loot
+14:00 - Final Boss Battle
+18:30 - Quest Rewards &amp; Next Steps</pre>
+          </div>
+          <div style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border);">
+            <div style="font-weight:700; margin-bottom:0.35rem;">📦 Product Review</div>
+            <pre style="margin:0; font-size:0.75rem; font-family:monospace; white-space:pre-wrap;">0:00 - Overview &amp; Unboxing
+01:30 - Build Quality &amp; Design
+04:15 - Real-World Performance
+08:50 - Pros &amp; Cons Comparison
+11:20 - Price vs. Value Analysis
+13:10 - Final Verdict &amp; Buy Advice</pre>
+          </div>
+        </div>
+
+        <h2>Technical Specifications &amp; Parser Mechanics</h2>
+        <ul>
+          <li><strong>Supported Input Time Formats:</strong> <code>m:ss</code>, <code>mm:ss</code>, <code>h:mm:ss</code>, <code>hh:mm:ss</code>, SMPTE <code>hh:mm:ss:ff</code> (auto-drops frames).</li>
+          <li><strong>Supported Delimiters:</strong> Colons (<code>:</code>), periods (<code>.</code>), hyphens (<code>-</code>), brackets (<code>[]</code>), parentheses (<code>()</code>).</li>
+          <li><strong>Mobile Truncation Threshold:</strong> 50 characters (warns when titles exceed standard viewport allowances).</li>
+          <li><strong>Export Formats:</strong> Plain text (YouTube description standard) and <code>.txt</code> file download.</li>
+        </ul>
+
+        <h2>Privacy &amp; Browser-Only Execution Guarantee</h2>
+        <p>
+          All timestamp cleaning, regex matching, chronological re-ordering, and duration estimations occur locally in your browser session via client-side JavaScript. No video titles, draft scripts, or timeline markers are uploaded to external cloud endpoints.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">Why are my YouTube video chapters not appearing or working?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            The most common reasons are: 1) The first chapter does not begin at 0:00; 2) You listed fewer than 3 chapters; 3) At least one chapter duration is shorter than 10 seconds; 4) Timestamps are not in ascending order; or 5) Your channel has active copyright strikes.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is the official minimum duration for a YouTube chapter?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Every chapter must be at least 10 seconds long. If two timestamps are placed within 9 seconds of each other, YouTube's algorithm ignores the entire chapter list.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How long should YouTube chapter titles be?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Keep chapter titles under 45-50 characters. On mobile devices, the YouTube video player scrubber truncates long titles with ellipses (...), obscuring important keywords for viewers.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How does global time shifting help when editing videos?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            If you trim an intro, cut a sponsor segment, or insert an animated intro clip, all subsequent timestamps shift. The Global Time Shift tool lets you add or subtract seconds across all chapters with a single click while automatically keeping the 0:00 intro anchored.
+          </p>
+        </div>
+
+        <h2>Related Browser Tools</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2);">
+          <a href="/tools/youtube-shorts-safe-zone-checker.html" class="related-tool-chip">▶️ YouTube Shorts Safe-Zone Preview</a>
+          <a href="/tools/short-form-safe-zone-checker.html" class="related-tool-chip">🌐 All-in-One Short-Form Safe-Zone Checker</a>
+          <a href="/tools/tiktok-safe-zone-checker.html" class="related-tool-chip">🎵 TikTok Safe-Zone Preview &amp; Template Generator</a>
+          <a href="/tools/instagram-reels-safe-zone-checker.html" class="related-tool-chip">📸 Instagram Reels &amp; 4:5 Safe-Zone Checker</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top:var(--space-5); border-top:1px solid var(--color-border); padding:var(--space-4) 0; text-align:center; color:var(--color-text-muted); font-size:var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/chapter-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // State
+    let chapters = [];
+    let currentMode = 'raw'; // 'raw' or 'builder'
+
+    // DOM Elements
+    const tabRawBtn = document.getElementById('tabRawBtn');
+    const tabBuilderBtn = document.getElementById('tabBuilderBtn');
+    const tabRawPanel = document.getElementById('tabRawPanel');
+    const tabBuilderPanel = document.getElementById('tabBuilderPanel');
+
+    const rawChaptersInput = document.getElementById('rawChaptersInput');
+    const btnLoadSample = document.getElementById('btnLoadSample');
+    const btnClear = document.getElementById('btnClear');
+    const builderList = document.getElementById('builderList');
+    const btnAddRow = document.getElementById('btnAddRow');
+
+    const validationBanner = document.getElementById('validationBanner');
+    const bannerTitle = document.getElementById('bannerTitle');
+    const bannerIssueList = document.getElementById('bannerIssueList');
+    const bannerActions = document.getElementById('bannerActions');
+    const btnFixAll = document.getElementById('btnFixAll');
+
+    const separatorStyle = document.getElementById('separatorStyle');
+    const timestampFormat = document.getElementById('timestampFormat');
+    const caseFormat = document.getElementById('caseFormat');
+    const totalVideoDuration = document.getElementById('totalVideoDuration');
+
+    const timeOffsetSeconds = document.getElementById('timeOffsetSeconds');
+    const btnShiftPlus10 = document.getElementById('btnShiftPlus10');
+    const btnShiftMinus10 = document.getElementById('btnShiftMinus10');
+    const btnApplyShift = document.getElementById('btnApplyShift');
+
+    const formattedOutput = document.getElementById('formattedOutput');
+    const outputCharCount = document.getElementById('outputCharCount');
+    const btnCopyOutput = document.getElementById('btnCopyOutput');
+    const btnDownloadTxt = document.getElementById('btnDownloadTxt');
+    const btnResetAll = document.getElementById('btnResetAll');
+
+    const mockProgressBar = document.getElementById('mockProgressBar');
+    const ytTotalDurationDisplay = document.getElementById('ytTotalDurationDisplay');
+    const statChapterCount = document.getElementById('statChapterCount');
+    const statAvgDuration = document.getElementById('statAvgDuration');
+    const statShortest = document.getElementById('statShortest');
+    const statLongest = document.getElementById('statLongest');
+
+    const SAMPLE_MESSY_TEXT = `0.00 - Intro & Channel Welcome
+1:5 - Equipment & Studio Setup
+03:45 Project Initialization
+[05:20] Main Coding Tutorial & Architecture
+08-30 Unit Testing & Edge Cases
+00:11:15:12 Production Deployment & Hosting
+14.05 Final Recap & Community Discussion`;
+
+    // Tab Switching
+    function setTab(tab) {
+      currentMode = tab;
+      if (tab === 'raw') {
+        tabRawBtn.classList.add('active');
+        tabRawBtn.setAttribute('aria-selected', 'true');
+        tabBuilderBtn.classList.remove('active');
+        tabBuilderBtn.setAttribute('aria-selected', 'false');
+        tabRawPanel.style.display = 'block';
+        tabBuilderPanel.style.display = 'none';
+      } else {
+        tabBuilderBtn.classList.add('active');
+        tabBuilderBtn.setAttribute('aria-selected', 'true');
+        tabRawBtn.classList.remove('active');
+        tabRawBtn.setAttribute('aria-selected', 'false');
+        tabBuilderPanel.style.display = 'block';
+        tabRawPanel.style.display = 'none';
+        renderBuilderRows();
+      }
+    }
+
+    tabRawBtn.addEventListener('click', () => setTab('raw'));
+    tabBuilderBtn.addEventListener('click', () => setTab('builder'));
+
+    // Parse total video duration
+    function getTotalVideoSeconds() {
+      const val = (totalVideoDuration.value || '').trim();
+      if (!val) return null;
+      if (/^\d+$/.test(val)) return parseInt(val, 10);
+      return ChapterUtils.parseTimestampToSeconds(val);
+    }
+
+    // Refresh everything based on current `chapters` array
+    function updateUI(options = {}) {
+      const totalSec = getTotalVideoSeconds();
+      const validation = ChapterUtils.validateChapters(chapters, totalSec);
+
+      // 1. Validation Banner
+      bannerActions.innerHTML = '';
+      if (validation.status === 'empty') {
+        validationBanner.className = 'val-banner status-warning';
+        bannerTitle.textContent = 'ℹ️ No Chapters Entered';
+        bannerIssueList.innerHTML = '<li>Paste your timestamps or click "Load Sample Messy" to start.</li>';
+        btnFixAll.style.display = 'none';
+      } else if (validation.isValid) {
+        validationBanner.className = 'val-banner status-ready';
+        bannerTitle.textContent = '✅ Ready for YouTube';
+        bannerIssueList.innerHTML = '<li>All 4 official YouTube rules satisfied. Timestamps start at 0:00, chapters are &ge;10s, and ordered ascendingly.</li>';
+        btnFixAll.style.display = 'none';
+
+        if (validation.warnings && validation.warnings.length > 0) {
+          validation.warnings.forEach(warn => {
+            const li = document.createElement('li');
+            li.style.color = 'var(--color-text-muted)';
+            li.textContent = `💡 Note: ${warn}`;
+            bannerIssueList.appendChild(li);
+          });
+        }
+      } else {
+        validationBanner.className = 'val-banner status-issues';
+        bannerTitle.textContent = `⚠️ ${validation.issues.length} Issue(s) Found`;
+        bannerIssueList.innerHTML = '';
+        btnFixAll.style.display = 'inline-flex';
+
+        validation.issues.forEach(issue => {
+          const li = document.createElement('li');
+          li.textContent = typeof issue === 'string' ? issue : issue.message;
+          bannerIssueList.appendChild(li);
+
+          // Add individual quick fix button if available
+          if (issue.code === 'MISSING_ZERO') {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn-fix';
+            btn.textContent = '+ Auto-Prepend 0:00 Intro';
+            btn.addEventListener('click', () => {
+              chapters.unshift({
+                id: 'ch_' + Date.now(),
+                rawTime: '0:00',
+                seconds: 0,
+                title: 'Intro'
+              });
+              syncToInputs();
+            });
+            bannerActions.appendChild(btn);
+          } else if (issue.code === 'NOT_ASCENDING') {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn-fix';
+            btn.textContent = '⇅ Sort Ascending';
+            btn.addEventListener('click', () => {
+              chapters.sort((a, b) => a.seconds - b.seconds);
+              syncToInputs();
+            });
+            bannerActions.appendChild(btn);
+          } else if (issue.code === 'SHORT_DURATION') {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn-fix';
+            btn.textContent = '🔗 Merge Short Chapters (<10s)';
+            btn.addEventListener('click', () => {
+              chapters = ChapterUtils.autoFixAll(chapters, totalSec);
+              syncToInputs();
+            });
+            bannerActions.appendChild(btn);
+          }
+        }
+      );
+      }
+
+      // 2. Export string
+      const exportText = ChapterUtils.exportToString(chapters, {
+        separator: separatorStyle.value,
+        timeFormat: timestampFormat.value,
+        caseMode: caseFormat.value
+      });
+      formattedOutput.value = exportText;
+      outputCharCount.textContent = `${chapters.length} chapter(s) • ${exportText.length} chars`;
+
+      // 3. Update Raw Text if not currently typing in raw text
+      if (!options.fromRawInput) {
+        rawChaptersInput.value = exportText;
+      }
+
+      // 4. Update Builder Rows if in builder mode
+      if (currentMode === 'builder' && !options.fromBuilder) {
+        renderBuilderRows();
+      }
+
+      // 5. Update Mock Player & Stats
+      renderMockPlayer(totalSec);
+    }
+
+    function syncToInputs() {
+      updateUI({ fromRawInput: false, fromBuilder: false });
+    }
+
+    // Render Row Builder
+    function renderBuilderRows() {
+      builderList.innerHTML = '';
+      if (chapters.length === 0) {
+        builderList.innerHTML = '<div style="text-align:center; padding:1.5rem; color:var(--color-text-muted); font-size:var(--font-size-sm);">No chapters yet. Click "+ Add Chapter" above.</div>';
+        return;
+      }
+
+      chapters.forEach((ch, idx) => {
+        const row = document.createElement('div');
+        row.className = 'builder-row';
+
+        // Duration calculation
+        let durStr = '--';
+        if (idx < chapters.length - 1) {
+          const diff = chapters[idx + 1].seconds - ch.seconds;
+          durStr = ChapterUtils.formatDuration(diff);
+        } else {
+          const totalSec = getTotalVideoSeconds();
+          if (totalSec && totalSec > ch.seconds) {
+            durStr = ChapterUtils.formatDuration(totalSec - ch.seconds);
+          } else {
+            durStr = 'End';
+          }
+        }
+
+        const isOver50 = ch.title.length > 50;
+
+        row.innerHTML = `
+          <input type="text" class="form-input row-time-input" value="${ChapterUtils.formatSeconds(ch.seconds, timestampFormat.value)}" aria-label="Chapter start timestamp">
+          <div class="row-title-wrap">
+            <input type="text" class="form-input row-title-input" value="${ch.title.replace(/"/g, '&quot;')}" aria-label="Chapter title">
+            <span class="char-badge ${isOver50 ? 'warn' : ''}">${ch.title.length}/50</span>
+          </div>
+          <span class="row-dur-badge" title="Duration of this chapter">${durStr}</span>
+          <div class="row-controls">
+            <button type="button" class="btn-ctrl btn-up" title="Move up" ${idx === 0 ? 'disabled' : ''}>▲</button>
+            <button type="button" class="btn-ctrl btn-down" title="Move down" ${idx === chapters.length - 1 ? 'disabled' : ''}>▼</button>
+            <button type="button" class="btn-ctrl btn-del" title="Delete chapter">✕</button>
+          </div>
+        `;
+
+        const timeInp = row.querySelector('.row-time-input');
+        const titleInp = row.querySelector('.row-title-input');
+        const charBadge = row.querySelector('.char-badge');
+        const btnUp = row.querySelector('.btn-up');
+        const btnDown = row.querySelector('.btn-down');
+        const btnDel = row.querySelector('.btn-del');
+
+        timeInp.addEventListener('change', () => {
+          const sec = ChapterUtils.parseTimestampToSeconds(timeInp.value);
+          if (sec !== null) {
+            ch.seconds = sec;
+            updateUI({ fromBuilder: false });
+          } else {
+            timeInp.value = ChapterUtils.formatSeconds(ch.seconds, timestampFormat.value);
+          }
+        });
+
+        titleInp.addEventListener('input', () => {
+          ch.title = titleInp.value;
+          charBadge.textContent = `${ch.title.length}/50`;
+          charBadge.classList.toggle('warn', ch.title.length > 50);
+          updateUI({ fromBuilder: true });
+        });
+
+        btnUp.addEventListener('click', () => {
+          if (idx > 0) {
+            const temp = chapters[idx - 1];
+            chapters[idx - 1] = chapters[idx];
+            chapters[idx] = temp;
+            syncToInputs();
+          }
+        });
+
+        btnDown.addEventListener('click', () => {
+          if (idx < chapters.length - 1) {
+            const temp = chapters[idx + 1];
+            chapters[idx + 1] = chapters[idx];
+            chapters[idx] = temp;
+            syncToInputs();
+          }
+        });
+
+        btnDel.addEventListener('click', () => {
+          chapters.splice(idx, 1);
+          syncToInputs();
+        });
+
+        builderList.appendChild(row);
+      });
+    }
+
+    // Render YouTube Mock Progress Bar
+    function renderMockPlayer(totalSec) {
+      mockProgressBar.innerHTML = '';
+
+      if (chapters.length === 0) {
+        mockProgressBar.innerHTML = '<div style="width:100%; height:100%; background:#2a2a2a;"></div>';
+        ytTotalDurationDisplay.textContent = 'Total: 0:00';
+        statChapterCount.textContent = '0';
+        statAvgDuration.textContent = '0s';
+        statShortest.textContent = '0s';
+        statLongest.textContent = '0s';
+        return;
+      }
+
+      // Calculate total video seconds
+      let calculatedTotal = totalSec;
+      if (!calculatedTotal || calculatedTotal <= chapters[chapters.length - 1].seconds) {
+        // Estimate: last chapter seconds + 60s
+        calculatedTotal = chapters[chapters.length - 1].seconds + 60;
+      }
+
+      ytTotalDurationDisplay.textContent = `Total: ${ChapterUtils.formatSeconds(calculatedTotal)}`;
+      statChapterCount.textContent = chapters.length;
+
+      let minDur = Infinity;
+      let maxDur = 0;
+      let totalDurs = 0;
+
+      chapters.forEach((ch, idx) => {
+        let segmentDuration = 0;
+        if (idx < chapters.length - 1) {
+          segmentDuration = Math.max(0, chapters[idx + 1].seconds - ch.seconds);
+        } else {
+          segmentDuration = Math.max(0, calculatedTotal - ch.seconds);
+        }
+
+        if (segmentDuration < minDur) minDur = segmentDuration;
+        if (segmentDuration > maxDur) maxDur = segmentDuration;
+        totalDurs += segmentDuration;
+
+        const pct = Math.max(0.5, (segmentDuration / calculatedTotal) * 100);
+
+        const seg = document.createElement('div');
+        seg.className = 'yt-segment';
+        seg.style.width = `${pct}%`;
+
+        const tooltip = document.createElement('div');
+        tooltip.className = 'yt-tooltip';
+        tooltip.textContent = `${ChapterUtils.formatSeconds(ch.seconds)} • ${ch.title} (${ChapterUtils.formatDuration(segmentDuration)})`;
+
+        seg.appendChild(tooltip);
+        mockProgressBar.appendChild(seg);
+      });
+
+      const avg = Math.round(totalDurs / chapters.length);
+      statAvgDuration.textContent = ChapterUtils.formatDuration(avg);
+      statShortest.textContent = minDur === Infinity ? '0s' : ChapterUtils.formatDuration(minDur);
+      statLongest.textContent = ChapterUtils.formatDuration(maxDur);
+    }
+
+    // Handle Raw Text Change
+    rawChaptersInput.addEventListener('input', () => {
+      chapters = ChapterUtils.parseChaptersFromText(rawChaptersInput.value);
+      updateUI({ fromRawInput: true });
+    });
+
+    // Load Sample Button
+    btnLoadSample.addEventListener('click', () => {
+      rawChaptersInput.value = SAMPLE_MESSY_TEXT;
+      chapters = ChapterUtils.parseChaptersFromText(SAMPLE_MESSY_TEXT);
+      syncToInputs();
+    });
+
+    // Clear Button
+    btnClear.addEventListener('click', () => {
+      rawChaptersInput.value = '';
+      chapters = [];
+      syncToInputs();
+    });
+
+    // Add Row in Builder
+    btnAddRow.addEventListener('click', () => {
+      const lastSec = chapters.length > 0 ? chapters[chapters.length - 1].seconds + 30 : 0;
+      chapters.push({
+        id: 'ch_' + Date.now(),
+        rawTime: ChapterUtils.formatSeconds(lastSec),
+        seconds: lastSec,
+        title: 'New Chapter'
+      });
+      syncToInputs();
+    });
+
+    // Fix All Issues Button
+    btnFixAll.addEventListener('click', () => {
+      const totalSec = getTotalVideoSeconds();
+      chapters = ChapterUtils.autoFixAll(chapters, totalSec);
+      syncToInputs();
+    });
+
+    // Option selectors change
+    [separatorStyle, timestampFormat, caseFormat, totalVideoDuration].forEach(el => {
+      el.addEventListener('change', () => updateUI());
+      if (el === totalVideoDuration) {
+        el.addEventListener('input', () => updateUI());
+      }
+    });
+
+    // Time Shift Handlers
+    btnShiftPlus10.addEventListener('click', () => {
+      timeOffsetSeconds.value = (parseInt(timeOffsetSeconds.value || 0, 10) + 10);
+    });
+
+    btnShiftMinus10.addEventListener('click', () => {
+      timeOffsetSeconds.value = (parseInt(timeOffsetSeconds.value || 0, 10) - 10);
+    });
+
+    btnApplyShift.addEventListener('click', () => {
+      const offset = parseInt(timeOffsetSeconds.value || 0, 10);
+      if (offset !== 0) {
+        chapters = ChapterUtils.applyTimeOffset(chapters, offset);
+        syncToInputs();
+      }
+    });
+
+    // Copy to Clipboard
+    btnCopyOutput.addEventListener('click', () => {
+      const text = formattedOutput.value;
+      if (!text) return;
+
+      navigator.clipboard.writeText(text).then(() => {
+        const origText = btnCopyOutput.textContent;
+        btnCopyOutput.textContent = '✓ Copied to Clipboard!';
+        setTimeout(() => {
+          btnCopyOutput.textContent = origText;
+        }, 2000);
+      }).catch(() => {
+        formattedOutput.select();
+        document.execCommand('copy');
+      });
+    });
+
+    // Download .txt
+    btnDownloadTxt.addEventListener('click', () => {
+      const text = formattedOutput.value;
+      if (!text) return;
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'youtube-chapters.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // Reset All
+    btnResetAll.addEventListener('click', () => {
+      separatorStyle.value = 'hyphen';
+      timestampFormat.value = 'auto';
+      caseFormat.value = 'original';
+      totalVideoDuration.value = '';
+      timeOffsetSeconds.value = '';
+      rawChaptersInput.value = SAMPLE_MESSY_TEXT;
+      chapters = ChapterUtils.parseChaptersFromText(SAMPLE_MESSY_TEXT);
+      syncToInputs();
+    });
+
+    // Initial Load with sample data
+    rawChaptersInput.value = SAMPLE_MESSY_TEXT;
+    chapters = ChapterUtils.parseChaptersFromText(SAMPLE_MESSY_TEXT);
+    syncToInputs();
+  })();
+  </script>
+</body>
+</html>

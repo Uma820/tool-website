@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchasing Power Parity (PPP) SaaS Price Calculator — Global Parity Pricing</title>
+  <meta name="description" content="Calculate localized Purchasing Power Parity (PPP) prices for SaaS, digital products, and courses across 150+ countries. 4-tier regional pricing, VPN protection guide, and 1-click JSON/CSV exports.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/ppp-price-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/ppp-price-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/ppp-price-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Purchasing Power Parity (PPP) SaaS Price Calculator",
+    "description": "Calculate localized purchasing power parity prices and regional tiers for SaaS and digital products across 150+ countries with 1-click JSON/CSV export and revenue lift simulation.",
+    "url": "https://nexivo.com/tools/ppp-price-calculator.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Purchasing Power Parity (PPP) pricing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Purchasing Power Parity (PPP) pricing adjusts software and digital product prices based on the local living costs and currency purchasing power of each customer's country. Charging $49 in the US might represent a casual purchase, whereas in India, Brazil, or Nigeria, $49 equals a week's living expenses. PPP pricing restores affordability, increasing global conversion rates and net revenue."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do SaaS founders prevent US and EU buyers from using VPNs to get PPP discounts?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Top prevention strategies include: 1) Requiring credit cards issued in the buyer's home country via Stripe or Paddle; 2) Using 4 broad regional tiers rather than hyper-specific 80% individual country discounts; 3) Establishing a strict price floor (e.g. 50-60% maximum discount); and 4) Displaying transparent checkout notices that misuse violates terms of service."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does offering PPP discounts cannibalize existing SaaS revenue?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. In emerging markets without PPP, conversion rates for full-price US software are typically near 0.1%. When prices are calibrated to local purchasing power, conversions frequently jump by 200% to 400%, generating significant incremental net revenue from customers who otherwise would have pirated or abandoned the product."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between granular country pricing and 4-Tier regional pricing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Granular pricing calculates an exact discount for all 150+ countries, which is great for automated edge middleware. 4-Tier regional pricing simplifies the world into 4 clean tiers (Tier 1: 0% off, Tier 2: 25% off, Tier 3: 45% off, Tier 4: 60% off), allowing founders to manage just 3 promotional coupon codes (PPP25, PPP45, PPP60) in checkout platforms like Lemon Squeezy, Gumroad, or Stripe."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .ppp-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-3);
+      padding: var(--space-3);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      margin-bottom: var(--space-4);
+    }
+    .quick-picks-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+    .btn-quick-pick {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .btn-quick-pick:hover, .btn-quick-pick.active {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    /* Tier Grid */
+    .tier-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .tier-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      transition: border-color 0.2s ease;
+    }
+    .tier-card:hover {
+      border-color: var(--color-primary);
+    }
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .tier-1 { background: rgba(59, 130, 246, 0.15); color: #2563eb; }
+    .tier-2 { background: rgba(16, 185, 129, 0.15); color: #059669; }
+    .tier-3 { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .tier-4 { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+    .tier-price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-family: monospace;
+      color: var(--color-text);
+    }
+    .tier-coupon-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-bg);
+      border: 1px dashed var(--color-border);
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: monospace;
+      margin-top: auto;
+    }
+    .btn-copy-mini {
+      background: none;
+      border: none;
+      color: var(--color-primary);
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0 0.2rem;
+    }
+    .btn-copy-mini:hover {
+      text-decoration: underline;
+    }
+
+    /* Revenue Simulator Card */
+    .simulator-card {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05));
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-2);
+    }
+    .sim-result-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      text-align: center;
+    }
+    .sim-result-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: monospace;
+      color: #10b981;
+    }
+    .sim-result-lbl {
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Filter Pills */
+    .filter-pills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: var(--space-3);
+    }
+    .filter-pill {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--color-text-muted);
+    }
+    .filter-pill:hover {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    .filter-pill.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    /* Country Table */
+    .table-container {
+      max-height: 520px;
+      overflow-y: auto;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      background: var(--color-surface);
+    }
+    .ppp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--font-size-sm);
+      text-align: left;
+    }
+    .ppp-table th {
+      position: sticky;
+      top: 0;
+      background: var(--color-bg);
+      padding: 0.6rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid var(--color-border);
+      z-index: 2;
+    }
+    .ppp-table td {
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--color-border);
+      vertical-align: middle;
+    }
+    .ppp-table tr:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    [data-theme="dark"] .ppp-table tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .country-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .iso-badge {
+      font-family: monospace;
+      font-size: 0.65rem;
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+    }
+    .discount-pill {
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .discount-none { background: rgba(100, 116, 139, 0.15); color: var(--color-text-muted); }
+    .discount-mid { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .discount-high { background: rgba(16, 185, 129, 0.15); color: #059669; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content" id="main-content">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <a href="/#calculators">Calculators</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <span class="breadcrumb-current">PPP SaaS Price Calculator</span>
+    </nav>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-title-row">
+          <h1 class="tool-title">Purchasing Power Parity (PPP) SaaS Price Calculator</h1>
+          <span class="badge badge-editorial">Calculators &amp; Business</span>
+        </div>
+        <p class="tool-desc">Calculate localized pricing for SaaS subscriptions, digital downloads, and courses across 150+ countries using official World Bank purchasing power parity ratios. Generate 4 clean regional pricing tiers, simulate revenue lifts, and export ready-to-deploy configs in 1 click.</p>
+        <div class="privacy-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>100% Client-Side — Calculations, exchange rates, and exports run entirely in your browser with zero analytics tracking.</span>
+        </div>
+      </div>
+
+      <!-- Top Control Bar: Founder Pricing Controls -->
+      <div class="ppp-controls-grid">
+        <!-- 1. Base US Price -->
+        <div class="form-group" style="margin:0;">
+          <label for="baseUsdPrice" class="form-label" style="font-size:var(--font-size-xs); font-weight:700;">Base US Price ($ USD):</label>
+          <div style="position:relative;">
+            <span style="position:absolute; left:10px; top:50%; transform:translateY(-50%); font-weight:700; color:var(--color-text-muted);">$</span>
+            <input type="number" id="baseUsdPrice" class="form-input" value="49" min="1" max="10000" step="1" style="padding-left:24px; font-weight:700; font-family:monospace;" aria-label="Base US price in USD">
+          </div>
+          <div class="quick-picks-row" aria-label="Quick pick base price">
+            <button type="button" class="btn-quick-pick" data-val="9">$9</button>
+            <button type="button" class="btn-quick-pick" data-val="19">$19</button>
+            <button type="button" class="btn-quick-pick" data-val="29">$29</button>
+            <button type="button" class="btn-quick-pick active" data-val="49">$49</button>
+            <button type="button" class="btn-quick-pick" data-val="99">$99</button>
+            <button type="button" class="btn-quick-pick" data-val="299">$299</button>
+          </div>
+        </div>
+
+        <!-- 2. Product Type / Margin Guardrail -->
+        <div class="form-group" style="margin:0;">
+          <label for="productTypePreset" class="form-label" style="font-size:var(--font-size-xs); font-weight:700;">Product Type / Cost Structure:</label>
+          <select id="productTypePreset" class="form-select" style="font-size:var(--font-size-xs); padding:0.4rem;">
+            <option value="digital">Digital Product / Course (Max 75% off)</option>
+            <option value="saas" selected>SaaS Web App (Max 60% off)</option>
+            <option value="service">AI Heavy / High COGS (Max 40% off)</option>
+            <option value="custom">Custom Maximum Discount Floor</option>
+          </select>
+          <span style="font-size:0.7rem; color:var(--color-text-muted); display:block; margin-top:0.25rem;">Prevents selling below server or token unit costs.</span>
+        </div>
+
+        <!-- 3. Max Discount Cap Slider -->
+        <div class="form-group" style="margin:0;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label for="maxDiscountSlider" class="form-label" style="font-size:var(--font-size-xs); font-weight:700; margin:0;">Max Discount Cap:</label>
+            <span id="maxDiscountVal" style="font-weight:700; font-family:monospace; color:var(--color-primary); font-size:var(--font-size-xs);">60%</span>
+          </div>
+          <input type="range" id="maxDiscountSlider" class="form-range" min="0" max="85" step="5" value="60" style="margin-top:0.5rem;" aria-label="Maximum allowed discount percentage">
+          <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:var(--color-text-muted);">
+            <span>0% (No discount)</span>
+            <span>50%</span>
+            <span>85% (Max)</span>
+          </div>
+        </div>
+
+        <!-- 4. Rounding & Display -->
+        <div class="form-group" style="margin:0;">
+          <label for="roundingStyle" class="form-label" style="font-size:var(--font-size-xs); font-weight:700;">Price Rounding Style:</label>
+          <select id="roundingStyle" class="form-select" style="font-size:var(--font-size-xs); padding:0.4rem;">
+            <option value="charm" selected>Charm .99 ($17.99)</option>
+            <option value="local_charm">Local Market Charm (₹999, €19, R$79)</option>
+            <option value="whole">Whole Numbers ($18, ₹1,000)</option>
+            <option value="exact">Exact Decimals ($18.42)</option>
+          </select>
+
+          <label for="currencyDisplayMode" class="form-label" style="font-size:var(--font-size-xs); font-weight:700; margin-top:0.35rem; margin-bottom:0.15rem;">Currency Display:</label>
+          <select id="currencyDisplayMode" class="form-select" style="font-size:var(--font-size-xs); padding:0.3rem;">
+            <option value="both" selected>USD + Local Currency Side-by-Side</option>
+            <option value="usd">USD Equivalent Only</option>
+            <option value="local">Local Currency Only</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section: 4-Tier Regional Pricing Cards & 1-Click Exports -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+        <div>
+          <h2 style="font-size:var(--font-size-base); font-weight:700; margin:0;">🎯 4-Tier Regional Pricing (Stripe / Gumroad / Lemon Squeezy)</h2>
+          <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin:0;">Group 150+ countries into 4 simple tiers to avoid managing dozens of complex coupons.</p>
+        </div>
+        <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+          <button type="button" id="btnCopyJson" class="btn btn-primary" style="font-size:var(--font-size-xs); padding:0.35rem 0.65rem;">📋 Copy JSON Config</button>
+          <button type="button" id="btnDownloadCsv" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.35rem 0.65rem;">💾 Download CSV</button>
+          <button type="button" id="btnCopyMarkdown" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.35rem 0.65rem;">📝 Copy Markdown</button>
+        </div>
+      </div>
+
+      <div class="tier-cards-grid">
+        <!-- Tier 1 -->
+        <div class="tier-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tier-badge tier-1">Tier 1</span>
+            <span style="font-size:0.75rem; font-weight:600; color:var(--color-text-muted);">0% Off (Full)</span>
+          </div>
+          <div id="tier1Price" class="tier-price">$49.00</div>
+          <p style="font-size:0.72rem; color:var(--color-text-muted); margin:0;">US, Canada, UK, Germany, France, Switzerland, Australia, Japan.</p>
+          <div class="tier-coupon-box">
+            <span>Coupon: <strong>FULLPRICE</strong></span>
+            <button type="button" class="btn-copy-mini" data-copy="FULLPRICE">Copy</button>
+          </div>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="tier-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tier-badge tier-2">Tier 2</span>
+            <span style="font-size:0.75rem; font-weight:600; color:var(--color-text-muted);">25% Off</span>
+          </div>
+          <div id="tier2Price" class="tier-price">$36.99</div>
+          <p style="font-size:0.72rem; color:var(--color-text-muted); margin:0;">Spain, Portugal, South Korea, UAE, Greece, Chile, Taiwan, Uruguay.</p>
+          <div class="tier-coupon-box">
+            <span>Coupon: <strong>PPP25</strong></span>
+            <button type="button" class="btn-copy-mini" data-copy="PPP25">Copy</button>
+          </div>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="tier-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tier-badge tier-3">Tier 3</span>
+            <span style="font-size:0.75rem; font-weight:600; color:var(--color-text-muted);">45% Off</span>
+          </div>
+          <div id="tier3Price" class="tier-price">$26.99</div>
+          <p style="font-size:0.72rem; color:var(--color-text-muted); margin:0;">Brazil, Mexico, Poland, South Africa, Romania, Malaysia, Colombia.</p>
+          <div class="tier-coupon-box">
+            <span>Coupon: <strong>PPP45</strong></span>
+            <button type="button" class="btn-copy-mini" data-copy="PPP45">Copy</button>
+          </div>
+        </div>
+
+        <!-- Tier 4 -->
+        <div class="tier-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="tier-badge tier-4">Tier 4</span>
+            <span id="tier4DiscountLbl" style="font-size:0.75rem; font-weight:600; color:var(--color-text-muted);">60% Off</span>
+          </div>
+          <div id="tier4Price" class="tier-price">$19.99</div>
+          <p style="font-size:0.72rem; color:var(--color-text-muted); margin:0;">India, Nigeria, Indonesia, Philippines, Vietnam, Egypt, Pakistan.</p>
+          <div class="tier-coupon-box">
+            <span>Coupon: <strong id="tier4CouponCode">PPP60</strong></span>
+            <button type="button" class="btn-copy-mini" id="btnCopyTier4Coupon" data-copy="PPP60">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bonus Mini-Widget: Revenue & Conversion Simulator -->
+      <div class="simulator-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+          <div>
+            <h3 style="font-size:var(--font-size-sm); font-weight:700; margin:0;">📈 Revenue Lift Simulator: "What Happens If I Enable PPP?"</h3>
+            <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin:0;">In emerging markets, full-price conversion is notoriously low (~0.1%). Affordability unlocks pent-up demand.</p>
+          </div>
+          <span style="font-size:0.72rem; font-weight:700; padding:0.2rem 0.5rem; background:rgba(16, 185, 129, 0.15); color:#059669; border-radius:4px;">Volume Expansion > Unit Discount</span>
+        </div>
+
+        <div class="sim-grid">
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:var(--font-size-xs); font-weight:600;">
+              <label for="simCurrentSales" style="margin:0;">Current Monthly Sales:</label>
+              <span id="simCurrentSalesVal">100 sales/mo</span>
+            </div>
+            <input type="range" id="simCurrentSales" class="form-range" min="10" max="1000" step="10" value="100" style="margin-top:0.35rem;" aria-label="Current monthly sales">
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:var(--font-size-xs); font-weight:600;">
+              <label for="simNonUsShare" style="margin:0;">Non-US Traffic Share (%):</label>
+              <span id="simNonUsShareVal">45%</span>
+            </div>
+            <input type="range" id="simNonUsShare" class="form-range" min="10" max="90" step="5" value="45" style="margin-top:0.35rem;" aria-label="Non-US traffic percentage share">
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:var(--font-size-xs); font-weight:600;">
+              <label for="simConversionLift" style="margin:0;">Emerging Market Lift:</label>
+              <span id="simConversionLiftVal">2.5× conversions</span>
+            </div>
+            <input type="range" id="simConversionLift" class="form-range" min="1.5" max="4.0" step="0.1" value="2.5" style="margin-top:0.35rem;" aria-label="Conversion rate multiplier in emerging markets">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:var(--space-2); margin-top:var(--space-3);">
+          <div class="sim-result-box">
+            <div class="sim-result-lbl">Current Baseline Revenue</div>
+            <div id="simBaselineRev" class="sim-result-val" style="color:var(--color-text);">$4,900 / mo</div>
+          </div>
+          <div class="sim-result-box">
+            <div class="sim-result-lbl">Projected Revenue With PPP</div>
+            <div id="simProjectedRev" class="sim-result-val">$6,450 / mo</div>
+          </div>
+          <div class="sim-result-box">
+            <div class="sim-result-lbl">Net Incremental Revenue</div>
+            <div id="simNetGain" class="sim-result-val">+$1,550 / mo</div>
+          </div>
+          <div class="sim-result-box">
+            <div class="sim-result-lbl">Net Growth Lift</div>
+            <div id="simGrowthPct" class="sim-result-val" style="color:#2563eb;">+31.6%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Country PPP Table & Search -->
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem;">
+          <h2 style="font-size:var(--font-size-base); font-weight:700; margin:0;">🌍 Country Purchasing Power Table (150+ Markets)</h2>
+          <div style="display:flex; gap:0.5rem; font-size:var(--font-size-xs); color:var(--color-text-muted);">
+            <span id="statShowingCount">Showing 152 countries</span>
+          </div>
+        </div>
+
+        <!-- Filter Pills & Search Bar -->
+        <div style="display:grid; grid-template-columns:1fr; gap:var(--space-2); margin-bottom:var(--space-2);">
+          <div class="filter-pills-row" role="radiogroup" aria-label="Region filter">
+            <button type="button" class="filter-pill active" data-region="all">All Countries (152)</button>
+            <button type="button" class="filter-pill" data-region="popular">⭐ Popular SaaS Markets (30)</button>
+            <button type="button" class="filter-pill" data-region="asia">🌏 Asia-Pacific</button>
+            <button type="button" class="filter-pill" data-region="europe">🌍 Europe</button>
+            <button type="button" class="filter-pill" data-region="latam">🌎 Latin America</button>
+            <button type="button" class="filter-pill" data-region="mea">🌍 Middle East &amp; Africa</button>
+          </div>
+
+          <div style="position:relative;">
+            <input type="text" id="countrySearchInput" class="form-input" placeholder="🔍 Search country name or ISO code (e.g. India, Brazil, IN, DE, PLN)..." aria-label="Search country or currency code" style="font-size:var(--font-size-sm); padding-left:10px;">
+          </div>
+        </div>
+
+        <!-- Scrollable Table -->
+        <div class="table-container">
+          <table class="ppp-table" aria-label="Purchasing power parity prices by country">
+            <thead>
+              <tr>
+                <th style="min-width:180px;">Country &amp; Code</th>
+                <th>PPP Ratio (vs US 1.0)</th>
+                <th>Recommended Discount</th>
+                <th id="thPriceUsd">Recommended Price (USD)</th>
+                <th id="thPriceLocal">Local Currency Price</th>
+                <th>Pricing Tier</th>
+              </tr>
+            </thead>
+            <tbody id="countryTableBody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Comprehensive SEO Educational Guide -->
+      <div class="tool-documentation" style="margin-top:var(--space-5);">
+        <h2>What Purchasing Power Parity (PPP) Pricing Is &amp; Why SaaS Founders Use It</h2>
+        <p>
+          Purchasing Power Parity (PPP) pricing is the economic practice of dynamically calibrating the price of software, digital subscriptions, courses, or digital assets to reflect the local purchasing power of customers worldwide. 
+        </p>
+        <p>
+          A single $49 USD monthly charge represents approximately <strong>0.8%</strong> of the median monthly salary in the United States. However, that exact same $49 charge consumes over <strong>18% to 25%</strong> of the median monthly income in emerging software markets like India, Nigeria, Pakistan, or Brazil. Without localized pricing, developers inadvertently price out over 80% of the world's population, forcing potential customers toward unmonetized open-source clones or software piracy.
+        </p>
+
+        <h2>The World Bank PPP Ratio Formula &amp; Price Level Index</h2>
+        <p>
+          The World Bank and the Organization for Economic Co-operation and Development (OECD) periodically calculate Purchasing Power Parity conversion factors based on international price comparison surveys across identical baskets of goods and services (the International Comparison Program).
+        </p>
+        <p>
+          The <strong>Price Level Ratio</strong> relative to the United States ($\text{US} = 1.00$) is expressed mathematically as:
+        </p>
+        <div style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); font-family:monospace; margin-bottom:1rem; font-size:var(--font-size-sm);">
+          $$\text{PPP Price Level Index} = \frac{\text{PPP Conversion Factor (Local Currency / USD)}}{\text{Market Exchange Rate (Local Currency / USD)}}$$
+          $$\text{Raw Recommended Discount \%} = \max\left(0, \left(1 - \text{PPP Ratio}\right) \times 100\right)$$
+          $$\text{Target Price} = \text{Base Price} \times \left(1 - \min\left(\text{Raw Discount}, \text{Founder Cap}\right)\right)$$
+        </div>
+
+        <h2>Proven Strategies to Prevent VPN Abuse &amp; Revenue Cannibalization</h2>
+        <p>
+          The number one hesitation founders express before rolling out parity pricing is: <em>"Won't US or European buyers use a VPN to pretend they are in India or Brazil to get 60% off?"</em>. In practice, seasoned SaaS operators eliminate VPN arbitrage through four battle-tested mechanisms:
+        </p>
+        <ul>
+          <li><strong>Credit Card Issuing Country Verification:</strong> Stripe, Paddle, and Lemon Squeezy return the 3-letter issuing country of the customer's credit card or bank. Automatically verify that the billing card origin matches the discounted country IP address. If a customer is browsing with an Indian IP but pays with a Chase Visa card issued in New York, invalidate the discount code at checkout.</li>
+          <li><strong>4-Tier Regional Pricing Instead of 80% Outliers:</strong> Rather than granting unpredictable 80% discounts on individual developing nations, group all non-parity countries into 4 standardized tiers (`0%`, `25%`, `45%`, `60%`). Even if an edge case slips through, the maximum discount is capped at a sustainable margin.</li>
+          <li><strong>Margin Guardrail &amp; Unit Cost Floors:</strong> If your software incurs variable infrastructure costs per user (e.g. OpenAI GPT-4 API tokens, dedicated AWS EC2 instances, or human customer support), set your <strong>Max Discount Cap</strong> to 40% or 50% so every tier remains unit-profitable.</li>
+          <li><strong>Transparent Banners &amp; Account Flagging:</strong> Show an overt notification: <em>"We detected you are visiting from Brazil. We've applied a local parity discount to make our tools accessible."</em> Emphasizing fairness and local currency transparency reduces abuse while creating goodwill.</li>
+        </ul>
+
+        <h2>PPP Comparison Table for Top 20 Global Software Markets</h2>
+        <table style="width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:var(--font-size-sm);">
+          <thead>
+            <tr style="text-align:left; border-bottom:2px solid var(--color-border);">
+              <th style="padding:0.5rem;">Country</th>
+              <th style="padding:0.5rem;">ISO Code</th>
+              <th style="padding:0.5rem;">PPP Index (vs US 1.0)</th>
+              <th style="padding:0.5rem;">Standard Tier</th>
+              <th style="padding:0.5rem;">Recommended Discount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇺🇸 United States</td><td style="padding:0.5rem;"><code>US</code></td><td style="padding:0.5rem;">1.00</td><td style="padding:0.5rem;">Tier 1</td><td style="padding:0.5rem;">0% (Base Price)</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇨🇭 Switzerland</td><td style="padding:0.5rem;"><code>CH</code></td><td style="padding:0.5rem;">1.18</td><td style="padding:0.5rem;">Tier 1</td><td style="padding:0.5rem;">0%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇬🇧 United Kingdom</td><td style="padding:0.5rem;"><code>GB</code></td><td style="padding:0.5rem;">0.88</td><td style="padding:0.5rem;">Tier 1</td><td style="padding:0.5rem;">0%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇩🇪 Germany</td><td style="padding:0.5rem;"><code>DE</code></td><td style="padding:0.5rem;">0.84</td><td style="padding:0.5rem;">Tier 1</td><td style="padding:0.5rem;">0%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇯🇵 Japan</td><td style="padding:0.5rem;"><code>JP</code></td><td style="padding:0.5rem;">0.72</td><td style="padding:0.5rem;">Tier 2</td><td style="padding:0.5rem;">25%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇰🇷 South Korea</td><td style="padding:0.5rem;"><code>KR</code></td><td style="padding:0.5rem;">0.75</td><td style="padding:0.5rem;">Tier 2</td><td style="padding:0.5rem;">25%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇵🇱 Poland</td><td style="padding:0.5rem;"><code>PL</code></td><td style="padding:0.5rem;">0.52</td><td style="padding:0.5rem;">Tier 3</td><td style="padding:0.5rem;">45%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇲🇽 Mexico</td><td style="padding:0.5rem;"><code>MX</code></td><td style="padding:0.5rem;">0.48</td><td style="padding:0.5rem;">Tier 3</td><td style="padding:0.5rem;">45%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇧🇷 Brazil</td><td style="padding:0.5rem;"><code>BR</code></td><td style="padding:0.5rem;">0.42</td><td style="padding:0.5rem;">Tier 3/4</td><td style="padding:0.5rem;">45% - 58%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇿🇦 South Africa</td><td style="padding:0.5rem;"><code>ZA</code></td><td style="padding:0.5rem;">0.44</td><td style="padding:0.5rem;">Tier 3</td><td style="padding:0.5rem;">45%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇮🇳 India</td><td style="padding:0.5rem;"><code>IN</code></td><td style="padding:0.5rem;">0.28</td><td style="padding:0.5rem;">Tier 4</td><td style="padding:0.5rem;">60% - 70%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇮🇩 Indonesia</td><td style="padding:0.5rem;"><code>ID</code></td><td style="padding:0.5rem;">0.32</td><td style="padding:0.5rem;">Tier 4</td><td style="padding:0.5rem;">60%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇳🇬 Nigeria</td><td style="padding:0.5rem;"><code>NG</code></td><td style="padding:0.5rem;">0.24</td><td style="padding:0.5rem;">Tier 4</td><td style="padding:0.5rem;">60% - 75%</td></tr>
+            <tr style="border-bottom:1px solid var(--color-border);"><td style="padding:0.5rem;">🇵🇭 Philippines</td><td style="padding:0.5rem;"><code>PH</code></td><td style="padding:0.5rem;">0.34</td><td style="padding:0.5rem;">Tier 4</td><td style="padding:0.5rem;">60%</td></tr>
+            <tr><td style="padding:0.5rem;">🇪🇬 Egypt</td><td style="padding:0.5rem;"><code>EG</code></td><td style="padding:0.5rem;">0.22</td><td style="padding:0.5rem;">Tier 4</td><td style="padding:0.5rem;">60% - 75%</td></tr>
+          </tbody>
+        </table>
+
+        <h2>4-Tier Regional Pricing vs. Granular Dynamic Geolocation</h2>
+        <p>
+          Founders can choose between two primary implementation architectures:
+        </p>
+        <ul>
+          <li><strong>The 4-Tier Strategy (Simplest, Recommended):</strong> Set up 3 coupon codes in Stripe or Lemon Squeezy (<code>PPP25</code>, <code>PPP45</code>, <code>PPP60</code>). Read the visitor's country header at the edge and display a floating discount banner: <em>"Enjoy 45% off in Mexico with code PPP45."</em> This eliminates maintaining hundreds of currency exchange webhooks.</li>
+          <li><strong>Granular Edge Geolocation (Advanced):</strong> Use our <strong>Copy JSON Config</strong> button to embed country-by-country prices into a Cloudflare Worker, Vercel Edge Middleware, or Next.js server component. Render local prices in the visitor's native currency (e.g., ₹1,499 in India, R$99 in Brazil) with localized Stripe checkout sessions.</li>
+        </ul>
+
+        <h2>Implementation Guide: Adding PPP Geolocation to Next.js &amp; Cloudflare</h2>
+        <p>Using Cloudflare Workers or Next.js middleware, reading visitor country takes only 3 lines of code:</p>
+        <pre style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); font-family:monospace; font-size:0.8rem; overflow-x:auto;">
+// Next.js middleware.ts or Cloudflare Worker
+import pppConfig from './ppp-pricing-config.json';
+
+export function middleware(request: Request) {
+  const countryCode = request.headers.get('cf-ipcountry') || 'US';
+  const pricing = pppConfig[countryCode] || pppConfig['US'];
+
+  // Pass pricing object into headers or props
+  request.headers.set('x-ppp-discount', String(pricing.discount));
+  request.headers.set('x-ppp-price', String(pricing.priceUsd));
+}
+        </pre>
+
+        <h2>Technical Specifications &amp; Currency Rounding Mechanics</h2>
+        <ul>
+          <li><strong>Coverage:</strong> 152 sovereign nations and territories with World Bank PPP price level factors and realistic FX conversion baselines.</li>
+          <li><strong>Rounding Formats:</strong> Psychological Charm pricing (`.99`), Whole Number rounding, Local Currency Charm endings (e.g. `₹999`, `R$79`), and Exact 2-decimal calculations.</li>
+          <li><strong>Data Export Formats:</strong> JSON configuration map, RFC-4180 compliant CSV, and GitHub-flavored Markdown pricing tables.</li>
+        </ul>
+
+        <h2>100% Client-Side Privacy Guarantee</h2>
+        <p>
+          Your product pricing strategy, traffic estimates, revenue figures, and export configurations are executed entirely in client-side JavaScript memory. No product data or commercial metrics are transmitted to any third-party analytics servers.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is Purchasing Power Parity (PPP) pricing?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Purchasing Power Parity (PPP) pricing adjusts software and digital product prices based on the local living costs and currency purchasing power of each customer's country. Charging $49 in the US might represent a casual purchase, whereas in India, Brazil, or Nigeria, $49 equals a week's living expenses. PPP pricing restores affordability, increasing global conversion rates and net revenue.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How do SaaS founders prevent US and EU buyers from using VPNs to get PPP discounts?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Top prevention strategies include: 1) Requiring credit cards issued in the buyer's home country via Stripe or Paddle; 2) Using 4 broad regional tiers rather than hyper-specific 80% individual country discounts; 3) Establishing a strict price floor (e.g. 50-60% maximum discount); and 4) Displaying transparent checkout notices that misuse violates terms of service.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">Does offering PPP discounts cannibalize existing SaaS revenue?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            No. In emerging markets without PPP, conversion rates for full-price US software are typically near 0.1%. When prices are calibrated to local purchasing power, conversions frequently jump by 200% to 400%, generating significant incremental net revenue from customers who otherwise would have pirated or abandoned the product.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is the difference between granular country pricing and 4-Tier regional pricing?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Granular pricing calculates an exact discount for all 150+ countries, which is great for automated edge middleware. 4-Tier regional pricing simplifies the world into 4 clean tiers (Tier 1: 0% off, Tier 2: 25% off, Tier 3: 45% off, Tier 4: 60% off), allowing founders to manage just 3 promotional coupon codes (PPP25, PPP45, PPP60) in checkout platforms like Lemon Squeezy, Gumroad, or Stripe.
+          </p>
+        </div>
+
+        <h2>Related Browser Tools</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2);">
+          <a href="/tools/percentage-calculator.html" class="related-tool-chip">🔢 Percentage Calculator</a>
+          <a href="/tools/unit-converter.html" class="related-tool-chip">🔄 Universal Unit Converter</a>
+          <a href="/tools/meta-tags-toolkit.html" class="related-tool-chip">🏷️ Meta Tags Toolkit</a>
+          <a href="/tools/open-graph-previewer.html" class="related-tool-chip">🖼️ Open Graph Previewer</a>
+          <a href="/tools/youtube-money-calculator.html" class="related-tool-chip">💰 YouTube Money Calculator</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top:var(--space-5); border-top:1px solid var(--color-border); padding:var(--space-4) 0; text-align:center; color:var(--color-text-muted); font-size:var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/ppp-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // State
+    let basePrice = 49;
+    let maxDiscount = 60;
+    let rounding = 'charm';
+    let displayMode = 'both';
+    let selectedRegion = 'all';
+    let searchQuery = '';
+
+    // Simulator State
+    let simSales = 100;
+    let simNonUs = 45;
+    let simLift = 2.5;
+
+    // DOM Elements
+    const baseUsdPrice = document.getElementById('baseUsdPrice');
+    const quickPickBtns = document.querySelectorAll('.btn-quick-pick');
+    const productTypePreset = document.getElementById('productTypePreset');
+    const maxDiscountSlider = document.getElementById('maxDiscountSlider');
+    const maxDiscountVal = document.getElementById('maxDiscountVal');
+    const roundingStyle = document.getElementById('roundingStyle');
+    const currencyDisplayMode = document.getElementById('currencyDisplayMode');
+
+    // Tiers
+    const tier1Price = document.getElementById('tier1Price');
+    const tier2Price = document.getElementById('tier2Price');
+    const tier3Price = document.getElementById('tier3Price');
+    const tier4Price = document.getElementById('tier4Price');
+    const tier4DiscountLbl = document.getElementById('tier4DiscountLbl');
+    const tier4CouponCode = document.getElementById('tier4CouponCode');
+    const btnCopyTier4Coupon = document.getElementById('btnCopyTier4Coupon');
+
+    // Export Buttons
+    const btnCopyJson = document.getElementById('btnCopyJson');
+    const btnDownloadCsv = document.getElementById('btnDownloadCsv');
+    const btnCopyMarkdown = document.getElementById('btnCopyMarkdown');
+
+    // Simulator
+    const simCurrentSales = document.getElementById('simCurrentSales');
+    const simCurrentSalesVal = document.getElementById('simCurrentSalesVal');
+    const simNonUsShare = document.getElementById('simNonUsShare');
+    const simNonUsShareVal = document.getElementById('simNonUsShareVal');
+    const simConversionLift = document.getElementById('simConversionLift');
+    const simConversionLiftVal = document.getElementById('simConversionLiftVal');
+    const simBaselineRev = document.getElementById('simBaselineRev');
+    const simProjectedRev = document.getElementById('simProjectedRev');
+    const simNetGain = document.getElementById('simNetGain');
+    const simGrowthPct = document.getElementById('simGrowthPct');
+
+    // Table & Search
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const countrySearchInput = document.getElementById('countrySearchInput');
+    const countryTableBody = document.getElementById('countryTableBody');
+    const statShowingCount = document.getElementById('statShowingCount');
+    const thPriceUsd = document.getElementById('thPriceUsd');
+    const thPriceLocal = document.getElementById('thPriceLocal');
+
+    // Render Calculations
+    function render() {
+      // 1. Calculate pricing for all countries
+      const calculatedCountries = PPPData.COUNTRIES.map(c => {
+        return PPPData.calculateCountryPricing(c, basePrice, maxDiscount, rounding);
+      });
+
+      // 2. Update 4-Tier Regional Summary Cards
+      const t1 = calculatedCountries.find(c => c.country.code === 'US') || { formattedUsd: `$${basePrice.toFixed(2)}` };
+      tier1Price.textContent = t1.formattedUsd;
+
+      // Tier 2: 25% discount
+      const t2Usd = basePrice * (1 - Math.min(25, maxDiscount) / 100);
+      tier2Price.textContent = `$${t2Usd.toFixed(rounding === 'whole' ? 0 : 2)}`;
+
+      // Tier 3: 45% discount
+      const t3Usd = basePrice * (1 - Math.min(45, maxDiscount) / 100);
+      tier3Price.textContent = `$${t3Usd.toFixed(rounding === 'whole' ? 0 : 2)}`;
+
+      // Tier 4: maxDiscount
+      const t4Usd = basePrice * (1 - maxDiscount / 100);
+      tier4Price.textContent = `$${t4Usd.toFixed(rounding === 'whole' ? 0 : 2)}`;
+      tier4DiscountLbl.textContent = `${maxDiscount}% Off`;
+      const t4Coupon = `PPP${maxDiscount}`;
+      tier4CouponCode.textContent = t4Coupon;
+      btnCopyTier4Coupon.setAttribute('data-copy', t4Coupon);
+
+      // 3. Update Simulator
+      updateSimulator();
+
+      // 4. Filter & Search Countries for Table
+      const query = searchQuery.trim().toLowerCase();
+      const filtered = calculatedCountries.filter(item => {
+        const c = item.country;
+        // Region filter
+        if (selectedRegion === 'popular' && !c.isPopular) return false;
+        if (selectedRegion !== 'all' && selectedRegion !== 'popular' && c.region !== selectedRegion) return false;
+
+        // Search query
+        if (query) {
+          const matchName = c.name.toLowerCase().includes(query);
+          const matchCode = c.code.toLowerCase().includes(query);
+          const matchCurr = c.currencyCode.toLowerCase().includes(query);
+          if (!matchName && !matchCode && !matchCurr) return false;
+        }
+
+        return true;
+      });
+
+      statShowingCount.textContent = `Showing ${filtered.length} of ${calculatedCountries.length} countries`;
+
+      // Column visibility based on displayMode
+      if (displayMode === 'usd') {
+        thPriceUsd.style.display = '';
+        thPriceLocal.style.display = 'none';
+      } else if (displayMode === 'local') {
+        thPriceUsd.style.display = 'none';
+        thPriceLocal.style.display = '';
+      } else {
+        thPriceUsd.style.display = '';
+        thPriceLocal.style.display = '';
+      }
+
+      // Populate Table Body
+      countryTableBody.innerHTML = '';
+      if (filtered.length === 0) {
+        countryTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--color-text-muted);">No countries matched your search filter.</td></tr>`;
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      filtered.forEach(item => {
+        const tr = document.createElement('tr');
+        const c = item.country;
+
+        let discountBadgeClass = 'discount-none';
+        if (item.appliedDiscountPct >= 50) {
+          discountBadgeClass = 'discount-high';
+        } else if (item.appliedDiscountPct > 0) {
+          discountBadgeClass = 'discount-mid';
+        }
+
+        const tierBadgeClass = `tier-${item.tierInfo.tier}`;
+
+        tr.innerHTML = `
+          <td>
+            <div class="country-cell">
+              <span style="font-size:1.2rem;" aria-hidden="true">${c.flag}</span>
+              <div>
+                <strong>${c.name}</strong>
+                <span class="iso-badge">${c.code}</span>
+              </div>
+            </div>
+          </td>
+          <td><span style="font-family:monospace; font-weight:600;">${c.pppRatio.toFixed(2)}</span></td>
+          <td>
+            <span class="discount-pill ${discountBadgeClass}">
+              ${item.appliedDiscountPct > 0 ? `-${item.appliedDiscountPct}%` : '0% (Full)'}
+            </span>
+          </td>
+          <td style="${displayMode === 'local' ? 'display:none;' : ''}">
+            <strong style="font-family:monospace;">${item.formattedUsd}</strong>
+          </td>
+          <td style="${displayMode === 'usd' ? 'display:none;' : ''}">
+            <span style="font-family:monospace; color:var(--color-text-muted);">${item.formattedLocal}</span>
+            <span style="font-size:0.68rem; color:var(--color-text-muted);">(${c.currencyCode})</span>
+          </td>
+          <td>
+            <span class="tier-badge ${tierBadgeClass}">Tier ${item.tierInfo.tier}</span>
+            <span style="font-size:0.7rem; font-family:monospace; color:var(--color-text-muted); margin-left:0.25rem;">${item.tierInfo.standardCoupon}</span>
+          </td>
+        `;
+
+        fragment.appendChild(tr);
+      });
+
+      countryTableBody.appendChild(fragment);
+    }
+
+    // Revenue Simulator Calculation
+    function updateSimulator() {
+      // Baseline: Current Sales * basePrice
+      const baselineMonthly = simSales * basePrice;
+
+      // Without PPP: Non-US share produces (simSales * simNonUs / 100) at full price
+      const usSales = simSales * (1 - simNonUs / 100);
+      const nonUsSalesBase = simSales * (simNonUs / 100);
+
+      // With PPP: Average PPP discount in emerging markets is ~50% (price = 0.5 * basePrice)
+      // Volume increases by simLift
+      const nonUsSalesPpp = nonUsSalesBase * simLift;
+      const avgPppPrice = basePrice * (1 - Math.min(50, maxDiscount) / 100);
+
+      const projectedMonthly = (usSales * basePrice) + (nonUsSalesPpp * avgPppPrice);
+      const netGain = projectedMonthly - baselineMonthly;
+      const growthPct = (netGain / baselineMonthly) * 100;
+
+      simCurrentSalesVal.textContent = `${simSales} sales/mo`;
+      simNonUsShareVal.textContent = `${simNonUs}%`;
+      simConversionLiftVal.textContent = `${simLift.toFixed(1)}× conversions`;
+
+      simBaselineRev.textContent = `$${Math.round(baselineMonthly).toLocaleString()} / mo`;
+      simProjectedRev.textContent = `$${Math.round(projectedMonthly).toLocaleString()} / mo`;
+      simNetGain.textContent = `${netGain >= 0 ? '+' : ''}$${Math.round(netGain).toLocaleString()} / mo`;
+      simGrowthPct.textContent = `${growthPct >= 0 ? '+' : ''}${growthPct.toFixed(1)}%`;
+      simGrowthPct.style.color = growthPct >= 0 ? '#10b981' : '#ef4444';
+    }
+
+    // Event Listeners: Base Price
+    baseUsdPrice.addEventListener('input', () => {
+      const val = parseFloat(baseUsdPrice.value);
+      if (!isNaN(val) && val >= 1) {
+        basePrice = val;
+        quickPickBtns.forEach(btn => {
+          btn.classList.toggle('active', parseFloat(btn.dataset.val) === val);
+        });
+        render();
+      }
+    });
+
+    quickPickBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = parseFloat(btn.dataset.val);
+        basePrice = val;
+        baseUsdPrice.value = val;
+        quickPickBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+      });
+    });
+
+    // Event Listeners: Product Type Presets
+    productTypePreset.addEventListener('change', () => {
+      const preset = productTypePreset.value;
+      if (preset === 'digital') {
+        maxDiscount = 75;
+      } else if (preset === 'saas') {
+        maxDiscount = 60;
+      } else if (preset === 'service') {
+        maxDiscount = 40;
+      }
+      maxDiscountSlider.value = maxDiscount;
+      maxDiscountVal.textContent = `${maxDiscount}%`;
+      render();
+    });
+
+    // Slider
+    maxDiscountSlider.addEventListener('input', () => {
+      maxDiscount = parseInt(maxDiscountSlider.value, 10);
+      maxDiscountVal.textContent = `${maxDiscount}%`;
+      productTypePreset.value = 'custom';
+      render();
+    });
+
+    roundingStyle.addEventListener('change', () => {
+      rounding = roundingStyle.value;
+      render();
+    });
+
+    currencyDisplayMode.addEventListener('change', () => {
+      displayMode = currencyDisplayMode.value;
+      render();
+    });
+
+    // Region Pills
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        selectedRegion = pill.dataset.region;
+        render();
+      });
+    });
+
+    // Country Search
+    countrySearchInput.addEventListener('input', () => {
+      searchQuery = countrySearchInput.value;
+      render();
+    });
+
+    // Simulator Listeners
+    simCurrentSales.addEventListener('input', () => {
+      simSales = parseInt(simCurrentSales.value, 10);
+      updateSimulator();
+    });
+    simNonUsShare.addEventListener('input', () => {
+      simNonUs = parseInt(simNonUsShare.value, 10);
+      updateSimulator();
+    });
+    simConversionLift.addEventListener('input', () => {
+      simLift = parseFloat(simConversionLift.value);
+      updateSimulator();
+    });
+
+    // Copy Mini Coupons in Tier Cards
+    document.addEventListener('click', e => {
+      if (e.target.matches('.btn-copy-mini') || e.target.closest('.btn-copy-mini')) {
+        const btn = e.target.matches('.btn-copy-mini') ? e.target : e.target.closest('.btn-copy-mini');
+        const code = btn.getAttribute('data-copy');
+        if (code) {
+          navigator.clipboard.writeText(code).then(() => {
+            const orig = btn.textContent;
+            btn.textContent = '✓ Copied';
+            setTimeout(() => { btn.textContent = orig; }, 1500);
+          });
+        }
+      }
+    });
+
+    // Export: Copy JSON Config
+    btnCopyJson.addEventListener('click', () => {
+      const config = {};
+      PPPData.COUNTRIES.forEach(c => {
+        const item = PPPData.calculateCountryPricing(c, basePrice, maxDiscount, rounding);
+        config[c.code] = {
+          country: c.name,
+          discount: item.appliedDiscountPct,
+          priceUsd: item.priceUsd,
+          localPrice: item.formattedLocal,
+          currency: c.currencyCode,
+          tier: item.tierInfo.tier,
+          coupon: item.tierInfo.standardCoupon
+        };
+      });
+
+      const jsonStr = JSON.stringify(config, null, 2);
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        const orig = btnCopyJson.textContent;
+        btnCopyJson.textContent = '✓ JSON Copied!';
+        setTimeout(() => { btnCopyJson.textContent = orig; }, 2000);
+      });
+    });
+
+    // Export: Download CSV
+    btnDownloadCsv.addEventListener('click', () => {
+      const rows = [
+        ['CountryCode', 'CountryName', 'Region', 'PPPRatio', 'DiscountPercent', 'PriceUSD', 'CurrencyCode', 'LocalCurrencyPrice', 'PricingTier', 'CouponCode']
+      ];
+
+      PPPData.COUNTRIES.forEach(c => {
+        const item = PPPData.calculateCountryPricing(c, basePrice, maxDiscount, rounding);
+        rows.push([
+          c.code,
+          `"${c.name.replace(/"/g, '""')}"`,
+          c.region,
+          c.pppRatio.toFixed(2),
+          item.appliedDiscountPct,
+          item.priceUsd.toFixed(2),
+          c.currencyCode,
+          `"${item.formattedLocal.replace(/"/g, '""')}"`,
+          `Tier ${item.tierInfo.tier}`,
+          item.tierInfo.standardCoupon
+        ]);
+      });
+
+      const csvContent = rows.map(r => r.join(',')).join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `ppp-pricing-base-${basePrice}usd.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+
+    // Export: Copy Markdown
+    btnCopyMarkdown.addEventListener('click', () => {
+      const popularOnly = PPPData.COUNTRIES.filter(c => c.isPopular);
+      const lines = [
+        `### Purchasing Power Parity (PPP) Pricing Table (Base: $${basePrice} USD)`,
+        '',
+        '| Country | PPP Ratio | Discount | Price (USD) | Local Price | Tier | Coupon |',
+        '|:---|:---:|:---:|:---:|:---:|:---:|:---:|'
+      ];
+
+      popularOnly.forEach(c => {
+        const item = PPPData.calculateCountryPricing(c, basePrice, maxDiscount, rounding);
+        lines.push(`| ${c.flag} ${c.name} (${c.code}) | ${c.pppRatio.toFixed(2)} | -${item.appliedDiscountPct}% | ${item.formattedUsd} | ${item.formattedLocal} (${c.currencyCode}) | Tier ${item.tierInfo.tier} | \`${item.tierInfo.standardCoupon}\` |`);
+      });
+
+      const mdText = lines.join('\n');
+      navigator.clipboard.writeText(mdText).then(() => {
+        const orig = btnCopyMarkdown.textContent;
+        btnCopyMarkdown.textContent = '✓ Markdown Copied!';
+        setTimeout(() => { btnCopyMarkdown.textContent = orig; }, 2000);
+      });
+    });
+
+    // Initial render
+    render();
+  })();
+  </script>
+</body>
+</html>

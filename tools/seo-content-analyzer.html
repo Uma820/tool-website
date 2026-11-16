@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEO Content Analyzer &amp; On-Page Auditor — Free Online Tools</title>
+  <meta name="description" content="Audit on-page SEO, heading structure, keyword density, readability scores, and image alt tags from pasted text or HTML. 100% private in-browser analysis.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/seo-content-analyzer.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/seo-content-analyzer.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/seo-content-analyzer.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SEO Content Analyzer & On-Page Auditor",
+    "description": "Audit on-page SEO, heading structure, keyword density, readability scores, and image alt tags from pasted text or HTML. 100% private in-browser analysis.",
+    "url": "https://nexivo.com/tools/seo-content-analyzer.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#website">Website &amp; SEO Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">SEO Content Analyzer</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>SEO Content Analyzer &amp; On-Page Auditor</span>
+      </h1>
+      <p class="tool-header-lead">
+        Audit on-page SEO health directly in your browser. Inspect heading hierarchy, word count, Flesch reading score, keyword density, missing image alt attributes, and internal links from pasted HTML or text.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Readability &amp; Keyword Density</span>
+        <span class="tool-badge">DOM HTML Auditor</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Notice on Client-Side Scope -->
+      <div style="background: rgba(2, 132, 199, 0.08); border-left: 4px solid var(--color-primary); padding: var(--space-3); border-radius: var(--radius-sm); margin-block-end: var(--space-4); font-size: var(--font-size-xs); color: var(--color-text);">
+        <strong>Client-Side Operation:</strong> Because web browsers enforce Cross-Origin Resource Sharing (CORS) security rules preventing cross-domain web scraping, this tool operates on pasted HTML source code or draft article text. Your content is analyzed locally in memory and never sent to a server.
+      </div>
+
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample HTML Article</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Clear Content</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Analyzes in real-time
+        </div>
+      </div>
+
+      <!-- Input Textarea -->
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="input-content" class="form-label" style="margin-block-end: 0; font-weight: var(--font-weight-semibold);">Paste HTML Document, Blog Post, or Article Text:</label>
+          <span id="char-counter" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">0 characters</span>
+        </div>
+        <textarea id="input-content" class="form-textarea" rows="8" placeholder="Paste your article draft or HTML page source here..." style="font-family: var(--font-family-mono); font-size: var(--font-size-sm);"></textarea>
+      </div>
+
+      <!-- Primary SEO Health Score & Metrics -->
+      <div class="stats-grid" style="margin-block-end: var(--space-4);">
+        <div class="stat-card">
+          <div class="stat-label">SEO Health Score</div>
+          <div class="stat-value" id="stat-score" style="color: var(--color-primary);">--</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="stat-score-label">Based on on-page criteria</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Word Count</div>
+          <div class="stat-value" id="stat-words">0</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);"><span id="stat-chars">0</span> characters</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Flesch Reading Ease</div>
+          <div class="stat-value" id="stat-readability">--</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="stat-readability-label">Reading grade level</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Headings (H1–H6)</div>
+          <div class="stat-value" id="stat-headings">0</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="stat-h1-status">H1 count: 0</div>
+        </div>
+      </div>
+
+      <!-- Checklist & Detailed Breakdown -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-4);">
+        <!-- SEO Audit Checklist -->
+        <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4);">
+          <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-3);">On-Page SEO Checklist</h3>
+          <div id="audit-checklist" style="display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--font-size-sm);">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Keyword Density Table -->
+        <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+            <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: 0;">Top Keywords &amp; Density</h3>
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Ideal: 1% – 3%</span>
+          </div>
+          <div style="overflow-x: auto; max-block-size: 260px;">
+            <table style="inline-size: 100%; border-collapse: collapse; font-size: var(--font-size-xs);">
+              <thead>
+                <tr style="border-block-end: 1px solid var(--color-border); text-align: start;">
+                  <th style="padding: 6px;">Keyword Phrase</th>
+                  <th style="padding: 6px; text-align: center;">Count</th>
+                  <th style="padding: 6px; text-align: end;">Density</th>
+                </tr>
+              </thead>
+              <tbody id="keyword-table-body">
+                <tr>
+                  <td colspan="3" style="text-align: center; padding: var(--space-3); color: var(--color-text-muted);">Paste content to view keywords</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the SEO Content Analyzer Do?</h2>
+        <p>
+          The <strong>SEO Content Analyzer &amp; On-Page Auditor</strong> inspects articles, blog posts, and HTML markup against established on-page search engine optimization guidelines. Rather than relying on black-box external scrapers or paying for expensive enterprise subscriptions, you can paste your text or HTML to evaluate title tags, heading structure (H1–H6), word counts, accessibility image alt attributes, and keyword density.
+        </p>
+        <p>
+          It also calculates the standard <strong>Flesch Reading Ease score</strong>, allowing editors to balance search relevance with smooth human readability and clear sentence structure.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Input Article or HTML:</strong> Paste your written article, Google Doc text, or exported HTML source code into the main text area, or click <strong>Sample HTML Article</strong>.</li>
+          <li><strong>Review the SEO Health Score:</strong> Check the overall score and the actionable checklist to see what elements passed, what needs attention, and what critical errors exist (such as missing H1 tags or absent image alt attributes).</li>
+          <li><strong>Evaluate Readability:</strong> Verify your Flesch Reading Ease score (scores between 60 and 70 represent plain English accessible to general audiences).</li>
+          <li><strong>Inspect Keyword Density:</strong> Review the top recurring keywords to avoid keyword stuffing penalties (keep primary phrase density below 3.5%).</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Pre-Publishing Blog Audit</h3>
+            <p>Ensure writers adhere to single-H1 rules, sufficient article length, and proper subheading structure before publishing.</p>
+          </div>
+          <div class="card">
+            <h3>Accessibility &amp; Alt Tag Compliance</h3>
+            <p>Identify every image missing an alt description in your HTML markup to maintain WCAG accessibility standards.</p>
+          </div>
+          <div class="card">
+            <h3>Copywriting &amp; Tone Tuning</h3>
+            <p>Use the Flesch Reading Ease score to ensure technical whitepapers or consumer guides match the reading level of the audience.</p>
+          </div>
+          <div class="card">
+            <h3>Keyword Stuffing Prevention</h3>
+            <p>Verify that promotional or repetitive target phrases do not exceed safe search engine density ratios.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Example Audit Findings:</div>
+          <pre class="example-pre">✓ Title Tag: Found (54 chars — optimal range)
+✓ Heading Structure: Exactly 1 H1 tag detected, followed by 4 H2 subheadings
+✓ Word Count: 1,240 words (Comprehensive long-form content)
+✓ Readability: 68.4 (Plain English, 8th-9th grade reading level)
+⚠ Image Warning: 1 of 4 images missing an alt attribute
+✓ Keyword Density: Primary keyword "pdf merger" at 2.1% (Safe)</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>DOM Parsing:</strong> Uses native browser <code>DOMParser</code> to safely parse HTML structures into an isolated document tree.</li>
+          <li><strong>Readability Formula:</strong> Implements the Flesch Reading Ease algorithm: <code>206.835 - 1.015 &times; (words / sentences) - 84.6 &times; (syllables / words)</code>.</li>
+          <li><strong>Tokenization:</strong> Filters common English stop words ("the", "and", "is", "of") to surface genuine thematic keywords and n-grams.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Due to browser security and Cross-Origin Resource Sharing (CORS) protections, client-side web tools cannot fetch and scrape arbitrary third-party web addresses directly. You must copy and paste your HTML or content into the analyzer.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All DOM parsing, syllable counting, and keyword frequency metrics are computed locally inside your browser tab. Your unpublished articles, draft copy, and proprietary strategies never leave your device.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Why can't I enter a URL to analyze a live webpage directly?</summary>
+            <div class="faq-answer">
+              <p>Modern web browsers block client-side JavaScript from fetching arbitrary external websites to prevent cross-site scripting (CORS policies). To audit an existing webpage, right-click the page, choose "View Page Source", and paste the HTML directly into this tool.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Why is having only one H1 tag important?</summary>
+            <div class="faq-answer">
+              <p>The <code>&lt;h1&gt;</code> tag communicates the overarching topic of a page to search engines and screen readers. Having zero H1s obscures the main topic, while multiple H1s can dilute topical focus.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What is a good Flesch Reading Ease score?</summary>
+            <div class="faq-answer">
+              <p>Scores between <strong>60 and 70</strong> are considered standard for consumer web content (easily understood by 13- to 15-year-olds). Higher scores (70–90) are very easy, while scores below 50 reflect academic or technical prose.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/seo-compare.html" class="related-tool-chip">
+            <div class="related-tool-title">SEO Compare</div>
+            <div class="related-tool-desc">Compare two articles side-by-side for readability, words, and headings.</div>
+          </a>
+          <a href="/tools/meta-tags-toolkit.html" class="related-tool-chip">
+            <div class="related-tool-title">Meta Tags Toolkit</div>
+            <div class="related-tool-desc">Generate HTML meta tags, Open Graph tags, and Twitter Cards.</div>
+          </a>
+          <a href="/tools/serp-preview-tool.html" class="related-tool-chip">
+            <div class="related-tool-title">SERP Preview Tool</div>
+            <div class="related-tool-desc">Simulate Google search results with pixel width limits and snippet testing.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const inputContent = document.getElementById('input-content');
+    const charCounter = document.getElementById('char-counter');
+
+    const statScore = document.getElementById('stat-score');
+    const statScoreLabel = document.getElementById('stat-score-label');
+    const statWords = document.getElementById('stat-words');
+    const statChars = document.getElementById('stat-chars');
+    const statReadability = document.getElementById('stat-readability');
+    const statReadabilityLabel = document.getElementById('stat-readability-label');
+    const statHeadings = document.getElementById('stat-headings');
+    const statH1Status = document.getElementById('stat-h1-status');
+
+    const auditChecklist = document.getElementById('audit-checklist');
+    const keywordTableBody = document.getElementById('keyword-table-body');
+    const btnSample = document.getElementById('btn-sample');
+    const btnClear = document.getElementById('btn-clear');
+
+    const STOP_WORDS = new Set([
+      'a','about','above','after','again','against','all','am','an','and','any','are','aren\'t','as','at','be','because',
+      'been','before','being','below','between','both','but','by','can','can\'t','cannot','could','couldn\'t','did','didn\'t',
+      'do','does','doesn\'t','doing','don\'t','down','during','each','few','for','from','further','had','hadn\'t','has','hasn\'t',
+      'have','haven\'t','having','he','he\'d','he\'ll','he\'s','her','here','here\'s','hers','herself','him','himself','his',
+      'how','how\'s','i','i\'d','i\'ll','i\'m','i\'ve','if','in','into','is','isn\'t','it','it\'s','its','itself','let\'s',
+      'me','more','most','mustn\'t','my','myself','no','nor','not','of','off','on','once','only','or','other','ought','our',
+      'ours','ourselves','out','over','own','same','shan\'t','she','she\'d','she\'ll','she\'s','should','shouldn\'t','so',
+      'some','such','than','that','that\'s','the','their','theirs','them','themselves','then','there','there\'s','these','they',
+      'they\'d','they\'ll','they\'re','they\'ve','this','those','through','to','too','under','until','up','very','was','wasn\'t',
+      'we','we\'d','we\'ll','we\'re','we\'ve','were','weren\'t','what','what\'s','when','when\'s','where','where\'s','which',
+      'while','who','who\'s','whom','why','why\'s','with','won\'t','would','wouldn\'t','you','you\'d','you\'ll','you\'re','you\'ve',
+      'your','yours','yourself','yourselves'
+    ]);
+
+    function countSyllables(word) {
+      word = word.toLowerCase().replace(/[^a-z]/g, '');
+      if (word.length <= 3) return 1;
+      word = word.replace(/(?:[^laeiouy]|ed|es|e)$/, '');
+      word = word.replace(/^y/, '');
+      const syllables = word.match(/[aeiouy]{1,2}/g);
+      return syllables ? syllables.length : 1;
+    }
+
+    function analyze() {
+      const raw = inputContent.value || '';
+      charCounter.textContent = raw.length.toLocaleString() + ' characters';
+
+      if (!raw.trim()) {
+        statScore.textContent = '--';
+        statScoreLabel.textContent = 'Based on on-page criteria';
+        statWords.textContent = '0';
+        statChars.textContent = '0';
+        statReadability.textContent = '--';
+        statReadabilityLabel.textContent = 'Reading grade level';
+        statHeadings.textContent = '0';
+        statH1Status.textContent = 'H1 count: 0';
+        auditChecklist.innerHTML = '<div style="color: var(--color-text-muted);">Paste text or HTML above to run audit.</div>';
+        keywordTableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: var(--space-3); color: var(--color-text-muted);">Paste content to view keywords</td></tr>';
+        return;
+      }
+
+      // Check if input looks like HTML
+      const isHtml = /<[a-z][\s\S]*>/i.test(raw);
+      let doc = null;
+      let textBody = raw;
+
+      let titleText = '';
+      let metaDescText = '';
+      let h1s = [], h2s = [], h3s = [], h4_6 = [];
+      let images = [];
+      let links = [];
+
+      if (isHtml) {
+        const parser = new DOMParser();
+        doc = parser.parseFromString(raw, 'text/html');
+        textBody = doc.body ? doc.body.textContent : raw.replace(/<[^>]+>/g, ' ');
+
+        const titleEl = doc.querySelector('title');
+        if (titleEl) titleText = titleEl.textContent.trim();
+
+        const descEl = doc.querySelector('meta[name="description"]');
+        if (descEl) metaDescText = descEl.getAttribute('content') || '';
+
+        h1s = Array.from(doc.querySelectorAll('h1'));
+        h2s = Array.from(doc.querySelectorAll('h2'));
+        h3s = Array.from(doc.querySelectorAll('h3'));
+        h4_6 = Array.from(doc.querySelectorAll('h4, h5, h6'));
+        images = Array.from(doc.querySelectorAll('img'));
+        links = Array.from(doc.querySelectorAll('a'));
+      }
+
+      // Words & Sentences
+      const words = (textBody.trim().match(/\b[A-Za-z0-9'-]+\b/g) || []);
+      const totalWords = words.length;
+      const sentences = textBody.split(/[.!?]+/).filter(s => s.trim().length > 0);
+      const totalSentences = Math.max(1, sentences.length);
+
+      // Flesch Reading Ease
+      let totalSyllables = 0;
+      words.forEach(w => { totalSyllables += countSyllables(w); });
+      const avgSentenceLength = totalWords / totalSentences;
+      const avgSyllablesPerWord = totalWords > 0 ? (totalSyllables / totalWords) : 0;
+      let flesch = Math.round(206.835 - (1.015 * avgSentenceLength) - (84.6 * avgSyllablesPerWord));
+      flesch = Math.max(0, Math.min(100, flesch));
+
+      let fleschLabel = 'Fairly Easy (6th Grade)';
+      if (flesch >= 90) fleschLabel = 'Very Easy (5th Grade)';
+      else if (flesch >= 80) fleschLabel = 'Easy (6th Grade)';
+      else if (flesch >= 70) fleschLabel = 'Fairly Easy (7th Grade)';
+      else if (flesch >= 60) fleschLabel = 'Standard (8th–9th Grade)';
+      else if (flesch >= 50) fleschLabel = 'Fairly Difficult (High School)';
+      else if (flesch >= 30) fleschLabel = 'Difficult (College)';
+      else fleschLabel = 'Very Confusing (Graduate)';
+
+      statWords.textContent = totalWords.toLocaleString();
+      statChars.textContent = textBody.length.toLocaleString();
+      statReadability.textContent = totalWords > 10 ? flesch : '--';
+      statReadabilityLabel.textContent = totalWords > 10 ? fleschLabel : 'Insufficient text';
+
+      const totalHeadings = h1s.length + h2s.length + h3s.length + h4_6.length;
+      statHeadings.textContent = totalHeadings;
+      statH1Status.textContent = `H1 count: ${h1s.length} &bull; H2 count: ${h2s.length}`;
+
+      // Checklist & Score calculation
+      const checks = [];
+      let scorePoints = 0;
+      let maxPoints = 0;
+
+      function addCheck(passed, label, passText, failText, weight = 15) {
+        maxPoints += weight;
+        if (passed) scorePoints += weight;
+        checks.push({ passed, label, text: passed ? passText : failText });
+      }
+
+      // 1. Content Length
+      if (totalWords >= 600) {
+        addCheck(true, 'Word Count', `Sufficient length: ${totalWords.toLocaleString()} words (ideal for comprehensive coverage).`, '', 15);
+      } else if (totalWords >= 300) {
+        addCheck(true, 'Word Count', `Moderate length: ${totalWords.toLocaleString()} words (meets standard blog minimum).`, '', 10);
+      } else {
+        addCheck(false, 'Word Count', '', `Thin content warning: Only ${totalWords} words found (target 300+ words).`, 15);
+      }
+
+      // 2. Title Tag (if HTML)
+      if (isHtml) {
+        if (titleText.length >= 40 && titleText.length <= 65) {
+          addCheck(true, 'Title Tag', `Optimal length: "${titleText}" (${titleText.length} chars).`, '', 15);
+        } else if (titleText.length > 0) {
+          addCheck(false, 'Title Tag', '', `Suboptimal length: "${titleText}" (${titleText.length} chars — target 50–60 chars).`, 15);
+        } else {
+          addCheck(false, 'Title Tag', '', 'Missing <title> tag in HTML document.', 15);
+        }
+      }
+
+      // 3. H1 Heading
+      if (isHtml) {
+        if (h1s.length === 1) {
+          addCheck(true, 'H1 Structure', `Perfect: Exactly 1 H1 tag found ("${h1s[0].textContent.trim().substring(0, 40)}...").`, '', 20);
+        } else if (h1s.length === 0) {
+          addCheck(false, 'H1 Structure', '', 'Missing <h1> tag. Every page requires exactly one main heading.', 20);
+        } else {
+          addCheck(false, 'H1 Structure', '', `Multiple H1 tags (${h1s.length} found). It is best practice to have only one main H1.`, 20);
+        }
+      }
+
+      // 4. Subheadings (H2)
+      if (isHtml) {
+        if (h2s.length >= 2) {
+          addCheck(true, 'Subheadings', `Good hierarchy: ${h2s.length} H2 sections break up the content.`, '', 10);
+        } else {
+          addCheck(false, 'Subheadings', '', 'Add more H2 subheadings to organize your content for scanability.', 10);
+        }
+      }
+
+      // 5. Image Alt Attributes
+      if (isHtml && images.length > 0) {
+        const missingAlt = images.filter(img => !img.hasAttribute('alt') || !img.getAttribute('alt').trim());
+        if (missingAlt.length === 0) {
+          addCheck(true, 'Image Alt Tags', `All ${images.length} images have descriptive alt attributes.`, '', 15);
+        } else {
+          addCheck(false, 'Image Alt Tags', '', `${missingAlt.length} of ${images.length} images are missing alt attributes!`, 15);
+        }
+      }
+
+      // 6. Readability Check
+      if (flesch >= 55) {
+        addCheck(true, 'Readability Score', `High readability score (${flesch}/100) — easy for audience to digest.`, '', 15);
+      } else {
+        addCheck(false, 'Readability Score', '', `Complex prose (${flesch}/100). Consider shortening sentences and using simpler vocabulary.`, 15);
+      }
+
+      // 7. Internal/External Links
+      if (isHtml && links.length > 0) {
+        addCheck(true, 'Hyperlinks', `Found ${links.length} links facilitating navigation and context.`, '', 10);
+      }
+
+      // Render Score
+      const finalScore = maxPoints > 0 ? Math.round((scorePoints / maxPoints) * 100) : 50;
+      statScore.textContent = finalScore + '%';
+      statScore.style.color = finalScore >= 80 ? 'var(--color-success)' : (finalScore >= 50 ? 'var(--color-warning)' : 'var(--color-danger)');
+      statScoreLabel.textContent = finalScore >= 80 ? 'Excellent On-Page SEO' : (finalScore >= 50 ? 'Needs Moderate Tweaks' : 'Requires Major SEO Fixes');
+
+      // Render Checklist
+      auditChecklist.innerHTML = '';
+      checks.forEach(c => {
+        const item = document.createElement('div');
+        item.style.display = 'flex';
+        item.style.alignItems = 'flex-start';
+        item.style.gap = 'var(--space-2)';
+
+        const icon = c.passed ? '✓' : '⚠';
+        const color = c.passed ? 'var(--color-success)' : 'var(--color-warning)';
+
+        item.innerHTML = `
+          <span style="font-weight: bold; color: ${color}; font-size: 16px; line-height: 1;">${icon}</span>
+          <div>
+            <strong>${c.label}:</strong> <span style="color: var(--color-text-muted);">${c.text}</span>
+          </div>
+        `;
+        auditChecklist.appendChild(item);
+      });
+
+      // Keyword Frequency & Density Calculation
+      const wordCounts = new Map();
+      words.forEach(w => {
+        const clean = w.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (clean.length > 2 && !STOP_WORDS.has(clean)) {
+          wordCounts.set(clean, (wordCounts.get(clean) || 0) + 1);
+        }
+      });
+
+      const sortedKeywords = Array.from(wordCounts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+      if (sortedKeywords.length === 0) {
+        keywordTableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: var(--space-3); color: var(--color-text-muted);">No significant keywords found</td></tr>';
+      } else {
+        keywordTableBody.innerHTML = sortedKeywords.map(([kw, count]) => {
+          const density = ((count / totalWords) * 100).toFixed(1);
+          const densityWarning = density > 3.5 ? ' style="color: var(--color-danger); font-weight: bold;"' : '';
+          return `
+            <tr style="border-block-end: 1px solid var(--color-border);">
+              <td style="padding: 6px; font-weight: 500;">${kw}</td>
+              <td style="padding: 6px; text-align: center;">${count}</td>
+              <td style="padding: 6px; text-align: end;"${densityWarning}>${density}%</td>
+            </tr>
+          `;
+        }).join('');
+      }
+    }
+
+    inputContent.addEventListener('input', analyze);
+
+    btnSample.addEventListener('click', () => {
+      inputContent.value = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Free PDF Merger — Merge PDF Documents Online in Seconds</title>
+  <meta name="description" content="Merge multiple PDF files into one clean document with our free online tool. Reorder pages, no registration required, and 100% private.">
+</head>
+<body>
+  <h1>Free Online PDF Merger & Document Combiner</h1>
+  <p>Merging PDF files is one of the most common daily office workflows. Whether you need to combine signed contracts, merge financial receipts for tax season, or assemble research papers into a single portfolio, our client-side PDF tool gives you total control.</p>
+
+  <h2>Why Choose Client-Side PDF Merging?</h2>
+  <p>Traditional PDF merger services require you to upload confidential financial or legal files to their remote cloud servers. This introduces significant security risks and potential privacy breaches. Our tool operates entirely inside your web browser, ensuring that your confidential documents never leave your computer.</p>
+  <img src="/assets/diagram.png" alt="Client side PDF processing diagram" width="600" height="400">
+
+  <h2>Step-by-Step Instructions</h2>
+  <p>To get started, simply drag and drop your PDF documents into the workspace. Reorder the files into your desired page sequence, and click the merge button to download your compiled PDF in seconds.</p>
+  <img src="/assets/screenshot.png" alt="PDF Merger User Interface" width="600" height="400">
+
+  <h2>Frequently Asked Questions</h2>
+  <p>Our tools are completely free to use with zero hidden subscriptions, file size limits, or invasive watermarks.</p>
+  <a href="/tools/pdf-splitter.html">Check out our PDF Splitter</a>
+</body>
+</html>`;
+      analyze();
+    });
+
+    btnClear.addEventListener('click', () => {
+      inputContent.value = '';
+      analyze();
+      inputContent.focus();
+    });
+
+    // Run sample on load
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

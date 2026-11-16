@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to PDF Converter — Free Online Tools</title>
+  <meta name="description" content="Convert JPG, PNG, and WebP images into a single clean PDF document. Reorder pages, customize margins, and download 100% private in your browser.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/pdf-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/pdf-converter.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/pdf-converter.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image to PDF Converter",
+    "description": "Convert JPG, PNG, and WebP images into a single clean PDF document. Reorder pages, customize margins, and download 100% private in your browser.",
+    "url": "https://nexivo.com/tools/pdf-converter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .image-queue {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--space-3);
+      margin-block: var(--space-4);
+    }
+    .image-card {
+      background: var(--color-bg-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+    }
+    .image-card img {
+      inline-size: 100%;
+      block-size: 110px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #000;
+    }
+    .image-name {
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      inline-size: 100%;
+      text-align: center;
+    }
+    .image-card-actions {
+      display: flex;
+      gap: 4px;
+      inline-size: 100%;
+      justify-content: center;
+    }
+    .image-card-actions button {
+      padding: 2px 6px;
+      font-size: 10px;
+    }
+    .dropzone {
+      border: 2px dashed var(--color-primary-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-align: center;
+      background: var(--color-bg-subtle);
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      background: rgba(2, 132, 199, 0.05);
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#pdf">PDF Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">Image to PDF</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Image to PDF Converter</span>
+      </h1>
+      <p class="tool-header-lead">
+        Merge multiple JPG, PNG, and WebP pictures into a single organized PDF document. Reorder pages, set page sizes, and download your file in seconds with 100% privacy.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 2: Client Library (pdf-lib)</span>
+        <span class="tool-badge">Multi-Page Compilation</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Status Banner -->
+      <div id="status-banner" style="display: none; margin-block-end: var(--space-4);"></div>
+
+      <!-- Dropzone -->
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload images to convert to PDF">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary); margin-block-end: var(--space-2);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <div style="font-weight: var(--font-weight-bold); font-size: var(--font-size-base);">Click to Select Images or Drag &amp; Drop</div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: 4px;">Supports JPG, PNG, and WebP files</div>
+        <input type="file" id="file-input" accept="image/jpeg, image/png, image/webp" multiple style="display: none;">
+      </div>
+
+      <!-- Queue Controls & Options -->
+      <div id="queue-section" style="display: none; margin-block-start: var(--space-4);">
+        <!-- Options Bar -->
+        <div style="background: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border); display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-3); align-items: center; margin-block-end: var(--space-4);">
+          <div>
+            <label for="pdf-page-size" class="form-label" style="font-size: var(--font-size-xs);">Page Size:</label>
+            <select id="pdf-page-size" class="form-select" style="font-size: var(--font-size-xs);">
+              <option value="fit" selected>Fit to Image (Preserve Dimensions)</option>
+              <option value="a4">Standard A4 (595 &times; 842 pt)</option>
+              <option value="letter">US Letter (612 &times; 792 pt)</option>
+            </select>
+          </div>
+          <div>
+            <label for="pdf-orientation" class="form-label" style="font-size: var(--font-size-xs);">Orientation:</label>
+            <select id="pdf-orientation" class="form-select" style="font-size: var(--font-size-xs);">
+              <option value="auto" selected>Auto (Based on Image)</option>
+              <option value="portrait">Portrait</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </div>
+          <div>
+            <label for="pdf-margins" class="form-label" style="font-size: var(--font-size-xs);">Page Margins:</label>
+            <select id="pdf-margins" class="form-select" style="font-size: var(--font-size-xs);">
+              <option value="0" selected>No Margin (Edge-to-Edge)</option>
+              <option value="20">Small (20 pt)</option>
+              <option value="40">Standard (40 pt)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); margin-block-end: 0;">Selected Images (<span id="image-count">0</span>):</h3>
+          <div style="display: flex; gap: var(--space-2);">
+            <button type="button" class="btn btn-secondary" id="btn-add-more" style="font-size: var(--font-size-xs); padding: 0.35rem 0.75rem;">+ Add More</button>
+            <button type="button" class="btn btn-secondary" id="btn-clear-all" style="font-size: var(--font-size-xs); padding: 0.35rem 0.75rem; color: var(--color-danger);">Clear All</button>
+          </div>
+        </div>
+
+        <!-- Image Cards Grid -->
+        <div class="image-queue" id="image-queue"></div>
+
+        <!-- Action Button -->
+        <div style="text-align: center; margin-block-start: var(--space-4);">
+          <button type="button" class="btn btn-primary" id="btn-convert-pdf" style="padding: 0.6rem 1.8rem; font-size: var(--font-size-base);">
+            <span id="convert-spinner" style="display: none; margin-inline-end: 6px;">⏳</span>
+            Convert &amp; Download PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Image to PDF Converter Do?</h2>
+        <p>
+          The <strong>Image to PDF Converter</strong> compiles multiple image files (JPG, PNG, and WebP) into a single, cohesive PDF document. Rather than sending individual image attachments that clutter email inboxes, this tool merges your receipts, photographic scans, artwork, and presentation slides into a professional document ready for sharing, archiving, or printing.
+        </p>
+        <p>
+          Using client-side WebAssembly and JavaScript via <code>pdf-lib</code>, your photos are processed directly in your device's memory. Your files are never uploaded to a cloud server, ensuring absolute privacy for sensitive financial documents, passports, and IDs.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Select or Drop Images:</strong> Drag and drop your JPG, PNG, or WebP files into the designated dropzone, or click to browse.</li>
+          <li><strong>Reorder Pages:</strong> Use the left (&larr;) and right (&rarr;) arrows on each image card to arrange your pages into the desired sequence.</li>
+          <li><strong>Choose Page Layout:</strong> Select <em>Fit to Image</em> to maintain original photo dimensions, or choose <em>Standard A4 / US Letter</em> with optional margins for formal printing.</li>
+          <li><strong>Convert &amp; Save:</strong> Click <strong>Convert &amp; Download PDF</strong>. The compiled document will be generated in your browser and automatically downloaded.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Expense &amp; Tax Receipts</h3>
+            <p>Combine multiple receipt snapshots from your phone into a single neat PDF for accounting and tax filing.</p>
+          </div>
+          <div class="card">
+            <h3>Document &amp; Passport Scans</h3>
+            <p>Compile two-sided ID cards, driver licenses, or signed paper contracts into a single formal document.</p>
+          </div>
+          <div class="card">
+            <h3>Portfolios &amp; Design Presentations</h3>
+            <p>Present graphic design concepts, UI wireframes, and creative illustrations in an organized, paginated PDF format.</p>
+          </div>
+          <div class="card">
+            <h3>School Assignments &amp; Homework</h3>
+            <p>Merge smartphone photos of handwritten homework worksheets into one PDF file for submission to school portals.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Compilation Scenario:</div>
+          <pre class="example-pre">Input: 3 smartphone photos (receipt_01.jpg, receipt_02.jpg, receipt_03.jpg)
+Page Size Setting: A4 with 20pt Margins
+Orientation: Auto
+Output Document: compiled-images.pdf (3 pages, perfectly centered with uniform page borders)</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>PDF Processing Core:</strong> Powered by the open-source <code>pdf-lib</code> library (MIT License) running 100% client-side.</li>
+          <li><strong>Image Format Handling:</strong> Directly embeds native JPEG and PNG streams without quality loss. WebP images are dynamically converted via Canvas before embedding.</li>
+          <li><strong>Output Standard:</strong> Generates ISO 32000-1 compliant PDF 1.7 documents compatible with Adobe Acrobat, Apple Preview, and modern web browsers.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Because all images are held in your browser's active tab memory during document generation, compiling hundreds of 20+ megapixel photos simultaneously may strain devices with low RAM. For optimal performance, compiling batches of 1 to 50 photos is recommended.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Your photos, confidential paperwork, and personal documents never leave your computer. All rendering, resizing, and PDF compiling happen completely inside your web browser. No files are ever uploaded to an external server.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Will my image resolution be reduced?</summary>
+            <div class="faq-answer">
+              <p>No. When you choose "Fit to Image", the PDF pages are created to match your exact image dimensions, embedding your photos at their full original resolution.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Can I mix JPG and PNG files together?</summary>
+            <div class="faq-answer">
+              <p>Yes. You can freely combine JPG, PNG, and WebP images into the same PDF document in any sequence.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Is there any watermark added to the PDF?</summary>
+            <div class="faq-answer">
+              <p>Never. All PDF tools on this website are 100% free with zero watermarks, ads in the document, or file restrictions.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/pdf-merger.html" class="related-tool-chip">
+            <div class="related-tool-title">PDF Merger</div>
+            <div class="related-tool-desc">Combine multiple PDF documents into one organized file.</div>
+          </a>
+          <a href="/tools/pdf-maker.html" class="related-tool-chip">
+            <div class="related-tool-title">PDF Maker</div>
+            <div class="related-tool-desc">Create custom PDF documents from text notes and markdown.</div>
+          </a>
+          <a href="/tools/image-converter.html" class="related-tool-chip">
+            <div class="related-tool-title">Image Converter</div>
+            <div class="related-tool-desc">Convert between PNG, JPG, WebP, and BMP in your browser.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/vendor/pdf-lib.min.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    const queueSection = document.getElementById('queue-section');
+    const imageQueue = document.getElementById('image-queue');
+    const imageCount = document.getElementById('image-count');
+    const statusBanner = document.getElementById('status-banner');
+
+    const pdfPageSize = document.getElementById('pdf-page-size');
+    const pdfOrientation = document.getElementById('pdf-orientation');
+    const pdfMargins = document.getElementById('pdf-margins');
+
+    const btnAddMore = document.getElementById('btn-add-more');
+    const btnClearAll = document.getElementById('btn-clear-all');
+    const btnConvertPdf = document.getElementById('btn-convert-pdf');
+    const convertSpinner = document.getElementById('convert-spinner');
+
+    let filesQueue = []; // Array of { file, dataUrl, img }
+
+    function showBanner(type, message) {
+      statusBanner.className = `alert alert-${type}`;
+      statusBanner.textContent = message;
+      statusBanner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      statusBanner.style.display = 'none';
+    }
+
+    function renderQueue() {
+      imageCount.textContent = filesQueue.length;
+      if (filesQueue.length === 0) {
+        queueSection.style.display = 'none';
+        fileInput.value = '';
+        return;
+      }
+      queueSection.style.display = 'block';
+
+      imageQueue.innerHTML = filesQueue.map((item, idx) => `
+        <div class="image-card" data-index="${idx}">
+          <img src="${item.dataUrl}" alt="Page ${idx + 1}">
+          <div class="image-name" title="${item.file.name}">${idx + 1}. ${item.file.name}</div>
+          <div class="image-card-actions">
+            <button type="button" class="btn btn-secondary" data-move="left" data-index="${idx}" ${idx === 0 ? 'disabled' : ''} aria-label="Move left">&larr;</button>
+            <button type="button" class="btn btn-secondary" data-move="right" data-index="${idx}" ${idx === filesQueue.length - 1 ? 'disabled' : ''} aria-label="Move right">&rarr;</button>
+            <button type="button" class="btn btn-secondary" style="color: var(--color-danger);" data-remove="${idx}" aria-label="Remove">&times;</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addFiles(files) {
+      hideBanner();
+      const valid = Array.from(files).filter(f => f.type.startsWith('image/'));
+      if (valid.length === 0) {
+        showBanner('danger', 'Please select valid image files (JPG, PNG, WebP).');
+        return;
+      }
+
+      valid.forEach(f => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            filesQueue.push({ file: f, dataUrl: e.target.result, img: img });
+            renderQueue();
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(f);
+      });
+    }
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files) addFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files) addFiles(e.target.files);
+    });
+
+    btnAddMore.addEventListener('click', () => fileInput.click());
+    btnClearAll.addEventListener('click', () => {
+      filesQueue = [];
+      renderQueue();
+    });
+
+    imageQueue.addEventListener('click', (e) => {
+      const moveBtn = e.target.closest('[data-move]');
+      const removeBtn = e.target.closest('[data-remove]');
+
+      if (moveBtn) {
+        const idx = parseInt(moveBtn.getAttribute('data-index'), 10);
+        const dir = moveBtn.getAttribute('data-move');
+        if (dir === 'left' && idx > 0) {
+          const temp = filesQueue[idx - 1];
+          filesQueue[idx - 1] = filesQueue[idx];
+          filesQueue[idx] = temp;
+          renderQueue();
+        } else if (dir === 'right' && idx < filesQueue.length - 1) {
+          const temp = filesQueue[idx + 1];
+          filesQueue[idx + 1] = filesQueue[idx];
+          filesQueue[idx] = temp;
+          renderQueue();
+        }
+      } else if (removeBtn) {
+        const idx = parseInt(removeBtn.getAttribute('data-remove'), 10);
+        filesQueue.splice(idx, 1);
+        renderQueue();
+      }
+    });
+
+    btnConvertPdf.addEventListener('click', async () => {
+      hideBanner();
+      if (typeof PDFLib === 'undefined' || !PDFLib.PDFDocument) {
+        showBanner('danger', 'PDF library failed to load. Please check your internet connection or reload.');
+        return;
+      }
+
+      if (filesQueue.length === 0) {
+        showBanner('danger', 'Please upload at least one image.');
+        return;
+      }
+
+      btnConvertPdf.disabled = true;
+      convertSpinner.style.display = 'inline-block';
+
+      try {
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const pageSizeOpt = pdfPageSize.value;
+        const orientOpt = pdfOrientation.value;
+        const marginVal = parseFloat(pdfMargins.value) || 0;
+
+        for (let i = 0; i < filesQueue.length; i++) {
+          const item = filesQueue[i];
+          const img = item.img;
+
+          // Convert image to PNG bytes via canvas for universal embedding (handles WebP, JPG, PNG)
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+
+          const imgBlob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+          const imgBytes = await imgBlob.arrayBuffer();
+          const embeddedImg = await pdfDoc.embedPng(imgBytes);
+
+          let pageWidth, pageHeight;
+
+          if (pageSizeOpt === 'a4') {
+            pageWidth = 595.28;
+            pageHeight = 841.89;
+          } else if (pageSizeOpt === 'letter') {
+            pageWidth = 612;
+            pageHeight = 792;
+          } else {
+            // Fit to image
+            pageWidth = img.naturalWidth;
+            pageHeight = img.naturalHeight;
+          }
+
+          // Handle orientation
+          if (pageSizeOpt !== 'fit') {
+            const isLandscape = (orientOpt === 'landscape') || (orientOpt === 'auto' && img.naturalWidth > img.naturalHeight);
+            if (isLandscape && pageWidth < pageHeight) {
+              const temp = pageWidth;
+              pageWidth = pageHeight;
+              pageHeight = temp;
+            } else if (!isLandscape && pageWidth > pageHeight) {
+              const temp = pageWidth;
+              pageWidth = pageHeight;
+              pageHeight = temp;
+            }
+          }
+
+          const page = pdfDoc.addPage([pageWidth, pageHeight]);
+
+          // Calculate image placement within margins
+          const availWidth = pageWidth - (marginVal * 2);
+          const availHeight = pageHeight - (marginVal * 2);
+
+          let drawWidth = img.naturalWidth;
+          let drawHeight = img.naturalHeight;
+
+          if (pageSizeOpt !== 'fit' || marginVal > 0) {
+            const scale = Math.min(availWidth / img.naturalWidth, availHeight / img.naturalHeight);
+            drawWidth = img.naturalWidth * scale;
+            drawHeight = img.naturalHeight * scale;
+          }
+
+          const x = marginVal + ((availWidth - drawWidth) / 2);
+          const y = marginVal + ((availHeight - drawHeight) / 2);
+
+          page.drawImage(embeddedImg, {
+            x: x,
+            y: y,
+            width: drawWidth,
+            height: drawHeight
+          });
+        }
+
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'converted-images.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        setTimeout(() => URL.revokeObjectURL(url), 60000);
+        showBanner('success', `Successfully converted ${filesQueue.length} images to PDF!`);
+      } catch (err) {
+        showBanner('danger', 'Conversion error: ' + err.message);
+      } finally {
+        btnConvertPdf.disabled = false;
+        convertSpinner.style.display = 'none';
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

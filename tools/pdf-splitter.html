@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Splitter — Extract Page Ranges Online Free</title>
+  <meta name="description" content="Split PDF files and extract custom page ranges online. Clearly defined 1-based page numbering, 100% private in-browser processing.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    .dropzone {
+      border: 2px dashed var(--color-primary-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      text-align: center;
+      background: var(--color-bg-canvas);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .dropzone:hover, .dropzone.dragover {
+      background: var(--color-primary-subtle);
+      border-color: var(--color-primary);
+    }
+  </style>
+  <link rel="canonical" href="https://nexivo.com/tools/pdf-splitter.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/pdf-splitter.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/pdf-splitter.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PDF Splitter",
+    "description": "Split PDF files and extract custom page ranges online. Clearly defined 1-based page numbering, 100% private in-browser processing.",
+    "url": "https://nexivo.com/tools/pdf-splitter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand" aria-label="Free Online Tools Homepage">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <span>Free Online Tools</span>
+        <span class="brand-badge">Phase 3</span>
+      </a>
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/pages/about.html" class="nav-link">About</a></li>
+          <li><a href="/pages/privacy.html" class="nav-link">Privacy</a></li>
+          <li><a href="/pages/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#pdf">PDF Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">PDF Splitter</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>PDF Splitter</span>
+      </h1>
+      <p class="tool-header-lead">
+        Extract specific page ranges or custom sets of pages into a new PDF document. Page numbering starts at 1, exactly matching physical page numbers.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 2: Client-Side Library</span>
+        <span class="tool-badge">1-Based Page Indexing</span>
+        <span class="tool-badge">100% Client-Side</span>
+      </div>
+    </div>
+
+    <div class="tool-panel">
+      <!-- File Picker -->
+      <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Select PDF file to split">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="margin-inline: auto; margin-block-end: var(--space-3);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/></svg>
+        <p style="font-size: var(--font-size-base); font-weight: 700; margin-block-end: var(--space-1);">
+          Click to choose a PDF file or drag and drop it here
+        </p>
+        <p style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Processed locally in your browser. Maximum document size depends on available device memory.
+        </p>
+        <input type="file" id="file-input" accept="application/pdf" style="display: none;">
+      </div>
+
+      <!-- Feedback / Error Banner -->
+      <div id="status-banner" class="alert" style="display: none; margin-block-start: var(--space-4);"></div>
+
+      <!-- Split Configuration Section -->
+      <div id="split-section" style="display: none; margin-block-start: var(--space-6);">
+        <!-- Document Stats Card -->
+        <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); margin-block-end: var(--space-5); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);">
+          <div>
+            <div style="font-weight: 700; font-size: var(--font-size-base); color: var(--color-text-primary);" id="doc-name">-</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);" id="doc-meta">-</div>
+          </div>
+          <button type="button" class="btn btn-secondary" id="btn-change-file">Change File</button>
+        </div>
+
+        <!-- Range Selection -->
+        <div class="form-group">
+          <label for="page-range-input" class="form-label">
+            Pages to Extract (Page numbering starts at 1):
+          </label>
+          <input type="text" id="page-range-input" class="form-input code-font" placeholder="e.g. 1-3, 5, 7-10" style="font-size: var(--font-size-base); font-weight: 600;">
+          <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: 4px;">
+            Specify individual pages separated by commas (e.g. <code>1, 3, 5</code>) or ranges with hyphens (e.g. <code>1-4</code>).
+          </p>
+        </div>
+
+        <!-- Quick Range Presets -->
+        <div style="margin-block-end: var(--space-5);">
+          <span style="font-size: var(--font-size-xs); font-weight: 600; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-block-end: var(--space-2);">Quick Presets:</span>
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;" id="preset-buttons">
+            <button type="button" class="tab-btn" id="preset-all">All Pages</button>
+            <button type="button" class="tab-btn" id="preset-first-half">First Half</button>
+            <button type="button" class="tab-btn" id="preset-second-half">Second Half</button>
+            <button type="button" class="tab-btn" id="preset-odd">Odd Pages Only</button>
+            <button type="button" class="tab-btn" id="preset-even">Even Pages Only</button>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <div style="display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary" id="btn-split" style="padding-block: 0.75rem; padding-inline: 1.5rem; font-size: var(--font-size-base);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+            Extract Pages &amp; Download PDF
+          </button>
+          <span id="process-spinner" style="display: none; font-size: var(--font-size-sm); color: var(--color-primary); font-weight: 600;">
+            Extracting pages... please wait.
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational & Technical Guide -->
+    
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>The <strong>PDF Splitter</strong> separates large PDF documents into smaller, targeted files by extracting user-selected page ranges. It allows you to isolate a specific chapter from a book, pull out a single invoice from a batch, or separate contracts without installing desktop software.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li>Select or drag and drop a PDF file into the upload zone.</li>
+          <li>Enter your desired page range using 1-based page numbers (e.g., <code>1-3</code>, <code>5</code>, or <code>8-12</code>).</li>
+          <li>Click "Split PDF" to extract the pages.</li>
+          <li>Your split PDF document downloads automatically.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Legal Contract Separation:</strong> Extract specific signed signature pages or addenda from a 50-page master agreement.</li>
+          <li><strong>Textbook Chapter Extraction:</strong> Split a large 600-page course textbook into individual chapter files for lighter reading on mobile devices.</li>
+          <li><strong>Extracting Invoice Sheets:</strong> Pull individual customer billing pages out of monthly batch statements.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">10-page document, Range: "2-4, 7"</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">New 4-page PDF containing original pages 2, 3, 4, and 7.</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>Uses <code>pdf-lib</code>'s <code>copyPages()</code> method. Page numbering is strictly 1-based in the UI, mapping to 0-based internal arrays. Out-of-bounds selections are validated and rejected with descriptive error guidance.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>The output document must contain at least 1 valid page. Encrypted or password-protected PDFs are not supported.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>100% client-side memory execution. Your confidential contracts and papers never leave your device.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+          <h3>Are page numbers 1-based or 0-based?</h3>
+          <p>Page numbering is strictly 1-based, matching the physical page numbers printed on your document.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I specify non-consecutive page ranges?</h3>
+          <p>Yes. You can combine ranges and single pages using commas, such as "1-3, 5, 8-10".</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Will the original PDF file be changed or deleted?</h3>
+          <p>No. Your original file remains untouched on your computer; a new split PDF is generated and downloaded.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/tools/pdf-merger.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>PDF Merger</span>
+          </a>
+
+          <a href="/tools/pdf-page-extractor.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>PDF Page Extractor</span>
+          </a>
+
+          <a href="/tools/pdf-page-deleter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>PDF Page Deleter</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/assets/vendor/pdf-lib.min.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const dropzone = document.getElementById('dropzone');
+      const fileInput = document.getElementById('file-input');
+      const splitSection = document.getElementById('split-section');
+      const statusBanner = document.getElementById('status-banner');
+      const docName = document.getElementById('doc-name');
+      const docMeta = document.getElementById('doc-meta');
+      const pageRangeInput = document.getElementById('page-range-input');
+      const btnSplit = document.getElementById('btn-split');
+      const btnChangeFile = document.getElementById('btn-change-file');
+      const processSpinner = document.getElementById('process-spinner');
+
+      const presetAll = document.getElementById('preset-all');
+      const presetFirstHalf = document.getElementById('preset-first-half');
+      const presetSecondHalf = document.getElementById('preset-second-half');
+      const presetOdd = document.getElementById('preset-odd');
+      const presetEven = document.getElementById('preset-even');
+
+      let currentFile = null;
+      let loadedPdfDoc = null;
+      let totalPages = 0;
+
+      function showBanner(type, message) {
+        statusBanner.className = `alert alert-${type}`;
+        statusBanner.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+            ${type === 'success' 
+              ? '<polyline points="20 6 9 17 4 12"/>' 
+              : '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'}
+          </svg>
+          <div>${window.FreeOnlineTools.escapeHtml(message)}</div>
+        `;
+        statusBanner.style.display = 'flex';
+      }
+
+      function hideBanner() {
+        statusBanner.style.display = 'none';
+      }
+
+      function formatBytes(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / 1048576).toFixed(2) + ' MB';
+      }
+
+      async function loadPdf(file) {
+        hideBanner();
+
+        if (typeof PDFLib === 'undefined' || !PDFLib.PDFDocument) {
+          showBanner('danger', 'The client PDF library failed to load. Please check your connection or refresh the page.');
+          return;
+        }
+
+        try {
+          const arrayBuffer = await file.arrayBuffer();
+          loadedPdfDoc = await PDFLib.PDFDocument.load(arrayBuffer, { ignoreEncryption: false });
+          totalPages = loadedPdfDoc.getPageCount();
+          currentFile = file;
+
+          docName.textContent = file.name;
+          docMeta.textContent = `${formatBytes(file.size)} • Total Pages: ${totalPages}`;
+
+          pageRangeInput.value = `1-${totalPages}`;
+          splitSection.style.display = 'block';
+          dropzone.style.display = 'none';
+        } catch (err) {
+          if (err.message && err.message.toLowerCase().includes('encrypt')) {
+            showBanner('danger', 'This PDF is password-protected or encrypted. Please remove password protection before splitting.');
+          } else {
+            showBanner('danger', 'Could not read PDF: ' + err.message);
+          }
+        }
+      }
+
+      dropzone.addEventListener('click', () => fileInput.click());
+      dropzone.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          fileInput.click();
+        }
+      });
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('dragover');
+      });
+      dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          loadPdf(e.dataTransfer.files[0]);
+        }
+      });
+
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          loadPdf(e.target.files[0]);
+        }
+      });
+
+      btnChangeFile.addEventListener('click', () => {
+        splitSection.style.display = 'none';
+        dropzone.style.display = 'block';
+        fileInput.value = '';
+        currentFile = null;
+        loadedPdfDoc = null;
+        totalPages = 0;
+        hideBanner();
+      });
+
+      // Presets
+      presetAll.addEventListener('click', () => {
+        pageRangeInput.value = `1-${totalPages}`;
+      });
+      presetFirstHalf.addEventListener('click', () => {
+        const half = Math.ceil(totalPages / 2);
+        pageRangeInput.value = `1-${half}`;
+      });
+      presetSecondHalf.addEventListener('click', () => {
+        const half = Math.ceil(totalPages / 2);
+        pageRangeInput.value = totalPages > 1 ? `${half + 1}-${totalPages}` : '1';
+      });
+      presetOdd.addEventListener('click', () => {
+        const odds = [];
+        for (let i = 1; i <= totalPages; i += 2) odds.push(i);
+        pageRangeInput.value = odds.join(', ');
+      });
+      presetEven.addEventListener('click', () => {
+        const evens = [];
+        for (let i = 2; i <= totalPages; i += 2) evens.push(i);
+        pageRangeInput.value = evens.length ? evens.join(', ') : '2';
+      });
+
+      // Parse and validate 1-based page range string
+      function parsePageNumbers(rangeStr, maxPages) {
+        if (!rangeStr || !rangeStr.trim()) {
+          throw new Error('Please enter at least one page number to extract.');
+        }
+
+        const pages = new Set();
+        const parts = rangeStr.split(',');
+
+        for (let part of parts) {
+          part = part.trim();
+          if (!part) continue;
+
+          if (part.includes('-')) {
+            const [startStr, endStr] = part.split('-');
+            const start = parseInt(startStr.trim(), 10);
+            const end = parseInt(endStr.trim(), 10);
+
+            if (isNaN(start) || isNaN(end)) {
+              throw new Error(`Invalid range format: "${part}". Use numbers like "1-5".`);
+            }
+            if (start < 1) {
+              throw new Error(`Page numbers start at 1 (received "${start}").`);
+            }
+            if (end > maxPages) {
+              throw new Error(`Page ${end} exceeds total document page count (${maxPages}).`);
+            }
+            if (start > end) {
+              throw new Error(`Invalid range: start page (${start}) cannot be greater than end page (${end}).`);
+            }
+
+            for (let i = start; i <= end; i++) {
+              pages.add(i);
+            }
+          } else {
+            const pageNum = parseInt(part, 10);
+            if (isNaN(pageNum)) {
+              throw new Error(`"${part}" is not a valid page number.`);
+            }
+            if (pageNum < 1) {
+              throw new Error(`Page numbers start at 1 (received "${pageNum}").`);
+            }
+            if (pageNum > maxPages) {
+              throw new Error(`Page ${pageNum} exceeds total document page count (${maxPages}).`);
+            }
+            pages.add(pageNum);
+          }
+        }
+
+        if (pages.size === 0) {
+          throw new Error('No valid pages selected.');
+        }
+
+        // Return sorted array of 0-based indices for pdf-lib
+        return Array.from(pages).sort((a, b) => a - b).map(p => p - 1);
+      }
+
+      btnSplit.addEventListener('click', async () => {
+        hideBanner();
+
+        if (!loadedPdfDoc || !currentFile) {
+          showBanner('danger', 'Please choose a PDF document first.');
+          return;
+        }
+
+        let pageIndices;
+        try {
+          pageIndices = parsePageNumbers(pageRangeInput.value, totalPages);
+        } catch (err) {
+          showBanner('danger', err.message);
+          return;
+        }
+
+        btnSplit.disabled = true;
+        processSpinner.style.display = 'inline-block';
+
+        try {
+          const newPdf = await PDFLib.PDFDocument.create();
+          const copiedPages = await newPdf.copyPages(loadedPdfDoc, pageIndices);
+          copiedPages.forEach(p => newPdf.addPage(p));
+
+          const pdfBytes = await newPdf.save();
+          const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+          const url = URL.createObjectURL(blob);
+
+          const a = document.createElement('a');
+          a.href = url;
+          const originalBaseName = currentFile.name.replace(/\.[^/.]+$/, '');
+          a.download = `${originalBaseName}-extracted.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+
+          setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+          showBanner('success', `Extracted ${pageIndices.length} page${pageIndices.length === 1 ? '' : 's'} into "${a.download}" successfully!`);
+          window.FreeOnlineTools.showToast('Split PDF downloaded!');
+        } catch (err) {
+          showBanner('danger', 'Extraction failed: ' + err.message);
+        } finally {
+          btnSplit.disabled = false;
+          processSpinner.style.display = 'none';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

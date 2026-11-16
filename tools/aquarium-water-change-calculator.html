@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquarium Water Change Calculator — Gallons to Drain &amp; Conditioner Dosing</title>
+  <meta name="description" content="Calculate water change volumes, bucket counts, dechlorinator conditioner dosing (Seachem Prime, API Stress Coat), and post-change nitrate levels in ppm.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/aquarium-water-change-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/aquarium-water-change-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/aquarium-water-change-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Aquarium Water Change Calculator",
+    "description": "Calculate exact water change volume, 5-gallon bucket counts, water conditioner dechlorinator dosing (Prime, API), and nitrate reduction simulator.",
+    "url": "https://nexivo.com/tools/aquarium-water-change-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How often and how much water should I change in my aquarium?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For a standard community aquarium, performing a 20% to 25% water change once every week or every two weeks is recommended. This removes accumulated nitrate, replenishes essential trace minerals, and prevents Old Tank Syndrome without shocking fish."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I dose water conditioner for the new water volume or the full tank volume?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If you pre-mix or pre-treat tap water in buckets or a reservoir before pouring it into the aquarium, only dose for the volume of new water. If you fill directly from a tap into the aquarium using a hose or Python water changer, standard safety protocol requires dosing conditioner for the entire volume of the aquarium to instantly neutralize chlorine before it contacts the fish and beneficial filter bacteria."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is nitrate harmful to aquarium fish?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "While beneficial nitrifying bacteria convert deadly ammonia and nitrite into nitrate, nitrate itself becomes toxic when allowed to accumulate above 40 to 50 ppm. Chronic high nitrate stunts juvenile fish growth, weakens fish immune systems leading to fin rot, and triggers uncontrollable nuisance algae blooms."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many drops are in 1 milliliter (ml) of water conditioner?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A standard medical dropper or laboratory pipette dispenses approximately 20 drops per milliliter (ml). For small nano tanks (under 5 gallons), dosing by drops ensures precise measurement without accidental overdosing."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#aquarium">Pets &amp; Aquarium</a></li>
+      <li>/</li>
+      <li aria-current="page">Aquarium Water Change Calculator</li>
+    </nav>
+
+    <!-- Aquarium Suite Navigation -->
+    <div class="aquarium-suite-nav">
+      <span class="aquarium-suite-label">Aquarium Suite:</span>
+      <a href="/tools/aquarium-volume-calculator.html" class="aquarium-pill">Tank Volume &amp; Weight</a>
+      <a href="/tools/aquarium-heater-calculator.html" class="aquarium-pill">Heater Sizing</a>
+      <a href="/tools/aquarium-water-change-calculator.html" class="aquarium-pill active">Water Change &amp; Dosing</a>
+      <a href="/tools/aquarium-stocking-calculator.html" class="aquarium-pill">Fish Stocking Guide</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Aquarium Water Change &amp; Conditioner Calculator</h1>
+      <p class="tool-header-desc">
+        Calculate exact water volumes to drain and refill, 5-gallon bucket counts, water conditioner dechlorinator dosing (Prime, API), and nitrate reduction predictions.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Prime &amp; API Dosing</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Nitrate Simulator</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Section 1: Tank Volume & Change Percentage -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3);">
+          <h2 style="font-size: var(--font-size-base); font-weight: 700; margin: 0; display: flex; align-items: center; gap: var(--space-2);">
+            <span>💧</span> 1. Water Volume &amp; Change Target
+          </h2>
+          <!-- Unit Selector -->
+          <div class="btn-group" role="group" aria-label="Water Change Volume Unit Toggle">
+            <button type="button" id="btn-vol-gal" class="btn btn-secondary active" style="font-size: var(--font-size-xs); padding: 0.35rem 0.75rem;">US Gallons</button>
+            <button type="button" id="btn-vol-liters" class="btn btn-secondary" style="font-size: var(--font-size-xs); padding: 0.35rem 0.75rem;">Liters</button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3);">
+          <!-- Tank Volume -->
+          <div>
+            <label for="tank-volume-input" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Aquarium Net Water Volume:</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="tank-volume-input" class="form-control" value="20" min="1" max="1000" step="1" aria-label="Aquarium net water volume" style="font-size: var(--font-size-base); font-weight: 700; max-width: 180px;">
+              <span id="lbl-vol-unit" style="font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text-muted);">Gallons</span>
+            </div>
+          </div>
+
+          <!-- Change Percentage -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+              <label for="change-pct-slider" style="font-weight: 600; font-size: var(--font-size-xs); margin: 0;">Water Change Percentage:</label>
+              <span id="lbl-change-pct" style="font-size: var(--font-size-xs); font-weight: 700; color: var(--color-primary);">25% (Standard Routine)</span>
+            </div>
+            <input type="range" id="change-pct-slider" min="5" max="80" step="5" value="25" class="form-range" style="width: 100%;" aria-label="Water change percentage slider">
+            <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 0.3rem;">
+              <button type="button" class="btn btn-secondary btn-quick-pct" data-pct="10" style="padding: 0.2rem 0.45rem; font-size: 11px;">10%</button>
+              <button type="button" class="btn btn-secondary btn-quick-pct" data-pct="20" style="padding: 0.2rem 0.45rem; font-size: 11px;">20%</button>
+              <button type="button" class="btn btn-secondary btn-quick-pct active" data-pct="25" style="padding: 0.2rem 0.45rem; font-size: 11px;">25%</button>
+              <button type="button" class="btn btn-secondary btn-quick-pct" data-pct="30" style="padding: 0.2rem 0.45rem; font-size: 11px;">30%</button>
+              <button type="button" class="btn btn-secondary btn-quick-pct" data-pct="50" style="padding: 0.2rem 0.45rem; font-size: 11px;">50%</button>
+              <button type="button" class="btn btn-secondary btn-quick-pct" data-pct="75" style="padding: 0.2rem 0.45rem; font-size: 11px;">75%</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Water Conditioner / Dechlorinator Parameters -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>🧪</span> 2. Dechlorinator / Water Conditioner Dosing
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3);">
+          <div>
+            <label for="conditioner-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Conditioner Brand / Product:</label>
+            <select id="conditioner-select" class="form-select" aria-label="Select water conditioner brand">
+              <option value="seachem_prime" selected>Seachem Prime (1 ml / 10 Gal)</option>
+              <option value="api_stress_coat">API Stress Coat (5 ml / 10 Gal)</option>
+              <option value="tetra_aquasafe">Tetra AquaSafe (5 ml / 10 Gal)</option>
+              <option value="fritz_complete">Fritz Complete (1 ml / 10 Gal)</option>
+              <option value="custom">Custom Dosage (ml per volume)</option>
+            </select>
+            <div id="wrapper-custom-dose" style="display: none; margin-top: 0.4rem;">
+              <label for="custom-dose-input" style="font-size: 11px; font-weight: 600;">Custom Dosage (ml per Gallon):</label>
+              <input type="number" id="custom-dose-input" class="form-control" value="0.2" min="0.01" step="0.05" style="max-width: 140px; padding: 0.25rem 0.4rem;" aria-label="Custom conditioner dosage ml per gallon">
+            </div>
+          </div>
+
+          <div>
+            <label style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Dosing Protocol Mode:</label>
+            <div class="btn-group" role="group" aria-label="Conditioner Dosing Mode Selector" style="display: flex;">
+              <button type="button" id="btn-dose-new" class="btn btn-secondary active" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem;">Dose for New Water Only (Bucket)</button>
+              <button type="button" id="btn-dose-full" class="btn btn-secondary" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem;">Dose for Full Tank (Hose / Python)</button>
+            </div>
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              When adding tap water straight to tank via hose, always dose for the full tank volume.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Optional Nitrate Reduction Simulator -->
+      <div class="form-section" style="margin-bottom: var(--space-4); background: var(--color-bg-secondary); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+          <h2 style="font-size: var(--font-size-sm); font-weight: 700; margin: 0; display: flex; align-items: center; gap: var(--space-2);">
+            <span>🔬</span> 3. Nitrate Reduction Simulator (Optional)
+          </h2>
+          <span style="font-size: 11px; color: var(--color-text-muted);">Predicts post-change water chemistry</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3);">
+          <div>
+            <label for="current-nitrate-input" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Current Tank Nitrate Level (ppm):</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="current-nitrate-input" class="form-control" value="40" min="0" max="200" step="5" aria-label="Current tank nitrate in ppm" style="max-width: 140px; font-weight: 700;">
+              <span style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">ppm</span>
+            </div>
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              Test kit reading before water change.
+            </span>
+          </div>
+
+          <div>
+            <label for="tap-nitrate-input" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Tap / Source Water Nitrate (ppm):</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="tap-nitrate-input" class="form-control" value="0" min="0" max="100" step="1" aria-label="Tap water nitrate in ppm" style="max-width: 140px; font-weight: 700;">
+              <span style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">ppm</span>
+            </div>
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              Usually 0 ppm; agricultural wells may have 5–15 ppm.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); margin-top: var(--space-3); flex-wrap: wrap;">
+        <button type="button" id="btn-copy-summary" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Water Change Sheet</span>
+        </button>
+        <button type="button" id="btn-reset" class="btn btn-secondary">Reset to Standard 25% Change</button>
+      </div>
+
+      <!-- Section 4: Output Summary Cards -->
+      <div style="margin-top: var(--space-5);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>📊</span> Water Change &amp; Dosing Output
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: var(--space-3);">
+          <!-- Card 1: Water Volume to Drain/Refill -->
+          <div style="background: var(--color-bg-surface); border: 2px solid var(--color-primary); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Volume to Drain &amp; Refill</span>
+            <div id="kpi-water-change" style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin: 0.25rem 0;">5.0 Gal</div>
+            <div id="kpi-water-liters" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">18.9 Liters (25% of 20 Gal)</div>
+          </div>
+
+          <!-- Card 2: 5-Gallon Bucket Count -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Standard 5-Gal Bucket Trips</span>
+            <div id="kpi-bucket-count" style="font-size: 2rem; font-weight: 800; color: #0284c7; margin: 0.25rem 0;">1.0 Bucket</div>
+            <div id="kpi-bucket-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Standard 5-Gallon / 19L buckets</div>
+          </div>
+
+          <!-- Card 3: Conditioner Dose -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Conditioner Dosage</span>
+            <div id="kpi-dose-ml" style="font-size: 2rem; font-weight: 800; color: #16a34a; margin: 0.25rem 0;">0.5 ml</div>
+            <div id="kpi-dose-drops" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">~10 drops (Seachem Prime)</div>
+          </div>
+
+          <!-- Card 4: Post-Change Nitrate -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Predicted Post-Change Nitrate</span>
+            <div id="kpi-post-nitrate" style="font-size: 2rem; font-weight: 800; color: #ea580c; margin: 0.25rem 0;">30.0 ppm</div>
+            <div id="kpi-nitrate-removed" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">-10.0 ppm removed (Optimal)</div>
+          </div>
+        </div>
+
+        <!-- Cap / Thread Measurement Guide Box -->
+        <div id="cap-guide-box" style="margin-top: var(--space-3); padding: var(--space-3); background: var(--color-bg-secondary); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text); line-height: 1.5;">
+            💡 <strong>Measuring Guide:</strong> <span id="cap-guide-text">0.5 ml is approx. 10 drops. For nano tanks, use an eye dropper or clean 1ml syringe for pinpoint safety.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Documentation & Educational Guide -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Aquarium Water Change Calculator</strong> takes the stress and guesswork out of routine aquarium maintenance. Performing water changes is the single most vital task in aquarium keeping: it removes nitrate and dissolved organic wastes that biological filters cannot consume, clears discoloration, and restores natural pH mineral buffers (carbonates and trace elements). This tool computes the exact volume of water to siphon and refill in both gallons and liters, converts the volume into physical 5-gallon bucket trips, provides precise dechlorinator dosing (in both milliliters and drops to prevent overdosing), and accurately simulates post-change nitrate levels.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Enter Net Water Volume:</strong> Input your tank's net water volume in <strong>US Gallons</strong> or <strong>Liters</strong>.</li>
+        <li><strong>Select Water Change Target:</strong> Adjust the percentage slider (typically <strong>20% to 25%</strong> for routine maintenance, or <strong>50%</strong> for emergency parameter resets).</li>
+        <li><strong>Choose Your Water Conditioner:</strong> Select your dechlorinator brand (such as <strong>Seachem Prime</strong>, <strong>API Stress Coat</strong>, or <strong>Tetra AquaSafe</strong>).</li>
+        <li><strong>Select Dosing Mode:</strong> Choose <strong>New Water Only</strong> if you treat water in buckets before adding it to the tank. Select <strong>Full Tank Volume</strong> if filling directly from a household tap using a hose/Python system.</li>
+        <li><strong>(Optional) Enter Nitrate Readings:</strong> Enter your current water test kit nitrate reading and tap water reading to predict the exact post-change nitrate level.</li>
+        <li><strong>Execute Maintenance:</strong> Review required bucket trips and exact conditioner dose, then click <strong>Copy Water Change Sheet</strong> for your maintenance records.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        Water exchange dilution and chemical neutralization follow linear conservation formulas:
+      </p>
+      <ul>
+        <li><strong>Water Volume to Change:</strong> $$V_{\text{change}} = V_{\text{tank}} \times \left(\frac{\text{Change \%}}{100}\right)$$</li>
+        <li><strong>5-Gallon Bucket Trips:</strong> $$\text{Bucket Count} = \frac{V_{\text{change (US Gal)}}}{5.0}$$</li>
+        <li><strong>Conditioner Dosage:</strong> 
+          $$\text{Dose (ml)} = V_{\text{dose volume}} \times \text{Conditioner Rate (ml/gal)}$$
+          $$\text{Drops} = \text{Dose (ml)} \times 20\text{ drops/ml}$$
+        </li>
+        <li><strong>Post-Change Nitrate Simulator:</strong> 
+          $$N_{\text{post}} = N_{\text{current}} \times \left(1 - \frac{\text{Change \%}}{100}\right) + N_{\text{tap}} \times \left(\frac{\text{Change \%}}{100}\right)$$
+          $$\text{Nitrate Removed (ppm)} = N_{\text{current}} - N_{\text{post}}$$
+        </li>
+      </ul>
+
+      <h2>Reference Table: Dechlorinator Dosing &amp; Nitrate Targets</h2>
+      <table class="table" style="width: 100%; font-size: var(--font-size-sm); margin-top: var(--space-3); border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--color-border); text-align: left;">
+            <th style="padding: 0.5rem;">Parameter / Brand</th>
+            <th style="padding: 0.5rem;">Standard Dosing Rate</th>
+            <th style="padding: 0.5rem;">Drops per Gallon</th>
+            <th style="padding: 0.5rem;">Safe Nitrate Target Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Seachem Prime</td>
+            <td style="padding: 0.5rem;">1 ml per 10 US Gal (5 ml / 50 Gal)</td>
+            <td style="padding: 0.5rem;">~2 drops / Gal</td>
+            <td style="padding: 0.5rem; color: #16a34a; font-weight: 600;">Optimal (&lt;20 ppm)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">API Stress Coat</td>
+            <td style="padding: 0.5rem;">5 ml per 10 US Gal (1 tsp / 10 Gal)</td>
+            <td style="padding: 0.5rem;">~10 drops / Gal</td>
+            <td style="padding: 0.5rem; color: #16a34a; font-weight: 600;">Optimal (&lt;20 ppm)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Tetra AquaSafe</td>
+            <td style="padding: 0.5rem;">5 ml per 10 US Gal</td>
+            <td style="padding: 0.5rem;">~10 drops / Gal</td>
+            <td style="padding: 0.5rem; color: #0284c7;">Acceptable (20–40 ppm)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Fritz Complete</td>
+            <td style="padding: 0.5rem;">1 ml per 10 US Gal</td>
+            <td style="padding: 0.5rem;">~2 drops / Gal</td>
+            <td style="padding: 0.5rem; color: #ea580c;">High Risk (40–80 ppm)</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; font-weight: 600;">Extreme Danger Zone</td>
+            <td style="padding: 0.5rem;">N/A (Immediate 50% change needed)</td>
+            <td style="padding: 0.5rem;">N/A</td>
+            <td style="padding: 0.5rem; color: #dc2626; font-weight: 700;">Lethal Hazard (&gt;80 ppm)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>Routine Weekly Maintenance:</strong> Calculating exact 20% or 25% bucket fills for scheduled Saturday tank maintenance.</li>
+        <li><strong>Emergency Ammonia &amp; Nitrite Spikes:</strong> Calculating consecutive 50% water changes during unexpected filter crashes or dead fish decomposition.</li>
+        <li><strong>Nano Tank Precision Dosing:</strong> Determining exact drop counts for 2.5-gallon and 5-gallon betta tanks where syringe measurements are inconvenient.</li>
+        <li><strong>Direct Tap Water Python Siphoning:</strong> Ensuring the correct whole-tank dechlorinator dosage is added before turning on the tap hose.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        <strong>Scenario:</strong> You perform a <strong>25% water change</strong> on a <strong>20 Gallon</strong> aquarium using <strong>Seachem Prime</strong>. Your pre-change nitrate reading is <strong>40 ppm</strong>, and your municipal tap water has <strong>0 ppm</strong> nitrate.
+      </p>
+      <ul>
+        <li><strong>Water to Drain:</strong> $20\text{ Gal} \times 0.25 = \mathbf{5.0\text{ US Gallons}}$ ($18.9\text{ Liters}$).</li>
+        <li><strong>Bucket Count:</strong> $5.0 / 5.0 = \mathbf{1.0\text{ standard bucket}}$ trip.</li>
+        <li><strong>Conditioner Dosage (New Water):</strong> $5.0\text{ Gal} \times 0.1\text{ ml/gal} = \mathbf{0.5\text{ ml}}$ ($\approx \mathbf{10\text{ drops}}$).</li>
+        <li><strong>Predicted Post-Change Nitrate:</strong> $40 \times 0.75 + 0 \times 0.25 = \mathbf{30.0\text{ ppm}}$ ($10.0\text{ ppm removed}$).</li>
+      </ul>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <ul>
+        <li><strong>Chloramine Complex Neutralization:</strong> Dechlorinators split the chlorine-ammonia bond in chloramine, rendering toxic chlorine harmless and temporarily binding toxic ammonia into non-toxic ammonium for 24 to 48 hours.</li>
+        <li><strong>Drops Accuracy Standard:</strong> Adheres to standard 20 drops per milliliter metric drops calibration.</li>
+        <li><strong>Instant Zero-Latency Execution:</strong> Runs 100% locally on your computer or phone without server delays.</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        Calculations assume uniform water mixing. Water temperature of the new refill water should be matched to within $\pm 2^\circ\text{F}$ of the aquarium water to prevent thermal shock.
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        All entered tank volumes, water chemistry readings, and chemical selections remain strictly private on your device. Zero data is transmitted or tracked.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Can I change 100% of the water at once?</h3>
+        <p>
+          No, never perform a 100% water change unless responding to severe chemical poisoning. Large swings in pH, temperature, and osmotic pressure cause osmotic shock, which is often fatal to fish. In heavily neglected tanks, perform multiple small 15%–20% water changes over several days.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Will changing water kill my beneficial bacteria?</h3>
+        <p>
+          No. Beneficial nitrifying bacteria live colonially attached to surfaces: filter sponge foam, bio-rings, ceramic media, substrate gravel, and glass. Very few bacteria float free in the water column. As long as you treat tap water with conditioner, water changes protect your biological cycle.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Can you overdose Seachem Prime?</h3>
+        <p>
+          Seachem Prime has a high safety margin and can be safely dosed at up to 5x standard concentration in emergency spikes of ammonia or nitrite. However, excessive overdosing can deplete dissolved oxygen levels, so adequate surface agitation should always be maintained.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/aquarium-volume-calculator.html" class="related-tool-chip">🐠 Aquarium Volume Calculator</a>
+        <a href="/tools/aquarium-heater-calculator.html" class="related-tool-chip">🌡️ Aquarium Heater Calculator</a>
+        <a href="/tools/aquarium-stocking-calculator.html" class="related-tool-chip">🐟 Aquarium Stocking Calculator</a>
+        <a href="/tools/unit-converter.html" class="related-tool-chip">🔄 Universal Unit Converter</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/aquarium-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // State
+      let volUnit = 'gallons'; // 'gallons' or 'liters'
+      let doseMode = 'new_water'; // 'new_water' or 'full_tank'
+      let lastResult = null;
+
+      // DOM Elements
+      const btnVolGal = document.getElementById('btn-vol-gal');
+      const btnVolLiters = document.getElementById('btn-vol-liters');
+      const tankVolInput = document.getElementById('tank-volume-input');
+      const lblVolUnit = document.getElementById('lbl-vol-unit');
+
+      const changePctSlider = document.getElementById('change-pct-slider');
+      const lblChangePct = document.getElementById('lbl-change-pct');
+      const quickPctBtns = document.querySelectorAll('.btn-quick-pct');
+
+      const conditionerSelect = document.getElementById('conditioner-select');
+      const wrapperCustomDose = document.getElementById('wrapper-custom-dose');
+      const customDoseInput = document.getElementById('custom-dose-input');
+
+      const btnDoseNew = document.getElementById('btn-dose-new');
+      const btnDoseFull = document.getElementById('btn-dose-full');
+
+      const currentNitrateInput = document.getElementById('current-nitrate-input');
+      const tapNitrateInput = document.getElementById('tap-nitrate-input');
+
+      const kpiWaterChange = document.getElementById('kpi-water-change');
+      const kpiWaterLiters = document.getElementById('kpi-water-liters');
+      const kpiBucketCount = document.getElementById('kpi-bucket-count');
+      const kpiBucketSub = document.getElementById('kpi-bucket-sub');
+      const kpiDoseMl = document.getElementById('kpi-dose-ml');
+      const kpiDoseDrops = document.getElementById('kpi-dose-drops');
+      const kpiPostNitrate = document.getElementById('kpi-post-nitrate');
+      const kpiNitrateRemoved = document.getElementById('kpi-nitrate-removed');
+
+      const capGuideBox = document.getElementById('cap-guide-box');
+      const capGuideText = document.getElementById('cap-guide-text');
+
+      const btnCopySummary = document.getElementById('btn-copy-summary');
+      const btnReset = document.getElementById('btn-reset');
+
+      // Check URL query parameters (e.g. ?volume=20&unit=gallons)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('volume')) {
+        const v = parseFloat(urlParams.get('volume'));
+        if (!isNaN(v) && v > 0) {
+          tankVolInput.value = v;
+        }
+      }
+      if (urlParams.get('unit') === 'liters') {
+        volUnit = 'liters';
+        btnVolLiters.classList.add('active');
+        btnVolGal.classList.remove('active');
+        lblVolUnit.textContent = 'Liters';
+      }
+
+      // Volume Unit Toggle
+      btnVolGal.addEventListener('click', () => setVolUnit('gallons'));
+      btnVolLiters.addEventListener('click', () => setVolUnit('liters'));
+
+      function setVolUnit(u) {
+        if (volUnit === u) return;
+        const currentVal = parseFloat(tankVolInput.value) || 20;
+        volUnit = u;
+        btnVolGal.classList.toggle('active', u === 'gallons');
+        btnVolLiters.classList.toggle('active', u === 'liters');
+        lblVolUnit.textContent = u === 'gallons' ? 'Gallons' : 'Liters';
+
+        if (u === 'liters') {
+          tankVolInput.value = Math.round(currentVal * 3.78541);
+        } else {
+          tankVolInput.value = Math.round(currentVal / 3.78541);
+        }
+        calculate();
+      }
+
+      // Quick Pct buttons
+      quickPctBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          quickPctBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          changePctSlider.value = this.dataset.pct;
+          updatePctLabel(this.dataset.pct);
+          calculate();
+        });
+      });
+
+      changePctSlider.addEventListener('input', function() {
+        quickPctBtns.forEach(b => b.classList.toggle('active', b.dataset.pct === this.value));
+        updatePctLabel(this.value);
+        calculate();
+      });
+
+      function updatePctLabel(val) {
+        const v = parseInt(val, 10);
+        let tag = 'Routine';
+        if (v <= 15) tag = 'Minor Refresh';
+        else if (v <= 30) tag = 'Standard Routine';
+        else if (v <= 50) tag = 'Deep Clean';
+        else tag = 'Emergency Reset';
+        lblChangePct.textContent = `${v}% (${tag})`;
+      }
+
+      // Conditioner Select
+      conditionerSelect.addEventListener('change', function() {
+        wrapperCustomDose.style.display = (this.value === 'custom') ? 'block' : 'none';
+        calculate();
+      });
+
+      // Dose Mode Toggle
+      btnDoseNew.addEventListener('click', () => {
+        doseMode = 'new_water';
+        btnDoseNew.classList.add('active');
+        btnDoseFull.classList.remove('active');
+        calculate();
+      });
+
+      btnDoseFull.addEventListener('click', () => {
+        doseMode = 'full_tank';
+        btnDoseFull.classList.add('active');
+        btnDoseNew.classList.remove('active');
+        calculate();
+      });
+
+      // Calculation Engine
+      function calculate() {
+        const res = AquariumUtils.calculateWaterChange({
+          tankVolume: parseFloat(tankVolInput.value) || 20,
+          unit: volUnit,
+          changePercentage: parseFloat(changePctSlider.value) || 25,
+          conditionerId: conditionerSelect.value,
+          customMlPerGal: parseFloat(customDoseInput.value) || 0.2,
+          doseMode,
+          currentNitratePpm: parseFloat(currentNitrateInput.value),
+          tapNitratePpm: parseFloat(tapNitrateInput.value) || 0
+        });
+
+        if (!res) return;
+        lastResult = res;
+
+        // Populate KPIs
+        kpiWaterChange.textContent = `${res.waterChanged} ${volUnit === 'gallons' ? 'Gal' : 'L'}`;
+        kpiWaterLiters.textContent = `${res.waterChangedLiters} L (${res.waterChangedGal} Gal)`;
+
+        kpiBucketCount.textContent = `${res.bucketCount} Bucket${res.bucketCount === 1 ? '' : 's'}`;
+        kpiBucketSub.textContent = `Standard 5-Gallon / 19L buckets`;
+
+        kpiDoseMl.textContent = `${res.conditioner.doseMl} ml`;
+        kpiDoseDrops.textContent = `~${res.conditioner.doseDrops} drops (${res.conditioner.name})`;
+
+        if (res.nitrate) {
+          kpiPostNitrate.textContent = `${res.nitrate.postPpm} ppm`;
+          kpiNitrateRemoved.textContent = `-${res.nitrate.removedPpm} ppm (${res.nitrate.status.label})`;
+        } else {
+          kpiPostNitrate.textContent = '--';
+          kpiNitrateRemoved.textContent = 'Enter current nitrate above';
+        }
+
+        // Cap Guide Text
+        if (res.conditioner.capGuide) {
+          capGuideBox.style.display = 'block';
+          capGuideText.textContent = `${res.conditioner.capGuide}. Mode: ${doseMode === 'new_water' ? 'New water treated' : 'Full tank volume treated'}.`;
+        } else {
+          capGuideBox.style.display = 'block';
+          capGuideText.textContent = `${res.conditioner.doseMl} ml (~${res.conditioner.doseDrops} drops) of ${res.conditioner.name}.`;
+        }
+      }
+
+      // Copy Water Change Sheet
+      btnCopySummary.addEventListener('click', function() {
+        if (!lastResult) return;
+        const res = lastResult;
+        const lines = [
+          '💧 AQUARIUM WATER CHANGE & CONDITIONER SHEET',
+          '============================================',
+          `Tank Net Volume:           ${tankVolInput.value} ${volUnit.toUpperCase()}`,
+          `Water Change Target:       ${changePctSlider.value}%`,
+          '--------------------------------------------',
+          `WATER TO DRAIN & REFILL:   ${res.waterChanged} ${volUnit} (${res.waterChangedLiters} Liters)`,
+          `5-GALLON BUCKET TRIPS:     ${res.bucketCount} bucket(s)`,
+          `CONDITIONER PRODUCT:       ${res.conditioner.name}`,
+          `CONDITIONER DOSAGE:        ${res.conditioner.doseMl} ml (~${res.conditioner.doseDrops} drops)`,
+          `DOSING MODE:               ${doseMode === 'new_water' ? 'New Water Volume Only' : 'Full Tank Volume (Python/Tap)'}`,
+          '--------------------------------------------'
+        ];
+
+        if (res.nitrate) {
+          lines.push(
+            `Current Nitrate:           ${res.nitrate.currentPpm} ppm`,
+            `Tap Water Nitrate:         ${res.nitrate.tapPpm} ppm`,
+            `PREDICTED POST-CHANGE:     ${res.nitrate.postPpm} ppm (-${res.nitrate.removedPpm} ppm)`,
+            '--------------------------------------------'
+          );
+        }
+
+        lines.push(
+          'Calculated 100% in-browser at https://nexivo.com/tools/aquarium-water-change-calculator.html'
+        );
+
+        AquariumUtils.copyTextToClipboard(lines.join('\n'), btnCopySummary, 'Sheet Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        volUnit = 'gallons';
+        doseMode = 'new_water';
+        btnVolGal.classList.add('active');
+        btnVolLiters.classList.remove('active');
+        lblVolUnit.textContent = 'Gallons';
+
+        tankVolInput.value = '20';
+        changePctSlider.value = '25';
+        updatePctLabel('25');
+        quickPctBtns.forEach(b => b.classList.toggle('active', b.dataset.pct === '25'));
+
+        conditionerSelect.value = 'seachem_prime';
+        wrapperCustomDose.style.display = 'none';
+
+        btnDoseNew.classList.add('active');
+        btnDoseFull.classList.remove('active');
+
+        currentNitrateInput.value = '40';
+        tapNitrateInput.value = '0';
+
+        calculate();
+      });
+
+      // Event bindings
+      [tankVolInput, currentNitrateInput, tapNitrateInput, customDoseInput].forEach(inp => {
+        inp.addEventListener('input', calculate);
+        inp.addEventListener('change', calculate);
+      });
+
+      // Init
+      calculate();
+    })();
+  </script>
+</body>
+</html>

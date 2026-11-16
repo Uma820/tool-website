@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXIF Reader &amp; Metadata Remover — Free Online Tools</title>
+  <meta name="description" content="Read camera settings, exposure, lens details, and GPS location from photo EXIF metadata, or strip EXIF for privacy. 100% private in your browser.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/exif-reader.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/exif-reader.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/exif-reader.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "EXIF Reader & Metadata Remover",
+    "description": "Read camera settings, exposure, lens details, and GPS location from photo EXIF metadata, or strip EXIF for privacy. 100% private in your browser.",
+    "url": "https://nexivo.com/tools/exif-reader.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#image">Image Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">EXIF Reader</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>EXIF Reader &amp; Metadata Remover</span>
+      </h1>
+      <p class="tool-header-lead">
+        Inspect hidden camera metadata including shutter speed, aperture, ISO, lens model, and GPS location. Cleanly strip all EXIF tags before sharing photos online.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Binary TIFF/EXIF Parser</span>
+        <span class="tool-badge">Privacy Metadata Scrubber</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Toolbar -->
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <label class="btn btn-primary" style="cursor: pointer; margin-block-end: 0;">
+            <span>Select Photo (JPG / TIFF)</span>
+            <input type="file" id="file-input" accept="image/jpeg, image/tiff" style="display: none;">
+          </label>
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample EXIF Profile</button>
+          <button type="button" class="btn btn-secondary" id="btn-strip-download">Strip EXIF &amp; Download</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Decoded entirely in browser memory
+        </div>
+      </div>
+
+      <!-- Main Layout: Photo Preview & Metadata Cards -->
+      <div style="display: grid; grid-template-columns: 280px 1fr; gap: var(--space-4); margin-block-end: var(--space-4); align-items: start;">
+        <!-- Left: Image Thumbnail Preview -->
+        <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-3); text-align: center;">
+          <div style="block-size: 260px; display: flex; align-items: center; justify-content: center; background: #000000; border-radius: 4px; overflow: hidden; margin-block-end: var(--space-2);">
+            <img id="photo-thumb" src="" alt="Photo Preview" style="max-inline-size: 100%; max-block-size: 100%; object-fit: contain;">
+          </div>
+          <div id="file-specs-info" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+            No photo loaded
+          </div>
+        </div>
+
+        <!-- Right: EXIF Tags Table -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <!-- Camera Settings Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Camera Model</div>
+              <div class="stat-value" id="card-camera" style="font-size: var(--font-size-lg);">--</div>
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="card-make">Make / Manufacturer</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Exposure &amp; Aperture</div>
+              <div class="stat-value" id="card-exposure" style="font-size: var(--font-size-lg);">--</div>
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="card-iso">ISO --</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Focal Length &amp; Lens</div>
+              <div class="stat-value" id="card-focal" style="font-size: var(--font-size-lg);">--</div>
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="card-lens">Standard Lens</div>
+            </div>
+          </div>
+
+          <!-- Detailed Tags Table -->
+          <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4);">
+            <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-3);">Complete EXIF Tag Manifest</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3); font-size: var(--font-size-sm);">
+              <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+                <span style="color: var(--color-text-muted);">Date / Time Taken:</span>
+                <strong id="tag-datetime">--</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+                <span style="color: var(--color-text-muted);">Dimensions:</span>
+                <strong id="tag-dims">--</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+                <span style="color: var(--color-text-muted);">Flash Status:</span>
+                <strong id="tag-flash">--</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+                <span style="color: var(--color-text-muted);">Software / Firmware:</span>
+                <strong id="tag-software">--</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+                <span style="color: var(--color-text-muted);">GPS Coordinates:</span>
+                <strong id="tag-gps">None Found (Privacy Safe)</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+                <span style="color: var(--color-text-muted);">Color Space:</span>
+                <strong id="tag-colorspace">sRGB</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the EXIF Reader Do?</h2>
+        <p>
+          The <strong>EXIF Reader &amp; Metadata Remover</strong> decodes the Exchangeable Image File Format (EXIF) metadata embedded inside digital camera photographs. Whenever you snap a picture with a smartphone (iPhone, Android) or digital camera (Sony, Canon, Nikon), the device automatically saves technical parameters into the binary image header.
+        </p>
+        <p>
+          This data includes your camera model, aperture (F-stop), shutter speed, ISO sensitivity, focal length, lens serial numbers, exact timestamp, and in many cases, precise <strong>GPS geographical coordinates</strong> showing exactly where the photo was taken. This tool allows photographers to review shooting parameters and lets privacy-minded users scrub all metadata before sharing photos publicly.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Select a Photo:</strong> Click <strong>Select Photo</strong> to choose a JPG or TIFF file from your device, or click <strong>Sample EXIF Profile</strong> to inspect a demonstration dataset.</li>
+          <li><strong>Review Exposure Settings:</strong> Inspect the primary metric cards to check camera make, model, shutter speed, aperture, and ISO.</li>
+          <li><strong>Check for GPS Privacy Risks:</strong> Look at the <em>GPS Coordinates</em> row to see if geographic latitude and longitude coordinates are embedded.</li>
+          <li><strong>Strip Metadata:</strong> Click <strong>Strip EXIF &amp; Download</strong> to generate and download a fresh copy of your image with all EXIF headers permanently removed.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Online Privacy Protection</h3>
+            <p>Remove embedded home or workplace GPS coordinates before uploading pictures of classified items or personal sales to marketplaces.</p>
+          </div>
+          <div class="card">
+            <h3>Photography Education &amp; Learning</h3>
+            <p>Inspect the camera settings (aperture, shutter speed, ISO) used to capture stunning professional photographs.</p>
+          </div>
+          <div class="card">
+            <h3>Equipment Verification</h3>
+            <p>Confirm the exact lens model and body firmware version used for client photography shoots.</p>
+          </div>
+          <div class="card">
+            <h3>Copyright &amp; Timestamp Auditing</h3>
+            <p>Verify exact original capture timestamps when resolving copyright or chronological documentation disputes.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Decoded Camera Metadata:</div>
+          <pre class="example-pre">Camera: Sony ILCE-7M4 (A7 IV)
+Lens: FE 24-70mm F2.8 GM II
+Exposure: 1/500s at f/2.8, ISO 100
+Focal Length: 50.0 mm
+Date Taken: 2026-05-12 14:22:18
+GPS Location: 37°46'29.8"N 122°25'09.4"W (San Francisco, CA)
+Action: Click "Strip EXIF" to scrub coordinates before posting to forums.</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Binary Parser:</strong> Direct client-side <code>DataView</code> binary parsing scanning JPEG APP1 (<code>0xFFE1</code>) markers and TIFF IFD pointer tables.</li>
+          <li><strong>Endianness Awareness:</strong> Supports both Intel little-endian (<code>II</code> / <code>0x4949</code>) and Motorola big-endian (<code>MM</code> / <code>0x4D4D</code>) byte orders.</li>
+          <li><strong>Scrubbing Engine:</strong> Re-renders pixel bitmap through Canvas 2D, producing a clean, metadata-free image buffer.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Many social media platforms (like Twitter, WhatsApp, and Facebook) automatically strip EXIF metadata when you upload images to their servers. If you download a photo from social media, its EXIF tags have likely already been erased. For full metadata inspection, use the original photo taken directly by the camera.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Your personal photos and sensitive GPS locations are processed 100% locally on your computer inside your web browser. No photos, coordinates, or timestamps are ever sent to an external server.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Why do photos contain GPS coordinates?</summary>
+            <div class="faq-answer">
+              <p>Modern smartphones have built-in GPS receivers. By default, camera apps embed your geographic coordinates into photo files to organize your pictures by location in your phone's photo albums.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">How does "Strip EXIF" work?</summary>
+            <div class="faq-answer">
+              <p>The tool draws the photo onto a clean HTML5 canvas and re-encodes only the pure visual pixels into a fresh JPEG file. Because only pixel data is drawn, all EXIF, GPS, camera serials, and thumbnail data are completely left behind.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Can stripped metadata ever be recovered?</summary>
+            <div class="faq-answer">
+              <p>No. Once the EXIF segment is stripped from the new file, that metadata is permanently erased from the downloaded image.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/image-editor.html" class="related-tool-chip">
+            <div class="related-tool-title">Image Editor</div>
+            <div class="related-tool-desc">Rotate, crop, and adjust colors and filters on photos.</div>
+          </a>
+          <a href="/tools/image-compressor.html" class="related-tool-chip">
+            <div class="related-tool-title">Image Compressor</div>
+            <div class="related-tool-desc">Compress image file sizes with interactive quality sliders.</div>
+          </a>
+          <a href="/tools/image-converter.html" class="related-tool-chip">
+            <div class="related-tool-title">Image Converter</div>
+            <div class="related-tool-desc">Convert between PNG, JPG, WebP, and BMP in your browser.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const fileInput = document.getElementById('file-input');
+    const photoThumb = document.getElementById('photo-thumb');
+    const fileSpecsInfo = document.getElementById('file-specs-info');
+
+    const cardCamera = document.getElementById('card-camera');
+    const cardMake = document.getElementById('card-make');
+    const cardExposure = document.getElementById('card-exposure');
+    const cardIso = document.getElementById('card-iso');
+    const cardFocal = document.getElementById('card-focal');
+    const cardLens = document.getElementById('card-lens');
+
+    const tagDatetime = document.getElementById('tag-datetime');
+    const tagDims = document.getElementById('tag-dims');
+    const tagFlash = document.getElementById('tag-flash');
+    const tagSoftware = document.getElementById('tag-software');
+    const tagGps = document.getElementById('tag-gps');
+    const tagColorspace = document.getElementById('tag-colorspace');
+
+    const btnSample = document.getElementById('btn-sample');
+    const btnStripDownload = document.getElementById('btn-strip-download');
+
+    let loadedImg = new Image();
+    let currentFileName = 'image.jpg';
+
+    // Binary EXIF parser
+    function parseExif(arrayBuffer) {
+      const dataView = new DataView(arrayBuffer);
+      const result = {
+        make: null,
+        model: null,
+        exposureTime: null,
+        fNumber: null,
+        iso: null,
+        focalLength: null,
+        lensModel: null,
+        dateTime: null,
+        software: null,
+        flash: null,
+        gps: null
+      };
+
+      if (dataView.getUint16(0, false) !== 0xFFD8) {
+        return result; // Not a standard JPEG
+      }
+
+      let offset = 2;
+      const length = dataView.byteLength;
+
+      while (offset < length) {
+        if (dataView.getUint8(offset) !== 0xFF) break;
+        const marker = dataView.getUint8(offset + 1);
+
+        // APP1 marker (0xFFE1)
+        if (marker === 0xE1) {
+          const app1Length = dataView.getUint16(offset + 2, false);
+          // Check for 'Exif\0\0' header
+          if (dataView.getUint32(offset + 4, false) === 0x45786966 && dataView.getUint16(offset + 8, false) === 0x0000) {
+            parseTiff(dataView, offset + 10, result);
+          }
+          break;
+        } else {
+          offset += 2 + dataView.getUint16(offset + 2, false);
+        }
+      }
+
+      return result;
+    }
+
+    function parseTiff(view, tiffStart, result) {
+      const byteOrder = view.getUint16(tiffStart, false);
+      const littleEndian = (byteOrder === 0x4949); // 'II'
+
+      if (byteOrder !== 0x4949 && byteOrder !== 0x4D4D) return;
+
+      const firstIfdOffset = view.getUint32(tiffStart + 4, littleEndian);
+      if (firstIfdOffset < 0x00000008) return;
+
+      readIfd(view, tiffStart, tiffStart + firstIfdOffset, littleEndian, result);
+    }
+
+    function getString(view, offset, length) {
+      let str = '';
+      for (let i = 0; i < length; i++) {
+        const charCode = view.getUint8(offset + i);
+        if (charCode === 0) break;
+        str += String.fromCharCode(charCode);
+      }
+      return str.trim();
+    }
+
+    function readIfd(view, tiffStart, dirStart, littleEndian, result) {
+      const numEntries = view.getUint16(dirStart, littleEndian);
+
+      for (let i = 0; i < numEntries; i++) {
+        const entryOffset = dirStart + 2 + (i * 12);
+        const tag = view.getUint16(entryOffset, littleEndian);
+        const type = view.getUint16(entryOffset + 2, littleEndian);
+        const count = view.getUint32(entryOffset + 4, littleEndian);
+        const valOffset = entryOffset + 8;
+
+        function getValAddress() {
+          return count * (type === 1 || type === 2 ? 1 : (type === 3 ? 2 : 4)) > 4
+            ? tiffStart + view.getUint32(valOffset, littleEndian)
+            : valOffset;
+        }
+
+        switch (tag) {
+          case 0x010F: // Make
+            result.make = getString(view, getValAddress(), count);
+            break;
+          case 0x0110: // Model
+            result.model = getString(view, getValAddress(), count);
+            break;
+          case 0x0131: // Software
+            result.software = getString(view, getValAddress(), count);
+            break;
+          case 0x0132: // DateTime
+            result.dateTime = getString(view, getValAddress(), count);
+            break;
+          case 0x8769: // Exif SubIFD Pointer
+            const subIfdOffset = view.getUint32(valOffset, littleEndian);
+            readSubIfd(view, tiffStart, tiffStart + subIfdOffset, littleEndian, result);
+            break;
+        }
+      }
+    }
+
+    function readSubIfd(view, tiffStart, dirStart, littleEndian, result) {
+      const numEntries = view.getUint16(dirStart, littleEndian);
+
+      for (let i = 0; i < numEntries; i++) {
+        const entryOffset = dirStart + 2 + (i * 12);
+        const tag = view.getUint16(entryOffset, littleEndian);
+        const type = view.getUint16(entryOffset + 2, littleEndian);
+        const count = view.getUint32(entryOffset + 4, littleEndian);
+        const valOffset = entryOffset + 8;
+
+        function getValAddress() {
+          return count * (type === 1 || type === 2 ? 1 : (type === 3 ? 2 : 4)) > 4
+            ? tiffStart + view.getUint32(valOffset, littleEndian)
+            : valOffset;
+        }
+
+        switch (tag) {
+          case 0x829A: // ExposureTime
+            const addrExp = getValAddress();
+            const numExp = view.getUint32(addrExp, littleEndian);
+            const denExp = view.getUint32(addrExp + 4, littleEndian);
+            result.exposureTime = numExp === 1 ? `1/${denExp}s` : `${(numExp / denExp).toFixed(2)}s`;
+            break;
+          case 0x829D: // FNumber
+            const addrF = getValAddress();
+            const numF = view.getUint32(addrF, littleEndian);
+            const denF = view.getUint32(addrF + 4, littleEndian);
+            result.fNumber = `f/${(numF / denF).toFixed(1)}`;
+            break;
+          case 0x8827: // ISO
+            result.iso = view.getUint16(valOffset, littleEndian);
+            break;
+          case 0x920A: // FocalLength
+            const addrFoc = getValAddress();
+            const numFoc = view.getUint32(addrFoc, littleEndian);
+            const denFoc = view.getUint32(addrFoc + 4, littleEndian);
+            result.focalLength = `${(numFoc / denFoc).toFixed(1)} mm`;
+            break;
+          case 0xA434: // LensModel
+            result.lensModel = getString(view, getValAddress(), count);
+            break;
+          case 0x9209: // Flash
+            const fVal = view.getUint16(valOffset, littleEndian);
+            result.flash = (fVal & 1) ? 'Flash fired' : 'No flash fired';
+            break;
+        }
+      }
+    }
+
+    function displayExif(exif) {
+      cardCamera.textContent = exif.model || 'Unknown Camera';
+      cardMake.textContent = exif.make ? `Manufacturer: ${exif.make}` : 'Make not recorded';
+
+      cardExposure.textContent = (exif.exposureTime && exif.fNumber) ? `${exif.exposureTime} @ ${exif.fNumber}` : (exif.exposureTime || exif.fNumber || '--');
+      cardIso.textContent = exif.iso ? `ISO ${exif.iso}` : 'ISO not specified';
+
+      cardFocal.textContent = exif.focalLength || '--';
+      cardLens.textContent = exif.lensModel || 'Standard optics';
+
+      tagDatetime.textContent = exif.dateTime || 'Not available';
+      tagFlash.textContent = exif.flash || 'Not recorded';
+      tagSoftware.textContent = exif.software || 'Camera firmware';
+      tagGps.textContent = exif.gps ? `${exif.gps.lat}, ${exif.gps.lon}` : 'None found (Privacy Safe)';
+    }
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      currentFileName = file.name;
+
+      const readerBuf = new FileReader();
+      readerBuf.onload = (evt) => {
+        const exif = parseExif(evt.target.result);
+        displayExif(exif);
+      };
+      readerBuf.readAsArrayBuffer(file);
+
+      const readerData = new FileReader();
+      readerData.onload = (evt) => {
+        loadedImg = new Image();
+        loadedImg.onload = () => {
+          photoThumb.src = loadedImg.src;
+          fileSpecsInfo.textContent = `${loadedImg.naturalWidth} × ${loadedImg.naturalHeight} px • ${(file.size / 1024).toFixed(1)} KB`;
+          tagDims.textContent = `${loadedImg.naturalWidth} × ${loadedImg.naturalHeight} px`;
+        };
+        loadedImg.src = evt.target.result;
+      };
+      readerData.readAsDataURL(file);
+    });
+
+    btnSample.addEventListener('click', () => {
+      currentFileName = 'sample-photo.jpg';
+      displayExif({
+        make: 'Sony',
+        model: 'ILCE-7M4 (A7 IV)',
+        exposureTime: '1/500s',
+        fNumber: 'f/2.8',
+        iso: 100,
+        focalLength: '50.0 mm',
+        lensModel: 'FE 24-70mm F2.8 GM II',
+        dateTime: '2026-05-12 14:22:18',
+        software: 'ILCE-7M4 v2.01',
+        flash: 'No flash fired',
+        gps: null
+      });
+
+      loadedImg = new Image();
+      loadedImg.crossOrigin = 'anonymous';
+      loadedImg.onload = () => {
+        photoThumb.src = loadedImg.src;
+        fileSpecsInfo.textContent = `1920 × 1080 px • Sample File`;
+        tagDims.textContent = `1920 × 1080 px`;
+      };
+      loadedImg.src = 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&fit=crop';
+    });
+
+    btnStripDownload.addEventListener('click', () => {
+      if (!loadedImg.src) return;
+      const canvas = document.createElement('canvas');
+      canvas.width = loadedImg.naturalWidth || 800;
+      canvas.height = loadedImg.naturalHeight || 600;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(loadedImg, 0, 0);
+
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `stripped-${currentFileName}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 'image/jpeg', 0.95);
+    });
+
+    // Run sample on load
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub README &amp; Notion Badge Builder — Markdown &amp; Progress Bars</title>
+  <meta name="description" content="Generate customizable GitHub README badges, Notion unicode progress bars, and aesthetic alert callouts with 40+ tech stack logos and 1-click Markdown copy. 100% client-side.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/readme-badge-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/readme-badge-builder.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/readme-badge-builder.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "GitHub README & Notion Badge Builder",
+    "description": "Create customizable Shields.io Markdown badges, Notion unicode progress bars, and GitHub alert callouts with 40+ tech logos and live preview.",
+    "url": "https://nexivo.com/tools/readme-badge-builder.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I add Shields.io badges to my GitHub README?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Copy the generated Markdown snippet (e.g. `![React](https://img.shields.io/badge/React-v19-blue?logo=react)`) and paste it directly into your README.md file. If you want the badge to act as a clickable hyperlink, use the linked syntax: `[![React](badge_url)](target_url)`."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do Notion unicode progress bars work without third-party integrations?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Unicode progress bars use standard block characters like `█` (solid block) and `░` (light shade) or `■` and `□`. Because they are pure text characters, they render instantly in Notion page titles, database text properties, and callouts with zero loading delays and no external API dependencies."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between Badge styles (flat, for-the-badge, flat-square)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "`flat` is the modern default with rounded edges and subtle shading. `flat-square` removes rounded corners for a sharp, modern developer aesthetic. `for-the-badge` creates uppercase, bold, prominent cards that are especially popular in GitHub profile README tech stacks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do GitHub Markdown alert blocks work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "GitHub natively supports blockquote alerts using special headers: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, and `> [!CAUTION]`. In modern GitHub renderers, these automatically transform into stylized, color-accented callout boxes with platform icons."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Builder Mode Tabs */
+    .builder-mode-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: var(--space-4);
+    }
+    .btn-mode-tab {
+      background: none;
+      border: none;
+      padding: var(--space-2) var(--space-3);
+      font-weight: 600;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .btn-mode-tab:hover {
+      color: var(--color-primary);
+    }
+    .btn-mode-tab.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* Grid Layout */
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    @media (min-width: 992px) {
+      .builder-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+    }
+
+    /* Cards */
+    .b-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .b-label {
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    /* Swatches */
+    .color-swatches-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.35rem;
+    }
+    .swatch-chip {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    .swatch-chip:hover {
+      transform: scale(1.15);
+    }
+
+    /* Live Preview Boxes */
+    .preview-box {
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      margin-bottom: var(--space-3);
+      position: relative;
+    }
+    .preview-light {
+      background: #ffffff;
+      color: #1f2328;
+    }
+    .preview-dark {
+      background: #0d1117;
+      color: #e6edf3;
+    }
+
+    /* Tech Stack Row Box */
+    .stack-row-box {
+      background: var(--color-bg);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      min-height: 60px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    .stack-badge-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 0.15rem 0.35rem;
+    }
+    .btn-remove-badge {
+      background: none;
+      border: none;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      line-height: 1;
+      padding: 0 0.15rem;
+    }
+    .btn-remove-badge:hover {
+      color: #ef4444;
+    }
+
+    /* Output Textarea */
+    .code-output {
+      font-family: monospace;
+      font-size: var(--font-size-xs);
+      line-height: 1.5;
+      width: 100%;
+      min-height: 80px;
+      resize: vertical;
+      background: var(--color-bg);
+      color: var(--color-text);
+      padding: var(--space-3);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--color-border);
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content" id="main-content">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <a href="/#developer">Developer</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <span class="breadcrumb-current">GitHub &amp; Notion Badge Builder</span>
+    </nav>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-title-row">
+          <h1 class="tool-title">GitHub README &amp; Notion Badge Builder</h1>
+          <span class="badge badge-editorial">Developer &amp; Markdown</span>
+        </div>
+        <p class="tool-desc">Design custom Shields.io Markdown badges for your GitHub repositories and Profile READMEs. Build Notion text progress bars, assemble full tech stack rows, and generate GitHub alert callouts in 1 click.</p>
+        <div class="privacy-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>100% Client-Side — Badge configurations, progress strings, and markdown code are built locally in your browser.</span>
+        </div>
+      </div>
+
+      <!-- Mode Selector Tabs -->
+      <div class="builder-mode-nav" role="tablist" aria-label="Badge Builder Mode">
+        <button type="button" id="tabBadgesBtn" class="btn-mode-tab active" role="tab" aria-selected="true" aria-controls="panelBadges">
+          🛡️ Shields.io Badges &amp; Tech Stack
+        </button>
+        <button type="button" id="tabProgressBtn" class="btn-mode-tab" role="tab" aria-selected="false" aria-controls="panelProgress">
+          📊 Notion &amp; GitHub Progress Bars
+        </button>
+        <button type="button" id="tabAlertsBtn" class="btn-mode-tab" role="tab" aria-selected="false" aria-controls="panelAlerts">
+          💡 GitHub Alerts &amp; Notion Callouts
+        </button>
+      </div>
+
+      <!-- TAB 1: SHIELDS.IO BADGES -->
+      <div id="panelBadges" role="tabpanel" aria-labelledby="tabBadgesBtn">
+        <div class="builder-grid">
+          <!-- Left: Controls -->
+          <div>
+            <!-- Presets Row -->
+            <div class="b-card">
+              <span class="b-label">⚡ Quick 1-Click Presets:</span>
+              <div id="presetsRow" style="display:flex; flex-wrap:wrap; gap:0.35rem;">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Custom Badge Config -->
+            <div class="b-card">
+              <span class="b-label">Badge Configuration:</span>
+              
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:0.5rem;">
+                <div>
+                  <label for="badgeLabel" style="font-size:var(--font-size-xs); font-weight:600;">Left Label (Optional):</label>
+                  <input type="text" id="badgeLabel" class="form-input" value="React" placeholder="e.g. React, License" style="font-size:var(--font-size-xs); padding:0.35rem;" aria-label="Badge left label">
+                </div>
+                <div>
+                  <label for="badgeMessage" style="font-size:var(--font-size-xs); font-weight:600;">Right Message:</label>
+                  <input type="text" id="badgeMessage" class="form-input" value="19.0" placeholder="e.g. v1.0.0, Passing" style="font-size:var(--font-size-xs); padding:0.35rem;" aria-label="Badge right message">
+                </div>
+              </div>
+
+              <!-- Color & Style -->
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:0.5rem;">
+                <div>
+                  <label for="badgeStyleSelect" style="font-size:var(--font-size-xs); font-weight:600;">Badge Style:</label>
+                  <select id="badgeStyleSelect" class="form-select" style="font-size:var(--font-size-xs); padding:0.35rem;">
+                    <option value="flat" selected>Flat (Default)</option>
+                    <option value="for-the-badge">For-the-Badge (Bold Caps)</option>
+                    <option value="flat-square">Flat Square (Sharp)</option>
+                    <option value="plastic">Plastic (3D Shaded)</option>
+                    <option value="social">Social</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="badgeColorInput" style="font-size:var(--font-size-xs); font-weight:600;">Right Color (Hex/Name):</label>
+                  <div style="display:flex; gap:0.3rem;">
+                    <input type="text" id="badgeColorInput" class="form-input" value="20232A" style="font-size:var(--font-size-xs); padding:0.35rem; font-family:monospace;" aria-label="Badge color hex code">
+                    <input type="color" id="badgeColorPicker" value="#20232A" style="width:36px; height:30px; padding:0; border:none; border-radius:4px; cursor:pointer;" aria-label="Pick color">
+                  </div>
+                  <div class="color-swatches-row">
+                    <span class="swatch-chip" style="background:#2563EB;" data-color="2563EB" title="Blue"></span>
+                    <span class="swatch-chip" style="background:#10B981;" data-color="10B981" title="Green"></span>
+                    <span class="swatch-chip" style="background:#EF4444;" data-color="EF4444" title="Red"></span>
+                    <span class="swatch-chip" style="background:#F59E0B;" data-color="F59E0B" title="Yellow"></span>
+                    <span class="swatch-chip" style="background:#8B5CF6;" data-color="8B5CF6" title="Purple"></span>
+                    <span class="swatch-chip" style="background:#000000;" data-color="000000" title="Black"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tech Logo & Link -->
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:0.5rem;">
+                <div>
+                  <label for="badgeLogoSelect" style="font-size:var(--font-size-xs); font-weight:600;">Icon / Logo (SimpleIcons):</label>
+                  <select id="badgeLogoSelect" class="form-select" style="font-size:var(--font-size-xs); padding:0.35rem;">
+                    <option value="">None (No Icon)</option>
+                    <!-- Populated by JS -->
+                  </select>
+                </div>
+                <div>
+                  <label for="badgeLogoColor" style="font-size:var(--font-size-xs); font-weight:600;">Logo Color (Optional):</label>
+                  <input type="text" id="badgeLogoColor" class="form-input" value="61DAFB" placeholder="white or 61DAFB" style="font-size:var(--font-size-xs); padding:0.35rem; font-family:monospace;" aria-label="Logo color">
+                </div>
+              </div>
+
+              <div style="margin-bottom:0.5rem;">
+                <label for="badgeLinkUrl" style="font-size:var(--font-size-xs); font-weight:600;">Hyperlink URL (Optional):</label>
+                <input type="url" id="badgeLinkUrl" class="form-input" placeholder="https://github.com/your-username/repo" style="font-size:var(--font-size-xs); padding:0.35rem;" aria-label="Badge hyperlink URL">
+              </div>
+
+              <button type="button" id="btnAddBadgeToStack" class="btn btn-secondary" style="width:100%; font-size:var(--font-size-xs); padding:0.4rem;">
+                ➕ Add This Badge to Tech Stack Row
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Previews & Code Output -->
+          <div>
+            <span class="b-label">Live Preview (Light &amp; Dark Theme):</span>
+            
+            <div class="preview-box preview-light" aria-label="Badge light background preview">
+              <span style="position:absolute; top:6px; left:8px; font-size:0.65rem; color:#888;">GitHub Light</span>
+              <img id="badgePreviewLight" src="" alt="Badge Preview Light" style="max-width:100%; height:auto;">
+            </div>
+
+            <div class="preview-box preview-dark" aria-label="Badge dark background preview">
+              <span style="position:absolute; top:6px; left:8px; font-size:0.65rem; color:#888;">GitHub Dark</span>
+              <img id="badgePreviewDark" src="" alt="Badge Preview Dark" style="max-width:100%; height:auto;">
+            </div>
+
+            <!-- Single Badge Copy Buttons -->
+            <div style="display:flex; gap:0.4rem; margin-bottom:0.75rem;">
+              <button type="button" id="btnCopyMarkdown" class="btn btn-primary" style="flex:1; font-size:var(--font-size-xs);">
+                📋 Copy Markdown
+              </button>
+              <button type="button" id="btnCopyHtml" class="btn btn-secondary" style="font-size:var(--font-size-xs);">
+                Copy HTML
+              </button>
+              <button type="button" id="btnCopyUrl" class="btn btn-secondary" style="font-size:var(--font-size-xs);">
+                Copy URL
+              </button>
+            </div>
+
+            <textarea id="badgeOutputCode" class="code-output" readonly aria-label="Generated badge code"></textarea>
+
+            <!-- Tech Stack Row Builder -->
+            <div class="b-card" style="margin-top:0.75rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="b-label" style="margin:0;">📦 My Tech Stack Row (<span id="stackCount">0</span>):</span>
+                <div style="display:flex; gap:0.3rem;">
+                  <button type="button" id="btnCopyStackRow" class="btn btn-primary" style="font-size:var(--font-size-xs); padding:0.25rem 0.6rem;">Copy Stack Row</button>
+                  <button type="button" id="btnClearStack" class="btn btn-secondary" style="font-size:var(--font-size-xs); padding:0.25rem 0.5rem;">Clear</button>
+                </div>
+              </div>
+              <div id="stackRowContainer" class="stack-row-box">
+                <span style="font-size:var(--font-size-xs); color:var(--color-text-muted);">No badges added yet. Click "+ Add This Badge" above.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: NOTION & GITHUB PROGRESS BARS -->
+      <div id="panelProgress" role="tabpanel" aria-labelledby="tabProgressBtn" style="display:none;">
+        <div class="builder-grid">
+          <!-- Left: Controls -->
+          <div>
+            <div class="b-card">
+              <span class="b-label">Progress Bar Configuration:</span>
+
+              <div style="margin-bottom:0.75rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:var(--font-size-xs); font-weight:700;">
+                  <label for="progressSlider" style="margin:0;">Completion Percentage:</label>
+                  <span id="progressPctVal" style="color:var(--color-primary); font-size:var(--font-size-sm); font-family:monospace;">75%</span>
+                </div>
+                <input type="range" id="progressSlider" class="form-range" min="0" max="100" step="5" value="75" style="margin-top:0.35rem;" aria-label="Progress percentage">
+              </div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:0.5rem;">
+                <div>
+                  <label for="progressStyleSelect" style="font-size:var(--font-size-xs); font-weight:600;">Block Character Style:</label>
+                  <select id="progressStyleSelect" class="form-select" style="font-size:var(--font-size-xs); padding:0.35rem;">
+                    <option value="blocks" selected>Solid Blocks (████░░)</option>
+                    <option value="squares">Squares (■■■□□)</option>
+                    <option value="dots">Circles / Dots (●●●○○)</option>
+                    <option value="shades">Shaded Blocks (▓▓▓░░)</option>
+                    <option value="pipes">Pipes (||||--)</option>
+                    <option value="arrows">Arrows (▶▶▶▷▷)</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="progressLengthSelect" style="font-size:var(--font-size-xs); font-weight:600;">Total Segments / Width:</label>
+                  <select id="progressLengthSelect" class="form-select" style="font-size:var(--font-size-xs); padding:0.35rem;">
+                    <option value="10" selected>10 Segments (Standard)</option>
+                    <option value="15">15 Segments</option>
+                    <option value="20">20 Segments (Detailed)</option>
+                    <option value="25">25 Segments</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:0.5rem;">
+                <div>
+                  <label for="progressPrefix" style="font-size:var(--font-size-xs); font-weight:600;">Prefix Label (Optional):</label>
+                  <input type="text" id="progressPrefix" class="form-input" value="Reading Goal 2026:" placeholder="e.g. Q1 Roadmap:" style="font-size:var(--font-size-xs); padding:0.35rem;" aria-label="Progress bar prefix">
+                </div>
+                <div>
+                  <label for="progressSuffix" style="font-size:var(--font-size-xs); font-weight:600;">Suffix Label (Optional):</label>
+                  <input type="text" id="progressSuffix" class="form-input" value="(18/24 books)" placeholder="e.g. (18/24)" style="font-size:var(--font-size-xs); padding:0.35rem;" aria-label="Progress bar suffix">
+                </div>
+              </div>
+
+              <label style="display:flex; align-items:center; gap:0.4rem; font-size:var(--font-size-xs); cursor:pointer; margin-top:0.4rem;">
+                <input type="checkbox" id="chkShowPercentage" checked style="width:16px; height:16px;">
+                <span>Show Numerical Percentage (`75%`) at End</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Right: Progress Bar Outputs -->
+          <div>
+            <div class="b-card">
+              <span class="b-label">Notion &amp; Text Progress Bar:</span>
+              <div id="unicodeProgressPreview" style="font-family:monospace; font-size:1.15rem; font-weight:700; background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); text-align:center; margin-bottom:0.5rem;">
+                <!-- Populated by JS -->
+              </div>
+              <button type="button" id="btnCopyUnicodeBar" class="btn btn-primary" style="width:100%; font-size:var(--font-size-xs); padding:0.4rem;">
+                📋 Copy Notion Text Progress Bar
+              </button>
+            </div>
+
+            <!-- Alternative Shields.io Progress Badge -->
+            <div class="b-card">
+              <span class="b-label">Alternative: Shields.io Visual Badge</span>
+              <div style="text-align:center; padding:1rem; background:var(--color-bg); border-radius:var(--border-radius); border:1px solid var(--color-border); margin-bottom:0.5rem;">
+                <img id="progressBadgeImg" src="" alt="Progress Badge Preview">
+              </div>
+              <div style="display:flex; gap:0.4rem;">
+                <button type="button" id="btnCopyProgressBadgeMd" class="btn btn-secondary" style="flex:1; font-size:var(--font-size-xs);">
+                  Copy Markdown
+                </button>
+                <button type="button" id="btnCopyProgressBadgeUrl" class="btn btn-secondary" style="font-size:var(--font-size-xs);">
+                  Copy URL
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: GITHUB ALERTS & NOTION CALLOUTS -->
+      <div id="panelAlerts" role="tabpanel" aria-labelledby="tabAlertsBtn" style="display:none;">
+        <div class="builder-grid">
+          <!-- Left: Controls -->
+          <div>
+            <div class="b-card">
+              <span class="b-label">GitHub Native Markdown Alerts:</span>
+
+              <div style="margin-bottom:0.5rem;">
+                <label for="alertTypeSelect" style="font-size:var(--font-size-xs); font-weight:600;">Alert Type:</label>
+                <select id="alertTypeSelect" class="form-select" style="font-size:var(--font-size-xs); padding:0.35rem;">
+                  <option value="NOTE" selected>ℹ️ NOTE (Blue — General information)</option>
+                  <option value="TIP">💡 TIP (Green — Best practices and advice)</option>
+                  <option value="IMPORTANT">❗ IMPORTANT (Purple — Crucial requirements)</option>
+                  <option value="WARNING">⚠️ WARNING (Yellow/Amber — Critical cautions)</option>
+                  <option value="CAUTION">🛑 CAUTION (Red — Dangerous risks and breaking changes)</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom:0.5rem;">
+                <label for="alertTextInput" style="font-size:var(--font-size-xs); font-weight:600;">Alert Message Text:</label>
+                <textarea id="alertTextInput" class="form-input" style="font-size:var(--font-size-xs); min-height:90px; line-height:1.5;" placeholder="Enter the text that will appear inside the alert box..." aria-label="Alert message text">Highlights useful information that users should know, even when skimming.</textarea>
+              </div>
+
+              <button type="button" id="btnCopyAlertMd" class="btn btn-primary" style="width:100%; font-size:var(--font-size-xs); padding:0.4rem;">
+                📋 Copy GitHub Alert Markdown
+              </button>
+            </div>
+
+            <!-- Notion Aesthetic Callout -->
+            <div class="b-card">
+              <span class="b-label">Notion Aesthetic Callout:</span>
+              <div style="display:grid; grid-template-columns:80px 1fr; gap:0.4rem; margin-bottom:0.5rem;">
+                <div>
+                  <label for="notionEmojiInput" style="font-size:var(--font-size-xs); font-weight:600;">Emoji:</label>
+                  <input type="text" id="notionEmojiInput" class="form-input" value="💡" style="font-size:1.1rem; text-align:center; padding:0.25rem;" aria-label="Notion callout emoji">
+                </div>
+                <div>
+                  <label for="notionCalloutText" style="font-size:var(--font-size-xs); font-weight:600;">Callout Text:</label>
+                  <input type="text" id="notionCalloutText" class="form-input" value="Pro-Tip: Track your daily micro-habits here!" style="font-size:var(--font-size-xs); padding:0.35rem;" aria-label="Notion callout text">
+                </div>
+              </div>
+              <button type="button" id="btnCopyNotionCallout" class="btn btn-secondary" style="width:100%; font-size:var(--font-size-xs); padding:0.4rem;">
+                📋 Copy Notion Callout Text
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Alert Previews -->
+          <div>
+            <div class="b-card">
+              <span class="b-label">GitHub Alert Preview:</span>
+              <div id="alertPreviewBox" style="border-left:4px solid #2563eb; background:rgba(37, 99, 235, 0.08); padding:0.75rem 1rem; border-radius:4px; font-size:var(--font-size-sm); margin-bottom:0.75rem;">
+                <div id="alertPreviewHeader" style="font-weight:700; color:#2563eb; margin-bottom:0.25rem;">
+                  Note
+                </div>
+                <div id="alertPreviewBody" style="color:var(--color-text);">
+                  Highlights useful information that users should know, even when skimming.
+                </div>
+              </div>
+
+              <span class="b-label">Raw Markdown Snippet:</span>
+              <textarea id="alertOutputCode" class="code-output" readonly aria-label="Alert markdown snippet"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEO Educational Guide & Documentation -->
+      <div class="tool-documentation" style="margin-top:var(--space-5);">
+        <h2>Why Custom Badges &amp; Progress Bars Boost GitHub and Notion Engagement</h2>
+        <p>
+          First impressions determine whether developers star, fork, and contribute to your open-source repository, or whether teammates read your documentation. Adding clean Shields.io metadata badges communicates immediate project maturity: current release version, build CI/CD status, code coverage, test suite passing, and supported framework versions.
+        </p>
+        <p>
+          In Notion workspaces and personal dashboards, unicode progress bars transform static to-do lists into dynamic visual gamification trackers without requiring complex formula widgets or brittle third-party integrations.
+        </p>
+
+        <h2>Anatomy of a Shields.io Badge URL</h2>
+        <p>
+          Shields.io builds SVG badges dynamically based on clean URL path parameters:
+        </p>
+        <div style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); font-family:monospace; margin-bottom:0.75rem; font-size:var(--font-size-xs);">
+          https://img.shields.io/badge/&lt;LABEL&gt;-&lt;MESSAGE&gt;-&lt;COLOR&gt;?style=&lt;STYLE&gt;&amp;logo=&lt;LOGO&gt;
+        </div>
+        <ul>
+          <li><strong>Label &amp; Message Escaping:</strong> Shields interprets single hyphens <code>-</code> as delimiters between label, message, and color. To include a literal hyphen or dash, it must be escaped as <code>--</code>. Spaces are replaced by underscores <code>_</code>. Our builder handles all character sanitization automatically.</li>
+          <li><strong>Color Formats:</strong> Supports hex values (e.g. <code>#61DAFB</code> or <code>61DAFB</code>) as well as named colors like <code>brightgreen</code>, <code>success</code>, <code>yellow</code>, <code>blue</code>, and <code>critical</code>.</li>
+          <li><strong>SimpleIcons Integration:</strong> Easily embed recognized logos from hundreds of open-source frameworks, programming languages, and social platforms.</li>
+        </ul>
+
+        <h2>Choosing the Right Badge Style</h2>
+        <table style="width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:var(--font-size-sm);">
+          <thead>
+            <tr style="text-align:left; border-bottom:2px solid var(--color-border);">
+              <th style="padding:0.5rem;">Style</th>
+              <th style="padding:0.5rem;">Visual Characteristics</th>
+              <th style="padding:0.5rem;">Best Used For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Flat (Default)</strong></td>
+              <td style="padding:0.5rem;">Rounded pill corners with modern subtle gradient.</td>
+              <td style="padding:0.5rem;">Open-source library READMEs, versioning, license pills.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>For-the-Badge</strong></td>
+              <td style="padding:0.5rem;">Large uppercase cards, bold typography, high impact.</td>
+              <td style="padding:0.5rem;">GitHub Profile README "Tech Stack" and skills showcases.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:0.5rem;"><strong>Flat-Square</strong></td>
+              <td style="padding:0.5rem;">Zero corner radius, sharp edges, clean minimalist feel.</td>
+              <td style="padding:0.5rem;">Developer toolkits, CLI utilities, technical documentation.</td>
+            </tr>
+            <tr>
+              <td style="padding:0.5rem;"><strong>Social</strong></td>
+              <td style="padding:0.5rem;">Two-part button with star/follower counter balloon.</td>
+              <td style="padding:0.5rem;">Discord invite links, GitHub star counters, Twitter follows.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Embedding Dynamic Progress Bars in Notion Workspaces</h2>
+        <p>
+          While Notion supports native property progress bars, they only work inside structured databases. If you want a progress bar in page headings, callout blocks, or personal to-do dashboards, text-based <strong>Unicode Progress Bars</strong> (e.g. <code>[████████░░] 80%</code>) provide an instant zero-dependency solution.
+        </p>
+
+        <h2>GitHub Alerts Syntax Guide</h2>
+        <p>GitHub recognizes five standardized alert callout tags inside Markdown blockquotes:</p>
+        <ul>
+          <li><code>&gt; [!NOTE]</code>: Informational details users should notice while skimming.</li>
+          <li><code>&gt; [!TIP]</code>: Helpful advice and best practice recommendations.</li>
+          <li><code>&gt; [!IMPORTANT]</code>: Crucial information required for users to succeed.</li>
+          <li><code>&gt; [!WARNING]</code>: Urgent alerts demanding immediate user attention to prevent failures.</li>
+          <li><code>&gt; [!CAUTION]</code>: Warnings regarding dangerous consequences or breaking data loss.</li>
+        </ul>
+
+        <h2>Curating an Aesthetic GitHub Profile README Tech Stack</h2>
+        <p>
+          When building your developer portfolio README, group related technologies into single horizontal rows (e.g. Languages, Frontend, Backend, Cloud &amp; DevOps). Using our <strong>"Add to Tech Stack Row"</strong> feature, you can assemble multiple badges and copy the entire aligned Markdown row in one click.
+        </p>
+
+        <h2>Technical Specifications &amp; Markdown Compatibility</h2>
+        <ul>
+          <li><strong>Standards Compliance:</strong> Fully compliant with CommonMark, GitHub Flavored Markdown (GFM), and Notion Rich Text.</li>
+          <li><strong>Logo Directory:</strong> 40+ curated developer and platform logos from SimpleIcons.</li>
+          <li><strong>100% Client-Side Memory:</strong> Zero analytics tracking, zero account logins, instant copy-paste generation.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How do I add Shields.io badges to my GitHub README?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Copy the generated Markdown snippet (e.g. <code>![React](https://img.shields.io/badge/React-v19-blue?logo=react)</code>) and paste it directly into your README.md file. If you want the badge to act as a clickable hyperlink, use the linked syntax: <code>[![React](badge_url)](target_url)</code>.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How do Notion unicode progress bars work without third-party integrations?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Unicode progress bars use standard block characters like <code>█</code> (solid block) and <code>░</code> (light shade) or <code>■</code> and <code>□</code>. Because they are pure text characters, they render instantly in Notion page titles, database text properties, and callouts with zero loading delays and no external API dependencies.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is the difference between Badge styles (flat, for-the-badge, flat-square)?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            <code>flat</code> is the modern default with rounded edges and subtle shading. <code>flat-square</code> removes rounded corners for a sharp, modern developer aesthetic. <code>for-the-badge</code> creates uppercase, bold, prominent cards that are especially popular in GitHub profile README tech stacks.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How do GitHub Markdown alert blocks work?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            GitHub natively supports blockquote alerts using special headers: <code>&gt; [!NOTE]</code>, <code>&gt; [!TIP]</code>, <code>&gt; [!IMPORTANT]</code>, <code>&gt; [!WARNING]</code>, and <code>&gt; [!CAUTION]</code>. In modern GitHub renderers, these automatically transform into stylized, color-accented callout boxes with platform icons.
+          </p>
+        </div>
+
+        <h2>Related Browser Tools</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2);">
+          <a href="/tools/markdown-previewer.html" class="related-tool-chip">📝 Markdown Previewer</a>
+          <a href="/tools/slug-converter.html" class="related-tool-chip">🔗 URL Slug Converter</a>
+          <a href="/tools/meta-tags-toolkit.html" class="related-tool-chip">🏷️ Meta Tags Toolkit</a>
+          <a href="/tools/json-formatter-validator.html" class="related-tool-chip">💻 JSON Formatter &amp; Validator</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top:var(--space-5); border-top:1px solid var(--color-border); padding:var(--space-4) 0; text-align:center; color:var(--color-text-muted); font-size:var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/badge-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // State: Badges
+    let badgeStack = [];
+
+    // DOM Elements: Tabs
+    const tabBadgesBtn = document.getElementById('tabBadgesBtn');
+    const tabProgressBtn = document.getElementById('tabProgressBtn');
+    const tabAlertsBtn = document.getElementById('tabAlertsBtn');
+    const panelBadges = document.getElementById('panelBadges');
+    const panelProgress = document.getElementById('panelProgress');
+    const panelAlerts = document.getElementById('panelAlerts');
+
+    // DOM Elements: Badges
+    const presetsRow = document.getElementById('presetsRow');
+    const badgeLabel = document.getElementById('badgeLabel');
+    const badgeMessage = document.getElementById('badgeMessage');
+    const badgeStyleSelect = document.getElementById('badgeStyleSelect');
+    const badgeColorInput = document.getElementById('badgeColorInput');
+    const badgeColorPicker = document.getElementById('badgeColorPicker');
+    const badgeLogoSelect = document.getElementById('badgeLogoSelect');
+    const badgeLogoColor = document.getElementById('badgeLogoColor');
+    const badgeLinkUrl = document.getElementById('badgeLinkUrl');
+
+    const badgePreviewLight = document.getElementById('badgePreviewLight');
+    const badgePreviewDark = document.getElementById('badgePreviewDark');
+    const badgeOutputCode = document.getElementById('badgeOutputCode');
+    const btnCopyMarkdown = document.getElementById('btnCopyMarkdown');
+    const btnCopyHtml = document.getElementById('btnCopyHtml');
+    const btnCopyUrl = document.getElementById('btnCopyUrl');
+
+    const btnAddBadgeToStack = document.getElementById('btnAddBadgeToStack');
+    const stackRowContainer = document.getElementById('stackRowContainer');
+    const stackCount = document.getElementById('stackCount');
+    const btnCopyStackRow = document.getElementById('btnCopyStackRow');
+    const btnClearStack = document.getElementById('btnClearStack');
+
+    // DOM Elements: Progress
+    const progressSlider = document.getElementById('progressSlider');
+    const progressPctVal = document.getElementById('progressPctVal');
+    const progressStyleSelect = document.getElementById('progressStyleSelect');
+    const progressLengthSelect = document.getElementById('progressLengthSelect');
+    const progressPrefix = document.getElementById('progressPrefix');
+    const progressSuffix = document.getElementById('progressSuffix');
+    const chkShowPercentage = document.getElementById('chkShowPercentage');
+    const unicodeProgressPreview = document.getElementById('unicodeProgressPreview');
+    const btnCopyUnicodeBar = document.getElementById('btnCopyUnicodeBar');
+    const progressBadgeImg = document.getElementById('progressBadgeImg');
+    const btnCopyProgressBadgeMd = document.getElementById('btnCopyProgressBadgeMd');
+    const btnCopyProgressBadgeUrl = document.getElementById('btnCopyProgressBadgeUrl');
+
+    // DOM Elements: Alerts
+    const alertTypeSelect = document.getElementById('alertTypeSelect');
+    const alertTextInput = document.getElementById('alertTextInput');
+    const alertPreviewBox = document.getElementById('alertPreviewBox');
+    const alertPreviewHeader = document.getElementById('alertPreviewHeader');
+    const alertPreviewBody = document.getElementById('alertPreviewBody');
+    const alertOutputCode = document.getElementById('alertOutputCode');
+    const btnCopyAlertMd = document.getElementById('btnCopyAlertMd');
+
+    const notionEmojiInput = document.getElementById('notionEmojiInput');
+    const notionCalloutText = document.getElementById('notionCalloutText');
+    const btnCopyNotionCallout = document.getElementById('btnCopyNotionCallout');
+
+    // Mode Tab Switching
+    function setTab(mode) {
+      [tabBadgesBtn, tabProgressBtn, tabAlertsBtn].forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
+      [panelBadges, panelProgress, panelAlerts].forEach(p => p.style.display = 'none');
+
+      if (mode === 'badges') {
+        tabBadgesBtn.classList.add('active');
+        tabBadgesBtn.setAttribute('aria-selected', 'true');
+        panelBadges.style.display = 'block';
+      } else if (mode === 'progress') {
+        tabProgressBtn.classList.add('active');
+        tabProgressBtn.setAttribute('aria-selected', 'true');
+        panelProgress.style.display = 'block';
+        updateProgress();
+      } else {
+        tabAlertsBtn.classList.add('active');
+        tabAlertsBtn.setAttribute('aria-selected', 'true');
+        panelAlerts.style.display = 'block';
+        updateAlert();
+      }
+    }
+
+    tabBadgesBtn.addEventListener('click', () => setTab('badges'));
+    tabProgressBtn.addEventListener('click', () => setTab('progress'));
+    tabAlertsBtn.addEventListener('click', () => setTab('alerts'));
+
+    // Populate Logos dropdown
+    BadgeUtils.POPULAR_LOGOS.forEach(logo => {
+      const opt = document.createElement('option');
+      opt.value = logo.id;
+      opt.textContent = logo.name;
+      badgeLogoSelect.appendChild(opt);
+    });
+
+    // Populate Quick Presets
+    BadgeUtils.QUICK_PRESETS.forEach(preset => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-secondary';
+      btn.style.fontSize = '0.7rem';
+      btn.style.padding = '0.2rem 0.5rem';
+      btn.textContent = `${preset.label}: ${preset.message}`;
+      btn.addEventListener('click', () => {
+        badgeLabel.value = preset.label;
+        badgeMessage.value = preset.message;
+        badgeColorInput.value = preset.color;
+        badgeColorPicker.value = preset.color.startsWith('#') ? preset.color : '#2563EB';
+        badgeStyleSelect.value = preset.style || 'flat';
+        badgeLogoSelect.value = preset.logo || '';
+        badgeLogoColor.value = preset.logoColor || '';
+        updateBadge();
+      });
+      presetsRow.appendChild(btn);
+    });
+
+    // Color Swatches click
+    document.querySelectorAll('.swatch-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        badgeColorInput.value = chip.dataset.color;
+        badgeColorPicker.value = '#' + chip.dataset.color;
+        updateBadge();
+      });
+    });
+
+    badgeColorPicker.addEventListener('input', () => {
+      badgeColorInput.value = badgeColorPicker.value.replace('#', '');
+      updateBadge();
+    });
+
+    // Update Badge Previews
+    function updateBadge() {
+      const opts = {
+        label: badgeLabel.value,
+        message: badgeMessage.value,
+        color: badgeColorInput.value,
+        style: badgeStyleSelect.value,
+        logo: badgeLogoSelect.value,
+        logoColor: badgeLogoColor.value
+      };
+
+      const url = BadgeUtils.generateBadgeUrl(opts);
+      badgePreviewLight.src = url;
+      badgePreviewDark.src = url;
+
+      const md = BadgeUtils.generateMarkdownBadge(opts, badgeLinkUrl.value);
+      badgeOutputCode.value = md;
+    }
+
+    [badgeLabel, badgeMessage, badgeStyleSelect, badgeColorInput, badgeLogoSelect, badgeLogoColor, badgeLinkUrl].forEach(el => {
+      el.addEventListener('input', updateBadge);
+      el.addEventListener('change', updateBadge);
+    });
+
+    // Copy Badge Buttons
+    function copyFeedback(btn, originalText) {
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = originalText; }, 1800);
+    }
+
+    btnCopyMarkdown.addEventListener('click', () => {
+      const opts = {
+        label: badgeLabel.value,
+        message: badgeMessage.value,
+        color: badgeColorInput.value,
+        style: badgeStyleSelect.value,
+        logo: badgeLogoSelect.value,
+        logoColor: badgeLogoColor.value
+      };
+      const md = BadgeUtils.generateMarkdownBadge(opts, badgeLinkUrl.value);
+      navigator.clipboard.writeText(md).then(() => copyFeedback(btnCopyMarkdown, '📋 Copy Markdown'));
+    });
+
+    btnCopyHtml.addEventListener('click', () => {
+      const opts = {
+        label: badgeLabel.value,
+        message: badgeMessage.value,
+        color: badgeColorInput.value,
+        style: badgeStyleSelect.value,
+        logo: badgeLogoSelect.value,
+        logoColor: badgeLogoColor.value
+      };
+      const html = BadgeUtils.generateHtmlBadge(opts, badgeLinkUrl.value);
+      navigator.clipboard.writeText(html).then(() => copyFeedback(btnCopyHtml, 'Copy HTML'));
+    });
+
+    btnCopyUrl.addEventListener('click', () => {
+      const opts = {
+        label: badgeLabel.value,
+        message: badgeMessage.value,
+        color: badgeColorInput.value,
+        style: badgeStyleSelect.value,
+        logo: badgeLogoSelect.value,
+        logoColor: badgeLogoColor.value
+      };
+      const url = BadgeUtils.generateBadgeUrl(opts);
+      navigator.clipboard.writeText(url).then(() => copyFeedback(btnCopyUrl, 'Copy URL'));
+    });
+
+    // Tech Stack Row Manager
+    function renderStackRow() {
+      stackRowContainer.innerHTML = '';
+      stackCount.textContent = badgeStack.length;
+
+      if (badgeStack.length === 0) {
+        stackRowContainer.innerHTML = '<span style="font-size:var(--font-size-xs); color:var(--color-text-muted);">No badges added yet. Click "+ Add This Badge" above.</span>';
+        return;
+      }
+
+      badgeStack.forEach((badgeOpts, idx) => {
+        const item = document.createElement('div');
+        item.className = 'stack-badge-item';
+
+        const img = document.createElement('img');
+        img.src = BadgeUtils.generateBadgeUrl(badgeOpts);
+        img.style.height = '20px';
+
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'btn-remove-badge';
+        delBtn.textContent = '✕';
+        delBtn.title = 'Remove';
+        delBtn.addEventListener('click', () => {
+          badgeStack.splice(idx, 1);
+          renderStackRow();
+        });
+
+        item.appendChild(img);
+        item.appendChild(delBtn);
+        stackRowContainer.appendChild(item);
+      });
+    }
+
+    btnAddBadgeToStack.addEventListener('click', () => {
+      badgeStack.push({
+        label: badgeLabel.value,
+        message: badgeMessage.value,
+        color: badgeColorInput.value,
+        style: badgeStyleSelect.value,
+        logo: badgeLogoSelect.value,
+        logoColor: badgeLogoColor.value,
+        link: badgeLinkUrl.value
+      });
+      renderStackRow();
+    });
+
+    btnCopyStackRow.addEventListener('click', () => {
+      if (badgeStack.length === 0) return;
+      const rowMd = badgeStack.map(b => BadgeUtils.generateMarkdownBadge(b, b.link)).join(' ');
+      navigator.clipboard.writeText(rowMd).then(() => copyFeedback(btnCopyStackRow, 'Copy Stack Row'));
+    });
+
+    btnClearStack.addEventListener('click', () => {
+      badgeStack = [];
+      renderStackRow();
+    });
+
+    // Progress Bar Logic
+    function updateProgress() {
+      const pct = parseInt(progressSlider.value, 10);
+      progressPctVal.textContent = `${pct}%`;
+
+      const barText = BadgeUtils.generateUnicodeProgressBar(pct, {
+        length: parseInt(progressLengthSelect.value, 10),
+        style: progressStyleSelect.value,
+        prefix: progressPrefix.value,
+        suffix: progressSuffix.value,
+        showPercentage: chkShowPercentage.checked
+      });
+
+      unicodeProgressPreview.textContent = barText;
+
+      // Color based on pct
+      let badgeColor = 'red';
+      if (pct >= 80) badgeColor = 'brightgreen';
+      else if (pct >= 50) badgeColor = 'yellowgreen';
+      else if (pct >= 25) badgeColor = 'yellow';
+
+      const badgeUrl = BadgeUtils.generateBadgeUrl({
+        label: (progressPrefix.value || 'Progress').replace(/:$/, '').trim(),
+        message: `${pct}%`,
+        color: badgeColor,
+        style: 'flat'
+      });
+      progressBadgeImg.src = badgeUrl;
+    }
+
+    [progressSlider, progressStyleSelect, progressLengthSelect, progressPrefix, progressSuffix, chkShowPercentage].forEach(el => {
+      el.addEventListener('input', updateProgress);
+      el.addEventListener('change', updateProgress);
+    });
+
+    btnCopyUnicodeBar.addEventListener('click', () => {
+      navigator.clipboard.writeText(unicodeProgressPreview.textContent).then(() => {
+        copyFeedback(btnCopyUnicodeBar, '📋 Copy Notion Text Progress Bar');
+      });
+    });
+
+    btnCopyProgressBadgeMd.addEventListener('click', () => {
+      const pct = parseInt(progressSlider.value, 10);
+      let badgeColor = pct >= 80 ? 'brightgreen' : (pct >= 50 ? 'yellowgreen' : 'yellow');
+      const md = BadgeUtils.generateMarkdownBadge({
+        label: (progressPrefix.value || 'Progress').replace(/:$/, '').trim(),
+        message: `${pct}%`,
+        color: badgeColor
+      });
+      navigator.clipboard.writeText(md).then(() => copyFeedback(btnCopyProgressBadgeMd, 'Copy Markdown'));
+    });
+
+    btnCopyProgressBadgeUrl.addEventListener('click', () => {
+      navigator.clipboard.writeText(progressBadgeImg.src).then(() => {
+        copyFeedback(btnCopyProgressBadgeUrl, 'Copy URL');
+      });
+    });
+
+    // Alert & Callout Logic
+    const ALERT_COLORS = {
+      NOTE: '#2563eb',
+      TIP: '#10b981',
+      IMPORTANT: '#8b5cf6',
+      WARNING: '#f59e0b',
+      CAUTION: '#ef4444'
+    };
+
+    function updateAlert() {
+      const type = alertTypeSelect.value;
+      const text = alertTextInput.value;
+
+      const color = ALERT_COLORS[type] || '#2563eb';
+      alertPreviewBox.style.borderColor = color;
+      alertPreviewBox.style.background = `${color}14`; // 8% opacity
+      alertPreviewHeader.style.color = color;
+      alertPreviewHeader.textContent = type.charAt(0) + type.slice(1).toLowerCase();
+      alertPreviewBody.textContent = text || 'Alert content preview.';
+
+      const alertMd = BadgeUtils.generateGitHubAlert(type, text);
+      alertOutputCode.value = alertMd;
+    }
+
+    alertTypeSelect.addEventListener('change', updateAlert);
+    alertTextInput.addEventListener('input', updateAlert);
+
+    btnCopyAlertMd.addEventListener('click', () => {
+      navigator.clipboard.writeText(alertOutputCode.value).then(() => {
+        copyFeedback(btnCopyAlertMd, '📋 Copy GitHub Alert Markdown');
+      });
+    });
+
+    btnCopyNotionCallout.addEventListener('click', () => {
+      const calloutText = BadgeUtils.generateNotionCallout(notionEmojiInput.value, notionCalloutText.value);
+      navigator.clipboard.writeText(calloutText).then(() => {
+        copyFeedback(btnCopyNotionCallout, '📋 Copy Notion Callout Text');
+      });
+    });
+
+    // Initial Load
+    badgeLogoSelect.value = 'react';
+    updateBadge();
+    updateProgress();
+    updateAlert();
+  })();
+  </script>
+</body>
+</html>

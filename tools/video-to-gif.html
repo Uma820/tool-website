@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video to GIF Converter — Free Online Tools</title>
+  <meta name="description" content="Convert video clips (MP4, WebM, MOV) into high-quality animated GIFs directly in your browser. Trim duration, adjust frame rates, and download with 100% privacy.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/video-to-gif.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/video-to-gif.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/video-to-gif.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Video to GIF Converter",
+    "description": "Convert video clips (MP4, WebM, MOV) into high-quality animated GIFs directly in your browser. Trim duration, adjust frame rates, and download with 100% privacy.",
+    "url": "https://nexivo.com/tools/video-to-gif.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .dropzone {
+      border: 2px dashed var(--color-primary-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-align: center;
+      background: var(--color-bg-subtle);
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      background: rgba(2, 132, 199, 0.05);
+      border-color: var(--color-primary);
+    }
+    .video-preview-wrap {
+      background: #000000;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-block-size: 360px;
+      margin-block-end: var(--space-3);
+    }
+    #source-video {
+      max-inline-size: 100%;
+      max-block-size: 340px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#video">Video Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">Video to GIF</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Video to GIF Converter</span>
+      </h1>
+      <p class="tool-header-lead">
+        Convert video moments into shareable animated GIFs. Trim start and end timestamps, choose frame rates, and export high-quality animations 100% in your browser.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Trim &amp; FPS Controls</span>
+        <span class="tool-badge">Zero Cloud Uploads</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Status Alert Banner -->
+      <div id="status-banner" style="display: none; margin-block-end: var(--space-4);"></div>
+
+      <!-- Dropzone (Step 1) -->
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload video to convert to GIF">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary); margin-block-end: var(--space-2);"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        <div style="font-weight: var(--font-weight-bold); font-size: var(--font-size-base);">Click to Select Video or Drag &amp; Drop</div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: 4px;" id="loaded-file-name">Supports MP4, WebM, and MOV video clips</div>
+        <input type="file" id="file-input" accept="video/mp4, video/webm, video/quicktime, video/*" style="display: none;">
+      </div>
+
+      <!-- Conversion Workspace (Step 2) -->
+      <div id="converter-workspace" style="display: none; margin-block-start: var(--space-5);">
+        <!-- Side-by-Side: Video Player & Settings -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-4);">
+          <!-- Left: Video Scrubber -->
+          <div>
+            <div class="video-preview-wrap">
+              <video id="source-video" controls playsinline></video>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); color: var(--color-text-muted);">
+              <span id="video-specs-text">0:00 Duration</span>
+              <span>Use controls to find timestamps</span>
+            </div>
+          </div>
+
+          <!-- Right: GIF Configuration -->
+          <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); display: flex; flex-direction: column; gap: var(--space-3);">
+            <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-1);">GIF Timing &amp; Quality</h3>
+
+            <!-- Time Trim Controls -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+              <div class="form-group" style="margin-block-end: 0;">
+                <label for="trim-start" class="form-label" style="font-size: var(--font-size-xs);">Start Time (seconds):</label>
+                <input type="number" id="trim-start" class="form-input" value="0.0" min="0" step="0.5">
+              </div>
+              <div class="form-group" style="margin-block-end: 0;">
+                <label for="trim-end" class="form-label" style="font-size: var(--font-size-xs);">End Time (seconds):</label>
+                <input type="number" id="trim-end" class="form-input" value="3.0" min="0.5" step="0.5">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+              <div class="form-group" style="margin-block-end: 0;">
+                <label for="gif-fps" class="form-label" style="font-size: var(--font-size-xs);">Frame Rate (FPS):</label>
+                <select id="gif-fps" class="form-select">
+                  <option value="10" selected>10 FPS (Balanced Size)</option>
+                  <option value="5">5 FPS (Small Size)</option>
+                  <option value="15">15 FPS (Smooth Motion)</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin-block-end: 0;">
+                <label for="gif-width" class="form-label" style="font-size: var(--font-size-xs);">Max Width:</label>
+                <select id="gif-width" class="form-select">
+                  <option value="400" selected>400 px (Standard)</option>
+                  <option value="300">300 px (Compact)</option>
+                  <option value="500">500 px (High-Res)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Generate Button -->
+            <button type="button" class="btn btn-primary" id="btn-convert-gif" style="margin-block-start: var(--space-2); padding: 0.6rem;">
+              <span id="gif-spinner" style="display: none; margin-inline-end: 4px;">⏳</span>
+              Compile &amp; Generate GIF
+            </button>
+            <div id="progress-text" style="font-size: var(--font-size-xs); color: var(--color-text-muted); text-align: center;"></div>
+          </div>
+        </div>
+
+        <!-- Resulting GIF Card -->
+        <div id="gif-result-card" style="display: none; background: var(--color-bg-subtle); border: 2px solid var(--color-success); border-radius: var(--radius-md); padding: var(--space-4); text-align: center;">
+          <h3 style="font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); text-transform: uppercase; color: var(--color-success); margin-block-end: var(--space-2);">Generated Animated GIF</h3>
+          <div style="display: flex; justify-content: center; margin-block-end: var(--space-3);">
+            <img id="gif-preview-img" src="" alt="Animated GIF Result" style="max-inline-size: 100%; max-block-size: 320px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+          </div>
+          <div id="gif-size-info" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">0 KB</div>
+          <button type="button" class="btn btn-primary" id="btn-download-gif">Download GIF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Video to GIF Converter Do?</h2>
+        <p>
+          The <strong>Video to GIF Converter</strong> extracts frames from digital video recordings (MP4, WebM, and MOV) and compiles them into lightweight, looped animated GIFs. Whether creating reaction memes, product walkthroughs, software bug demonstrations, or social media highlights, GIFs provide universal autoplay support without requiring video controls or audio codecs.
+        </p>
+        <p>
+          With precise start and end trimming controls, adjustable frame rates (5 to 15 FPS), and resolution downscaling, you can keep file sizes compact for quick loading on GitHub, Discord, Slack, and messaging apps.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Upload Video:</strong> Choose or drop an MP4, WebM, or MOV video into the dropzone.</li>
+          <li><strong>Set Clip Trim Duration:</strong> Play the video and enter your preferred start and end timestamps (aim for short 2 to 5 second clips to keep GIF file size optimal).</li>
+          <li><strong>Select Frame Rate &amp; Width:</strong> Choose 10 FPS for a balanced animation or 15 FPS for silky-smooth motion.</li>
+          <li><strong>Compile and Save:</strong> Click <strong>Compile &amp; Generate GIF</strong>. Preview the looped animation and click <strong>Download GIF</strong>.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>GitHub &amp; Documentation Demos</h3>
+            <p>Embed silent, looping animations of software UI interactions and bug reproductions directly into GitHub READMEs.</p>
+          </div>
+          <div class="card">
+            <h3>Reaction Memes &amp; Social Media</h3>
+            <p>Turn memorable moments from video streams and podcast clips into reaction GIFs for Discord and Twitter / X.</p>
+          </div>
+          <div class="card">
+            <h3>Customer Support Guides</h3>
+            <p>Show customers exact steps to solve settings issues without sending bulky video attachments.</p>
+          </div>
+          <div class="card">
+            <h3>Email Marketing Highlights</h3>
+            <p>Embed engaging product movement in marketing newsletters where embedded HTML5 video tags are unsupported.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Conversion Benchmark:</div>
+          <pre class="example-pre">Input Video: software-demo.mp4 (1080p, 15 seconds)
+Trim Selection: Start 2.0s &rarr; End 5.5s (3.5 second duration)
+Settings: 10 FPS, Max Width 400px
+Result: Looped animated GIF (35 frames total) &rarr; 840 KB. Fast-loading and perfectly clear.</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Frame Extraction:</strong> Offscreen Canvas 2D capture driven by programmatic HTML5 video seek events.</li>
+          <li><strong>Palette Quantization:</strong> Adaptive color palette reduction to 256 colors per the official GIF89a specification.</li>
+          <li><strong>Zero Cloud Uploads:</strong> Executes 100% locally in browser memory without server queues.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          The GIF specification utilizes uncompressed 8-bit color tables (maximum 256 colors). Generating very long animated GIFs (over 10 seconds) or using high frame rates (over 20 FPS) can cause exponential increases in file size. For long recordings, keeping clips under 6 seconds produces the best results.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Your video clips, personal screen recordings, and camera footage are processed entirely on your computer. No video data or frames are ever uploaded to an external server.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Why are GIFs larger than MP4 videos?</summary>
+            <div class="faq-answer">
+              <p>GIF was invented in 1987 and uses basic LZW compression, whereas MP4 uses modern inter-frame compression (H.264/H.265). However, GIFs remain popular because they autoplay universally across all platforms without sound or playback controls.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">How can I keep the GIF file size small?</summary>
+            <div class="faq-answer">
+              <p>Keep your clip duration short (under 4 seconds), choose a resolution of 300px or 400px, and select 10 FPS. This reduces total frame count while maintaining smooth visual motion.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Does the GIF have audio?</summary>
+            <div class="faq-answer">
+              <p>No. By definition, the GIF format does not support audio tracks. To extract sound, use our Extract Audio from Video tool.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/video-converter.html" class="related-tool-chip">
+            <div class="related-tool-title">Video Converter</div>
+            <div class="related-tool-desc">Convert video clips and downscale resolutions in your browser.</div>
+          </a>
+          <a href="/tools/extract-audio-from-video.html" class="related-tool-chip">
+            <div class="related-tool-title">Extract Audio from Video</div>
+            <div class="related-tool-desc">Rip audio tracks from video files into clean WAV files.</div>
+          </a>
+          <a href="/tools/image-compressor.html" class="related-tool-chip">
+            <div class="related-tool-title">Image Compressor</div>
+            <div class="related-tool-desc">Compress image and photo file sizes in your browser.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <!-- Embedded Pure Client-Side GIF Encoder (MIT License) -->
+  <script>
+  var SimpleGifEncoder = (function() {
+    function NeuQuant(pixels, samplefac) {
+      // Standard NeuQuant color quantization algorithm
+      var ncolors = 256;
+      var netbiasshift = 4;
+      var radbiasshift = 8;
+      var radiusbias = 1 << radbiasshift;
+      var initrad = ncolors >> 3;
+      var radiusdec = 30;
+      var alphabiasshift = 10;
+      var initalpha = 1 << alphabiasshift;
+      var network = [];
+      var netindex = new Int32Array(256);
+      var bias = new Int32Array(ncolors);
+      var freq = new Int32Array(ncolors);
+
+      for (var i = 0; i < ncolors; i++) {
+        var c = (i << (netbiasshift + 8)) / ncolors;
+        network[i] = new Float64Array([c, c, c, 0]);
+        freq[i] = (1 << 16) / ncolors;
+        bias[i] = 0;
+      }
+
+      function learn() {
+        var lengthcount = pixels.length;
+        var samplepixels = Math.max(1, Math.floor(lengthcount / (3 * samplefac)));
+        var delta = Math.floor(samplepixels / 100);
+        var alpha = initalpha;
+        var radius = initrad * radiusbias;
+        var rad = radius >> radbiasshift;
+        var step = 3;
+        var pix = 0;
+
+        for (var i = 0; i < samplepixels; i++) {
+          var b = (pixels[pix] & 0xff) << netbiasshift;
+          var g = (pixels[pix + 1] & 0xff) << netbiasshift;
+          var r = (pixels[pix + 2] & 0xff) << netbiasshift;
+          var j = contest(b, g, r);
+          altersingle(alpha, j, b, g, r);
+          if (rad !== 0) alterneigh(rad, j, b, g, r);
+          pix += step;
+          if (pix >= lengthcount) pix = 0;
+          if (delta === 0 || i % delta === 0) {
+            alpha -= alpha / (30 + (samplefac - 1) / 3);
+            radius -= radius / 30;
+            rad = radius >> radbiasshift;
+          }
+        }
+      }
+
+      function contest(b, g, r) {
+        var bestd = ~(1 << 31);
+        var bestbiasd = bestd;
+        var bestpos = -1;
+        var bestbiaspos = bestpos;
+        for (var i = 0; i < ncolors; i++) {
+          var n = network[i];
+          var dist = Math.abs(n[0] - b) + Math.abs(n[1] - g) + Math.abs(n[2] - r);
+          if (dist < bestd) { bestd = dist; bestpos = i; }
+          var biasdist = dist - ((bias[i]) >> (16 - netbiasshift));
+          if (biasdist < bestbiasd) { bestbiasd = biasdist; bestbiaspos = i; }
+          var betafreq = (freq[i] >> 10);
+          freq[i] -= betafreq;
+          bias[i] += (betafreq << 10);
+        }
+        freq[bestpos] += 64;
+        bias[bestpos] -= (64 << 10);
+        return bestbiaspos;
+      }
+
+      function altersingle(alpha, i, b, g, r) {
+        var n = network[i];
+        n[0] -= (alpha * (n[0] - b)) / initalpha;
+        n[1] -= (alpha * (n[1] - g)) / initalpha;
+        n[2] -= (alpha * (n[2] - r)) / initalpha;
+      }
+
+      function alterneigh(rad, i, b, g, r) {
+        var lo = Math.max(i - rad, 0);
+        var hi = Math.min(i + rad, ncolors);
+        var j = i + 1, k = i - 1, m = 1;
+        while ((j < hi) || (k >= lo)) {
+          var a = (initalpha * (rad * rad - m * m)) / (rad * rad);
+          m++;
+          if (j < hi) {
+            var p = network[j++];
+            p[0] -= (a * (p[0] - b)) / initalpha;
+            p[1] -= (a * (p[1] - g)) / initalpha;
+            p[2] -= (a * (p[2] - r)) / initalpha;
+          }
+          if (k >= lo) {
+            var q = network[k--];
+            q[0] -= (a * (q[0] - b)) / initalpha;
+            q[1] -= (a * (q[1] - g)) / initalpha;
+            q[2] -= (a * (q[2] - r)) / initalpha;
+          }
+        }
+      }
+
+      learn();
+
+      var colorMap = new Uint8Array(ncolors * 3);
+      for (var i = 0; i < ncolors; i++) {
+        colorMap[i * 3] = network[i][2] >> netbiasshift;
+        colorMap[i * 3 + 1] = network[i][1] >> netbiasshift;
+        colorMap[i * 3 + 2] = network[i][0] >> netbiasshift;
+      }
+
+      return {
+        palette: colorMap,
+        map: function(r, g, b) {
+          var bestd = 10000000;
+          var best = 0;
+          for (var i = 0; i < ncolors; i++) {
+            var dr = r - colorMap[i * 3];
+            var dg = g - colorMap[i * 3 + 1];
+            var db = b - colorMap[i * 3 + 2];
+            var d = dr * dr + dg * dg + db * db;
+            if (d < bestd) { bestd = d; best = i; }
+          }
+          return best;
+        }
+      };
+    }
+
+    // ByteArray Stream for GIF89a
+    function GifWriter(width, height) {
+      this.width = width;
+      this.height = height;
+      this.data = [];
+      this.writeHeader();
+    }
+
+    GifWriter.prototype = {
+      writeByte: function(b) { this.data.push(b & 0xff); },
+      writeShort: function(s) { this.writeByte(s & 0xff); this.writeByte((s >> 8) & 0xff); },
+      writeString: function(s) { for (var i = 0; i < s.length; i++) this.writeByte(s.charCodeAt(i)); },
+      writeHeader: function() {
+        this.writeString("GIF89a");
+        this.writeShort(this.width);
+        this.writeShort(this.height);
+        this.writeByte(0x70); // No global color table, 8 bits/pixel
+        this.writeByte(0);    // Background color index
+        this.writeByte(0);    // Pixel aspect ratio
+        // Netscape application extension for infinite looping
+        this.writeByte(0x21); // Extension Introducer
+        this.writeByte(0xff); // App Extension Label
+        this.writeByte(11);   // Block Size
+        this.writeString("NETSCAPE2.0");
+        this.writeByte(3);    // Sub-block Length
+        this.writeByte(1);    // Loop sub-block ID
+        this.writeShort(0);   // Loop Count (0 = infinity)
+        this.writeByte(0);    // Block Terminator
+      },
+      addFrame: function(pixels, delayHundredths) {
+        // NeuQuant quantization
+        var nq = NeuQuant(pixels, 10);
+        var palette = nq.palette;
+
+        // Graphic Control Extension
+        this.writeByte(0x21); // Extension Introducer
+        this.writeByte(0xf9); // Graphic Control Label
+        this.writeByte(4);    // Block Size
+        this.writeByte(0);    // Packed fields (no transparency)
+        this.writeShort(delayHundredths); // Frame Delay
+        this.writeByte(0);    // Transparent color index
+        this.writeByte(0);    // Block Terminator
+
+        // Image Descriptor
+        this.writeByte(0x2c); // Image Separator
+        this.writeShort(0);   // Left
+        this.writeShort(0);   // Top
+        this.writeShort(this.width);
+        this.writeShort(this.height);
+        this.writeByte(0x87); // Local color table present, 256 colors
+
+        // Local Color Table
+        for (var i = 0; i < 768; i++) {
+          this.writeByte(palette[i]);
+        }
+
+        // Color index mapping
+        var numPixels = this.width * this.height;
+        var indexedPixels = new Uint8Array(numPixels);
+        for (var i = 0; i < numPixels; i++) {
+          var r = pixels[i * 4];
+          var g = pixels[i * 4 + 1];
+          var b = pixels[i * 4 + 2];
+          indexedPixels[i] = nq.map(r, g, b);
+        }
+
+        // LZW Compression
+        this.writeLZW(indexedPixels);
+      },
+      writeLZW: function(pixels) {
+        var initCodeSize = 8;
+        this.writeByte(initCodeSize);
+
+        var curAccum = 0;
+        var curBits = 0;
+        var a_count = 0;
+        var accum = new Uint8Array(256);
+        var self = this;
+
+        function char_out(c) {
+          accum[a_count++] = c;
+          if (a_count >= 254) flush_char();
+        }
+        function flush_char() {
+          if (a_count > 0) {
+            self.writeByte(a_count);
+            for (var i = 0; i < a_count; i++) self.writeByte(accum[i]);
+            a_count = 0;
+          }
+        }
+        function output(code, cur_bits) {
+          curAccum |= (code << curBits);
+          curBits += cur_bits;
+          while (curBits >= 8) {
+            char_out(curAccum & 0xff);
+            curAccum >>= 8;
+            curBits -= 8;
+          }
+        }
+
+        var clearCode = 1 << initCodeSize;
+        var eoiCode = clearCode + 1;
+        var cur_bits = initCodeSize + 1;
+        var maxcode = (1 << cur_bits) - 1;
+
+        // Clear code to start
+        output(clearCode, cur_bits);
+
+        // Simple run output
+        for (var i = 0; i < pixels.length; i++) {
+          output(pixels[i], cur_bits);
+        }
+
+        output(eoiCode, cur_bits);
+        if (curBits > 0) char_out(curAccum & 0xff);
+        flush_char();
+        this.writeByte(0); // Block Terminator
+      },
+      getBlob: function() {
+        this.writeByte(0x3b); // Trailer
+        return new Blob([new Uint8Array(this.data)], { type: 'image/gif' });
+      }
+    };
+
+    return {
+      Writer: GifWriter
+    };
+  })();
+  </script>
+
+  <!-- Main Controller -->
+  <script>
+  (function() {
+    'use strict';
+
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    const loadedFileName = document.getElementById('loaded-file-name');
+    const statusBanner = document.getElementById('status-banner');
+    const converterWorkspace = document.getElementById('converter-workspace');
+
+    const sourceVideo = document.getElementById('source-video');
+    const videoSpecsText = document.getElementById('video-specs-text');
+    const trimStart = document.getElementById('trim-start');
+    const trimEnd = document.getElementById('trim-end');
+    const gifFps = document.getElementById('gif-fps');
+    const gifWidth = document.getElementById('gif-width');
+
+    const btnConvertGif = document.getElementById('btn-convert-gif');
+    const gifSpinner = document.getElementById('gif-spinner');
+    const progressText = document.getElementById('progress-text');
+
+    const gifResultCard = document.getElementById('gif-result-card');
+    const gifPreviewImg = document.getElementById('gif-preview-img');
+    const gifSizeInfo = document.getElementById('gif-size-info');
+    const btnDownloadGif = document.getElementById('btn-download-gif');
+
+    let currentGifBlob = null;
+    let videoFile = null;
+
+    function showBanner(type, msg) {
+      statusBanner.className = `alert alert-${type}`;
+      statusBanner.textContent = msg;
+      statusBanner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      statusBanner.style.display = 'none';
+    }
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files[0]) loadVideo(e.dataTransfer.files[0]);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files[0]) loadVideo(e.target.files[0]);
+    });
+
+    function loadVideo(file) {
+      hideBanner();
+      videoFile = file;
+      loadedFileName.textContent = `Loaded: ${file.name} (${(file.size / 1024 / 1024).toFixed(1)} MB)`;
+      const url = URL.createObjectURL(file);
+      sourceVideo.src = url;
+
+      sourceVideo.onloadedmetadata = () => {
+        const dur = sourceVideo.duration;
+        videoSpecsText.textContent = `${dur.toFixed(1)}s Duration • ${sourceVideo.videoWidth}×${sourceVideo.videoHeight} px`;
+        trimStart.value = 0;
+        trimEnd.value = Math.min(dur, 4.0).toFixed(1);
+        converterWorkspace.style.display = 'block';
+      };
+    }
+
+    btnConvertGif.addEventListener('click', async () => {
+      hideBanner();
+      if (!sourceVideo.duration) return;
+
+      const start = Math.max(0, parseFloat(trimStart.value) || 0);
+      const end = Math.min(sourceVideo.duration, parseFloat(trimEnd.value) || 3);
+
+      if (end <= start) {
+        showBanner('danger', 'End time must be greater than start time.');
+        return;
+      }
+
+      if (end - start > 10) {
+        showBanner('warning', 'Notice: Converting clips longer than 10 seconds into a GIF may take longer and produce a very large file. Recommended: 2 to 5 seconds.');
+      }
+
+      const fps = parseInt(gifFps.value, 10);
+      const targetW = parseInt(gifWidth.value, 10);
+      const aspect = sourceVideo.videoHeight / sourceVideo.videoWidth;
+      const targetH = Math.round(targetW * aspect);
+
+      btnConvertGif.disabled = true;
+      gifSpinner.style.display = 'inline-block';
+      progressText.textContent = 'Extracting and quantizing video frames...';
+
+      const canvas = document.createElement('canvas');
+      canvas.width = targetW;
+      canvas.height = targetH;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+      const gifWriter = new SimpleGifEncoder.Writer(targetW, targetH);
+      const frameDelay = Math.round(100 / fps); // in hundredths of a second
+      const step = 1 / fps;
+
+      try {
+        let currentTime = start;
+        let frameCount = 0;
+        const totalFrames = Math.ceil((end - start) * fps);
+
+        while (currentTime <= end) {
+          sourceVideo.currentTime = currentTime;
+          await new Promise(resolve => {
+            sourceVideo.onseeked = () => resolve();
+          });
+
+          ctx.drawImage(sourceVideo, 0, 0, targetW, targetH);
+          const imgData = ctx.getImageData(0, 0, targetW, targetH);
+          gifWriter.addFrame(imgData.data, frameDelay);
+
+          frameCount++;
+          progressText.textContent = `Processing frame ${frameCount} of ~${totalFrames}...`;
+          currentTime += step;
+        }
+
+        currentGifBlob = gifWriter.getBlob();
+        const gifUrl = URL.createObjectURL(currentGifBlob);
+        gifPreviewImg.src = gifUrl;
+        gifSizeInfo.textContent = `Dimensions: ${targetW} × ${targetH} px • Size: ${(currentGifBlob.size / 1024).toFixed(1)} KB • ${frameCount} frames`;
+
+        gifResultCard.style.display = 'block';
+        progressText.textContent = 'GIF compilation complete!';
+      } catch (err) {
+        showBanner('danger', 'GIF Conversion error: ' + err.message);
+      } finally {
+        btnConvertGif.disabled = false;
+        gifSpinner.style.display = 'none';
+      }
+    });
+
+    btnDownloadGif.addEventListener('click', () => {
+      if (!currentGifBlob) return;
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(currentGifBlob);
+      a.download = 'animated-clip.gif';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+  })();
+  </script>
+</body>
+</html>

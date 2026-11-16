@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remove Extra Spaces — Free Online Tools</title>
+  <meta name="description" content="Free tool to remove extra spaces, normalize repeated whitespace, and trim line edges. 100% private client-side text cleaner.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/remove-extra-spaces.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/remove-extra-spaces.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/remove-extra-spaces.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Remove Extra Spaces",
+    "description": "Free tool to remove extra spaces, normalize repeated whitespace, and trim line edges. 100% private client-side text cleaner.",
+    "url": "https://nexivo.com/tools/remove-extra-spaces.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand" aria-label="Free Online Tools Homepage">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <span>Free Online Tools</span>
+        <span class="brand-badge">Phase 2</span>
+      </a>
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/pages/about.html" class="nav-link">About</a></li>
+          <li><a href="/pages/privacy.html" class="nav-link">Privacy</a></li>
+          <li><a href="/pages/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#text">Text Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">Remove Extra Spaces</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Remove Extra Spaces</span>
+      </h1>
+      <p class="tool-header-lead">
+        Clean up cluttered text by collapsing repeated spaces into a single space, trimming unwanted leading and trailing whitespace on each line, and standardizing tabs.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">100% Client-Side</span>
+        <span class="tool-badge">Preserves Unicode</span>
+      </div>
+    </div>
+
+    <div class="tool-panel">
+      <!-- Input Area -->
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="input-text" class="form-label" style="margin-bottom: 0;">Original Text:</label>
+          <div style="display: flex; gap: var(--space-2);">
+            <button type="button" class="btn btn-secondary" id="btn-sample">Sample</button>
+            <button type="button" class="btn btn-secondary" id="btn-clear">Clear</button>
+          </div>
+        </div>
+        <textarea id="input-text" class="form-textarea code-font" placeholder="Paste text containing irregular or excessive spaces here..."></textarea>
+      </div>
+
+      <!-- Configurable Options -->
+      <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); margin-block-end: var(--space-5);">
+        <h2 style="font-size: var(--font-size-sm); text-transform: uppercase; letter-spacing: 0.05em; margin-block-end: var(--space-3);">Whitespace Cleaning Options</h2>
+        <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+          <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); cursor: pointer;">
+            <input type="checkbox" id="opt-collapse" checked>
+            <strong>Normalize repeated spaces</strong> (collapses multiple consecutive spaces into a single space)
+          </label>
+          <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); cursor: pointer;">
+            <input type="checkbox" id="opt-trim-lines" checked>
+            <strong>Trim line edges</strong> (removes leading and trailing spaces from each line)
+          </label>
+          <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); cursor: pointer;">
+            <input type="checkbox" id="opt-tabs-to-spaces">
+            <strong>Convert tabs to single spaces</strong> before normalizing
+          </label>
+        </div>
+      </div>
+
+      <!-- Output Area -->
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="output-text" class="form-label" style="margin-bottom: 0;">Cleaned Output:</label>
+          <button type="button" class="btn btn-secondary" id="btn-copy">Copy Output</button>
+        </div>
+        <textarea id="output-text" class="form-textarea code-font" readonly placeholder="Cleaned text will appear here..."></textarea>
+      </div>
+
+      <!-- Character Impact Counter -->
+      <div id="cleaning-stats" style="font-size: var(--font-size-xs); color: var(--color-text-muted); display: flex; gap: var(--space-4);">
+        <span>Original: <strong id="stat-orig">0</strong> chars</span>
+        <span>Cleaned: <strong id="stat-cleaned">0</strong> chars</span>
+        <span>Spaces Removed: <strong id="stat-diff" style="color: var(--color-success);">0</strong></span>
+      </div>
+    </div>
+
+    <!-- Educational & Instructional Guide -->
+    
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>The <strong>Remove Extra Spaces</strong> tool normalizes erratic whitespace in text pasted from PDFs, OCR scanners, legacy documents, or formatted spreadsheets. It removes accidental double spaces, strips leading and trailing spaces from individual lines, and turns tab characters into standard spaces.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li>Paste your unformatted or spacing-damaged text into the input textarea.</li>
+          <li>Check or uncheck the formatting options: "Collapse consecutive spaces", "Trim line beginnings and ends", and "Convert tabs to spaces".</li>
+          <li>Click "Clean Spaces" to apply the sanitization rules.</li>
+          <li>Click "Copy Output" to copy your clean, normalized text to the clipboard.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>PDF & OCR Extraction Cleanup:</strong> Fix erratic gaps, double-spaces, and broken column alignments that occur when copying text from PDF documents or OCR scans.</li>
+          <li><strong>Source Code & Data Preparation:</strong> Sanitize tab-delimited records and eliminate trailing whitespace from CSV data before database ingestion.</li>
+          <li><strong>Typesetting & Copywriting:</strong> Eliminate obsolete double-spacing after periods to adhere to modern typography and editorial standards.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">   The   quick    brown    fox
+      jumps   over    the   dog.   </pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">The quick brown fox
+jumps over the dog.</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>Processes text using regular expression token replacement: <code>/[^\S\r\n]+/g</code> collapses consecutive non-newline whitespace into single spaces. Line trimming applies <code>/^[ \t]+|[ \t]+$/gm</code>, preserving newline structure while cleaning line margins.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>This tool preserves intentional line breaks (<code>\n</code>). To eliminate completely blank lines between paragraphs, use the <em>Remove Empty Lines</em> tool.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>Whitespace normalization runs strictly on your device CPU. Your text never leaves your browser.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+          <h3>Does this tool remove line breaks?</h3>
+          <p>No. Line breaks are preserved so paragraph structure remains intact. Only horizontal whitespace (spaces and tabs) is normalized.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I convert tabs into a custom number of spaces?</h3>
+          <p>Yes. The tab conversion feature expands tab characters into standard 4-space indentations.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is it safe to paste confidential documents here?</h3>
+          <p>Yes. All processing is 100% client-side with zero network requests or tracking.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/tools/remove-empty-lines.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Remove Empty Lines</span>
+          </a>
+
+          <a href="/tools/duplicate-line-remover.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Duplicate Line Remover</span>
+          </a>
+
+          <a href="/tools/text-sorter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Text Sorter</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const input = document.getElementById('input-text');
+      const output = document.getElementById('output-text');
+      const optCollapse = document.getElementById('opt-collapse');
+      const optTrimLines = document.getElementById('opt-trim-lines');
+      const optTabs = document.getElementById('opt-tabs-to-spaces');
+
+      const statOrig = document.getElementById('stat-orig');
+      const statCleaned = document.getElementById('stat-cleaned');
+      const statDiff = document.getElementById('stat-diff');
+
+      const btnSample = document.getElementById('btn-sample');
+      const btnClear = document.getElementById('btn-clear');
+      const btnCopy = document.getElementById('btn-copy');
+
+      function cleanSpaces() {
+        const text = input.value;
+        if (!text) {
+          output.value = '';
+          statOrig.textContent = '0';
+          statCleaned.textContent = '0';
+          statDiff.textContent = '0';
+          return;
+        }
+
+        let result = text;
+
+        if (optTabs.checked) {
+          result = result.replace(/\t/g, ' ');
+        }
+
+        if (optTrimLines.checked) {
+          result = result.split('\n').map(line => line.trim()).join('\n');
+        }
+
+        if (optCollapse.checked) {
+          // Collapse multiple horizontal spaces on each line without collapsing linebreaks
+          result = result.split('\n').map(line => line.replace(/[^\S\r\n]+/g, ' ')).join('\n');
+        }
+
+        output.value = result;
+
+        const origLen = text.length;
+        const cleanLen = result.length;
+        const diff = Math.max(0, origLen - cleanLen);
+
+        statOrig.textContent = origLen.toLocaleString();
+        statCleaned.textContent = cleanLen.toLocaleString();
+        statDiff.textContent = diff.toLocaleString();
+      }
+
+      input.addEventListener('input', cleanSpaces);
+      optCollapse.addEventListener('change', cleanSpaces);
+      optTrimLines.addEventListener('change', cleanSpaces);
+      optTabs.addEventListener('change', cleanSpaces);
+
+      btnSample.addEventListener('click', () => {
+        input.value = "   This   is   a   sample   text   with    excessive    spacing.   \n\n\tAnother   line   with   tabs\tand   trailing   spaces.     \n   Leading    space   example.   ";
+        cleanSpaces();
+      });
+
+      btnClear.addEventListener('click', () => {
+        input.value = '';
+        cleanSpaces();
+        input.focus();
+      });
+
+      btnCopy.addEventListener('click', () => {
+        window.FreeOnlineTools.copyToClipboard(output.value, 'Cleaned text copied to clipboard!');
+      });
+
+      cleanSpaces();
+    })();
+  </script>
+</body>
+</html>

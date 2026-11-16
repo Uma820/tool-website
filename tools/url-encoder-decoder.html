@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Encoder & Decoder — Free Online Tools</title>
+  <meta name="description" content="Safely encode or decode URLs and query parameters using standard percent-encoding. Client-side, fast, and free.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/url-encoder-decoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/url-encoder-decoder.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/url-encoder-decoder.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "URL Encoder & Decoder",
+    "description": "Safely encode or decode URLs and query parameters using standard percent-encoding. Client-side, fast, and free.",
+    "url": "https://nexivo.com/tools/url-encoder-decoder.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#developer">Developer Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">URL Encoder & Decoder</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>URL Encoder & Decoder</span>
+      </h1>
+      <p class="tool-header-lead">
+        Safely convert query parameters and special characters into standard percent-encoded format (RFC 3986) or restore encoded URLs into human-readable text.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">RFC 3986</span>
+        <span class="tool-badge">100% Client-Side</span>
+      </div>
+    </div>
+
+    <div class="tool-panel">
+      <!-- Input Area -->
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="url-input" class="form-label" style="margin-bottom: 0;">Enter URL or Text:</label>
+          <div style="display: flex; gap: var(--space-2);">
+            <button type="button" class="btn btn-secondary" id="btn-sample">Sample</button>
+            <button type="button" class="btn btn-secondary" id="btn-clear">Clear</button>
+          </div>
+        </div>
+        <textarea id="url-input" class="form-textarea code-font" placeholder="Paste URL or text to encode/decode..."></textarea>
+      </div>
+
+      <!-- Mode Selection -->
+      <div style="display: flex; gap: var(--space-4); margin-block-end: var(--space-4); flex-wrap: wrap;">
+        <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); cursor: pointer;">
+          <input type="radio" name="url-mode" value="component" checked>
+          <strong>Encode Component</strong> (Encodes delimiters like <code>&</code>, <code>=</code>, <code>?</code> for query params)
+        </label>
+        <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); cursor: pointer;">
+          <input type="radio" name="url-mode" value="full">
+          <strong>Encode Full URL</strong> (Preserves protocol, slash, query structure)
+        </label>
+      </div>
+
+      <!-- Actions -->
+      <div style="display: flex; gap: var(--space-3); margin-block-end: var(--space-5); flex-wrap: wrap;">
+        <button type="button" class="btn btn-primary" id="btn-encode">Encode URL</button>
+        <button type="button" class="btn btn-primary" id="btn-decode">Decode URL</button>
+      </div>
+
+      <!-- Error Box -->
+      <div id="url-error" class="alert alert-danger" style="display: none;"></div>
+
+      <!-- Output Area -->
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+          <label for="url-output" class="form-label" style="margin-bottom: 0;">Processed Output:</label>
+          <button type="button" class="btn btn-secondary" id="btn-copy-output">Copy Output</button>
+        </div>
+        <textarea id="url-output" class="form-textarea code-font" readonly placeholder="Output appears here..."></textarea>
+      </div>
+    </div>
+
+    
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>The <strong>URL Encoder and Decoder</strong> converts text into percent-encoded strings safe for query parameters, or decodes percent-encoded URLs back into human-readable text. It solves broken links and corrupted query strings caused by special characters like spaces, slashes, ampersands, or non-ASCII letters.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li>Enter or paste your text or URL into the input area.</li>
+          <li>Choose encoding mode: "Component" (encodes reserved punctuation like <code>?&amp;=</code>) or "Full URL" (preserves protocol and domain slashes).</li>
+          <li>Click "Encode" to produce percent-encoded output, or "Decode" to decode percent escapes.</li>
+          <li>Copy your converted URL string to clipboard.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>API Query Parameter Construction:</strong> Safely encode search terms like "c++ & python" into <code>c%2B%2B%20%26%20python</code> for GET requests.</li>
+          <li><strong>OAuth & Webhook Redirection:</strong> Encode complex callback URLs inside redirect parameter strings.</li>
+          <li><strong>Decoding Logged Requests:</strong> Decode percent-encoded tracking URLs in server access logs to read actual user queries.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">https://example.com/search?q=free tools & web=1</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">Component: "https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dfree%20tools%20%26%20web%3D1"
+Full URL: "https://example.com/search?q=free%20tools%20&%20web=1"</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>Built using standard browser APIs: <code>encodeURIComponent()</code> and <code>decodeURIComponent()</code> for component mode, and <code>encodeURI()</code> and <code>decodeURI()</code> for full URL mode. Catches malformed percent-escape sequences gracefully.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>Handles syntactic RFC 3986 percent-encoding transformation; does not verify whether destination hostnames or server endpoints exist on the web.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>100% client-side memory execution. No URLs or queries are logged or shared.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+          <h3>When should I use Component vs Full URL mode?</h3>
+          <p>Use Component mode when encoding query parameter values (so & and = are escaped). Use Full URL mode when encoding an entire address where protocol (https://) and domain slashes must remain intact.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How does it handle non-Latin characters and emojis?</h3>
+          <p>It converts them into their UTF-8 byte representation and encodes each byte as a percent-escape (e.g. %F0%9F%9A%80 for 🚀).</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What happens if I try to decode invalid percent sequences?</h3>
+          <p>The tool catches the URIError and displays a clear alert pointing out the malformed sequence.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/tools/base64-encoder-decoder.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Base64 Text Encoder</span>
+          </a>
+
+          <a href="/tools/slug-converter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Text to Slug Converter</span>
+          </a>
+
+          <a href="/tools/json-formatter-validator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>JSON Formatter & Validator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const input = document.getElementById('url-input');
+      const output = document.getElementById('url-output');
+      const errorBox = document.getElementById('url-error');
+      const btnEncode = document.getElementById('btn-encode');
+      const btnDecode = document.getElementById('btn-decode');
+      const btnSample = document.getElementById('btn-sample');
+      const btnClear = document.getElementById('btn-clear');
+      const btnCopy = document.getElementById('btn-copy-output');
+
+      function hideError() {
+        errorBox.style.display = 'none';
+        errorBox.textContent = '';
+      }
+
+      function showError(msg) {
+        errorBox.textContent = msg;
+        errorBox.style.display = 'flex';
+      }
+
+      btnEncode.addEventListener('click', () => {
+        hideError();
+        const text = input.value;
+        if (!text) {
+          output.value = '';
+          return;
+        }
+        const isComponent = document.querySelector('input[name="url-mode"]:checked').value === 'component';
+        try {
+          output.value = isComponent ? encodeURIComponent(text) : encodeURI(text);
+        } catch (err) {
+          showError('Encoding error: ' + err.message);
+        }
+      });
+
+      btnDecode.addEventListener('click', () => {
+        hideError();
+        const text = input.value;
+        if (!text) {
+          output.value = '';
+          return;
+        }
+        const isComponent = document.querySelector('input[name="url-mode"]:checked').value === 'component';
+        try {
+          output.value = isComponent ? decodeURIComponent(text) : decodeURI(text);
+        } catch (err) {
+          showError('Malformed URL: The input contains invalid percent-encoding (e.g. an unescaped % or incomplete byte sequence).');
+        }
+      });
+
+      btnSample.addEventListener('click', () => {
+        hideError();
+        input.value = "https://example.com/search?q=free online tools & category=web design 100%!";
+        output.value = encodeURIComponent(input.value);
+      });
+
+      btnClear.addEventListener('click', () => {
+        hideError();
+        input.value = '';
+        output.value = '';
+        input.focus();
+      });
+
+      btnCopy.addEventListener('click', () => {
+        window.FreeOnlineTools.copyToClipboard(output.value, 'Output copied!');
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquarium Volume Calculator — Fish Tank Gallons, Liters &amp; Weight</title>
+  <meta name="description" content="Calculate gross and real-world net water volume for rectangular, bowfront, cylinder, hexagonal, and corner aquariums with glass thickness, headspace, and substrate weight.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/aquarium-volume-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/aquarium-volume-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/aquarium-volume-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Aquarium Volume Calculator",
+    "description": "Calculate gross and net water volume in Gallons and Liters for all fish tank shapes, including filled tank weight and substrate requirements.",
+    "url": "https://nexivo.com/tools/aquarium-volume-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between Gross Tank Volume and Net Water Volume?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Gross volume is the mathematical volume calculated from the outer dimensions of the glass box. Net water volume represents the actual water inside the tank after subtracting glass thickness, top headspace (waterline 1 inch below the rim), and displacement from substrate, rocks, and driftwood (typically 10% to 15% of total volume)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does a filled aquarium weigh per gallon?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Freshwater weighs 8.34 lbs per US Gallon (1.0 kg per Liter), while saltwater weighs 8.55 lbs per Gallon. When factoring in the weight of the glass aquarium itself and heavy gravel/sand substrate, a fully filled aquarium weighs approximately 10 to 11 lbs per gallon (1.2 to 1.3 kg per liter)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How deep should aquarium gravel or substrate be?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For fish-only or artificial plant aquariums, a substrate bed of 1.5 to 2 inches (4 to 5 cm) is recommended. For planted aquariums with rooted plants (such as Amazon Swords or Cryptocorynes), a 2 to 3-inch (5 to 7.5 cm) nutrient-rich substrate bed is required to allow strong root anchoring."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is accurate net water volume critical for medications and conditioners?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most fish keepers overdose medications by dosing for gross nominal tank size (e.g. 55 gallons) when the tank actually holds only 44 gallons of water due to substrate, rocks, and headspace. Overdosing harsh medications like copper or formalin can stress or kill sensitive fish and invertebrates."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#aquarium">Pets &amp; Aquarium</a></li>
+      <li>/</li>
+      <li aria-current="page">Aquarium Volume Calculator</li>
+    </nav>
+
+    <!-- Aquarium Suite Navigation -->
+    <div class="aquarium-suite-nav">
+      <span class="aquarium-suite-label">Aquarium Suite:</span>
+      <a href="/tools/aquarium-volume-calculator.html" class="aquarium-pill active">Tank Volume &amp; Weight</a>
+      <a href="/tools/aquarium-heater-calculator.html" class="aquarium-pill">Heater Sizing</a>
+      <a href="/tools/aquarium-water-change-calculator.html" class="aquarium-pill">Water Change &amp; Dosing</a>
+      <a href="/tools/aquarium-stocking-calculator.html" class="aquarium-pill">Fish Stocking Guide</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Aquarium Volume &amp; Weight Calculator</h1>
+      <p class="tool-header-desc">
+        Calculate exact gross and net water volume for rectangular, bowfront, cylinder, hexagonal, and corner fish tanks with filled floor weight and substrate requirements.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Net Water Displacement</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Floor Weight Check</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Section 1: Tank Shape & Standard Presets -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-2);">
+          <h2 style="font-size: var(--font-size-base); font-weight: 700; margin: 0; display: flex; align-items: center; gap: var(--space-2);">
+            <span>🐠</span> 1. Tank Shape &amp; Unit Preference
+          </h2>
+          <!-- Unit Toggle Button Group -->
+          <div class="btn-group" role="group" aria-label="Unit System Toggle">
+            <button type="button" id="btn-unit-imperial" class="btn btn-secondary active" style="font-size: var(--font-size-xs); padding: 0.35rem 0.75rem;">Imperial (in / gal / lbs)</button>
+            <button type="button" id="btn-unit-metric" class="btn btn-secondary" style="font-size: var(--font-size-xs); padding: 0.35rem 0.75rem;">Metric (cm / L / kg)</button>
+          </div>
+        </div>
+
+        <!-- Shape Selector Grid -->
+        <div class="shape-selector-grid">
+          <button type="button" class="shape-btn active" data-shape="rectangular" aria-label="Rectangular Aquarium Shape">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+            <span>Rectangular</span>
+          </button>
+          <button type="button" class="shape-btn" data-shape="bowfront" aria-label="Bowfront Aquarium Shape">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h18v14H3z"/><path d="M3 19c6 3 12 3 18 0"/></svg>
+            <span>Bowfront</span>
+          </button>
+          <button type="button" class="shape-btn" data-shape="cylinder" aria-label="Cylinder Aquarium Shape">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/></svg>
+            <span>Cylinder</span>
+          </button>
+          <button type="button" class="shape-btn" data-shape="hexagonal" aria-label="Hexagonal Aquarium Shape">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5"/></svg>
+            <span>Hexagonal</span>
+          </button>
+          <button type="button" class="shape-btn" data-shape="corner" aria-label="Corner Quarter Cylinder Shape">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16"/><path d="M4 4v16a16 16 0 0 0 16-16"/></svg>
+            <span>Corner Unit</span>
+          </button>
+        </div>
+
+        <!-- Standard Size Quick Preset Dropdown -->
+        <div style="margin-top: var(--space-3);" id="wrapper-presets">
+          <label for="tank-preset-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Standard Tank Size Preset:</label>
+          <select id="tank-preset-select" class="form-select" aria-label="Standard Tank Size Quick Presets">
+            <option value="custom" selected>Custom Dimensions (Enter Below)</option>
+            <option value="5gal">5 Gallon Standard (16" × 8" × 10")</option>
+            <option value="10gal">10 Gallon Standard (20" × 10" × 12")</option>
+            <option value="20gal_h">20 Gallon High (24" × 12" × 16")</option>
+            <option value="20gal_l">20 Gallon Long (30" × 12" × 12")</option>
+            <option value="29gal">29 Gallon Standard (30" × 12" × 18")</option>
+            <option value="40gal_b">40 Gallon Breeder (36" × 18" × 16")</option>
+            <option value="55gal">55 Gallon Standard (48" × 13" × 21")</option>
+            <option value="75gal">75 Gallon Standard (48" × 18" × 21")</option>
+            <option value="125gal">125 Gallon Standard (72" × 18" × 21")</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section 2: Outer Dimensions Input -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>📐</span> 2. Outer Tank Dimensions
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-3);" id="dimensions-container">
+          <!-- Dimension inputs dynamically shown/hidden by shape -->
+          <div id="wrapper-dim-length">
+            <label for="input-dim-length" id="lbl-dim-length" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Length (Front to Back):</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="input-dim-length" class="form-control" value="24" min="1" step="0.5" aria-label="Tank Length">
+              <span class="unit-dim-label" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">in</span>
+            </div>
+          </div>
+
+          <div id="wrapper-dim-width">
+            <label for="input-dim-width" id="lbl-dim-width" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Width (Side Depth):</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="input-dim-width" class="form-control" value="12" min="1" step="0.5" aria-label="Tank Width">
+              <span class="unit-dim-label" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">in</span>
+            </div>
+          </div>
+
+          <div id="wrapper-dim-center-width" style="display: none;">
+            <label for="input-dim-center-width" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Center Depth (At Bow Peak):</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="input-dim-center-width" class="form-control" value="16" min="1" step="0.5" aria-label="Bowfront Center Depth">
+              <span class="unit-dim-label" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">in</span>
+            </div>
+          </div>
+
+          <div id="wrapper-dim-diameter" style="display: none;">
+            <label for="input-dim-diameter" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Tank Diameter:</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="input-dim-diameter" class="form-control" value="18" min="1" step="0.5" aria-label="Cylinder Diameter">
+              <span class="unit-dim-label" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">in</span>
+            </div>
+          </div>
+
+          <div id="wrapper-dim-side" style="display: none;">
+            <label for="input-dim-side" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Side Panel Length:</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="input-dim-side" class="form-control" value="12" min="1" step="0.5" aria-label="Hexagon Side Length">
+              <span class="unit-dim-label" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">in</span>
+            </div>
+          </div>
+
+          <div id="wrapper-dim-height">
+            <label for="input-dim-height" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Height (Vertical):</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="input-dim-height" class="form-control" value="16" min="1" step="0.5" aria-label="Tank Height">
+              <span class="unit-dim-label" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Real-World Net Adjustments (Collapsible / Clean) -->
+      <div class="form-section" style="margin-bottom: var(--space-4); background: var(--color-bg-secondary); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+          <h2 style="font-size: var(--font-size-sm); font-weight: 700; margin: 0; display: flex; align-items: center; gap: var(--space-2);">
+            <span>💧</span> 3. Real-World Net Volume Adjustments
+          </h2>
+          <span style="font-size: 11px; color: var(--color-text-muted);">Deducts glass, rim headspace &amp; decor</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3);">
+          <div>
+            <label for="glass-thickness-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Glass Thickness:</label>
+            <select id="glass-thickness-select" class="form-select" aria-label="Glass thickness">
+              <option value="4">4 mm (~1/8" - Small nano tanks)</option>
+              <option value="6" selected>6 mm (~1/4" - 10 to 40 Gallons)</option>
+              <option value="8">8 mm (~5/16" - 40 to 65 Gallons)</option>
+              <option value="10">10 mm (~3/8" - 75 to 120 Gallons)</option>
+              <option value="12">12 mm (~1/2" - 125+ Gal rimless)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="headspace-input" id="lbl-headspace" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Waterline Headspace (Below Rim):</label>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <input type="number" id="headspace-input" class="form-control" value="1.0" min="0" max="6" step="0.25" aria-label="Top water headspace in inches">
+              <span class="unit-dim-label" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">in</span>
+            </div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+              <label for="displacement-slider" style="font-weight: 600; font-size: var(--font-size-xs); margin: 0;">Hardscape &amp; Substrate Displacement:</label>
+              <span id="lbl-disp-val" style="font-size: var(--font-size-xs); font-weight: 700; color: var(--color-primary);">12% (Standard)</span>
+            </div>
+            <input type="range" id="displacement-slider" min="0" max="30" step="1" value="12" class="form-range" style="width: 100%;" aria-label="Substrate and hardscape water displacement percentage">
+          </div>
+
+          <div>
+            <label for="water-type-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Water Salinity (Weight):</label>
+            <select id="water-type-select" class="form-select" aria-label="Water salinity type">
+              <option value="freshwater" selected>Freshwater (8.34 lbs / gal)</option>
+              <option value="saltwater">Saltwater / Marine (8.55 lbs / gal)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); margin-top: var(--space-3); flex-wrap: wrap;">
+        <button type="button" id="btn-copy-summary" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Tank Summary</span>
+        </button>
+        <button type="button" id="btn-reset" class="btn btn-secondary">Reset to Defaults</button>
+      </div>
+
+      <!-- Section 4: Output Summary Cards -->
+      <div style="margin-top: var(--space-5);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>📊</span> Tank Volume &amp; Weight Results
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: var(--space-3);">
+          <!-- Card 1: Estimated Net Water Volume -->
+          <div style="background: var(--color-bg-surface); border: 2px solid var(--color-primary); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">True Net Water Volume</span>
+            <div id="kpi-net-gal" style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin: 0.25rem 0;">15.8 Gal</div>
+            <div id="kpi-net-liters" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">59.8 Liters (13.2 Imp Gal)</div>
+          </div>
+
+          <!-- Card 2: Gross Nominal Volume -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Gross Tank Volume</span>
+            <div id="kpi-gross-gal" style="font-size: 2rem; font-weight: 800; color: #0284c7; margin: 0.25rem 0;">19.9 Gal</div>
+            <div id="kpi-gross-liters" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">75.5 Liters outer capacity</div>
+          </div>
+
+          <!-- Card 3: Filled Tank Weight -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Total Filled Weight</span>
+            <div id="kpi-weight-lbs" style="font-size: 2rem; font-weight: 800; color: #ea580c; margin: 0.25rem 0;">191 lbs</div>
+            <div id="kpi-weight-kg" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">87 kg (Water + Glass + Gravel)</div>
+          </div>
+
+          <!-- Card 4: Surface Footprint Area -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Surface Area (Gas Exchange)</span>
+            <div id="kpi-surface-area" style="font-size: 2rem; font-weight: 800; color: #16a34a; margin: 0.25rem 0;">288 sq in</div>
+            <div id="kpi-surface-metric" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">1,858 cm² top surface</div>
+          </div>
+        </div>
+
+        <!-- Section 4B: Substrate Calculator Bonus Card -->
+        <div style="margin-top: var(--space-4); background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: var(--space-3); border: 1px solid var(--color-border);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-2);">
+            <h3 style="font-size: var(--font-size-sm); font-weight: 700; margin: 0; display: flex; align-items: center; gap: var(--space-2);">
+              <span>🪨</span> Substrate Calculator (Gravel / Sand Bed)
+            </h3>
+            <div style="display: flex; gap: var(--space-1); align-items: center;">
+              <label for="substrate-depth-input" style="font-size: var(--font-size-xs); font-weight: 600;">Desired Depth:</label>
+              <input type="number" id="substrate-depth-input" class="form-control" value="2.0" min="0.5" max="6" step="0.5" style="width: 80px; padding: 0.25rem 0.4rem; font-size: var(--font-size-xs);" aria-label="Desired substrate bed depth in inches">
+              <span class="unit-dim-label" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted);">in</span>
+            </div>
+          </div>
+          <div style="font-size: var(--font-size-sm); display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: center;">
+            <div>Gravel / Sand Needed: <strong id="kpi-sub-lbs" style="color: var(--color-primary); font-size: var(--font-size-base);">33.4 lbs</strong> (<span id="kpi-sub-kg">15.1 kg</span>)</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-secondary);">Calculated for standard aquarium gravel density (~100 lbs/cu ft).</div>
+          </div>
+        </div>
+
+        <!-- Send Volume to Other Calculators Helper Bar -->
+        <div style="margin-top: var(--space-3); padding: var(--space-3); background: rgba(2, 132, 199, 0.05); border: 1px solid rgba(2, 132, 199, 0.25); border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-2);">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text);">
+            🚀 <strong>Next Step:</strong> Use your net volume (<span id="send-net-summary">15.8 Gal / 59.8 L</span>) in companion tools:
+          </div>
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+            <a href="#" id="link-send-heater" class="btn btn-secondary" style="font-size: 11px; padding: 0.3rem 0.6rem;">Size Heater &rarr;</a>
+            <a href="#" id="link-send-water-change" class="btn btn-secondary" style="font-size: 11px; padding: 0.3rem 0.6rem;">Calculate Water Changes &rarr;</a>
+            <a href="#" id="link-send-stocking" class="btn btn-secondary" style="font-size: 11px; padding: 0.3rem 0.6rem;">Check Fish Stocking &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Documentation & Educational Guide -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Aquarium Volume Calculator</strong> determines both the nominal outer volume and the true net water capacity of any home aquarium. Commercial fish tanks are marketed by their nominal glass dimensions (e.g. "20 Gallon High"), but in reality, glass thickness, top waterline headspace, substrate gravel, rock hardscape, and driftwood significantly reduce the amount of water the aquarium holds—often by <strong>15% to 25%</strong>. Knowing your exact net water volume prevents fatal chemical overdoses when adding water conditioners or medications, prevents buying undersized heaters, and gives you the exact floor weight load for stand safety.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Select Tank Shape:</strong> Click on the icon matching your tank geometry (<strong>Rectangular</strong>, <strong>Bowfront</strong>, <strong>Cylinder</strong>, <strong>Hexagonal</strong>, or <strong>Corner Unit</strong>).</li>
+        <li><strong>Choose a Preset or Enter Dimensions:</strong> Select from standard commercial tank sizes (such as 10 Gal, 20 Long, 29 Gal, 55 Gal, or 75 Gal) or type your exact custom dimensions. Toggle between <strong>Imperial</strong> (inches) and <strong>Metric</strong> (cm) at any time.</li>
+        <li><strong>Configure Real-World Adjustments:</strong> Adjust your glass thickness, waterline headspace (distance from water level to top glass rim), and decor displacement percentage.</li>
+        <li><strong>Inspect Sizing &amp; Substrate:</strong> Instantly view gross volume, net water volume (in US Gallons, Imperial Gallons, and Liters), total filled weight, surface area, and the recommended gravel bed weight.</li>
+        <li><strong>One-Click Send to Companion Tools:</strong> Click the direct links to transfer your calculated net volume directly into the <strong>Heater Size</strong>, <strong>Water Change</strong>, or <strong>Stocking</strong> calculators.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        Volume calculations depend on the 3D geometric cross-section:
+      </p>
+      <ul>
+        <li><strong>Rectangular Tank:</strong> $$\text{Gross Volume (cu in)} = \text{Length} \times \text{Width} \times \text{Height}$$</li>
+        <li><strong>Bowfront Tank:</strong> $$\text{Footprint Area} = (\text{Length} \times \text{Side Width}) + \left(\frac{2}{3} \times \text{Length} \times (\text{Center Depth} - \text{Side Width})\right)$$</li>
+        <li><strong>Cylinder Tank:</strong> $$\text{Gross Volume} = \pi \times \left(\frac{\text{Diameter}}{2}\right)^2 \times \text{Height}$$</li>
+        <li><strong>Hexagonal Tank:</strong> $$\text{Footprint Area} = \frac{3\sqrt{3}}{2} \times \text{Side Length}^2$$</li>
+        <li><strong>Corner Quarter-Cylinder:</strong> $$\text{Footprint Area} = \frac{\pi \times \text{Radius}^2}{4}$$</li>
+        <li><strong>Unit Conversions:</strong> 
+          $$\text{US Gallons} = \frac{\text{Cubic Inches}}{231}$$
+          $$\text{Liters} = \text{US Gallons} \times 3.78541$$
+        </li>
+        <li><strong>Net Water Volume:</strong> 
+          $$\text{Net Volume} = \text{Internal Volume (accounting for glass \& headspace)} \times (1 - \text{Displacement \%})$$
+        </li>
+      </ul>
+
+      <h2>Reference Table: Standard Aquarium Sizes &amp; Water Volume</h2>
+      <table class="table" style="width: 100%; font-size: var(--font-size-sm); margin-top: var(--space-3); border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--color-border); text-align: left;">
+            <th style="padding: 0.5rem;">Nominal Size</th>
+            <th style="padding: 0.5rem;">Outer Dimensions ($L \times W \times H$)</th>
+            <th style="padding: 0.5rem;">Gross Volume</th>
+            <th style="padding: 0.5rem;">Typical Net Water</th>
+            <th style="padding: 0.5rem;">Total Filled Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">10 Gallon Standard</td>
+            <td style="padding: 0.5rem;">20" × 10" × 12"</td>
+            <td style="padding: 0.5rem;">10.4 US Gal (39.3 L)</td>
+            <td style="padding: 0.5rem;">~8.5 US Gal (32 L)</td>
+            <td style="padding: 0.5rem;">~110 lbs (50 kg)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">20 Gallon Long</td>
+            <td style="padding: 0.5rem;">30" × 12" × 12"</td>
+            <td style="padding: 0.5rem;">18.7 US Gal (70.8 L)</td>
+            <td style="padding: 0.5rem;">~15.0 US Gal (57 L)</td>
+            <td style="padding: 0.5rem;">~190 lbs (86 kg)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">29 Gallon Standard</td>
+            <td style="padding: 0.5rem;">30" × 12" × 18"</td>
+            <td style="padding: 0.5rem;">28.1 US Gal (106 L)</td>
+            <td style="padding: 0.5rem;">~23.0 US Gal (87 L)</td>
+            <td style="padding: 0.5rem;">~290 lbs (131 kg)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">40 Gallon Breeder</td>
+            <td style="padding: 0.5rem;">36" × 18" × 16"</td>
+            <td style="padding: 0.5rem;">44.9 US Gal (170 L)</td>
+            <td style="padding: 0.5rem;">~36.0 US Gal (136 L)</td>
+            <td style="padding: 0.5rem;">~460 lbs (208 kg)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">55 Gallon Standard</td>
+            <td style="padding: 0.5rem;">48" × 13" × 21"</td>
+            <td style="padding: 0.5rem;">56.7 US Gal (215 L)</td>
+            <td style="padding: 0.5rem;">~46.0 US Gal (174 L)</td>
+            <td style="padding: 0.5rem;">~620 lbs (281 kg)</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; font-weight: 600;">75 Gallon Standard</td>
+            <td style="padding: 0.5rem;">48" × 18" × 21"</td>
+            <td style="padding: 0.5rem;">78.5 US Gal (297 L)</td>
+            <td style="padding: 0.5rem;">~64.0 US Gal (242 L)</td>
+            <td style="padding: 0.5rem;">~850 lbs (385 kg)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>Floor &amp; Stand Structural Verification:</strong> Confirming whether a large aquarium (e.g. 75 or 125 gal weighing 850–1,400 lbs) can safely rest on residential floor joists or standard furniture.</li>
+        <li><strong>Accurate Medication &amp; Dechlorinator Dosing:</strong> Calculating true net water volume to prevent dangerous copper, formalin, or salt overdoses in sick fish quarantine tanks.</li>
+        <li><strong>Substrate &amp; Soil Estimation:</strong> Calculating exact bags or pounds of aquasoil, sand, or gravel needed to achieve a 2-inch plant root bed before visiting the local fish store.</li>
+        <li><strong>Custom Rimless Tank Fabrication:</strong> Sizing custom DIY glass aquariums or sump filter chambers with tailored glass thicknesses.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        <strong>Scenario:</strong> You purchase a standard 20 Gallon High tank ($24" \times 12" \times 16"$), built with $6\text{mm}$ glass ($0.24"$), a $1\text{ inch}$ top water line headspace, and a $2\text{ inch}$ gravel bed that displaces $12\%$ of total volume.
+      </p>
+      <ul>
+        <li><strong>Gross Outer Volume:</strong> $24 \times 12 \times 16 = 4,608\text{ cu in} / 231 = \mathbf{19.9\text{ US Gallons}}$ ($75.5\text{ Liters}$).</li>
+        <li><strong>Internal Water Height:</strong> $16" - 0.24" - 1.0" = 14.76\text{ inches}$.</li>
+        <li><strong>Net Water Volume:</strong> Accounting for glass walls and $12\%$ displacement, true water is $\mathbf{15.8\text{ US Gallons}}$ ($59.8\text{ Liters}$).</li>
+        <li><strong>Filled Tank Weight:</strong> $15.8\text{ gal water } (132\text{ lbs}) + \text{empty glass } (27\text{ lbs}) + 2"\text{ gravel } (33\text{ lbs}) = \mathbf{192\text{ lbs}}$ ($87\text{ kg}$).</li>
+      </ul>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <ul>
+        <li><strong>Unit Fidelity:</strong> Bidirectional imperial and metric recalculations retain precision across US Gallons, Imperial Gallons, and Liters.</li>
+        <li><strong>Bowfront Parabolic Integration:</strong> Uses exact 2/3 parabolic arc area calculus rather than rough rectangular approximations.</li>
+        <li><strong>Client-Side Execution:</strong> All geometric equations execute inside the browser JavaScript engine with instantaneous responsiveness.</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        Filled weights represent engineering approximations using standard float glass density and average quartz gravel ($100\text{ lbs/cu ft}$). Unusually dense rocks (such as granite or ironwood) or extra-thick acrylic panels will slightly alter final stand weights.
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        No tank dimensions, pet details, or location data are stored or transmitted. All calculations run strictly in your web browser.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>How do I calculate bowfront aquarium volume accurately?</h3>
+        <p>
+          A bowfront tank consists of a rectangular base plus a curved front segment. Our calculator computes the rectangular area ($L \times W_{\text{side}}$) and adds the parabolic bow curve area ($\frac{2}{3} \times L \times (W_{\text{center}} - W_{\text{side}})$), then multiplies by height to get the true three-dimensional volume.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Will my floor support a 55-gallon or 75-gallon aquarium?</h3>
+        <p>
+          A 55-gallon tank weighs around 620 lbs, and a 75-gallon tank weighs around 850 lbs. In modern residential construction, placing the tank perpendicular to floor joists against a load-bearing wall is generally safe up to 75 gallons. For 100+ gallon tanks (weighing over 1,200 lbs), consulting a structural engineer or adding basement floor jacks is recommended.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>How many pounds of gravel do I need per gallon?</h3>
+        <p>
+          The standard general rule is 1 to 1.5 pounds of gravel per gallon of tank capacity for a 1.5 to 2-inch bed. However, shallow tanks with large footprints (like 40 Gallon Breeders) require more gravel than tall tanks with small footprints. Our tool calculates gravel based on exact bottom surface area for greater precision.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/aquarium-heater-calculator.html" class="related-tool-chip">🌡️ Aquarium Heater Calculator</a>
+        <a href="/tools/aquarium-water-change-calculator.html" class="related-tool-chip">💧 Aquarium Water Change Calculator</a>
+        <a href="/tools/aquarium-stocking-calculator.html" class="related-tool-chip">🐟 Aquarium Stocking Calculator</a>
+        <a href="/tools/unit-converter.html" class="related-tool-chip">🔄 Universal Unit Converter</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/aquarium-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // State
+      let activeShape = 'rectangular';
+      let activeUnit = 'imperial'; // 'imperial' or 'metric'
+      let lastResult = null;
+
+      // DOM Elements
+      const btnUnitImp = document.getElementById('btn-unit-imperial');
+      const btnUnitMet = document.getElementById('btn-unit-metric');
+      const shapeBtns = document.querySelectorAll('.shape-btn');
+      const presetSelect = document.getElementById('tank-preset-select');
+
+      const wrapLength = document.getElementById('wrapper-dim-length');
+      const wrapWidth = document.getElementById('wrapper-dim-width');
+      const wrapCenterWidth = document.getElementById('wrapper-dim-center-width');
+      const wrapDiameter = document.getElementById('wrapper-dim-diameter');
+      const wrapSide = document.getElementById('wrapper-dim-side');
+      const wrapHeight = document.getElementById('wrapper-dim-height');
+
+      const inputLength = document.getElementById('input-dim-length');
+      const inputWidth = document.getElementById('input-dim-width');
+      const inputCenterWidth = document.getElementById('input-dim-center-width');
+      const inputDiameter = document.getElementById('input-dim-diameter');
+      const inputSide = document.getElementById('input-dim-side');
+      const inputHeight = document.getElementById('input-dim-height');
+
+      const glassSelect = document.getElementById('glass-thickness-select');
+      const headspaceInput = document.getElementById('headspace-input');
+      const dispSlider = document.getElementById('displacement-slider');
+      const lblDispVal = document.getElementById('lbl-disp-val');
+      const waterTypeSelect = document.getElementById('water-type-select');
+      const subDepthInput = document.getElementById('substrate-depth-input');
+
+      const kpiNetGal = document.getElementById('kpi-net-gal');
+      const kpiNetLiters = document.getElementById('kpi-net-liters');
+      const kpiGrossGal = document.getElementById('kpi-gross-gal');
+      const kpiGrossLiters = document.getElementById('kpi-gross-liters');
+      const kpiWeightLbs = document.getElementById('kpi-weight-lbs');
+      const kpiWeightKg = document.getElementById('kpi-weight-kg');
+      const kpiSurfaceArea = document.getElementById('kpi-surface-area');
+      const kpiSurfaceMetric = document.getElementById('kpi-surface-metric');
+      const kpiSubLbs = document.getElementById('kpi-sub-lbs');
+      const kpiSubKg = document.getElementById('kpi-sub-kg');
+
+      const sendNetSummary = document.getElementById('send-net-summary');
+      const linkSendHeater = document.getElementById('link-send-heater');
+      const linkSendWaterChange = document.getElementById('link-send-water-change');
+      const linkSendStocking = document.getElementById('link-send-stocking');
+
+      const btnCopySummary = document.getElementById('btn-copy-summary');
+      const btnReset = document.getElementById('btn-reset');
+
+      // Unit Toggle
+      btnUnitImp.addEventListener('click', () => setUnit('imperial'));
+      btnUnitMet.addEventListener('click', () => setUnit('metric'));
+
+      function setUnit(u) {
+        if (activeUnit === u) return;
+        activeUnit = u;
+        btnUnitImp.classList.toggle('active', u === 'imperial');
+        btnUnitMet.classList.toggle('active', u === 'metric');
+
+        document.querySelectorAll('.unit-dim-label').forEach(el => {
+          el.textContent = u === 'imperial' ? 'in' : 'cm';
+        });
+
+        // Convert current field values
+        if (u === 'metric') {
+          inputLength.value = (parseFloat(inputLength.value) * 2.54).toFixed(1);
+          inputWidth.value = (parseFloat(inputWidth.value) * 2.54).toFixed(1);
+          inputCenterWidth.value = (parseFloat(inputCenterWidth.value) * 2.54).toFixed(1);
+          inputDiameter.value = (parseFloat(inputDiameter.value) * 2.54).toFixed(1);
+          inputSide.value = (parseFloat(inputSide.value) * 2.54).toFixed(1);
+          inputHeight.value = (parseFloat(inputHeight.value) * 2.54).toFixed(1);
+          headspaceInput.value = (parseFloat(headspaceInput.value) * 2.54).toFixed(1);
+          subDepthInput.value = (parseFloat(subDepthInput.value) * 2.54).toFixed(1);
+        } else {
+          inputLength.value = (parseFloat(inputLength.value) / 2.54).toFixed(1);
+          inputWidth.value = (parseFloat(inputWidth.value) / 2.54).toFixed(1);
+          inputCenterWidth.value = (parseFloat(inputCenterWidth.value) / 2.54).toFixed(1);
+          inputDiameter.value = (parseFloat(inputDiameter.value) / 2.54).toFixed(1);
+          inputSide.value = (parseFloat(inputSide.value) / 2.54).toFixed(1);
+          inputHeight.value = (parseFloat(inputHeight.value) / 2.54).toFixed(1);
+          headspaceInput.value = (parseFloat(headspaceInput.value) / 2.54).toFixed(1);
+          subDepthInput.value = (parseFloat(subDepthInput.value) / 2.54).toFixed(1);
+        }
+        calculate();
+      }
+
+      // Shape Toggle
+      shapeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          shapeBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          activeShape = this.dataset.shape;
+          updateShapeVisibility();
+          calculate();
+        });
+      });
+
+      function updateShapeVisibility() {
+        wrapLength.style.display = (activeShape === 'rectangular' || activeShape === 'bowfront' || activeShape === 'corner') ? 'block' : 'none';
+        wrapWidth.style.display = (activeShape === 'rectangular' || activeShape === 'bowfront') ? 'block' : 'none';
+        wrapCenterWidth.style.display = (activeShape === 'bowfront') ? 'block' : 'none';
+        wrapDiameter.style.display = (activeShape === 'cylinder') ? 'block' : 'none';
+        wrapSide.style.display = (activeShape === 'hexagonal') ? 'block' : 'none';
+        wrapHeight.style.display = 'block';
+
+        const lblLen = document.getElementById('lbl-dim-length');
+        if (activeShape === 'corner') {
+          lblLen.textContent = 'Radius / Wall Leg Length:';
+        } else {
+          lblLen.textContent = 'Length (Front to Back):';
+        }
+      }
+
+      // Preset selection
+      presetSelect.addEventListener('change', function() {
+        const val = this.value;
+        if (val === 'custom') return;
+
+        const p = AquariumUtils.STANDARD_TANKS.find(t => t.id === val);
+        if (!p) return;
+
+        // Switch to rectangular shape
+        shapeBtns.forEach(b => b.classList.toggle('active', b.dataset.shape === 'rectangular'));
+        activeShape = 'rectangular';
+        updateShapeVisibility();
+
+        let l = p.length;
+        let w = p.width;
+        let h = p.height;
+        if (activeUnit === 'metric') {
+          l = (l * 2.54).toFixed(1);
+          w = (w * 2.54).toFixed(1);
+          h = (h * 2.54).toFixed(1);
+        }
+        inputLength.value = l;
+        inputWidth.value = w;
+        inputHeight.value = h;
+        calculate();
+      });
+
+      // Displacement slider
+      dispSlider.addEventListener('input', function() {
+        lblDispVal.textContent = `${this.value}% (${this.value < 8 ? 'Minimal' : this.value > 16 ? 'Dense Hardscape' : 'Standard'})`;
+        calculate();
+      });
+
+      // Calculation Engine
+      function calculate() {
+        const res = AquariumUtils.calculateAquariumVolume({
+          shape: activeShape,
+          unit: activeUnit,
+          length: parseFloat(inputLength.value) || 24,
+          width: parseFloat(inputWidth.value) || 12,
+          height: parseFloat(inputHeight.value) || 16,
+          centerWidth: parseFloat(inputCenterWidth.value) || 16,
+          diameter: parseFloat(inputDiameter.value) || 18,
+          sideLength: parseFloat(inputSide.value) || 12,
+          glassThicknessMm: parseFloat(glassSelect.value) || 6,
+          headspaceInch: parseFloat(headspaceInput.value) || 1.0,
+          displacementPct: parseFloat(dispSlider.value) || 12,
+          substrateDepthInch: parseFloat(subDepthInput.value) || 2.0,
+          waterType: waterTypeSelect.value
+        });
+
+        if (!res) return;
+        lastResult = res;
+
+        // Populate KPIs
+        kpiNetGal.textContent = `${res.net.usGal} Gal`;
+        kpiNetLiters.textContent = `${res.net.liters} L (${res.net.ukGal} UK Gal)`;
+
+        kpiGrossGal.textContent = `${res.gross.usGal} Gal`;
+        kpiGrossLiters.textContent = `${res.gross.liters} L (${res.gross.cuIn.toLocaleString()} cu in)`;
+
+        kpiWeightLbs.textContent = `${res.weight.totalLbs.toLocaleString()} lbs`;
+        kpiWeightKg.textContent = `${res.weight.totalKg.toLocaleString()} kg (Water + Glass + Substrate)`;
+
+        kpiSurfaceArea.textContent = `${res.surfaceAreaSqIn.toLocaleString()} sq in`;
+        kpiSurfaceMetric.textContent = `${res.surfaceAreaSqCm.toLocaleString()} cm² surface footprint`;
+
+        kpiSubLbs.textContent = `${res.substrate.weightLbs} lbs`;
+        kpiSubKg.textContent = `${res.substrate.weightKg} kg`;
+
+        // Update send-to links
+        sendNetSummary.textContent = `${res.net.usGal} Gal / ${res.net.liters} L`;
+        linkSendHeater.href = `/tools/aquarium-heater-calculator.html?volume=${res.net.usGal}&unit=gallons`;
+        linkSendWaterChange.href = `/tools/aquarium-water-change-calculator.html?volume=${res.net.usGal}&unit=gallons`;
+        linkSendStocking.href = `/tools/aquarium-stocking-calculator.html?volume=${res.net.usGal}&length=${inputLength.value}`;
+      }
+
+      // Copy Tank Summary
+      btnCopySummary.addEventListener('click', function() {
+        if (!lastResult) return;
+        const res = lastResult;
+        const lines = [
+          '🐠 AQUARIUM VOLUME, WEIGHT & SUBSTRATE REPORT',
+          '==============================================',
+          `Tank Geometry:             ${activeShape.toUpperCase()}`,
+          `Unit System:               ${activeUnit.toUpperCase()}`,
+          '----------------------------------------------',
+          `GROSS TANK VOLUME:         ${res.gross.usGal} US Gal (${res.gross.liters} Liters)`,
+          `ESTIMATED NET WATER:       ${res.net.usGal} US Gal (${res.net.liters} Liters)`,
+          `TOTAL FILLED WEIGHT:       ${res.weight.totalLbs} lbs (${res.weight.totalKg} kg)`,
+          `SURFACE FOOTPRINT AREA:    ${res.surfaceAreaSqIn} sq in (${res.surfaceAreaSqCm} cm²)`,
+          '----------------------------------------------',
+          `Substrate Bed (${res.substrate.depthInch}"):   ${res.substrate.weightLbs} lbs (${res.substrate.weightKg} kg)`,
+          `Glass Thickness:           ${glassSelect.value} mm`,
+          `Water Displacement:        ${dispSlider.value}%`,
+          '==============================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/aquarium-volume-calculator.html'
+        ];
+
+        AquariumUtils.copyTextToClipboard(lines.join('\n'), btnCopySummary, 'Summary Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        presetSelect.value = '20gal_h';
+        shapeBtns.forEach(b => b.classList.toggle('active', b.dataset.shape === 'rectangular'));
+        activeShape = 'rectangular';
+        activeUnit = 'imperial';
+        btnUnitImp.classList.add('active');
+        btnUnitMet.classList.remove('active');
+        document.querySelectorAll('.unit-dim-label').forEach(el => el.textContent = 'in');
+
+        inputLength.value = '24';
+        inputWidth.value = '12';
+        inputCenterWidth.value = '16';
+        inputDiameter.value = '18';
+        inputSide.value = '12';
+        inputHeight.value = '16';
+
+        glassSelect.value = '6';
+        headspaceInput.value = '1.0';
+        dispSlider.value = '12';
+        lblDispVal.textContent = '12% (Standard)';
+        waterTypeSelect.value = 'freshwater';
+        subDepthInput.value = '2.0';
+
+        updateShapeVisibility();
+        calculate();
+      });
+
+      // Event bindings
+      [inputLength, inputWidth, inputCenterWidth, inputDiameter, inputSide, inputHeight, glassSelect, headspaceInput, waterTypeSelect, subDepthInput].forEach(inp => {
+        inp.addEventListener('input', () => {
+          presetSelect.value = 'custom';
+          calculate();
+        });
+        inp.addEventListener('change', () => {
+          presetSelect.value = 'custom';
+          calculate();
+        });
+      });
+
+      // Init
+      updateShapeVisibility();
+      calculate();
+    })();
+  </script>
+</body>
+</html>

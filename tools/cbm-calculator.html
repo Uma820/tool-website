@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CBM Calculator — Calculate Cubic Meters & Freight Volume</title>
+  <meta name="description" content="Calculate Cubic Meters (CBM), Cubic Feet (CFT), and Gross Weight for shipping cartons. Check 20ft & 40ft container fill rates. Free client-side tool.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/cbm-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/cbm-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/cbm-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CBM Calculator (Cubic Meters)",
+    "description": "Calculate Cubic Meters (CBM), Cubic Feet, Gross Weight, and estimated 20ft/40ft container fill rates for ocean and air shipping.",
+    "url": "https://nexivo.com/tools/cbm-calculator.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is CBM calculated for shipping?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In the metric system, CBM per carton equals (Length × Width × Height in cm) divided by 1,000,000. Multiply this by the total number of cartons to determine the total shipment CBM."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert CBM to Cubic Feet (CFT)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1 Cubic Meter (CBM) equals 35.3147 Cubic Feet (CFT). To convert CBM to CFT, multiply the total CBM by 35.3147. To convert inches directly to CBM, divide (L × W × H in inches) by 61,023.7."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many CBM fit into a 20ft and 40ft container?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A standard 20ft GP container has an internal volume of 33.2 CBM, with practical loading space of 26 to 28 CBM. A standard 40ft GP container holds 67.7 CBM (practical: 56 to 58 CBM), and a 40ft High Cube (HC) holds 76.4 CBM (practical: 66 to 68 CBM)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are my cargo dimensions uploaded to any server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All calculations run 100% locally in your browser memory. Your cargo manifest, box dimensions, and weights are never transmitted to external servers."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#logistics">Logistics</a></li>
+      <li>/</li>
+      <li aria-current="page">CBM Calculator</li>
+    </nav>
+
+    <!-- Cross-Linking Freight Suite Nav -->
+    <div class="freight-suite-nav">
+      <span class="freight-suite-label">Freight Suite:</span>
+      <a href="/tools/cbm-calculator.html" class="freight-pill active">CBM Calculator</a>
+      <a href="/tools/volumetric-weight-calculator.html" class="freight-pill">Volumetric Weight</a>
+      <a href="/tools/chargeable-weight-calculator.html" class="freight-pill">Chargeable Weight</a>
+      <a href="/tools/container-loading-calculator.html" class="freight-pill">Container Loading</a>
+      <a href="/tools/pallet-calculator.html" class="freight-pill">Pallet Calculator</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>CBM Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Calculate total Cubic Meters (CBM), Cubic Feet ($\text{ft}^3$), and Gross Weight for multi-item cargo shipments. Includes instant 20ft &amp; 40ft ocean container fill estimates.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-popular">Popular</span>
+        <span class="tool-badge">Multi-Box Table</span>
+        <span class="tool-badge">Container Fill %</span>
+        <span class="tool-badge">100% In-Browser</span>
+      </div>
+    </div>
+
+    <!-- Calculator Main Panel -->
+    <div class="tool-panel">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); margin-block-end: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); margin: 0; color: var(--color-primary); display: flex; align-items: center; gap: var(--space-2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span>Cargo Items &amp; Dimensions</span>
+        </h2>
+        
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <span style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-secondary);">Unit System:</span>
+          <div class="unit-toggle-group" role="radiogroup" aria-label="Measurement Unit System">
+            <button type="button" class="unit-toggle-btn active" id="btn-metric" aria-checked="true">Metric (cm / kg)</button>
+            <button type="button" class="unit-toggle-btn" id="btn-imperial" aria-checked="false">Imperial (in / lbs)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-Row Table -->
+      <div class="cargo-table-container">
+        <table class="cargo-table" id="cbm-items-table">
+          <thead>
+            <tr>
+              <th style="inline-size: 20%;">Item Name (Optional)</th>
+              <th style="inline-size: 14%;" class="th-dim">Length (<span class="unit-len-label">cm</span>)</th>
+              <th style="inline-size: 14%;" class="th-dim">Width (<span class="unit-len-label">cm</span>)</th>
+              <th style="inline-size: 14%;" class="th-dim">Height (<span class="unit-len-label">cm</span>)</th>
+              <th style="inline-size: 14%;">Gross Wt (<span class="unit-wt-label">kg</span>)</th>
+              <th style="inline-size: 12%;">Qty</th>
+              <th style="inline-size: 12%;">Subtotal CBM</th>
+              <th style="inline-size: 4%;"></th>
+            </tr>
+          </thead>
+          <tbody id="cbm-items-tbody">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cargo-table-actions">
+        <div class="cargo-action-btns">
+          <button type="button" class="btn btn-primary" id="btn-add-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Add Another Item</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btn-reset">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>Reset</span>
+          </button>
+        </div>
+
+        <div class="cargo-action-btns">
+          <button type="button" class="btn btn-secondary" id="btn-copy-summary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy Results</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btn-send-container" title="Send current items to Container Loading Calculator">
+            <span>Send to Container &rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Warning box for invalid/zero inputs -->
+      <div id="cbm-warning" class="alert alert-info" style="margin-block-start: var(--space-4); display: none;">
+        <span>Please enter valid positive dimensions for accurate volume calculation.</span>
+      </div>
+
+      <!-- Summary KPI Metric Cards -->
+      <div class="stats-grid" style="margin-block-start: var(--space-6);">
+        <div class="stat-card">
+          <div class="stat-value" id="res-total-cbm" style="color: var(--color-primary);">0.000 <span style="font-size: var(--font-size-sm); font-weight: 500;">m³</span></div>
+          <div class="stat-label">Total Volume (CBM)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="res-total-cft">0.00 <span style="font-size: var(--font-size-sm); font-weight: 500;">ft³</span></div>
+          <div class="stat-label">Total Volume (Cubic Feet)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="res-total-weight">0.00 <span style="font-size: var(--font-size-sm); font-weight: 500;">kg</span></div>
+          <div class="stat-label">Total Gross Weight (<span id="res-alt-weight">0.0 lbs</span>)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="res-total-packages">0</div>
+          <div class="stat-label">Total Packages / Cartons</div>
+        </div>
+      </div>
+
+      <!-- Estimated Ocean Container Capacity Utilization -->
+      <h3 style="font-size: var(--font-size-base); margin-block-start: var(--space-8); margin-block-end: var(--space-3); color: var(--color-text-primary);">
+        Estimated Shipping Container Fill Rates
+      </h3>
+      <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-4);">
+        Calculated against realistic usable volume (~85% packing efficiency due to carton stacking and door clearance).
+      </p>
+
+      <div class="utilization-grid">
+        <!-- 20ft Standard -->
+        <div class="utilization-card">
+          <div class="utilization-header">
+            <span>20' Standard (20'GP)</span>
+            <span id="label-util-20gp" style="color: var(--color-primary);">0%</span>
+          </div>
+          <div class="progress-track" aria-label="20GP container volume utilization">
+            <div class="progress-fill fill-safe" id="bar-util-20gp" style="width: 0%;"></div>
+          </div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-secondary); display: flex; justify-content: space-between;">
+            <span>Usable: ~28 CBM</span>
+            <span id="status-util-20gp">Fits inside</span>
+          </div>
+        </div>
+
+        <!-- 40ft Standard -->
+        <div class="utilization-card">
+          <div class="utilization-header">
+            <span>40' Standard (40'GP)</span>
+            <span id="label-util-40gp" style="color: var(--color-primary);">0%</span>
+          </div>
+          <div class="progress-track" aria-label="40GP container volume utilization">
+            <div class="progress-fill fill-safe" id="bar-util-40gp" style="width: 0%;"></div>
+          </div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-secondary); display: flex; justify-content: space-between;">
+            <span>Usable: ~58 CBM</span>
+            <span id="status-util-40gp">Fits inside</span>
+          </div>
+        </div>
+
+        <!-- 40ft High Cube -->
+        <div class="utilization-card">
+          <div class="utilization-header">
+            <span>40' High Cube (40'HC)</span>
+            <span id="label-util-40hc" style="color: var(--color-primary);">0%</span>
+          </div>
+          <div class="progress-track" aria-label="40HC container volume utilization">
+            <div class="progress-fill fill-safe" id="bar-util-40hc" style="width: 0%;"></div>
+          </div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-secondary); display: flex; justify-content: space-between;">
+            <span>Usable: ~68 CBM</span>
+            <span id="status-util-40hc">Fits inside</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational & SEO Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>
+          The <strong>CBM Calculator</strong> computes the exact cubic meter volume ($\text{m}^3$), cubic feet ($\text{ft}^3$), and gross weight for international freight shipments. Whether you are shipping commercial cartons via ocean container (FCL / LCL), air freight, or road transit, calculating your total CBM is the fundamental first step required by freight forwarders, shipping lines, and customs brokers to quote shipping rates.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li><strong>Select your unit of measurement:</strong> Toggle between <em>Metric (cm / kg)</em> or <em>Imperial (in / lbs)</em> to match your supplier's packing list.</li>
+          <li><strong>Enter carton dimensions:</strong> Input the Length, Width, and Height of your shipping boxes along with gross unit weight and quantity.</li>
+          <li><strong>Add multiple box sizes:</strong> If your consignment contains different carton sizes, click <em>"+ Add Another Item"</em> to create additional rows.</li>
+          <li><strong>Review the summary:</strong> Total CBM, Cubic Feet, Gross Weight, and estimated 20ft/40ft container fill rates update in real time.</li>
+          <li><strong>Copy or transfer data:</strong> Click <em>"Copy Results"</em> to paste the manifest into an email or quote request, or click <em>"Send to Container"</em> to simulate container door stuffing.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Mathematical Formulas Used</h2>
+        <div class="example-box">
+          <p style="margin-block-end: var(--space-2); font-weight: 600;">Metric Calculation (cm to CBM):</p>
+          <pre class="example-pre">CBM per Carton = (Length (cm) × Width (cm) × Height (cm)) / 1,000,000&#10;Total CBM = CBM per Carton × Quantity&#10;Total Cubic Feet (CFT) = Total CBM × 35.3147</pre>
+          <p style="margin-block-start: var(--space-3); margin-block-end: var(--space-2); font-weight: 600;">Imperial Calculation (Inches to CBM):</p>
+          <pre class="example-pre">CBM per Carton = (Length (in) × Width (in) × Height (in)) / 61,023.7&#10;Total CFT = (Length (in) × Width (in) × Height (in) × Qty) / 1,728</pre>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Standard Ocean Container Specifications Reference Table</h2>
+        <div class="cargo-table-container">
+          <table class="cargo-table">
+            <thead>
+              <tr>
+                <th>Container Type</th>
+                <th>Internal Dimensions (L × W × H)</th>
+                <th>Nominal CBM</th>
+                <th>Practical Usable CBM</th>
+                <th>Max Payload Weight</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>20' Standard (20'GP)</strong></td>
+                <td>589 × 235 × 239 cm (19'4" × 7'8" × 7'10")</td>
+                <td>33.2 m³</td>
+                <td>26 – 28 m³</td>
+                <td>28,200 kg (62,170 lbs)</td>
+              </tr>
+              <tr>
+                <td><strong>40' Standard (40'GP)</strong></td>
+                <td>1203 × 235 × 239 cm (39'5" × 7'8" × 7'10")</td>
+                <td>67.7 m³</td>
+                <td>56 – 58 m³</td>
+                <td>26,700 kg (58,863 lbs)</td>
+              </tr>
+              <tr>
+                <td><strong>40' High Cube (40'HC)</strong></td>
+                <td>1203 × 235 × 269 cm (39'5" × 7'8" × 8'10")</td>
+                <td>76.4 m³</td>
+                <td>66 – 68 m³</td>
+                <td>26,500 kg (58,422 lbs)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Ocean Freight LCL vs FCL Decision:</strong> Importers evaluate whether their cargo volume justifies booking an entire 20ft container (typically economical above 15 CBM) or booking Less than Container Load (LCL).</li>
+          <li><strong>Freight Forwarder RFQs:</strong> Generating clean volume breakdowns when requesting ocean or air freight quotes from logistics providers.</li>
+          <li><strong>Warehouse Inbound Planning:</strong> Determining pallet space and racking footprints prior to cargo arrival.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">Item 1: 50 × 40 × 30 cm | Wt: 12 kg | Qty: 100 boxes&#10;Item 2: 60 × 40 × 40 cm | Wt: 18 kg | Qty: 50 boxes</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">Item 1 CBM: 0.060 m³ × 100 = 6.000 CBM&#10;Item 2 CBM: 0.096 m³ × 50  = 4.800 CBM&#10;Total Volume: 10.800 CBM (381.40 ft³)&#10;Total Gross Weight: 2,100 kg (4,630 lbs)&#10;20ft Container Fill: 38.6%</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          Calculations are executed in double-precision floating-point arithmetic with defensive numerical validation. Zero or negative numbers are trapped before multiplication, preventing <code>NaN</code> or division errors. Unit conversions employ exact international standards ($1\text{ in} = 2.54\text{ cm}$, $1\text{ kg} = 2.2046226\text{ lbs}$).
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          The container fill percentage is an volumetric approximation based on usable cubic capacity. It assumes cartons can be stacked without orientation constraints. For exact 3D spatial box arrangement with door thresholds and overhang restrictions, verify with the <a href="/tools/container-loading-calculator.html" style="color: var(--color-primary); text-decoration: underline;">Container Loading Calculator</a>.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All cargo calculations execute 100% locally in your web browser. No commercial invoice values, carton measurements, or consignee details are stored on or transmitted to any remote server.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Why does actual container capacity differ from nominal CBM?</h3>
+          <p>
+            Nominal CBM is the theoretical interior volume of an empty container. In real-world cargo loading, cartons rarely tessellate perfectly against corrugated container walls, leaving 10% to 15% void space ("broken stowage").
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How does CBM affect freight charges in LCL shipping?</h3>
+          <p>
+            Ocean LCL cargo is billed on a "Weight or Measurement" (W/M) basis where 1 CBM is equivalent to 1,000 kg (1 metric ton). Whichever yields the higher revenue ton is used as the billable basis.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I mix different box sizes in this calculator?</h3>
+          <p>
+            Yes. Click "+ Add Another Item" to enter as many different carton shapes, sizes, and quantities as needed. The calculator computes individual row subtotals and aggregates them into the grand total.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/volumetric-weight-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>Volumetric Weight Calculator</span>
+          </a>
+          <a href="/tools/chargeable-weight-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>Chargeable Weight Calculator</span>
+          </a>
+          <a href="/tools/container-loading-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>Container Loading Calculator</span>
+          </a>
+          <a href="/tools/pallet-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16M4 16h16M6 12h12M4 8h16M8 4h8"/></svg>
+            <span>Pallet Calculator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/freight-utils.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let isMetric = true;
+      const tbody = document.getElementById('cbm-items-tbody');
+      const btnMetric = document.getElementById('btn-metric');
+      const btnImperial = document.getElementById('btn-imperial');
+      const btnAddRow = document.getElementById('btn-add-row');
+      const btnReset = document.getElementById('btn-reset');
+      const btnCopy = document.getElementById('btn-copy-summary');
+      const btnSendContainer = document.getElementById('btn-send-container');
+      const warningEl = document.getElementById('cbm-warning');
+
+      // Metric & Imperial Labels
+      const lenLabels = document.querySelectorAll('.unit-len-label');
+      const wtLabels = document.querySelectorAll('.unit-wt-label');
+
+      // Default demo cargo rows
+      const defaultRows = [
+        { name: 'Carton A', l: 50, w: 40, h: 30, wt: 12, qty: 100 },
+        { name: 'Carton B', l: 60, w: 40, h: 40, wt: 18, qty: 50 }
+      ];
+
+      function updateUnitLabels() {
+        lenLabels.forEach(el => el.textContent = isMetric ? 'cm' : 'in');
+        wtLabels.forEach(el => el.textContent = isMetric ? 'kg' : 'lbs');
+      }
+
+      function createRowHtml(item = { name: '', l: 0, w: 0, h: 0, wt: 0, qty: 1 }) {
+        const tr = document.createElement('tr');
+        tr.className = 'cargo-row';
+        tr.innerHTML = `
+          <td><input type="text" class="form-input row-name" placeholder="Box description" value="${escapeAttr(item.name)}"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-l" value="${item.l || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-w" value="${item.w || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-h" value="${item.h || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-wt" value="${item.wt || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="1" min="1" class="form-input row-qty" value="${item.qty || 1}"></td>
+          <td class="row-subtotal" style="font-weight: 600; font-family: monospace;">0.000 m³</td>
+          <td style="text-align: center;">
+            <button type="button" class="btn btn-icon btn-remove-row" title="Delete this row" aria-label="Delete this row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        `;
+        return tr;
+      }
+
+      function escapeAttr(str) {
+        return (str || '').replace(/"/g, '&quot;');
+      }
+
+      function getItems() {
+        const rows = tbody.querySelectorAll('.cargo-row');
+        const items = [];
+        rows.forEach(tr => {
+          items.push({
+            name: tr.querySelector('.row-name').value.trim(),
+            l: parseFloat(tr.querySelector('.row-l').value) || 0,
+            w: parseFloat(tr.querySelector('.row-w').value) || 0,
+            h: parseFloat(tr.querySelector('.row-h').value) || 0,
+            wt: parseFloat(tr.querySelector('.row-wt').value) || 0,
+            qty: parseInt(tr.querySelector('.row-qty').value, 10) || 0
+          });
+        });
+        return items;
+      }
+
+      function calculate() {
+        const items = getItems();
+        let grandCbm = 0;
+        let grandWeight = 0;
+        let grandPackages = 0;
+        let hasInvalidInput = false;
+
+        const rows = tbody.querySelectorAll('.cargo-row');
+        rows.forEach((tr, idx) => {
+          const it = items[idx];
+          if (it.l < 0 || it.w < 0 || it.h < 0 || it.wt < 0 || it.qty < 0) {
+            hasInvalidInput = true;
+          }
+
+          let cbmUnit = 0;
+          if (it.l > 0 && it.w > 0 && it.h > 0) {
+            if (isMetric) {
+              cbmUnit = (it.l * it.w * it.h) / 1000000;
+            } else {
+              cbmUnit = (it.l * it.w * it.h) / 61023.7;
+            }
+          }
+
+          const subtotalCbm = cbmUnit * it.qty;
+          tr.querySelector('.row-subtotal').textContent = `${subtotalCbm.toFixed(3)} m³`;
+
+          grandCbm += subtotalCbm;
+          grandWeight += (it.wt * it.qty);
+          grandPackages += it.qty;
+        });
+
+        if (hasInvalidInput) {
+          warningEl.style.display = 'block';
+        } else {
+          warningEl.style.display = 'none';
+        }
+
+        // Display Totals
+        const totalCft = grandCbm * 35.3147;
+        let weightKg = isMetric ? grandWeight : (grandWeight * 0.453592);
+        let weightLbs = isMetric ? (grandWeight * 2.20462) : grandWeight;
+
+        document.getElementById('res-total-cbm').innerHTML = `${grandCbm.toFixed(3)} <span style="font-size: var(--font-size-sm); font-weight: 500;">m³</span>`;
+        document.getElementById('res-total-cft').innerHTML = `${totalCft.toFixed(2)} <span style="font-size: var(--font-size-sm); font-weight: 500;">ft³</span>`;
+        document.getElementById('res-total-weight').innerHTML = `${weightKg.toFixed(2)} <span style="font-size: var(--font-size-sm); font-weight: 500;">kg</span>`;
+        document.getElementById('res-alt-weight').textContent = `${weightLbs.toFixed(1)} lbs`;
+        document.getElementById('res-total-packages').textContent = grandPackages.toLocaleString();
+
+        // Container Fill Rates (against usable capacity: 28, 58, 68 CBM)
+        updateContainerFill('20gp', grandCbm, 28);
+        updateContainerFill('40gp', grandCbm, 58);
+        updateContainerFill('40hc', grandCbm, 68);
+      }
+
+      function updateContainerFill(id, cargoCbm, usableCapacity) {
+        const fillPct = (cargoCbm / usableCapacity) * 100;
+        const bar = document.getElementById(`bar-util-${id}`);
+        const label = document.getElementById(`label-util-${id}`);
+        const status = document.getElementById(`status-util-${id}`);
+
+        label.textContent = `${fillPct.toFixed(1)}%`;
+        bar.style.width = `${Math.min(fillPct, 100)}%`;
+
+        if (fillPct <= 85) {
+          bar.className = 'progress-fill fill-safe';
+          label.style.color = 'var(--color-success)';
+          status.textContent = 'Comfortable fit';
+          status.style.color = 'var(--color-text-secondary)';
+        } else if (fillPct <= 100) {
+          bar.className = 'progress-fill fill-near';
+          label.style.color = '#d97706';
+          status.textContent = 'Tight fit (~Full)';
+          status.style.color = '#d97706';
+        } else {
+          bar.className = 'progress-fill fill-overflow';
+          label.style.color = 'var(--color-danger)';
+          const countNeeded = Math.ceil(cargoCbm / usableCapacity);
+          status.textContent = `Exceeds 1 container (${countNeeded}x needed)`;
+          status.style.color = 'var(--color-danger)';
+        }
+      }
+
+      function populateRows(data) {
+        tbody.innerHTML = '';
+        data.forEach(item => {
+          tbody.appendChild(createRowHtml(item));
+        });
+        calculate();
+      }
+
+      // Event Listeners
+      tbody.addEventListener('input', calculate);
+
+      tbody.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.btn-remove-row');
+        if (removeBtn) {
+          const rows = tbody.querySelectorAll('.cargo-row');
+          if (rows.length > 1) {
+            removeBtn.closest('tr').remove();
+            calculate();
+          } else {
+            // If only one row, reset inputs rather than delete
+            const tr = rows[0];
+            tr.querySelectorAll('input').forEach(inp => inp.value = '');
+            tr.querySelector('.row-qty').value = '1';
+            calculate();
+          }
+        }
+      });
+
+      btnAddRow.addEventListener('click', () => {
+        const rows = tbody.querySelectorAll('.cargo-row');
+        tbody.appendChild(createRowHtml({ name: `Box ${rows.length + 1}`, l: '', w: '', h: '', wt: '', qty: 1 }));
+        calculate();
+      });
+
+      btnReset.addEventListener('click', () => {
+        populateRows(defaultRows);
+      });
+
+      btnMetric.addEventListener('click', () => {
+        if (!isMetric) {
+          isMetric = true;
+          btnMetric.classList.add('active');
+          btnMetric.setAttribute('aria-checked', 'true');
+          btnImperial.classList.remove('active');
+          btnImperial.setAttribute('aria-checked', 'false');
+          updateUnitLabels();
+          calculate();
+        }
+      });
+
+      btnImperial.addEventListener('click', () => {
+        if (isMetric) {
+          isMetric = false;
+          btnImperial.classList.add('active');
+          btnImperial.setAttribute('aria-checked', 'true');
+          btnMetric.classList.remove('active');
+          btnMetric.setAttribute('aria-checked', 'false');
+          updateUnitLabels();
+          calculate();
+        }
+      });
+
+      btnCopy.addEventListener('click', () => {
+        const cbm = document.getElementById('res-total-cbm').textContent;
+        const cft = document.getElementById('res-total-cft').textContent;
+        const wt = document.getElementById('res-total-weight').textContent;
+        const altWt = document.getElementById('res-alt-weight').textContent;
+        const pkgs = document.getElementById('res-total-packages').textContent;
+
+        const text = `--- Freight Cargo Summary (CBM Calculator) ---
+Total Volume: ${cbm} (${cft})
+Total Gross Weight: ${wt} (${altWt})
+Total Packages: ${pkgs}
+20'GP Fill Rate: ${document.getElementById('label-util-20gp').textContent}
+40'GP Fill Rate: ${document.getElementById('label-util-40gp').textContent}
+40'HC Fill Rate: ${document.getElementById('label-util-40hc').textContent}
+Generated via Free Online Tools (https://freeonlinetools.net/tools/cbm-calculator.html)`;
+
+        if (window.FreightUtils && window.FreightUtils.copyTextToClipboard) {
+          window.FreightUtils.copyTextToClipboard(text, 'CBM summary copied to clipboard!');
+        }
+      });
+
+      btnSendContainer.addEventListener('click', () => {
+        const items = getItems();
+        if (window.FreightUtils && window.FreightUtils.encodeCargoParams) {
+          const url = window.FreightUtils.encodeCargoParams('/tools/container-loading-calculator.html', items, isMetric);
+          window.location.href = url;
+        } else {
+          window.location.href = '/tools/container-loading-calculator.html';
+        }
+      });
+
+      // Initialize from URL params if passed from another tool
+      if (window.FreightUtils && window.FreightUtils.parseCargoParams) {
+        const parsed = window.FreightUtils.parseCargoParams();
+        if (parsed && parsed.items && parsed.items.length) {
+          if (!parsed.isMetric) {
+            btnImperial.click();
+          }
+          populateRows(parsed.items);
+          return;
+        }
+      }
+
+      // Default Initialization
+      populateRows(defaultRows);
+    })();
+  </script>
+</body>
+</html>

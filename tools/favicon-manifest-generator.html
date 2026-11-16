@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Favicon &amp; Web App Manifest Pack Generator — 100% Client-Side</title>
+  <meta name="description" content="Generate complete modern favicon packs: multi-resolution favicon.ico (16/32/48px), Apple Touch icon (180px), Android PWA maskable icons (192/512px), valid site.webmanifest, and ready-to-use ZIP download.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/favicon-manifest-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/favicon-manifest-generator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/favicon-manifest-generator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Complete Favicon & Web App Manifest Pack Generator",
+    "description": "Generate multi-resolution binary favicon.ico (16x16, 32x32, 48x48), Apple Touch icon (180x180), Android Chrome PWA icons (192x192, 512x512), adaptive maskable safe-zone icons, and site.webmanifest in a 1-click ZIP package.",
+    "url": "https://nexivo.com/tools/favicon-manifest-generator.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What image sizes are required in a modern favicon pack in 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A complete 2026 favicon pack requires: 1) A multi-resolution binary favicon.ico embedding 16x16, 32x32, and 48x48 PNG frames for legacy browsers and desktop taskbars; 2) Standalone 16x16 and 32x32 PNG favicons for modern Chromium and Safari tabs; 3) A 180x180 PNG Apple Touch icon for iOS home screens; 4) 192x192 and 512x512 PNG icons for Android PWA installs; and 5) A 512x512 maskable icon with a 10% safe zone padding."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do Apple Touch Icons turn black if they have transparent backgrounds?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "iOS does not support transparency in home screen app icons. If you save an image with transparent alpha channels as apple-touch-icon.png, iOS renders the transparent pixels as solid pitch black. Our tool allows you to toggle a solid background fill (e.g. white or your brand color) specifically for the Apple Touch icon to preserve design aesthetics."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a maskable icon and why does it need safe-zone padding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Android displays app icons inside various OEM-defined shape masks (circles, squarcles, rounded rectangles). A maskable icon ensures that your logo is placed within the inner 80% safe-zone circle (a 10% padding margin on all sides). Without this safe zone, Android's shape mask cuts off the outer perimeter of your logo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the minimum favicon size required by Google Mobile Search?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Google's search indexing guidelines require that website favicons displayed next to search snippets must be a multiple of 48x48 pixels (e.g. 48x48, 96x96, or 192x192). Our pack includes 48x48 embedded in the binary ICO and 192x192 PNGs to guarantee crisp rendering in Google SERP results."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Dual Workspace Layout */
+    .favicon-studio-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    @media (max-width: 960px) {
+      .favicon-studio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left Control Panel */
+    .studio-panel {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+    }
+    .uploader-dropzone {
+      border: 2px dashed var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4) var(--space-2);
+      text-align: center;
+      background: var(--color-bg);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: var(--space-3);
+    }
+    .uploader-dropzone:hover, .uploader-dropzone.dragover {
+      border-color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.05);
+    }
+    .dropzone-icon {
+      color: var(--color-primary);
+      margin-bottom: 0.35rem;
+    }
+
+    /* Section Subtitle */
+    .panel-section-title {
+      font-size: var(--font-size-xs);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-muted);
+      margin-top: var(--space-3);
+      margin-bottom: 0.5rem;
+      border-bottom: 1px dashed var(--color-border);
+      padding-bottom: 0.25rem;
+    }
+    .panel-section-title:first-child {
+      margin-top: 0;
+    }
+
+    /* Sliders & Controls */
+    .ctrl-row {
+      margin-bottom: var(--space-2);
+    }
+    .ctrl-label-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .ctrl-val {
+      font-family: monospace;
+      color: var(--color-primary);
+    }
+    .range-input {
+      width: 100%;
+      height: 6px;
+      background: var(--color-border);
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+    .range-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      cursor: pointer;
+    }
+
+    /* Swatches & Pills */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.25rem;
+      margin-bottom: var(--space-2);
+    }
+    .choice-pill {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .choice-pill:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .choice-pill.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    /* Color Swatch Dots */
+    .swatch-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.1s ease;
+    }
+    .swatch-dot:hover {
+      transform: scale(1.15);
+    }
+
+    /* Right Preview Stage */
+    .preview-stage {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    /* Device Mockups Grid */
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--space-3);
+    }
+    .mockup-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mockup-title {
+      font-size: var(--font-size-xs);
+      font-weight: 800;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Browser Tab Mockups */
+    .tab-bar-mock {
+      border-radius: 8px 8px 0 0;
+      padding: 6px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 500;
+      width: 100%;
+      box-sizing: border-box;
+      border-top: 2px solid var(--color-primary);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .tab-dark {
+      background: #1e293b;
+      color: #f8fafc;
+      border-bottom: 1px solid #334155;
+    }
+    .tab-light {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-bottom: 1px solid #cbd5e1;
+    }
+    .tab-favicon-img {
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* iOS Home Screen Mockup */
+    .ios-screen-mock {
+      background: linear-gradient(135deg, #3b82f6 0%, #9333ea 50%, #f43f5e 100%);
+      border-radius: 14px;
+      padding: 1.25rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.25);
+    }
+    .ios-icon-frame {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+    }
+    .ios-app-label {
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      margin-top: 0.35rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+
+    /* Android Maskable Mockup */
+    .android-screen-mock {
+      background: #09090b;
+      border-radius: 14px;
+      padding: 1.25rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .android-mask-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    /* Google SERP Snippet Mockup */
+    .serp-card-mock {
+      background: #ffffff;
+      color: #202124;
+      border: 1px solid #dfe1e5;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-family: Arial, sans-serif;
+    }
+    .serp-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .serp-favicon-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #f1f3f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .serp-site-name {
+      font-size: 13px;
+      color: #202124;
+      font-weight: 400;
+    }
+    .serp-site-url {
+      font-size: 11px;
+      color: #5f6368;
+    }
+    .serp-title {
+      font-size: 16px;
+      color: #1a0dab;
+      font-weight: 400;
+      text-decoration: none;
+      margin-top: 0.2rem;
+      display: block;
+    }
+    .serp-desc {
+      font-size: 12px;
+      color: #4d5156;
+      line-height: 1.4;
+      margin-top: 0.25rem;
+    }
+
+    /* Generated Pack Files List */
+    .pack-files-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+    .pack-file-badge {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.72rem;
+      font-family: monospace;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* HTML Code Snippet Card */
+    .export-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+    }
+    .code-pre {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: var(--space-3);
+      font-family: monospace;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--color-text);
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 0.5rem;
+    }
+
+    /* FAQs */
+    .faq-item {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .related-tool-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      font-size: var(--font-size-xs);
+      color: var(--color-text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .related-tool-chip:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content" id="main-content">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <a href="/#images">Images</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <span class="breadcrumb-current">Favicon &amp; Web Manifest Pack Generator</span>
+    </nav>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-title-row">
+          <h1 class="tool-title">Complete Favicon &amp; Web App Manifest Pack Generator</h1>
+          <span class="badge badge-editorial">Images &amp; Developer</span>
+        </div>
+        <p class="tool-desc">Generate all essential modern website and app icons in one click: true multi-resolution binary favicon.ico (16/32/48px), Apple Touch icon (180px), Android PWA maskable icons (192/512px), and a compliant site.webmanifest in a ready-to-use ZIP archive.</p>
+        <div class="privacy-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>100% Client-Side / Your Logo Never Leaves Your Browser — Resizing, binary .ico encoding, and ZIP packaging run entirely in local JavaScript with zero server uploads.</span>
+        </div>
+      </div>
+
+      <!-- Studio Workspace -->
+      <div class="favicon-studio-grid">
+        <!-- Left: Upload & Customization Controls -->
+        <div class="studio-panel">
+          <!-- Dropzone -->
+          <div class="uploader-dropzone" id="dropZone">
+            <svg class="dropzone-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <div style="font-size:var(--font-size-sm); font-weight:700;">Drag &amp; Drop Logo Here</div>
+            <div style="font-size:0.75rem; color:var(--color-text-muted); margin-top:0.25rem;">Supports PNG, SVG, JPG, WebP</div>
+            <input type="file" id="fileInput" accept="image/png,image/jpeg,image/svg+xml,image/webp" style="display:none;">
+          </div>
+          <button type="button" class="btn btn-secondary" id="btnSampleLogo" style="width:100%; font-size:var(--font-size-xs); padding:0.35rem; display:flex; align-items:center; justify-content:center; gap:0.35rem;">
+            <span>🎨</span> Load Sample Modern App Logo
+          </button>
+
+          <!-- Icon Appearance Controls -->
+          <div class="panel-section-title">Icon Styling &amp; Masking</div>
+
+          <div class="ctrl-row">
+            <label style="font-size:var(--font-size-xs); font-weight:700; margin-bottom:0.25rem; display:block;">Background Fill:</label>
+            <div class="pill-group" role="group" aria-label="Background Fill">
+              <button type="button" class="choice-pill active" id="btnBgTransparent" data-fill="transparent">Transparent</button>
+              <button type="button" class="choice-pill" id="btnBgSolid" data-fill="solid">Solid Fill</button>
+            </div>
+            <div id="solidColorPickerWrap" style="display:none; align-items:center; gap:0.5rem; margin-top:0.35rem;">
+              <input type="color" id="inputBgColor" value="#ffffff" style="width:36px; height:28px; border:none; border-radius:4px; cursor:pointer;">
+              <div style="display:flex; gap:0.35rem;">
+                <span class="swatch-dot" data-color="#ffffff" style="background:#ffffff;" title="White"></span>
+                <span class="swatch-dot" data-color="#0f172a" style="background:#0f172a;" title="Dark Navy"></span>
+                <span class="swatch-dot" data-color="#2563eb" style="background:#2563eb;" title="Royal Blue"></span>
+                <span class="swatch-dot" data-color="#7c3aed" style="background:#7c3aed;" title="Purple"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="inputSafePadding">Inner Safe-Zone Padding:</label>
+              <span class="ctrl-val" id="dispSafePadding">10%</span>
+            </div>
+            <input type="range" id="inputSafePadding" class="range-input" min="0" max="30" value="10">
+            <span style="font-size:0.7rem; color:var(--color-text-muted);">Prevents Android circular masks from clipping logo edges</span>
+          </div>
+
+          <div class="ctrl-row">
+            <label style="font-size:var(--font-size-xs); font-weight:700; margin-bottom:0.25rem; display:block;">Corner Radius Preview Shape:</label>
+            <div class="pill-group" role="group" aria-label="Preview Shape">
+              <button type="button" class="choice-pill active" data-shape="square">Square</button>
+              <button type="button" class="choice-pill" data-shape="squircle">Squircle (iOS 22%)</button>
+              <button type="button" class="choice-pill" data-shape="circle">Circle (50%)</button>
+            </div>
+          </div>
+
+          <!-- Web Manifest Metadata Drawer -->
+          <div class="panel-section-title">Web App Manifest (`site.webmanifest`)</div>
+
+          <div class="ctrl-row">
+            <label for="inputAppName" style="font-size:var(--font-size-xs); font-weight:700;">App Name:</label>
+            <input type="text" id="inputAppName" class="form-input" value="My Awesome Web App" style="font-size:0.8rem; padding:0.25rem 0.5rem; margin-top:0.2rem;">
+          </div>
+
+          <div class="ctrl-row">
+            <label for="inputShortName" style="font-size:var(--font-size-xs); font-weight:700;">Short Name (Home Screen):</label>
+            <input type="text" id="inputShortName" class="form-input" value="AwesomeApp" style="font-size:0.8rem; padding:0.25rem 0.5rem; margin-top:0.2rem;">
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:var(--space-2);">
+            <div>
+              <label for="inputThemeColor" style="font-size:0.7rem; font-weight:700;">Theme Color:</label>
+              <input type="color" id="inputThemeColor" value="#2563eb" style="width:100%; height:28px; border:none; border-radius:4px; cursor:pointer; margin-top:0.2rem;">
+            </div>
+            <div>
+              <label for="inputManifestBgColor" style="font-size:0.7rem; font-weight:700;">Splash BG:</label>
+              <input type="color" id="inputManifestBgColor" value="#ffffff" style="width:100%; height:28px; border:none; border-radius:4px; cursor:pointer; margin-top:0.2rem;">
+            </div>
+          </div>
+
+          <div class="ctrl-row">
+            <label for="selectDisplayMode" style="font-size:var(--font-size-xs); font-weight:700;">Display Mode:</label>
+            <select id="selectDisplayMode" class="form-select" style="font-size:0.8rem; padding:0.25rem 0.5rem; margin-top:0.2rem;">
+              <option value="standalone" selected>standalone (Full-screen PWA)</option>
+              <option value="minimal-ui">minimal-ui (Minimal browser nav)</option>
+              <option value="browser">browser (Standard tab)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Right: Multi-Device Live Previews & Download Action -->
+        <div class="preview-stage">
+          <!-- Download Hero Action -->
+          <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--border-radius); padding:var(--space-3); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+            <div>
+              <div style="font-size:var(--font-size-sm); font-weight:800; color:var(--color-text);">Complete Production Favicon Pack</div>
+              <div style="font-size:0.72rem; color:var(--color-text-muted);">Includes binary .ico, Apple Touch, PWA 192/512px &amp; site.webmanifest</div>
+            </div>
+            <button type="button" class="btn btn-primary" id="btnDownloadZip" style="padding:0.45rem 1.15rem; font-size:var(--font-size-sm); display:inline-flex; align-items:center; gap:0.4rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Complete Pack (.ZIP)
+            </button>
+          </div>
+
+          <!-- Included Files Chips -->
+          <div>
+            <div style="font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-text-muted);">
+              Generated Files inside ZIP Package:
+            </div>
+            <div class="pack-files-grid">
+              <span class="pack-file-badge">📄 favicon.ico (16/32/48px)</span>
+              <span class="pack-file-badge">🖼️ favicon-16x16.png</span>
+              <span class="pack-file-badge">🖼️ favicon-32x32.png</span>
+              <span class="pack-file-badge">🍎 apple-touch-icon.png</span>
+              <span class="pack-file-badge">🤖 android-192x192.png</span>
+              <span class="pack-file-badge">🤖 android-512x512.png</span>
+              <span class="pack-file-badge">🛡️ maskable-512x512.png</span>
+              <span class="pack-file-badge">⚙️ site.webmanifest</span>
+            </div>
+          </div>
+
+          <!-- Multi-Device Previews Grid -->
+          <div class="mockup-grid">
+            <!-- 1. Chrome / Safari Tabs -->
+            <div class="mockup-card">
+              <div class="mockup-title">Desktop Browser Tabs (16×16 / 32×32)</div>
+              <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                <div class="tab-bar-mock tab-light">
+                  <img id="prevTabLight" class="tab-favicon-img" alt="Tab icon">
+                  <span id="prevTabLightText">My Awesome Web App</span>
+                </div>
+                <div class="tab-bar-mock tab-dark">
+                  <img id="prevTabDark" class="tab-favicon-img" alt="Tab icon">
+                  <span id="prevTabDarkText">My Awesome Web App</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. iOS Home Screen -->
+            <div class="mockup-card">
+              <div class="mockup-title">iOS Home Screen (180×180 Squircle)</div>
+              <div class="ios-screen-mock">
+                <div class="ios-icon-frame">
+                  <img id="prevIosIcon" style="width:100%; height:100%; object-fit:cover;" alt="iOS Icon">
+                </div>
+                <div class="ios-app-label" id="prevIosLabel">AwesomeApp</div>
+              </div>
+            </div>
+
+            <!-- 3. Android Adaptive Maskable -->
+            <div class="mockup-card">
+              <div class="mockup-title">Android Adaptive Maskable (192×192)</div>
+              <div class="android-screen-mock">
+                <div class="android-mask-circle">
+                  <img id="prevAndroidIcon" style="width:100%; height:100%; object-fit:cover;" alt="Android Icon">
+                </div>
+                <div style="color:#a1a1aa; font-size:10px; font-weight:700; margin-top:0.35rem;" id="prevAndroidLabel">AwesomeApp</div>
+              </div>
+            </div>
+
+            <!-- 4. Google Mobile Search SERP -->
+            <div class="mockup-card">
+              <div class="mockup-title">Google Search Result Snippet (48×48)</div>
+              <div class="serp-card-mock">
+                <div class="serp-header">
+                  <div class="serp-favicon-badge">
+                    <img id="prevSerpBadge" style="width:16px; height:16px;" alt="SERP Favicon">
+                  </div>
+                  <div>
+                    <div class="serp-site-name" id="prevSerpSiteName">My Awesome Web App</div>
+                    <div class="serp-site-url">https://example.com</div>
+                  </div>
+                </div>
+                <span class="serp-title" id="prevSerpTitle">My Awesome Web App — Official Website</span>
+                <div class="serp-desc">High-performance digital web application with modern PWA support and offline capabilities.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HTML Code Snippet Card -->
+          <div class="export-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="font-size:var(--font-size-xs); font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-text-muted);">
+                HTML &lt;head&gt; Code Integration
+              </div>
+              <button type="button" class="btn btn-secondary" id="btnCopyHtml" style="font-size:0.75rem; padding:0.25rem 0.65rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                Copy HTML Snippet
+              </button>
+            </div>
+            <pre class="code-pre" id="codePreSnippet">Loading code snippet...</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEO Educational Reference Guide -->
+      <div class="tool-documentation" style="margin-top:var(--space-5);">
+        <h2>The 2026 Favicon Standard: Why a Single `favicon.ico` Is No Longer Enough</h2>
+        <p>
+          In the early days of the web, placing a tiny 16×16 pixel <code>favicon.ico</code> in your server's root directory was sufficient. Today, web browsing spans retina desktop monitors, high-DPI Android smartphones, iPads, and Progressive Web Apps (PWAs). A legacy 16px icon rendered on an iPad home screen or a 4K display appears pixelated and unreadable.
+        </p>
+        <p>
+          Modern web standards require an orchestrated pack of multi-resolution assets tailored to specific operating systems, search engine crawlers, and application manifests.
+        </p>
+
+        <h2>Multi-Resolution Binary ICO Architecture (16px, 32px, 48px in One File)</h2>
+        <p>
+          The standard Windows ICO file is not an image format like PNG or JPEG; it is a <strong>binary container</strong> that embeds multiple distinct image frames into one file. When a browser loads <code>/favicon.ico</code>, it reads the internal directory header and renders the optimal frame:
+        </p>
+        <ul>
+          <li><strong>16×16 pixels:</strong> Standard browser tab displays on standard-DPI screens.</li>
+          <li><strong>32×32 pixels:</strong> High-DPI Retina browser tabs and Safari sidebar bookmarks.</li>
+          <li><strong>48×48 pixels:</strong> Windows desktop shortcuts, taskbar pins, and Google Search crawler benchmarks.</li>
+        </ul>
+        <p>
+          Our generator encodes a genuine multi-resolution binary ICO entirely in your browser using pure typed arrays (<code>Uint8Array</code> and <code>DataView</code>).
+        </p>
+
+        <h2>Google Mobile Search Favicon Requirements (48px Multiple Rule)</h2>
+        <p>
+          Google displays favicons directly alongside search result snippets on mobile and desktop SERP pages. Google's Search Central documentation explicitly mandates:
+        </p>
+        <blockquote>
+          Your favicon must be a multiple of 48px square, for example: 48x48px, 96x96px, 144x144px or 192x192px. SVG files don't have a specific size.
+        </blockquote>
+        <p>
+          Websites that only supply a 16px or 32px favicon are frequently rejected by Googlebot, which replaces their logo with a generic gray globe icon in search rankings.
+        </p>
+
+        <h2>Apple Touch Icons: Handling Non-Transparent Backgrounds on iOS</h2>
+        <p>
+          When users tap "Add to Home Screen" in Mobile Safari on an iPhone or iPad, iOS looks for <code>apple-touch-icon.png</code> (180×180 pixels). iOS automatically applies its signature squircle corner radius (22%) and drop shadow.
+        </p>
+        <p>
+          Crucially, <strong>iOS does not support transparency in home screen icons</strong>. If your icon contains a transparent alpha channel, iOS renders the background as solid black. To prevent this, our customizer lets you bake a solid white or branded background fill directly into the 180×180 output.
+        </p>
+
+        <h2>Progressive Web Apps (PWA) &amp; Android Adaptive Maskable Safe Zones</h2>
+        <p>
+          Android devices do not use standard square icons. Manufacturers like Samsung, Google, and Xiaomi apply different shape masks (circles, squircles, or rounded octagons) to home screen shortcuts.
+        </p>
+        <p>
+          To prevent Android from slicing off parts of your logo, the W3C Web App Manifest specification introduced <strong>Maskable Icons</strong>. Maskable icons require a <strong>minimum 10% safe zone margin</strong> (placing all core visual artwork inside the central 80% circle). Our generator automatically calculates this safe zone so your logo looks pristine inside any shape mask.
+        </p>
+
+        <h2>Crafting the Perfect `site.webmanifest` File</h2>
+        <p>
+          The <code>site.webmanifest</code> (or <code>manifest.json</code>) is a JSON metadata file that informs browsers how your web application should behave when installed on a desktop or mobile device:
+        </p>
+        <ul>
+          <li><strong><code>name</code> &amp; <code>short_name</code>:</strong> Displayed on the splash screen and underneath the home screen icon.</li>
+          <li><strong><code>theme_color</code>:</strong> Tints the Android notification bar and browser address header to match your brand.</li>
+          <li><strong><code>background_color</code>:</strong> Sets the background color of the instant splash screen during PWA launch.</li>
+          <li><strong><code>display: standalone</code>:</strong> Hides browser navigation bars, making your site feel like a native mobile app.</li>
+        </ul>
+
+        <h2>HTML `&lt;head&gt;` Optimization: Minimal Tag Overhead vs. Legacy Compatibility</h2>
+        <p>
+          You do not need 20 redundant meta tags to support modern browsers. The optimal 2026 snippet requires only 5 clean declarations:
+        </p>
+        <pre style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); font-family:monospace; font-size:0.85rem; overflow-x:auto;">
+&lt;link rel="icon" type="image/x-icon" href="/favicon.ico"&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"&gt;
+&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
+&lt;link rel="manifest" href="/site.webmanifest"&gt;
+&lt;meta name="theme-color" content="#2563eb"&gt;
+        </pre>
+
+        <h2>100% Client-Side Privacy Guarantee</h2>
+        <p>
+          Your brand logos, SVG vectors, application metadata, and generated icons are processed strictly inside your device's browser memory via HTML5 Canvas and typed arrays. No image binaries or business details are ever uploaded to any third-party servers.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What image sizes are required in a modern favicon pack in 2026?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            A complete 2026 favicon pack requires: 1) A multi-resolution binary favicon.ico embedding 16x16, 32x32, and 48x48 PNG frames for legacy browsers and desktop taskbars; 2) Standalone 16x16 and 32x32 PNG favicons for modern Chromium and Safari tabs; 3) A 180x180 PNG Apple Touch icon for iOS home screens; 4) 192x192 and 512x512 PNG icons for Android PWA installs; and 5) A 512x512 maskable icon with a 10% safe zone padding.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">Why do Apple Touch Icons turn black if they have transparent backgrounds?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            iOS does not support transparency in home screen app icons. If you save an image with transparent alpha channels as apple-touch-icon.png, iOS renders the transparent pixels as solid pitch black. Our tool allows you to toggle a solid background fill (e.g. white or your brand color) specifically for the Apple Touch icon to preserve design aesthetics.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is a maskable icon and why does it need safe-zone padding?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Android displays app icons inside various OEM-defined shape masks (circles, squarcles, rounded rectangles). A maskable icon ensures that your logo is placed within the inner 80% safe-zone circle (a 10% padding margin on all sides). Without this safe zone, Android's shape mask cuts off the outer perimeter of your logo.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is the minimum favicon size required by Google Mobile Search?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Google's search indexing guidelines require that website favicons displayed next to search snippets must be a multiple of 48x48 pixels (e.g. 48x48, 96x96, or 192x192). Our pack includes 48x48 embedded in the binary ICO and 192x192 PNGs to guarantee crisp rendering in Google SERP results.
+          </p>
+        </div>
+
+        <h2>Related Browser Tools</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2);">
+          <a href="/tools/image-dpi-checker.html" class="related-tool-chip">🖨️ Image DPI &amp; Print Size Checker</a>
+          <a href="/tools/qr-code-generator.html" class="related-tool-chip">📱 QR Code Generator</a>
+          <a href="/tools/readme-badge-builder.html" class="related-tool-chip">🏷️ GitHub README Badge Builder</a>
+          <a href="/tools/css-bento-mesh-glass-generator.html" class="related-tool-chip">🍱 Bento Grid &amp; Glass Generator</a>
+          <a href="/tools/meta-tags-toolkit.html" class="related-tool-chip">🔍 Meta Tags Toolkit</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top:var(--space-5); border-top:1px solid var(--color-border); padding:var(--space-4) 0; text-align:center; color:var(--color-text-muted); font-size:var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/favicon-manifest-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const Utils = window.FaviconManifestUtils;
+    if (!Utils) {
+      console.error('FaviconManifestUtils not loaded.');
+      return;
+    }
+
+    // State
+    let currentImage = null;
+    let bgFillMode = 'transparent'; // 'transparent' | 'solid'
+    let currentBgColor = '#ffffff';
+    let safePadding = 10;
+    let previewShape = 'square'; // 'square' | 'squircle' | 'circle'
+
+    let appMetadata = {
+      appName: 'My Awesome Web App',
+      shortName: 'AwesomeApp',
+      themeColor: '#2563eb',
+      backgroundColor: '#ffffff',
+      display: 'standalone'
+    };
+
+    // DOM Elements - Inputs
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const btnSampleLogo = document.getElementById('btnSampleLogo');
+
+    const btnBgTransparent = document.getElementById('btnBgTransparent');
+    const btnBgSolid = document.getElementById('btnBgSolid');
+    const solidColorPickerWrap = document.getElementById('solidColorPickerWrap');
+    const inputBgColor = document.getElementById('inputBgColor');
+    const inputSafePadding = document.getElementById('inputSafePadding');
+    const dispSafePadding = document.getElementById('dispSafePadding');
+
+    const inputAppName = document.getElementById('inputAppName');
+    const inputShortName = document.getElementById('inputShortName');
+    const inputThemeColor = document.getElementById('inputThemeColor');
+    const inputManifestBgColor = document.getElementById('inputManifestBgColor');
+    const selectDisplayMode = document.getElementById('selectDisplayMode');
+
+    // DOM Elements - Previews
+    const prevTabLight = document.getElementById('prevTabLight');
+    const prevTabDark = document.getElementById('prevTabDark');
+    const prevTabLightText = document.getElementById('prevTabLightText');
+    const prevTabDarkText = document.getElementById('prevTabDarkText');
+    const prevIosIcon = document.getElementById('prevIosIcon');
+    const prevIosLabel = document.getElementById('prevIosLabel');
+    const prevAndroidIcon = document.getElementById('prevAndroidIcon');
+    const prevAndroidLabel = document.getElementById('prevAndroidLabel');
+    const prevSerpBadge = document.getElementById('prevSerpBadge');
+    const prevSerpSiteName = document.getElementById('prevSerpSiteName');
+    const prevSerpTitle = document.getElementById('prevSerpTitle');
+
+    const codePreSnippet = document.getElementById('codePreSnippet');
+    const btnCopyHtml = document.getElementById('btnCopyHtml');
+    const btnDownloadZip = document.getElementById('btnDownloadZip');
+
+    // Generate programmatic high-res sample logo
+    function createSampleLogo() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      // Rounded gradient backdrop
+      const grad = ctx.createLinearGradient(0, 0, 512, 512);
+      grad.addColorStop(0, '#2563eb');
+      grad.addColorStop(1, '#9333ea');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(256, 256, 240, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Sharp white lightning / rocket symbol
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(280, 80);
+      ctx.lineTo(160, 270);
+      ctx.lineTo(250, 270);
+      ctx.lineTo(230, 432);
+      ctx.lineTo(350, 230);
+      ctx.lineTo(260, 230);
+      ctx.closePath();
+      ctx.fill();
+
+      const img = new Image();
+      img.onload = () => {
+        currentImage = img;
+        renderAllPreviews();
+      };
+      img.src = canvas.toDataURL('image/png');
+    }
+
+    // Main Preview Renderer
+    function renderAllPreviews() {
+      if (!currentImage) return;
+
+      const fill = bgFillMode === 'solid' ? currentBgColor : 'transparent';
+
+      // 1. Render 32x32 for Browser Tab Mockups
+      const canvas32 = Utils.renderIconToCanvas(currentImage, {
+        size: 32,
+        paddingPct: 0,
+        bgFill: fill,
+        shape: 'square'
+      });
+      const dataUrl32 = canvas32.toDataURL('image/png');
+      prevTabLight.src = dataUrl32;
+      prevTabDark.src = dataUrl32;
+      prevTabLightText.textContent = appMetadata.appName;
+      prevTabDarkText.textContent = appMetadata.appName;
+
+      // 2. Render 180x180 for iOS Mockup (iOS requires solid background)
+      const iosBgFill = bgFillMode === 'solid' ? currentBgColor : '#ffffff';
+      const canvasIos = Utils.renderIconToCanvas(currentImage, {
+        size: 180,
+        paddingPct: safePadding,
+        bgFill: iosBgFill,
+        shape: 'squircle'
+      });
+      prevIosIcon.src = canvasIos.toDataURL('image/png');
+      prevIosLabel.textContent = appMetadata.shortName;
+
+      // 3. Render 192x192 for Android Maskable Mockup
+      const canvasAndroid = Utils.renderIconToCanvas(currentImage, {
+        size: 192,
+        paddingPct: safePadding,
+        bgFill: fill,
+        shape: 'circle'
+      });
+      prevAndroidIcon.src = canvasAndroid.toDataURL('image/png');
+      prevAndroidLabel.textContent = appMetadata.shortName;
+
+      // 4. Render 48x48 for Google SERP Badge
+      const canvas48 = Utils.renderIconToCanvas(currentImage, {
+        size: 48,
+        paddingPct: 5,
+        bgFill: fill,
+        shape: 'circle'
+      });
+      prevSerpBadge.src = canvas48.toDataURL('image/png');
+      prevSerpSiteName.textContent = appMetadata.appName;
+      prevSerpTitle.textContent = `${appMetadata.appName} — Official Website`;
+
+      // 5. Update HTML snippet
+      const htmlCode = Utils.generateHtmlHeadSnippet({ themeColor: appMetadata.themeColor });
+      codePreSnippet.textContent = htmlCode;
+    }
+
+    // File Upload Handlers
+    function handleImageFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          currentImage = img;
+          renderAllPreviews();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (e) => handleImageFile(e.target.files[0]));
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleImageFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    btnSampleLogo.addEventListener('click', createSampleLogo);
+
+    // Styling Controls
+    btnBgTransparent.addEventListener('click', () => {
+      bgFillMode = 'transparent';
+      btnBgTransparent.classList.add('active');
+      btnBgSolid.classList.remove('active');
+      solidColorPickerWrap.style.display = 'none';
+      renderAllPreviews();
+    });
+
+    btnBgSolid.addEventListener('click', () => {
+      bgFillMode = 'solid';
+      btnBgSolid.classList.add('active');
+      btnBgTransparent.classList.remove('active');
+      solidColorPickerWrap.style.display = 'flex';
+      renderAllPreviews();
+    });
+
+    inputBgColor.addEventListener('input', (e) => {
+      currentBgColor = e.target.value;
+      renderAllPreviews();
+    });
+
+    document.querySelectorAll('.swatch-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentBgColor = dot.dataset.color;
+        inputBgColor.value = currentBgColor;
+        renderAllPreviews();
+      });
+    });
+
+    inputSafePadding.addEventListener('input', () => {
+      safePadding = parseInt(inputSafePadding.value, 10);
+      dispSafePadding.textContent = `${safePadding}%`;
+      renderAllPreviews();
+    });
+
+    document.querySelectorAll('[data-shape]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-shape]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        previewShape = btn.dataset.shape;
+        renderAllPreviews();
+      });
+    });
+
+    // Metadata Inputs
+    inputAppName.addEventListener('input', () => {
+      appMetadata.appName = inputAppName.value || 'My Awesome Web App';
+      renderAllPreviews();
+    });
+
+    inputShortName.addEventListener('input', () => {
+      appMetadata.shortName = inputShortName.value || 'App';
+      renderAllPreviews();
+    });
+
+    inputThemeColor.addEventListener('input', () => {
+      appMetadata.themeColor = inputThemeColor.value;
+      renderAllPreviews();
+    });
+
+    inputManifestBgColor.addEventListener('input', () => {
+      appMetadata.backgroundColor = inputManifestBgColor.value;
+    });
+
+    selectDisplayMode.addEventListener('change', () => {
+      appMetadata.display = selectDisplayMode.value;
+    });
+
+    // Copy HTML Code Action
+    btnCopyHtml.addEventListener('click', () => {
+      const code = codePreSnippet.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const orig = btnCopyHtml.innerHTML;
+        btnCopyHtml.innerHTML = `✓ Snippet Copied!`;
+        setTimeout(() => { btnCopyHtml.innerHTML = orig; }, 2000);
+      });
+    });
+
+    // Download Complete .ZIP Pack
+    btnDownloadZip.addEventListener('click', async () => {
+      if (!currentImage) {
+        alert('Please upload an image or load the sample logo first.');
+        return;
+      }
+
+      const origText = btnDownloadZip.innerHTML;
+      btnDownloadZip.innerHTML = `⏳ Generating Pack...`;
+      btnDownloadZip.disabled = true;
+
+      try {
+        const fill = bgFillMode === 'solid' ? currentBgColor : 'transparent';
+        const iosFill = bgFillMode === 'solid' ? currentBgColor : '#ffffff';
+
+        // 1. Render All PNG Frames
+        const c16 = Utils.renderIconToCanvas(currentImage, { size: 16, paddingPct: 0, bgFill: fill });
+        const c32 = Utils.renderIconToCanvas(currentImage, { size: 32, paddingPct: 0, bgFill: fill });
+        const c48 = Utils.renderIconToCanvas(currentImage, { size: 48, paddingPct: 0, bgFill: fill });
+        const c180 = Utils.renderIconToCanvas(currentImage, { size: 180, paddingPct: safePadding, bgFill: iosFill });
+        const c192 = Utils.renderIconToCanvas(currentImage, { size: 192, paddingPct: safePadding, bgFill: fill });
+        const c512 = Utils.renderIconToCanvas(currentImage, { size: 512, paddingPct: safePadding, bgFill: fill });
+        const cMask512 = Utils.renderIconToCanvas(currentImage, { size: 512, paddingPct: 15, bgFill: iosFill });
+
+        // Convert canvases to Uint8Array PNG bytes
+        const b16 = await Utils.canvasToPngUint8Array(c16);
+        const b32 = await Utils.canvasToPngUint8Array(c32);
+        const b48 = await Utils.canvasToPngUint8Array(c48);
+        const b180 = await Utils.canvasToPngUint8Array(c180);
+        const b192 = await Utils.canvasToPngUint8Array(c192);
+        const b512 = await Utils.canvasToPngUint8Array(c512);
+        const bMask512 = await Utils.canvasToPngUint8Array(cMask512);
+
+        // 2. Encode Multi-Resolution favicon.ico binary
+        const icoBytes = Utils.createIcoFile([
+          { width: 16, height: 16, pngBytes: b16 },
+          { width: 32, height: 32, pngBytes: b32 },
+          { width: 48, height: 48, pngBytes: b48 }
+        ]);
+
+        // 3. Generate site.webmanifest JSON string
+        const manifestObj = Utils.generateManifestJson(appMetadata);
+        const manifestStr = JSON.stringify(manifestObj, null, 2);
+
+        // 4. Build ZIP file in pure JS
+        const zipBlob = Utils.createZip([
+          { name: 'favicon.ico', data: icoBytes },
+          { name: 'favicon-16x16.png', data: b16 },
+          { name: 'favicon-32x32.png', data: b32 },
+          { name: 'apple-touch-icon.png', data: b180 },
+          { name: 'android-chrome-192x192.png', data: b192 },
+          { name: 'android-chrome-512x512.png', data: b512 },
+          { name: 'maskable-icon-512x512.png', data: bMask512 },
+          { name: 'site.webmanifest', data: manifestStr }
+        ]);
+
+        // Trigger Browser Download
+        const downloadUrl = URL.createObjectURL(zipBlob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = 'favicon-manifest-pack.zip';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(downloadUrl);
+
+        btnDownloadZip.innerHTML = `✓ Pack Downloaded!`;
+        setTimeout(() => {
+          btnDownloadZip.innerHTML = origText;
+          btnDownloadZip.disabled = false;
+        }, 2500);
+
+      } catch (err) {
+        console.error('Failed to generate favicon pack ZIP:', err);
+        alert('An error occurred generating the ZIP pack: ' + err.message);
+        btnDownloadZip.innerHTML = origText;
+        btnDownloadZip.disabled = false;
+      }
+    });
+
+    // Initialize with programmatic sample logo
+    createSampleLogo();
+  })();
+  </script>
+</body>
+</html>

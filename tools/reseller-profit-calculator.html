@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reseller Profit &amp; Fee Calculator (Poshmark, Mercari, eBay, Depop &amp; Vinted)</title>
+  <meta name="description" content="Calculate net profit, payout, ROI, and profit margins across Poshmark, Mercari, Vinted, eBay, and Depop. Reverse target pricing, shipping presets, and side-by-side cross-listing fee comparison.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/reseller-profit-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/reseller-profit-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/reseller-profit-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Reseller Profit & Fee Calculator",
+    "description": "Calculate exact reseller net profit, marketplace commission fees, shipping deductions, ROI, and profit margins across Poshmark, Mercari, Vinted, eBay, and Depop with side-by-side cross-listing comparison.",
+    "url": "https://nexivo.com/tools/reseller-profit-calculator.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does Poshmark calculate seller commission fees?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Poshmark applies a two-tiered fee structure: for sales under $15.00, Poshmark charges a flat commission of $2.95. For sales of $15.00 and above, Poshmark deducts a flat 20% commission from the listing sale price. Any seller-offered shipping discounts (e.g. $4.99 or $5.95) are deducted directly from the seller's net payout."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between ROI % and Net Profit Margin % for resellers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Return on Investment (ROI %) measures your financial multiplier on the capital spent to source and ship an item: (Net Profit / Total Invested Cost) * 100. Profit Margin % measures what fraction of the final sale price you keep as take-home cash: (Net Profit / Sale Price) * 100. A $5 thrift haul sold for $40 yields an impressive 350% ROI but a 50% profit margin after marketplace fees."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which reselling platform has the lowest seller fees in 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Vinted charges 0% seller commission fees (buyers pay an optional Buyer Protection fee). Depop charges 0% selling commission with standard payment processing (3.3% + $0.45). Mercari charges a 10% flat selling commission. eBay charges 13.25% + $0.30 final value fee on total order value. Poshmark charges 20% on sales over $15."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the reverse target price calculator help when thrift sourcing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "When sourcing inventory at Goodwill or estate sales, sellers often know their buy cost (e.g. $8) and their target net profit goal (e.g. $20). The reverse calculator determines the exact minimum listing price needed on each app after accounting for non-negotiable commissions, shipping discounts, and poly mailer costs."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Mode Toggle */
+    .mode-toggle-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+    .segmented-control {
+      display: inline-flex;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 30px;
+      padding: 4px;
+      gap: 4px;
+      max-width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .segmented-btn {
+      padding: 0.5rem 1.25rem;
+      border: none;
+      background: transparent;
+      color: var(--color-text-muted);
+      border-radius: 24px;
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .segmented-btn:hover {
+      color: var(--color-text);
+    }
+    .segmented-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Dual-Column Workspace */
+    .reseller-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    @media (max-width: 900px) {
+      .reseller-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Input Panel */
+    .panel-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+    }
+
+    /* Platform Tabs */
+    .platform-tabs-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: var(--space-3);
+    }
+    .platform-tab-btn {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: 0.45rem 0.85rem;
+      border-radius: 6px;
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .platform-tab-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .platform-tab-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Platform Fee Badge */
+    .platform-fee-badge {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+      padding: 0.4rem 0.65rem;
+      background: var(--color-bg);
+      border-radius: 6px;
+      border-left: 3px solid var(--color-primary);
+    }
+
+    /* Input Group */
+    .input-row {
+      margin-bottom: var(--space-3);
+    }
+    .input-label-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .currency-input-wrap {
+      position: relative;
+    }
+    .currency-symbol-prefix {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 800;
+      color: var(--color-text-muted);
+      font-family: monospace;
+      font-size: 0.95rem;
+    }
+    .currency-input {
+      padding-left: 26px !important;
+      font-weight: 800;
+      font-family: monospace;
+      font-size: 1.05rem;
+    }
+
+    /* Quick Chips */
+    .quick-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+    .quick-chip {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .quick-chip:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    /* Platform-specific options drawer */
+    .platform-options-box {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+
+    /* Right Output: Profit Hero Box */
+    .profit-hero-box {
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+      text-align: center;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .hero-profit {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(37, 99, 235, 0.08) 100%);
+      border: 2px solid #10b981;
+    }
+    .hero-loss {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(245, 158, 11, 0.08) 100%);
+      border: 2px solid #ef4444;
+    }
+    [data-theme="dark"] .hero-profit {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(37, 99, 235, 0.15) 100%);
+    }
+    [data-theme="dark"] .hero-loss {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%);
+    }
+
+    .hero-eyebrow {
+      font-size: var(--font-size-xs);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.25rem;
+    }
+    .hero-profit .hero-eyebrow { color: #059669; }
+    .hero-loss .hero-eyebrow { color: #dc2626; }
+
+    .hero-main-val {
+      font-size: 2.75rem;
+      font-weight: 900;
+      font-family: monospace;
+      line-height: 1.1;
+      margin-bottom: 0.35rem;
+    }
+    .hero-profit .hero-main-val { color: #059669; }
+    .hero-loss .hero-main-val { color: #dc2626; }
+
+    .hero-sub-text {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .hero-sub-text strong {
+      color: var(--color-text);
+    }
+
+    .hero-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      padding-top: var(--space-3);
+      border-top: 1px dashed var(--color-border);
+    }
+    .hero-metric-cell {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 0.5rem 0.25rem;
+    }
+    .hero-metric-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      font-family: monospace;
+      color: var(--color-text);
+    }
+    .hero-metric-lbl {
+      font-size: 0.68rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Cost Waterfall Bar */
+    .waterfall-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .waterfall-bar-wrap {
+      display: flex;
+      height: 14px;
+      border-radius: 7px;
+      overflow: hidden;
+      margin: 0.6rem 0;
+      background: #e2e8f0;
+    }
+    .bar-profit { background: #10b981; }
+    .bar-cogs { background: #64748b; }
+    .bar-fees { background: #ef4444; }
+    .bar-shipping { background: #f59e0b; }
+    .bar-supplies { background: #8b5cf6; }
+
+    .waterfall-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* Comparison Table */
+    .comparison-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      margin-top: var(--space-4);
+    }
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      margin-top: var(--space-3);
+    }
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--font-size-sm);
+      text-align: left;
+    }
+    .comp-table th, .comp-table td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--color-border);
+      white-space: nowrap;
+    }
+    .comp-table th {
+      background: var(--color-bg);
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .comp-table tr:last-child td {
+      border-bottom: none;
+    }
+    .best-rail-row {
+      background: rgba(16, 185, 129, 0.08) !important;
+      font-weight: 700;
+    }
+    .badge-best-payout {
+      background: #10b981;
+      color: #fff;
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 0.35rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    /* FAQs */
+    .faq-item {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .related-tool-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      font-size: var(--font-size-xs);
+      color: var(--color-text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .related-tool-chip:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content" id="main-content">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <a href="/#calculators">Calculators</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <span class="breadcrumb-current">Reseller Profit &amp; Fee Calculator</span>
+    </nav>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-title-row">
+          <h1 class="tool-title">Reseller Profit &amp; Fee Calculator</h1>
+          <span class="badge badge-editorial">Calculators &amp; E-Commerce</span>
+        </div>
+        <p class="tool-desc">Calculate true net profit, marketplace commission fees, shipping deductions, ROI, and profit margins across Poshmark, Mercari, Vinted, eBay, and Depop. Reverse-engineer target listing prices and compare all 5 platforms simultaneously.</p>
+        <div class="privacy-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>100% Client-Side / Your Sourcing &amp; Profit Data Never Leaves Your Browser — All numbers and fee calculations run in local browser memory with zero tracking.</span>
+        </div>
+      </div>
+
+      <!-- Mode Toggle: Profit Calculator vs Reverse Target Price -->
+      <div class="mode-toggle-container">
+        <div class="segmented-control" role="group" aria-label="Calculator Mode">
+          <button type="button" class="segmented-btn active" id="btnModeProfit" data-mode="profit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Mode 1: Profit &amp; Margin Calculator ("Calculate Net Profit")
+          </button>
+          <button type="button" class="segmented-btn" id="btnModeReverse" data-mode="reverse">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+            Mode 2: Reverse Target Price ("Min Listing Price Needed")
+          </button>
+        </div>
+      </div>
+
+      <!-- Dual Workspace Grid -->
+      <div class="reseller-grid">
+        <!-- Left Panel: Marketplace & Costs Input -->
+        <div class="panel-card">
+          <!-- Currency & Region -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-3);">
+            <label for="currencySelect" style="font-size:var(--font-size-xs); font-weight:700;">Currency &amp; Region:</label>
+            <select id="currencySelect" class="form-select" style="width:auto; padding:0.25rem 0.5rem; font-size:var(--font-size-xs); font-weight:700;">
+              <option value="USD" selected>$ USD (United States)</option>
+              <option value="GBP">£ GBP (United Kingdom)</option>
+              <option value="EUR">€ EUR (Europe)</option>
+              <option value="CAD">C$ CAD (Canada)</option>
+            </select>
+          </div>
+
+          <!-- Marketplace Tabs -->
+          <label style="font-size:var(--font-size-xs); font-weight:700; margin-bottom:0.25rem; display:block;">Select Marketplace:</label>
+          <div class="platform-tabs-row" role="tablist">
+            <button type="button" class="platform-tab-btn active" data-platform="poshmark">👜 Poshmark</button>
+            <button type="button" class="platform-tab-btn" data-platform="mercari">📦 Mercari</button>
+            <button type="button" class="platform-tab-btn" data-platform="vinted">👗 Vinted</button>
+            <button type="button" class="platform-tab-btn" data-platform="ebay">🏷️ eBay</button>
+            <button type="button" class="platform-tab-btn" data-platform="depop">⚡ Depop</button>
+          </div>
+
+          <div class="platform-fee-badge" id="platformFeeBadge">
+            Poshmark: $2.95 flat fee if under $15, or 20% commission if $15 and above.
+          </div>
+
+          <!-- Primary Pricing Input (Mode 1: Sale Price | Mode 2: Target Profit) -->
+          <div class="input-row">
+            <div class="input-label-wrap">
+              <label for="primaryAmountInput" id="primaryAmountLabel">Listed Item Sale Price:</label>
+              <span style="font-size:0.72rem; color:var(--color-text-muted);" id="primaryAmountHint">What the buyer pays</span>
+            </div>
+            <div class="currency-input-wrap">
+              <span class="currency-symbol-prefix" id="primaryCurrencyPrefix">$</span>
+              <input type="number" id="primaryAmountInput" class="form-input currency-input" value="45.00" min="1" max="10000" step="1">
+            </div>
+            <div class="quick-chips-row" id="quickPicksRow">
+              <button type="button" class="quick-chip" data-val="18">$18</button>
+              <button type="button" class="quick-chip" data-val="25">$25</button>
+              <button type="button" class="quick-chip" data-val="35">$35</button>
+              <button type="button" class="quick-chip" data-val="50">$50</button>
+              <button type="button" class="quick-chip" data-val="75">$75</button>
+            </div>
+          </div>
+
+          <!-- Sourcing Cost / COGS -->
+          <div class="input-row">
+            <div class="input-label-wrap">
+              <label for="inputCogs">Item Cost (COGS / Thrift Purchase Price):</label>
+              <span style="font-size:0.72rem; color:var(--color-text-muted);">What you paid to buy it</span>
+            </div>
+            <div class="currency-input-wrap">
+              <span class="currency-symbol-prefix" id="cogsCurrencyPrefix">$</span>
+              <input type="number" id="inputCogs" class="form-input currency-input" value="6.00" min="0" max="5000" step="0.50">
+            </div>
+            <div class="quick-chips-row">
+              <button type="button" class="quick-chip" data-cogs="0">$0 (Free/Gift)</button>
+              <button type="button" class="quick-chip" data-cogs="3">$3 (Thrift T-shirt)</button>
+              <button type="button" class="quick-chip" data-cogs="7">$7 (Jeans/Sweater)</button>
+              <button type="button" class="quick-chip" data-cogs="15">$15 (Shoes/Jacket)</button>
+            </div>
+          </div>
+
+          <!-- Platform-Specific Options Drawer -->
+          <div class="platform-options-box" id="platformOptionsBox">
+            <!-- Poshmark Specific -->
+            <div id="optsPoshmark">
+              <label for="poshShippingSelect" style="font-size:var(--font-size-xs); font-weight:700;">Seller-Paid Shipping Discount:</label>
+              <select id="poshShippingSelect" class="form-select" style="margin-top:0.25rem; font-size:0.8rem;">
+                <option value="0" selected>None — Buyer Pays Full Shipping ($7.97)</option>
+                <option value="2.02">$5.95 Discount (Seller pays $2.02)</option>
+                <option value="2.98">$4.99 Discount (Seller pays $2.98)</option>
+                <option value="7.97">Free Shipping (Seller pays full $7.97)</option>
+              </select>
+            </div>
+
+            <!-- Mercari Specific -->
+            <div id="optsMercari" style="display:none;">
+              <label style="font-size:var(--font-size-xs); font-weight:700; margin-bottom:0.25rem; display:block;">Shipping Payment:</label>
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.5rem;">
+                <label style="font-size:0.75rem; font-weight:600; cursor:pointer;">
+                  <input type="radio" name="mercariShippingPayer" value="buyer" checked> Buyer Pays
+                </label>
+                <label style="font-size:0.75rem; font-weight:600; cursor:pointer;">
+                  <input type="radio" name="mercariShippingPayer" value="seller"> Free Shipping (Seller Pays)
+                </label>
+              </div>
+              <div id="mercariLabelSelectWrapper" style="display:none;">
+                <label for="mercariLabelPreset" style="font-size:var(--font-size-xs); font-weight:700;">Prepaid Label Weight Preset:</label>
+                <select id="mercariLabelPreset" class="form-select" style="margin-top:0.25rem; font-size:0.8rem;">
+                  <option value="4.30">4 oz ($4.30 - First Class jewelry/accessories)</option>
+                  <option value="4.99" selected>8 oz ($4.99 - T-shirts, lightweight tops)</option>
+                  <option value="6.99">1 lb ($6.99 - Jeans, hoodies, dresses)</option>
+                  <option value="11.99">3 lb ($11.99 - Boots, winter coats)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Vinted Specific -->
+            <div id="optsVinted" style="display:none;">
+              <div style="font-size:0.75rem; color:var(--color-text-muted); margin-bottom:0.4rem;">
+                Vinted charges sellers 0% commission. Buyer pays postage directly.
+              </div>
+              <label for="inputVintedBump" style="font-size:var(--font-size-xs); font-weight:700;">Optional Item Bump / Spotlight Fee ($):</label>
+              <input type="number" id="inputVintedBump" class="form-input" value="0.00" min="0" max="20" step="0.5" style="margin-top:0.25rem; font-size:0.8rem;">
+            </div>
+
+            <!-- eBay Specific -->
+            <div id="optsEbay" style="display:none;">
+              <div class="input-row" style="margin-bottom:0.5rem;">
+                <label for="inputEbayBuyerShipping" style="font-size:var(--font-size-xs); font-weight:700;">Shipping Charged to Buyer ($):</label>
+                <input type="number" id="inputEbayBuyerShipping" class="form-input" value="0.00" min="0" max="50" step="0.5" style="margin-top:0.2rem; font-size:0.8rem;">
+                <span style="font-size:0.7rem; color:var(--color-text-muted);">eBay assesses 13.25% fee on item + shipping</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label for="inputEbayPromotedAd" style="font-size:var(--font-size-xs); font-weight:700;">Promoted Listing Ad Rate (%):</label>
+                <span id="dispEbayAdPct" style="font-family:monospace; font-weight:800; color:var(--color-primary); font-size:0.8rem;">0%</span>
+              </div>
+              <input type="range" id="inputEbayPromotedAd" class="range-input" min="0" max="15" step="0.5" value="0" style="margin-top:0.25rem;">
+            </div>
+
+            <!-- Depop Specific -->
+            <div id="optsDepop" style="display:none;">
+              <div style="font-size:0.75rem; color:var(--color-text-muted); margin-bottom:0.4rem;">
+                Depop: 0% selling fee + 3.3% + $0.45 payment processing.
+              </div>
+              <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.75rem; font-weight:700; cursor:pointer;">
+                <input type="checkbox" id="chkDepopBoost">
+                <span>Enable 8% Boosted Listing Feature</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Other Packaging & Shipping Expenses -->
+          <div class="input-row">
+            <div class="input-label-wrap">
+              <label for="inputPackaging">Packaging &amp; Supplies Cost (Poly Mailer, Tape, Card):</label>
+            </div>
+            <div class="currency-input-wrap">
+              <span class="currency-symbol-prefix" id="packCurrencyPrefix">$</span>
+              <input type="number" id="inputPackaging" class="form-input currency-input" value="0.50" min="0" max="20" step="0.10">
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel: Profit Hero Card & Waterfall -->
+        <div>
+          <!-- Hero Box -->
+          <div class="profit-hero-box hero-profit" id="profitHeroBox">
+            <div class="hero-eyebrow" id="heroEyebrow">Estimated Net Profit</div>
+            <div class="hero-main-val" id="heroNetProfit">+$30.05</div>
+            <div class="hero-sub-text" id="heroSubText">
+              Platform Payout: <strong id="heroPayout">$36.00</strong> &bull; Total Invested: <strong id="heroInvested">$6.50</strong>
+            </div>
+
+            <div class="hero-metrics-grid">
+              <div class="hero-metric-cell">
+                <div class="hero-metric-val" id="metricRoi">462.3%</div>
+                <div class="hero-metric-lbl">Return on Investment</div>
+              </div>
+              <div class="hero-metric-cell">
+                <div class="hero-metric-val" id="metricMargin">66.8%</div>
+                <div class="hero-metric-lbl">Profit Margin</div>
+              </div>
+              <div class="hero-metric-cell">
+                <div class="hero-metric-val" id="metricBreakEven">$11.08</div>
+                <div class="hero-metric-lbl">Break-Even Price</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cost Waterfall Breakdown -->
+          <div class="waterfall-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font-size:var(--font-size-sm); font-weight:700; margin:0;">Sale Price Allocation &amp; Waterfall</h3>
+              <span style="font-size:0.72rem; color:var(--color-text-muted);" id="dispGrossTotal">$45.00 Total</span>
+            </div>
+
+            <div class="waterfall-bar-wrap" id="waterfallBar">
+              <div class="bar-profit" id="barProfit" style="width: 66.8%;" title="Net Profit"></div>
+              <div class="bar-cogs" id="barCogs" style="width: 13.3%;" title="COGS"></div>
+              <div class="bar-fees" id="barFees" style="width: 20.0%;" title="Platform Fees"></div>
+              <div class="bar-shipping" id="barShipping" style="width: 0%;" title="Shipping"></div>
+              <div class="bar-supplies" id="barSupplies" style="width: 1.1%;" title="Supplies"></div>
+            </div>
+
+            <div class="waterfall-legend">
+              <div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span> Net Profit (<span id="pctProfit">66.8%</span>)</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#64748b;"></span> COGS (<span id="pctCogs">13.3%</span>)</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span> Platform Fees (<span id="pctFees">20.0%</span>)</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> Shipping (<span id="pctShipping">0%</span>)</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#8b5cf6;"></span> Supplies (<span id="pctSupplies">1.1%</span>)</div>
+            </div>
+
+            <div style="margin-top:var(--space-3); padding-top:var(--space-3); border-top:1px dashed var(--color-border); display:flex; justify-content:flex-end;">
+              <button type="button" class="btn btn-primary" id="btnCopySummary" style="padding:0.35rem 0.85rem; font-size:var(--font-size-xs); display:inline-flex; align-items:center; gap:0.35rem;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                Copy Sourcing Summary
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side-by-Side Marketplace Comparison Table -->
+      <div class="comparison-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 style="font-size:var(--font-size-base); font-weight:700; margin:0;">Side-by-Side Marketplace Comparison</h2>
+          <span style="font-size:0.75rem; color:var(--color-text-muted);">Exact same item cross-listed across all 5 apps</span>
+        </div>
+
+        <div class="table-container">
+          <table class="comp-table" id="comparisonTable">
+            <thead>
+              <tr>
+                <th>Marketplace</th>
+                <th id="thSalePriceCol">Sale Price</th>
+                <th>Platform &amp; Ad Fees</th>
+                <th>Estimated Payout</th>
+                <th>Net Profit</th>
+                <th>ROI %</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="savingsBanner" style="background:rgba(16, 185, 129, 0.12); border:1px solid #10b981; border-radius:6px; padding:0.65rem 1rem; margin-top:var(--space-3); font-size:var(--font-size-sm); color:var(--color-text); display:flex; align-items:center; gap:0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          <span id="savingsBannerText">You keep the most money selling on <strong>Vinted</strong> (+$38.50 profit, save $9.00 vs Poshmark).</span>
+        </div>
+      </div>
+
+      <!-- SEO Educational Guide & Content -->
+      <div class="tool-documentation" style="margin-top:var(--space-5);">
+        <h2>The Reseller's Dilemma: Why Gross Sales Don't Equal Real Profit</h2>
+        <p>
+          In the reselling and thrifting community, it is common to celebrate gross sales revenue: <em>"I made \$500 this weekend on Poshmark!"</em> However, experienced e-commerce sellers know that gross sales figures can be dangerously deceptive. Between marketplace commissions, shipping label subsidizations, packaging overhead, and thrift purchase costs (COGS), actual net profit frequently lands 30% to 50% below top-line revenue.
+        </p>
+        <p>
+          Calculating every expense upfront prevents the common trap of working dozens of hours packaging and shipping inventory only to break even or lose money.
+        </p>
+
+        <h2>2026 Marketplace Fee Structures Compared: Poshmark vs. Mercari vs. Vinted vs. eBay vs. Depop</h2>
+        <p>
+          Each leading secondary marketplace operates a distinct fee schedule and buyer demographic:
+        </p>
+        <ul>
+          <li><strong>Poshmark:</strong> Charges a simple flat \$2.95 fee on orders under \$15.00, or a flat 20% commission on orders \$15.00 and above. Poshmark provides an expedited 5-lb USPS Priority Mail label, but seller-offered shipping discounts (mandatory for Closet Clear Out and offer-to-likers) come straight out of seller profit.</li>
+          <li><strong>Mercari:</strong> Charges a flat 10% selling fee upon item completion. Sellers can have buyers pay for shipping or offer free shipping using Mercari's competitive prepaid label weight tiers.</li>
+          <li><strong>Vinted:</strong> The lowest fee platform for sellers: 0% selling fee. Vinted charges buyers a Buyer Protection fee (5% + \$0.70). Sellers keep 100% of their listed item price, minus optional paid promotions like Bumps or Wardrobe Spotlights.</li>
+          <li><strong>eBay:</strong> Charges a standard 13.25% + \$0.30 Final Value Fee across most clothing, shoes, and accessories categories. Note that eBay calculates this fee on the <em>total order amount</em>, including any shipping fees paid by the buyer.</li>
+          <li><strong>Depop:</strong> Features 0% selling commission with standard payment processing (3.3% + \$0.45). Sellers can optionally enable an 8% Boost fee to appear higher in search algorithms.</li>
+        </ul>
+
+        <h2>Demystifying Poshmark's \$15 Threshold Rule (\$2.95 vs 20%)</h2>
+        <p>
+          Many sellers do not realize that Poshmark's \$2.95 flat fee on items under \$15.00 actually represents an effective commission rate much higher than 20%:
+        </p>
+        <ul>
+          <li>Selling an item for \$15.00 incurs a 20% fee = \$3.00 (You keep \$12.00).</li>
+          <li>Selling an item for \$10.00 incurs a \$2.95 flat fee = <strong>29.5% effective commission</strong> (You keep \$7.05).</li>
+          <li>Selling an item for \$7.00 incurs a \$2.95 flat fee = <strong>42.1% effective commission</strong> (You keep \$4.05).</li>
+        </ul>
+        <p>
+          Because of this cliff, reselling clothing under \$15.00 individually on Poshmark is rarely economical; bundling multiple lower-cost items into a single \$25+ listing yields substantially higher net margins.
+        </p>
+
+        <h2>Sourcing Economics: Return on Investment (ROI) vs. Net Profit Margin</h2>
+        <p>
+          Two key metrics dictate sustainable inventory sourcing:
+        </p>
+        <pre style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); font-family:monospace; font-size:0.85rem; overflow-x:auto;">
+Return on Investment (ROI %) = (Net Profit / Total Invested Cost) * 100
+Net Profit Margin % = (Net Profit / Gross Sale Price) * 100
+        </pre>
+        <p>
+          If you purchase a vintage band tee for \$4 at Goodwill, spend \$0.50 on a poly mailer, and sell it on Mercari for \$40:
+        </p>
+        <ul>
+          <li>Platform Fee (10%): \$4.00</li>
+          <li>Net Payout: \$36.00</li>
+          <li>Net Profit: \$36.00 - \$4.50 = \$31.50</li>
+          <li><strong>ROI: 700%</strong> (\$31.50 profit on \$4.50 invested)</li>
+          <li><strong>Margin: 78.8%</strong> (\$31.50 kept out of \$40.00 sale)</li>
+        </ul>
+
+        <h2>Shipping Strategies: Free Shipping vs. Buyer-Paid Labels</h2>
+        <p>
+          While buyers love the psychology of "Free Shipping," offering it without adjusting your listing price directly cannibalizes profits. For lightweight clothing under 8 ounces (e.g. swimwear, t-shirts), offering free shipping with a \$4.30 USPS Ground Advantage label and raising the price by \$5 often increases conversion. For heavy winter coats or footwear (over 2 lbs), having buyers pay actual calculated postage or utilizing Poshmark's standard 5-lb flat-rate label is significantly safer.
+        </p>
+
+        <h2>The Real Impact of Promoted and Boosted Listing Fees</h2>
+        <p>
+          Marketplaces increasingly monetize sellers by pushing pay-to-play visibility:
+        </p>
+        <ul>
+          <li><strong>eBay Promoted Listings:</strong> Allows bidding between 2% and 15%+ ad fee. This fee is only charged if the buyer clicks the ad and buys within 30 days.</li>
+          <li><strong>Depop Boosted Listings:</strong> Flat 8% surcharge on sales originating from boosted search placements.</li>
+        </ul>
+        <p>
+          On a \$50 Depop sale, enabling Boost raises total deductions from \$2.10 to \$6.10, cutting your profit margin by 8 full percentage points. Use our calculator to evaluate whether promotional boosts leave enough profit to justify the extra visibility.
+        </p>
+
+        <h2>Reverse Target Pricing: Sourcing Backwards from Goodwill and Thrift Hauls</h2>
+        <p>
+          Instead of guessing what to charge after an item is listed, profitable resellers use <strong>Mode 2 (Reverse Target Price)</strong> while standing inside the thrift store aisle. If a jacket costs \$12 at the register and your minimum hourly requirement is \$25 net profit, our reverse calculator reveals that you must list the jacket for at least \$47.50 on Poshmark or \$41.67 on Mercari to hit your goal.
+        </p>
+
+        <h2>100% Client-Side Privacy Guarantee</h2>
+        <p>
+          All thrift haul costs, listing prices, platform selections, and profit calculations execute entirely inside your local browser memory. No sourcing data or financial figures are logged or sent to remote servers.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How does Poshmark calculate seller commission fees?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Poshmark applies a two-tiered fee structure: for sales under $15.00, Poshmark charges a flat commission of $2.95. For sales of $15.00 and above, Poshmark deducts a flat 20% commission from the listing sale price. Any seller-offered shipping discounts (e.g. $4.99 or $5.95) are deducted directly from the seller's net payout.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is the difference between ROI % and Net Profit Margin % for resellers?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Return on Investment (ROI %) measures your financial multiplier on the capital spent to source and ship an item: (Net Profit / Total Invested Cost) * 100. Profit Margin % measures what fraction of the final sale price you keep as take-home cash: (Net Profit / Sale Price) * 100. A $5 thrift haul sold for $40 yields an impressive 350% ROI but a 50% profit margin after marketplace fees.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">Which reselling platform has the lowest seller fees in 2026?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Vinted charges 0% seller commission fees (buyers pay an optional Buyer Protection fee). Depop charges 0% selling commission with standard payment processing (3.3% + $0.45). Mercari charges a 10% flat selling commission. eBay charges 13.25% + $0.30 final value fee on total order value. Poshmark charges 20% on sales over $15.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How does the reverse target price calculator help when thrift sourcing?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            When sourcing inventory at Goodwill or estate sales, sellers often know their buy cost (e.g. $8) and their target net profit goal (e.g. $20). The reverse calculator determines the exact minimum listing price needed on each app after accounting for non-negotiable commissions, shipping discounts, and poly mailer costs.
+          </p>
+        </div>
+
+        <h2>Related Browser Tools</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2);">
+          <a href="/tools/freelance-fee-reverse-calculator.html" class="related-tool-chip">💳 Freelance Fee Reverse Calculator</a>
+          <a href="/tools/ppp-price-calculator.html" class="related-tool-chip">🌐 PPP SaaS Price Calculator</a>
+          <a href="/tools/percentage-calculator.html" class="related-tool-chip">🔢 Percentage Calculator</a>
+          <a href="/tools/cbm-calculator.html" class="related-tool-chip">📦 CBM &amp; Freight Shipping Calculator</a>
+          <a href="/tools/paypal-link-generator.html" class="related-tool-chip">🔗 PayPal Link Generator</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top:var(--space-5); border-top:1px solid var(--color-border); padding:var(--space-4) 0; text-align:center; color:var(--color-text-muted); font-size:var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/reseller-calc-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const Utils = window.ResellerCalcUtils;
+    if (!Utils) {
+      console.error('ResellerCalcUtils not loaded.');
+      return;
+    }
+
+    // State
+    let mode = 'profit'; // 'profit' | 'reverse'
+    let selectedPlatform = 'poshmark';
+    let selectedCurrency = 'USD';
+
+    // DOM Elements
+    const btnModeProfit = document.getElementById('btnModeProfit');
+    const btnModeReverse = document.getElementById('btnModeReverse');
+    const currencySelect = document.getElementById('currencySelect');
+
+    const platformFeeBadge = document.getElementById('platformFeeBadge');
+    const primaryAmountLabel = document.getElementById('primaryAmountLabel');
+    const primaryAmountHint = document.getElementById('primaryAmountHint');
+    const primaryAmountInput = document.getElementById('primaryAmountInput');
+    const primaryCurrencyPrefix = document.getElementById('primaryCurrencyPrefix');
+    const cogsCurrencyPrefix = document.getElementById('cogsCurrencyPrefix');
+    const packCurrencyPrefix = document.getElementById('packCurrencyPrefix');
+
+    const inputCogs = document.getElementById('inputCogs');
+    const inputPackaging = document.getElementById('inputPackaging');
+
+    // Platform drawers
+    const optsPoshmark = document.getElementById('optsPoshmark');
+    const optsMercari = document.getElementById('optsMercari');
+    const optsVinted = document.getElementById('optsVinted');
+    const optsEbay = document.getElementById('optsEbay');
+    const optsDepop = document.getElementById('optsDepop');
+
+    // Specific inputs
+    const poshShippingSelect = document.getElementById('poshShippingSelect');
+    const mercariLabelSelectWrapper = document.getElementById('mercariLabelSelectWrapper');
+    const mercariLabelPreset = document.getElementById('mercariLabelPreset');
+    const inputVintedBump = document.getElementById('inputVintedBump');
+    const inputEbayBuyerShipping = document.getElementById('inputEbayBuyerShipping');
+    const inputEbayPromotedAd = document.getElementById('inputEbayPromotedAd');
+    const dispEbayAdPct = document.getElementById('dispEbayAdPct');
+    const chkDepopBoost = document.getElementById('chkDepopBoost');
+
+    // Hero box outputs
+    const profitHeroBox = document.getElementById('profitHeroBox');
+    const heroEyebrow = document.getElementById('heroEyebrow');
+    const heroNetProfit = document.getElementById('heroNetProfit');
+    const heroSubText = document.getElementById('heroSubText');
+    const heroPayout = document.getElementById('heroPayout');
+    const heroInvested = document.getElementById('heroInvested');
+    const metricRoi = document.getElementById('metricRoi');
+    const metricMargin = document.getElementById('metricMargin');
+    const metricBreakEven = document.getElementById('metricBreakEven');
+
+    // Waterfall bar outputs
+    const dispGrossTotal = document.getElementById('dispGrossTotal');
+    const barProfit = document.getElementById('barProfit');
+    const barCogs = document.getElementById('barCogs');
+    const barFees = document.getElementById('barFees');
+    const barShipping = document.getElementById('barShipping');
+    const barSupplies = document.getElementById('barSupplies');
+
+    const pctProfit = document.getElementById('pctProfit');
+    const pctCogs = document.getElementById('pctCogs');
+    const pctFees = document.getElementById('pctFees');
+    const pctShipping = document.getElementById('pctShipping');
+    const pctSupplies = document.getElementById('pctSupplies');
+
+    // Table & Copy
+    const thSalePriceCol = document.getElementById('thSalePriceCol');
+    const comparisonTableBody = document.getElementById('comparisonTableBody');
+    const savingsBannerText = document.getElementById('savingsBannerText');
+    const btnCopySummary = document.getElementById('btnCopySummary');
+
+    function getCurrencySymbol() {
+      return Utils.CURRENCIES[selectedCurrency]?.symbol || '$';
+    }
+
+    function formatMoney(amount) {
+      const sym = getCurrencySymbol();
+      const val = parseFloat(amount) || 0;
+      return `${sym}${val.toFixed(2)}`;
+    }
+
+    // Gather Platform Specific Options
+    function getPlatformOptions() {
+      let sellerShipping = 0;
+      let poshDiscount = 0;
+      let mercariShipping = 0;
+      let vintedBump = 0;
+      let ebayShipping = 0;
+      let ebayAdPct = 0;
+      let depopBoost = false;
+
+      // Poshmark
+      poshDiscount = parseFloat(poshShippingSelect.value) || 0;
+
+      // Mercari
+      const mercariPayer = document.querySelector('input[name="mercariShippingPayer"]:checked')?.value || 'buyer';
+      if (mercariPayer === 'seller') {
+        mercariShipping = parseFloat(mercariLabelPreset.value) || 4.99;
+        sellerShipping = mercariShipping;
+      }
+
+      // Vinted
+      vintedBump = parseFloat(inputVintedBump.value) || 0;
+
+      // eBay
+      ebayShipping = parseFloat(inputEbayBuyerShipping.value) || 0;
+      ebayAdPct = parseFloat(inputEbayPromotedAd.value) || 0;
+
+      // Depop
+      depopBoost = chkDepopBoost.checked;
+
+      return {
+        poshmarkShippingDiscount: poshDiscount,
+        mercariShippingPayer: mercariPayer,
+        mercariSellerShipping: mercariShipping,
+        vintedBumpFee: vintedBump,
+        ebayBuyerShipping: ebayShipping,
+        ebayPromotedAdPct: ebayAdPct,
+        depopIsBoosted: depopBoost,
+        sellerShipping: sellerShipping
+      };
+    }
+
+    // Main Render Routine
+    function render() {
+      const sym = getCurrencySymbol();
+      primaryCurrencyPrefix.textContent = sym;
+      cogsCurrencyPrefix.textContent = sym;
+      packCurrencyPrefix.textContent = sym;
+
+      const opts = getPlatformOptions();
+      const cogs = Math.max(0, parseFloat(inputCogs.value) || 0);
+      const packagingCost = Math.max(0, parseFloat(inputPackaging.value) || 0.50);
+
+      // Handle Mode 1 (Profit) vs Mode 2 (Reverse Target Price)
+      let currentSalePrice = 0;
+      let targetProfit = 0;
+
+      if (mode === 'profit') {
+        currentSalePrice = Math.max(0, parseFloat(primaryAmountInput.value) || 0);
+      } else {
+        targetProfit = Math.max(0, parseFloat(primaryAmountInput.value) || 0);
+        // Calculate needed listing price on currently selected platform
+        const totalInvested = cogs + opts.sellerShipping + packagingCost;
+        currentSalePrice = Utils.calculateTargetListingPrice(selectedPlatform, targetProfit, totalInvested, opts);
+      }
+
+      // Calculate Primary Platform Result
+      const result = Utils.calculateProfit({
+        platformId: selectedPlatform,
+        salePrice: currentSalePrice,
+        cogs,
+        sellerShipping: opts.sellerShipping,
+        packagingCost,
+        ...opts
+      });
+
+      // Update Hero Box
+      const isProfit = result.netProfit >= 0;
+      profitHeroBox.className = `profit-hero-box ${isProfit ? 'hero-profit' : 'hero-loss'}`;
+      heroEyebrow.textContent = mode === 'profit' ? 'Estimated Net Profit' : 'Calculated Required Listing Price';
+
+      if (mode === 'profit') {
+        heroNetProfit.textContent = `${isProfit ? '+' : ''}${formatMoney(result.netProfit)}`;
+        heroSubText.innerHTML = `Platform Payout: <strong>${formatMoney(result.platformPayout)}</strong> &bull; Total Invested: <strong>${formatMoney(result.totalInvested)}</strong>`;
+      } else {
+        heroNetProfit.textContent = formatMoney(currentSalePrice);
+        heroSubText.innerHTML = `Guaranteed Net Profit: <strong>+${formatMoney(result.netProfit)}</strong> &bull; Platform Payout: <strong>${formatMoney(result.platformPayout)}</strong>`;
+      }
+
+      metricRoi.textContent = result.roiPct !== null ? `${result.roiPct}%` : 'N/A ($0 COGS)';
+      metricMargin.textContent = `${result.marginPct}%`;
+      metricBreakEven.textContent = formatMoney(result.breakEvenPrice);
+
+      // Update Waterfall Bar
+      dispGrossTotal.textContent = `${formatMoney(currentSalePrice)} Total`;
+      if (currentSalePrice > 0) {
+        const netPart = Math.max(0, (result.netProfit / currentSalePrice) * 100);
+        const cogsPart = Math.min(100, (cogs / currentSalePrice) * 100);
+        const feesPart = Math.min(100, (result.totalPlatformFees / currentSalePrice) * 100);
+        const shipPart = Math.min(100, (result.sellerShipping / currentSalePrice) * 100);
+        const packPart = Math.min(100, (packagingCost / currentSalePrice) * 100);
+
+        barProfit.style.width = `${netPart}%`;
+        barCogs.style.width = `${cogsPart}%`;
+        barFees.style.width = `${feesPart}%`;
+        barShipping.style.width = `${shipPart}%`;
+        barSupplies.style.width = `${packPart}%`;
+
+        pctProfit.textContent = `${Math.round(netPart)}%`;
+        pctCogs.textContent = `${Math.round(cogsPart)}%`;
+        pctFees.textContent = `${Math.round(feesPart)}%`;
+        pctShipping.textContent = `${Math.round(shipPart)}%`;
+        pctSupplies.textContent = `${Math.round(packPart)}%`;
+      } else {
+        barProfit.style.width = '100%';
+        barCogs.style.width = '0%';
+        barFees.style.width = '0%';
+        barShipping.style.width = '0%';
+        barSupplies.style.width = '0%';
+      }
+
+      // Update Cross-Listing Comparison Table
+      thSalePriceCol.textContent = mode === 'profit' ? 'Sale Price' : 'Min List Price';
+
+      const comp = Utils.compareAllPlatforms({
+        salePrice: currentSalePrice,
+        cogs,
+        sellerShipping: opts.sellerShipping,
+        packagingCost,
+        ...opts
+      });
+
+      comparisonTableBody.innerHTML = '';
+      comp.results.forEach((r, idx) => {
+        const isBest = (idx === comp.bestIndex);
+        const tr = document.createElement('tr');
+        if (isBest) tr.classList.add('best-rail-row');
+
+        const bestBadge = isBest ? '<span class="badge-best-payout">★ Highest Profit</span>' : '';
+        const netProfitColor = r.netProfit >= 0 ? '#059669' : '#dc2626';
+
+        tr.innerHTML = `
+          <td><strong>${r.platform.name}</strong>${bestBadge}</td>
+          <td><span style="font-family:monospace; font-weight:700;">${formatMoney(r.salePrice)}</span></td>
+          <td style="color:#dc2626;">-${formatMoney(r.totalPlatformFees)}</td>
+          <td>${formatMoney(r.platformPayout)}</td>
+          <td><strong style="color:${netProfitColor}; font-family:monospace;">${r.netProfit >= 0 ? '+' : ''}${formatMoney(r.netProfit)}</strong></td>
+          <td>${r.roiPct !== null ? r.roiPct + '%' : 'N/A'}</td>
+        `;
+        comparisonTableBody.appendChild(tr);
+      });
+
+      // Update Savings Banner
+      if (currentSalePrice > 0 && comp.maxProfitDifference > 0) {
+        const bestName = comp.bestPlatform.name;
+        const bestProfit = comp.results[comp.bestIndex].netProfit;
+        savingsBannerText.innerHTML = `You keep the most money selling on <strong>${bestName}</strong> (+${formatMoney(bestProfit)} net profit, saving up to <strong>${formatMoney(comp.maxProfitDifference)}</strong> vs higher-fee apps).`;
+      }
+    }
+
+    // Set Platform Selection
+    function selectPlatform(platformId) {
+      selectedPlatform = platformId;
+      document.querySelectorAll('.platform-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.platform === platformId);
+      });
+
+      // Show/hide options drawers
+      optsPoshmark.style.display = platformId === 'poshmark' ? 'block' : 'none';
+      optsMercari.style.display = platformId === 'mercari' ? 'block' : 'none';
+      optsVinted.style.display = platformId === 'vinted' ? 'block' : 'none';
+      optsEbay.style.display = platformId === 'ebay' ? 'block' : 'none';
+      optsDepop.style.display = platformId === 'depop' ? 'block' : 'none';
+
+      platformFeeBadge.textContent = `${Utils.PLATFORMS[platformId].name}: ${Utils.PLATFORMS[platformId].description}`;
+
+      render();
+    }
+
+    // Mode Toggle
+    btnModeProfit.addEventListener('click', () => {
+      mode = 'profit';
+      btnModeProfit.classList.add('active');
+      btnModeReverse.classList.remove('active');
+      primaryAmountLabel.textContent = 'Listed Item Sale Price:';
+      primaryAmountHint.textContent = 'What the buyer pays';
+      primaryAmountInput.value = '45.00';
+      render();
+    });
+
+    btnModeReverse.addEventListener('click', () => {
+      mode = 'reverse';
+      btnModeReverse.classList.add('active');
+      btnModeProfit.classList.remove('active');
+      primaryAmountLabel.textContent = 'Target Desired Net Profit:';
+      primaryAmountHint.textContent = 'Cash kept after all costs';
+      primaryAmountInput.value = '25.00';
+      render();
+    });
+
+    // Platform Tab clicks
+    document.querySelectorAll('.platform-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectPlatform(btn.dataset.platform);
+      });
+    });
+
+    // Currency Change
+    currencySelect.addEventListener('change', () => {
+      selectedCurrency = currencySelect.value;
+      render();
+    });
+
+    // Input Events
+    primaryAmountInput.addEventListener('input', render);
+    inputCogs.addEventListener('input', render);
+    inputPackaging.addEventListener('input', render);
+
+    // Quick pick sale price
+    document.querySelectorAll('#quickPicksRow .quick-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        primaryAmountInput.value = btn.dataset.val;
+        render();
+      });
+    });
+
+    // Quick pick COGS
+    document.querySelectorAll('[data-cogs]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        inputCogs.value = btn.dataset.cogs;
+        render();
+      });
+    });
+
+    // Specific Platform Inputs
+    poshShippingSelect.addEventListener('change', render);
+
+    document.querySelectorAll('input[name="mercariShippingPayer"]').forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        mercariLabelSelectWrapper.style.display = e.target.value === 'seller' ? 'block' : 'none';
+        render();
+      });
+    });
+    mercariLabelPreset.addEventListener('change', render);
+
+    inputVintedBump.addEventListener('input', render);
+    inputEbayBuyerShipping.addEventListener('input', render);
+    inputEbayPromotedAd.addEventListener('input', () => {
+      dispEbayAdPct.textContent = `${inputEbayPromotedAd.value}%`;
+      render();
+    });
+    chkDepopBoost.addEventListener('change', render);
+
+    // Copy Sourcing Summary
+    btnCopySummary.addEventListener('click', () => {
+      const opts = getPlatformOptions();
+      const cogs = Math.max(0, parseFloat(inputCogs.value) || 0);
+      const packagingCost = Math.max(0, parseFloat(inputPackaging.value) || 0.50);
+      const currentSalePrice = Math.max(0, parseFloat(primaryAmountInput.value) || 0);
+
+      const result = Utils.calculateProfit({
+        platformId: selectedPlatform,
+        salePrice: currentSalePrice,
+        cogs,
+        sellerShipping: opts.sellerShipping,
+        packagingCost,
+        ...opts
+      });
+
+      const summaryText = Utils.formatSourcingSummary(result, getCurrencySymbol());
+      navigator.clipboard.writeText(summaryText).then(() => {
+        const orig = btnCopySummary.innerHTML;
+        btnCopySummary.innerHTML = `✓ Summary Copied!`;
+        setTimeout(() => { btnCopySummary.innerHTML = orig; }, 2000);
+      });
+    });
+
+    // Initialize
+    selectPlatform('poshmark');
+  })();
+  </script>
+</body>
+</html>

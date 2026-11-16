@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google SERP Simulator &amp; Snippet Preview Tool — Free Online Tools</title>
+  <meta name="description" content="Simulate how your webpage appears on Google search results for desktop and mobile. Check pixel width limits, title truncation, and rich snippets. 100% free.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/serp-preview-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/serp-preview-tool.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/serp-preview-tool.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Google SERP Simulator & Snippet Preview Tool",
+    "description": "Simulate how your webpage appears on Google search results for desktop and mobile. Check pixel width limits, title truncation, and rich snippets. 100% free.",
+    "url": "https://nexivo.com/tools/serp-preview-tool.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    /* SERP Simulation Container */
+    .serp-card {
+      background: #ffffff;
+      color: #202124;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      box-shadow: 0 1px 6px rgba(32, 33, 36, 0.08);
+      max-inline-size: 650px;
+      margin-inline: auto;
+    }
+    .serp-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-block-end: 4px;
+    }
+    .serp-favicon {
+      inline-size: 26px;
+      block-size: 26px;
+      border-radius: 50%;
+      background: #f1f3f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      color: #1a0dab;
+      flex-shrink: 0;
+    }
+    .serp-site-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+      overflow: hidden;
+    }
+    .serp-site-name {
+      font-size: 14px;
+      color: #202124;
+      font-weight: 400;
+    }
+    .serp-url {
+      font-size: 12px;
+      color: #4d5156;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .serp-title {
+      font-size: 20px;
+      line-height: 1.3;
+      color: #1a0dab;
+      font-weight: 400;
+      margin-block-start: 4px;
+      margin-block-end: 4px;
+      cursor: pointer;
+      word-wrap: break-word;
+    }
+    .serp-title:hover {
+      text-decoration: underline;
+    }
+    .serp-snippet {
+      font-size: 14px;
+      line-height: 1.58;
+      color: #4d5156;
+      word-wrap: break-word;
+    }
+    .serp-date {
+      color: #70757a;
+      font-weight: 500;
+    }
+    .serp-stars {
+      color: #e37400;
+      font-size: 13px;
+      margin-block-end: 4px;
+    }
+    .device-tabs {
+      display: flex;
+      gap: var(--space-2);
+      margin-block-end: var(--space-4);
+      justify-content: center;
+    }
+    .device-btn.active {
+      background: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#website">Website &amp; SEO Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">SERP Preview Tool</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Google SERP Simulator &amp; Snippet Preview Tool</span>
+      </h1>
+      <p class="tool-header-lead">
+        Simulate how your title, meta description, and URL render in Google Search results on desktop and mobile devices. Inspect exact pixel width limits and avoid truncation.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Pixel Width Check</span>
+        <span class="tool-badge">Desktop &amp; Mobile Modes</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Device Viewport Toggle -->
+      <div class="device-tabs">
+        <button type="button" class="btn btn-secondary device-btn active" id="btn-desktop" data-device="desktop">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-inline-end: 6px;"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Desktop View
+        </button>
+        <button type="button" class="btn btn-secondary device-btn" id="btn-mobile" data-device="mobile">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-inline-end: 6px;"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+          Mobile View
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-sample" style="margin-inline-start: auto;">Sample Data</button>
+      </div>
+
+      <!-- Live SERP Preview Container -->
+      <div style="background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); margin-block-end: var(--space-5);">
+        <div class="serp-card" id="serp-container">
+          <div class="serp-header">
+            <div class="serp-favicon" id="serp-fav-initial">F</div>
+            <div class="serp-site-info">
+              <span class="serp-site-name" id="serp-display-site">Free Online Tools</span>
+              <span class="serp-url" id="serp-display-url">https://example.com &rsaquo; tools &rsaquo; preview</span>
+            </div>
+          </div>
+          <div class="serp-title" id="serp-display-title">Page Title Preview — Google Search Result</div>
+          <div class="serp-stars" id="serp-display-stars" style="display: none;">
+            ★★★★★ <span style="color: #4d5156; font-size: 12px;">Rating: 4.9 &bull; 142 reviews</span>
+          </div>
+          <div class="serp-snippet" id="serp-display-snippet">
+            <span class="serp-date" id="serp-display-date" style="display: none;">Nov 10, 2026 — </span><span id="serp-snippet-body">This is an accurate simulation of your webpage description snippet as it would appear on Google's search result index.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Controls Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-4);">
+        <div>
+          <!-- Title Input & Meter -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-1);">
+              <label for="input-title" class="form-label" style="font-weight: var(--font-weight-semibold); margin-block-end: 0;">SEO Title:</label>
+              <span id="title-pixel-meter" style="font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); color: var(--color-text-muted);">0px / 600px (0 chars)</span>
+            </div>
+            <input type="text" id="input-title" class="form-input" placeholder="Enter page title...">
+            <div style="block-size: 4px; background: var(--color-border); border-radius: 2px; margin-block-start: 4px; overflow: hidden;">
+              <div id="title-progress-bar" style="inline-size: 0%; block-size: 100%; background: var(--color-primary); transition: inline-size 0.2s, background-color 0.2s;"></div>
+            </div>
+          </div>
+
+          <!-- Description Input & Meter -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-1);">
+              <label for="input-desc" class="form-label" style="font-weight: var(--font-weight-semibold); margin-block-end: 0;">Meta Description:</label>
+              <span id="desc-pixel-meter" style="font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); color: var(--color-text-muted);">0px / 960px (0 chars)</span>
+            </div>
+            <textarea id="input-desc" class="form-textarea" rows="4" placeholder="Enter meta description..."></textarea>
+            <div style="block-size: 4px; background: var(--color-border); border-radius: 2px; margin-block-start: 4px; overflow: hidden;">
+              <div id="desc-progress-bar" style="inline-size: 0%; block-size: 100%; background: var(--color-primary); transition: inline-size 0.2s, background-color 0.2s;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!-- URL & Site Details -->
+          <div class="form-group">
+            <label for="input-url" class="form-label" style="font-weight: var(--font-weight-semibold);">Target URL:</label>
+            <input type="text" id="input-url" class="form-input" placeholder="https://example.com/tools/serp-preview">
+          </div>
+
+          <div class="form-group">
+            <label for="input-sitename" class="form-label" style="font-weight: var(--font-weight-semibold);">Site / Brand Name:</label>
+            <input type="text" id="input-sitename" class="form-input" placeholder="Free Online Tools">
+          </div>
+
+          <!-- Rich Snippets Toggles -->
+          <div style="background: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border); display: flex; flex-direction: column; gap: var(--space-2);">
+            <div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); text-transform: uppercase; color: var(--color-text-muted);">Rich Snippet Features</div>
+            <label class="form-checkbox-label" style="font-size: var(--font-size-xs);">
+              <input type="checkbox" id="toggle-date">
+              <span>Show Publication Date in Snippet</span>
+            </label>
+            <label class="form-checkbox-label" style="font-size: var(--font-size-xs);">
+              <input type="checkbox" id="toggle-rating">
+              <span>Show Review Stars Rating (4.9 / 5)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Google SERP Simulator Do?</h2>
+        <p>
+          The <strong>Google SERP Simulator &amp; Snippet Preview Tool</strong> models the exact rendering behavior of Google search engine result pages. While many webmasters count characters, Google's desktop and mobile algorithms calculate cutoff thresholds strictly based on <strong>pixel width</strong> (typically ~600px for desktop page titles and ~960px for descriptions).
+        </p>
+        <p>
+          Because wide letters (like 'W' and 'M') take significantly more visual space than narrow letters (like 'l' and 'i'), character count alone can mislead you into publishing truncated headlines. This tool measures rendered font dimensions in real-time to alert you before your title ends in an unsightly ellipsis (<code>...</code>).
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Input Title &amp; Description:</strong> Type or paste your proposed title and meta description into the input fields, or click <strong>Sample Data</strong>.</li>
+          <li><strong>Monitor Pixel Gauges:</strong> Watch the live pixel width meter and color-coded progress bars. Green indicates safe display, yellow warns near threshold, and red indicates truncation.</li>
+          <li><strong>Toggle Viewports:</strong> Click <strong>Desktop View</strong> or <strong>Mobile View</strong> to simulate device-specific typography and card boundaries.</li>
+          <li><strong>Simulate Rich Snippets:</strong> Toggle publication dates and review star ratings to see how extra metadata compresses available description space.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Search CTR Optimization</h3>
+            <p>Ensure your primary value propositions and calls to action remain visible before Google's truncation boundary.</p>
+          </div>
+          <div class="card">
+            <h3>Brand Positioning</h3>
+            <p>Test where to place your brand name (front vs end) so your primary target keywords aren't obscured on small mobile screens.</p>
+          </div>
+          <div class="card">
+            <h3>Editorial Standards</h3>
+            <p>Provide content marketing and copywriting teams with a consistent standard for page title character and pixel budgets.</p>
+          </div>
+          <div class="card">
+            <h3>Schema / Rich Snippet Planning</h3>
+            <p>Visualize how structured review ratings or publication dates impact snippet readability in search results.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Optimized SERP Title &amp; Snippet:</div>
+          <pre class="example-pre">Title: Free PDF Merger — Combine PDF Files Online in Seconds (56 chars, 542px &lt; 600px)
+Description: Merge multiple PDF documents into a single file quickly and securely. 100% free, private browser-based processing with no watermarks. (134 chars, 830px &lt; 960px)
+Result: Zero truncation on Google Desktop and Mobile search indexes.</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Measurement Engine:</strong> Real-time off-screen Canvas 2D font metric calculation matching Google's standard 20px Arial font metrics.</li>
+          <li><strong>Desktop Limits:</strong> Title maximum ~600px width (approx. 55-60 characters); Description maximum ~960px width (approx. 155-160 characters).</li>
+          <li><strong>Mobile Limits:</strong> Container constraints adapt to mobile card view with responsive touch wrapping.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Google frequently runs A/B tests on font sizes, line heights, and snippet packaging. Furthermore, Google algorithms may dynamically replace your declared meta description with sentences extracted directly from your body text if it believes the body text provides a more relevant answer to a user's specific search term.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All snippet rendering and pixel calculations occur 100% inside your browser session. Your draft content, unpublished URLs, and SEO campaign titles are never uploaded to any server.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Why does Google truncate titles before 60 characters?</summary>
+            <div class="faq-answer">
+              <p>Google measures titles in <strong>pixels</strong>, not characters. A 55-character title packed with wide capital letters ("WWW", "MMM") can easily exceed 600 pixels and get truncated, whereas a 65-character title with narrow letters ("i", "l", "t") might fit completely.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Does Google always show my meta description?</summary>
+            <div class="faq-answer">
+              <p>No. Research shows that Google rewrites or replaces meta descriptions for approximately 60-70% of search queries depending on how closely the query matches on-page body copy.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What is a good snippet length?</summary>
+            <div class="faq-answer">
+              <p>Aim for 50–60 characters (approx. 520–580px) for titles, and 140–155 characters (approx. 850–920px) for descriptions to leave safety margin for dates or device differences.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/meta-tags-toolkit.html" class="related-tool-chip">
+            <div class="related-tool-title">Meta Tags Toolkit</div>
+            <div class="related-tool-desc">Generate HTML meta tags, Open Graph tags, and Twitter Cards.</div>
+          </a>
+          <a href="/tools/open-graph-previewer.html" class="related-tool-chip">
+            <div class="related-tool-title">Open Graph Previewer</div>
+            <div class="related-tool-desc">Preview social media sharing cards for Facebook, Twitter, and LinkedIn.</div>
+          </a>
+          <a href="/tools/text-size-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Text Size Calculator</div>
+            <div class="related-tool-desc">Measure character count, UTF-8 bytes, and reading time.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const inputTitle = document.getElementById('input-title');
+    const inputDesc = document.getElementById('input-desc');
+    const inputUrl = document.getElementById('input-url');
+    const inputSitename = document.getElementById('input-sitename');
+
+    const serpContainer = document.getElementById('serp-container');
+    const serpFavInitial = document.getElementById('serp-fav-initial');
+    const serpDisplaySite = document.getElementById('serp-display-site');
+    const serpDisplayUrl = document.getElementById('serp-display-url');
+    const serpDisplayTitle = document.getElementById('serp-display-title');
+    const serpDisplayStars = document.getElementById('serp-display-stars');
+    const serpDisplayDate = document.getElementById('serp-display-date');
+    const serpSnippetBody = document.getElementById('serp-snippet-body');
+
+    const titlePixelMeter = document.getElementById('title-pixel-meter');
+    const descPixelMeter = document.getElementById('desc-pixel-meter');
+    const titleProgressBar = document.getElementById('title-progress-bar');
+    const descProgressBar = document.getElementById('desc-progress-bar');
+
+    const toggleDate = document.getElementById('toggle-date');
+    const toggleRating = document.getElementById('toggle-rating');
+    const btnDesktop = document.getElementById('btn-desktop');
+    const btnMobile = document.getElementById('btn-mobile');
+    const btnSample = document.getElementById('btn-sample');
+
+    // Canvas font metric measuring
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    function measureTextWidth(text, font) {
+      ctx.font = font;
+      return Math.round(ctx.measureText(text).width);
+    }
+
+    let isMobile = false;
+    const TITLE_MAX_PX = 600;
+    const DESC_MAX_PX = 960;
+
+    function render() {
+      const title = inputTitle.value.trim() || 'Page Title Preview — Google Search Result';
+      const desc = inputDesc.value.trim() || 'This is an accurate simulation of your webpage description snippet as it would appear on Google search results.';
+      const url = inputUrl.value.trim() || 'https://example.com/tools/serp-preview';
+      const sitename = inputSitename.value.trim() || 'Free Online Tools';
+
+      // Favicon initial & site info
+      serpFavInitial.textContent = sitename.charAt(0).toUpperCase() || 'F';
+      serpDisplaySite.textContent = sitename;
+
+      // Clean URL into breadcrumb representation
+      let breadcrumb = url;
+      try {
+        const parsed = new URL(url.startsWith('http') ? url : 'https://' + url);
+        breadcrumb = parsed.origin + (parsed.pathname !== '/' ? ' › ' + parsed.pathname.split('/').filter(Boolean).join(' › ') : '');
+      } catch (e) {}
+      serpDisplayUrl.textContent = breadcrumb;
+
+      // Font measurement
+      const titlePx = measureTextWidth(title, '20px Arial, sans-serif');
+      const descPx = measureTextWidth(desc, '14px Arial, sans-serif');
+
+      // Title truncation logic
+      if (titlePx > TITLE_MAX_PX) {
+        let truncated = title;
+        while (measureTextWidth(truncated + ' ...', '20px Arial, sans-serif') > TITLE_MAX_PX && truncated.length > 0) {
+          truncated = truncated.slice(0, -1);
+        }
+        serpDisplayTitle.textContent = truncated + ' ...';
+      } else {
+        serpDisplayTitle.textContent = title;
+      }
+
+      // Title meter update
+      const titlePercent = Math.min(100, Math.round((titlePx / TITLE_MAX_PX) * 100));
+      titlePixelMeter.textContent = `${titlePx}px / ${TITLE_MAX_PX}px (${title.length} chars)`;
+      titleProgressBar.style.inlineSize = titlePercent + '%';
+      if (titlePx > TITLE_MAX_PX) {
+        titleProgressBar.style.backgroundColor = 'var(--color-danger)';
+        titlePixelMeter.style.color = 'var(--color-danger)';
+      } else if (titlePx > 540) {
+        titleProgressBar.style.backgroundColor = 'var(--color-warning)';
+        titlePixelMeter.style.color = 'var(--color-warning)';
+      } else {
+        titleProgressBar.style.backgroundColor = 'var(--color-success)';
+        titlePixelMeter.style.color = 'var(--color-text-muted)';
+      }
+
+      // Snippet truncation logic
+      if (descPx > DESC_MAX_PX) {
+        let truncated = desc;
+        while (measureTextWidth(truncated + ' ...', '14px Arial, sans-serif') > DESC_MAX_PX && truncated.length > 0) {
+          truncated = truncated.slice(0, -1);
+        }
+        serpSnippetBody.textContent = truncated + ' ...';
+      } else {
+        serpSnippetBody.textContent = desc;
+      }
+
+      // Description meter update
+      const descPercent = Math.min(100, Math.round((descPx / DESC_MAX_PX) * 100));
+      descPixelMeter.textContent = `${descPx}px / ${DESC_MAX_PX}px (${desc.length} chars)`;
+      descProgressBar.style.inlineSize = descPercent + '%';
+      if (descPx > DESC_MAX_PX) {
+        descProgressBar.style.backgroundColor = 'var(--color-danger)';
+        descPixelMeter.style.color = 'var(--color-danger)';
+      } else if (descPx > 860) {
+        descProgressBar.style.backgroundColor = 'var(--color-warning)';
+        descPixelMeter.style.color = 'var(--color-warning)';
+      } else {
+        descProgressBar.style.backgroundColor = 'var(--color-success)';
+        descPixelMeter.style.color = 'var(--color-text-muted)';
+      }
+
+      // Rich Snippets
+      serpDisplayDate.style.display = toggleDate.checked ? 'inline' : 'none';
+      serpDisplayStars.style.display = toggleRating.checked ? 'block' : 'none';
+    }
+
+    [inputTitle, inputDesc, inputUrl, inputSitename, toggleDate, toggleRating].forEach(el => {
+      el.addEventListener('input', render);
+      el.addEventListener('change', render);
+    });
+
+    btnDesktop.addEventListener('click', () => {
+      isMobile = false;
+      btnDesktop.classList.add('active');
+      btnMobile.classList.remove('active');
+      serpContainer.style.maxInlineSize = '650px';
+      serpContainer.style.borderRadius = 'var(--radius-md)';
+      render();
+    });
+
+    btnMobile.addEventListener('click', () => {
+      isMobile = true;
+      btnMobile.classList.add('active');
+      btnDesktop.classList.remove('active');
+      serpContainer.style.maxInlineSize = '380px';
+      serpContainer.style.borderRadius = '16px';
+      render();
+    });
+
+    btnSample.addEventListener('click', () => {
+      inputTitle.value = 'Free PDF Merger — Merge PDF Documents Online in Seconds';
+      inputDesc.value = 'Combine multiple PDF files into one clean document with our free online tool. Reorder pages, no registration required, and 100% private client-side processing.';
+      inputUrl.value = 'https://example.com/tools/pdf-merger';
+      inputSitename.value = 'Free Online Tools';
+      toggleDate.checked = true;
+      toggleRating.checked = true;
+      render();
+    });
+
+    // Run sample on load
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

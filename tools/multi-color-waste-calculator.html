@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Color Waste Calculator — Bambu AMS &amp; MMU Purge Costs</title>
+  <meta name="description" content="Calculate purge poop waste, prime tower weight, and extra costs for multi-color 3D prints (Bambu Lab AMS, Prusa MMU). Optimize batch plate layouts to cut waste by up to 80%.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/multi-color-waste-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/multi-color-waste-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/multi-color-waste-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Multi-Color Waste Calculator",
+    "description": "Calculate flush purge volume, prime tower scrap, and cost overhead for multi-color 3D prints with batch optimization insights.",
+    "url": "https://nexivo.com/tools/multi-color-waste-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why does multi-color 3D printing produce so much purge waste?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Single-nozzle multi-color systems (like Bambu AMS, Prusa MMU, Anycubic Kobra 3) must purge the previous melted color completely from the hotend nozzle before extruding the new color. For models with hundreds of layer color swaps, purge waste ('purge poop') often exceeds the actual weight of the printed object."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does printing multiple copies on the build plate reduce waste per part?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Color changes occur per layer, not per model. If you print 4 identical multi-color models on one build plate, the printer performs the exact same number of filament swaps and flushes as printing just 1 model. The purge waste is shared across all 4 parts, cutting waste per part by 75%."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the function of a prime tower?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A prime tower stabilizes nozzle chamber pressure and primes the molten extrusion stream immediately after a filament swap and nozzle wipe. This prevents under-extrusion and voids when the print head returns to the actual model surface."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I reduce flush volume in Bambu Studio or OrcaSlicer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In the slicer, open the 'Flushing Volumes' matrix and calibrate flush values. You can safely lower the flush multiplier from 1.0 to 0.65 for similar colors (e.g. green to blue), enable 'Flush into Objects' Infill or Supports, and only keep heavy flushes (350mm³+) for stark dark-to-white transitions."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#printing">3D Printing</a></li>
+      <li>/</li>
+      <li aria-current="page">Multi-Color Waste Calculator</li>
+    </nav>
+
+    <!-- 3D Printing Suite Navigation -->
+    <div class="printing-suite-nav">
+      <span class="printing-suite-label">3D Printing Suite:</span>
+      <a href="/tools/3d-print-cost-calculator.html" class="printing-pill">Cost &amp; Quote</a>
+      <a href="/tools/filament-remaining-calculator.html" class="printing-pill">Filament Remaining</a>
+      <a href="/tools/filament-length-calculator.html" class="printing-pill">Weight &harr; Length</a>
+      <a href="/tools/multi-color-waste-calculator.html" class="printing-pill active">Multi-Color Waste</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Multi-Color 3D Print Waste &amp; Cost Calculator</h1>
+      <p class="tool-header-desc">
+        Calculate nozzle flush waste ("purge poop"), prime tower weight, and extra financial overhead for Bambu AMS, Prusa MMU, and toolchanger prints, with build plate batching optimization.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Bambu AMS &amp; MMU Calibrated</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Batch Savings Matrix</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Input Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4);">
+        <div>
+          <label for="input-model-weight" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Model Net Weight (1 copy, g):</label>
+          <input type="number" id="input-model-weight" class="form-input" value="80" min="1" max="5000" step="1" style="font-weight: 700; font-size: var(--font-size-base); color: var(--color-primary);">
+          <small style="color: var(--color-text-muted); font-size: 11px;">Weight of finished printed object</small>
+        </div>
+
+        <div>
+          <label for="input-swaps-count" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Filament Swaps / Changes:</label>
+          <input type="number" id="input-swaps-count" class="form-input" value="420" min="0" max="10000" step="10" style="font-weight: 700; font-size: var(--font-size-base);">
+          <small style="color: var(--color-text-muted); font-size: 11px;">From slicer preview summary</small>
+        </div>
+
+        <div>
+          <label for="select-flush-preset" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Avg Flush Volume per Swap:</label>
+          <select id="select-flush-preset" class="form-select" style="font-size: var(--font-size-xs); padding-block: 0.45rem;">
+            <option value="120">Conservative (~120 mm³ / 0.65x)</option>
+            <option value="180" selected>Standard Bambu (~180 mm³ / 1.0x)</option>
+            <option value="250">Moderate Flushing (~250 mm³)</option>
+            <option value="350">Heavy Dark-to-White (~350 mm³)</option>
+            <option value="custom">Custom mm³ Volume</option>
+          </select>
+          <input type="number" id="input-custom-flush" class="form-input" value="180" min="10" max="1000" step="10" aria-label="Custom flush volume in cubic millimeters" style="display: none; margin-top: 0.25rem; font-size: var(--font-size-xs);">
+        </div>
+
+        <div>
+          <label for="input-tower-weight" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Prime Tower Weight (g):</label>
+          <input type="number" id="input-tower-weight" class="form-input" value="25" min="0" max="500" step="5" style="font-size: var(--font-size-sm);">
+          <small style="color: var(--color-text-muted); font-size: 11px;">Bambu default is 20g–35g</small>
+        </div>
+      </div>
+
+      <!-- Secondary Row: Material, Price, Plate Copies -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3);">
+        <div>
+          <label for="select-material" style="font-weight: 600; font-size: var(--font-size-xs); margin-bottom: 0.25rem; display: block;">Material &amp; Density:</label>
+          <select id="select-material" class="form-select" style="font-size: var(--font-size-xs); padding-block: 0.4rem;">
+            <option value="1.24" selected>PLA (1.24 g/cm³)</option>
+            <option value="1.27">PETG (1.27 g/cm³)</option>
+            <option value="1.04">ABS (1.04 g/cm³)</option>
+            <option value="1.07">ASA (1.07 g/cm³)</option>
+            <option value="1.21">TPU (1.21 g/cm³)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="input-spool-price" style="font-weight: 600; font-size: var(--font-size-xs); margin-bottom: 0.25rem; display: block;">Filament Price per kg ($):</label>
+          <input type="number" id="input-spool-price" class="form-input" value="22" min="1" step="1" style="font-size: var(--font-size-xs);">
+        </div>
+
+        <div>
+          <label for="input-plate-copies" style="font-weight: 600; font-size: var(--font-size-xs); margin-bottom: 0.25rem; display: block;">Copies on Build Plate:</label>
+          <input type="number" id="input-plate-copies" class="form-input" value="1" min="1" max="50" step="1" style="font-weight: 700; font-size: var(--font-size-xs); color: var(--color-primary);">
+          <small style="color: var(--color-text-muted); font-size: 11px;">Identical models printed together</small>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4);">
+        <button type="button" class="btn btn-primary" id="btn-copy-waste" style="flex: 1; min-width: 180px;">
+          📋 Copy Waste &amp; Batch Report
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-reset" style="min-width: 100px;">
+          Reset
+        </button>
+      </div>
+
+      <!-- Primary Output KPIs -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4);">
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Total Purge &amp; Tower Waste</div>
+          <div id="kpi-waste-g" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-danger); margin-top: 0.25rem;">118.7 g</div>
+          <div id="kpi-waste-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">93.7g purge + 25g tower</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Waste Percentage</div>
+          <div id="kpi-waste-pct" style="font-size: var(--font-size-xl); font-weight: 800; color: #f59e0b; margin-top: 0.25rem;">59.7%</div>
+          <div id="kpi-ratio-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">1.48g waste per 1g model</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Total Consumed Filament</div>
+          <div id="kpi-consumed-g" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-text); margin-top: 0.25rem;">198.7 g</div>
+          <div id="kpi-consumed-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">Total spool usage</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Wasted Filament Cost</div>
+          <div id="kpi-waste-cost" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-danger); margin-top: 0.25rem;">$2.61</div>
+          <div id="kpi-total-cost" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">Total print: $4.37</div>
+        </div>
+      </div>
+
+      <!-- Batch Optimization Insight Box -->
+      <div style="border: 2px solid var(--color-primary); border-radius: var(--border-radius-md); padding: var(--space-4); background: rgba(37, 99, 235, 0.02); margin-bottom: var(--space-4);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2); flex-wrap: wrap; gap: var(--space-2);">
+          <h3 style="font-size: var(--font-size-base); font-weight: 700; margin: 0; color: var(--color-primary); display: flex; align-items: center; gap: var(--space-2);">
+            <span>💡</span> Batch Optimization: Fill Your Build Plate
+          </h3>
+          <span class="badge badge-success">Smart Print Farm Secret</span>
+        </div>
+        <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0; margin-bottom: var(--space-3);">
+          <strong>Critical 3D Printing Fact:</strong> Color flush swaps happen <em>per layer</em>, NOT per model! If you print 4 copies together, the purge poop weight remains almost identical, but is divided across 4 parts.
+        </p>
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-xs); border: 1px solid var(--color-border); background: var(--color-bg);">
+            <thead>
+              <tr style="background: var(--color-bg-secondary); border-bottom: 2px solid var(--color-border);">
+                <th style="padding: 0.5rem 0.6rem;">Copies on Plate</th>
+                <th style="padding: 0.5rem 0.6rem;">Total Output Wt</th>
+                <th style="padding: 0.5rem 0.6rem;">Waste % of Total</th>
+                <th style="padding: 0.5rem 0.6rem;">Purge Waste per Part</th>
+                <th style="padding: 0.5rem 0.6rem;">Waste Cost per Part</th>
+                <th style="padding: 0.5rem 0.6rem; text-align: right;">Waste Reduction</th>
+              </tr>
+            </thead>
+            <tbody id="batch-comparison-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic Educational Guide Section -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Multi-Color Waste Calculator</strong> analyzes and minimizes the hidden material waste inherent in single-nozzle multi-color 3D printing systems (such as the <strong>Bambu Lab Automatic Material System (AMS)</strong>, <strong>Prusa Multi-Material Upgrade (MMU3)</strong>, and <strong>Anycubic Kobra 3 ACE Pro</strong>).
+      </p>
+      <p>
+        In single-nozzle multi-material printing, whenever the slicer calls for a different filament, the print head moves to the waste chute, cuts the old filament, extrudes a purge coil ("purge poop") to clear the melted color from the nozzle chamber, wipes the nozzle on a brush, and deposits a stabilizing layer on a prime tower before returning to the model. For detailed models with 400 to 1,000+ color changes, <strong>waste material can easily outweigh the actual model by 200% to 400%</strong>, turning a $5 print into a $20 print.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Slice Your Model in Multi-Color:</strong> In your slicer (Bambu Studio, OrcaSlicer, or PrusaSlicer), paint or assign colors to your 3D model and slice it.</li>
+        <li><strong>Input Preview Statistics:</strong> Look at the slicer's preview screen to find:
+          <ul>
+            <li><strong>Model Net Weight (g):</strong> The actual weight of your printed model.</li>
+            <li><strong>Filament Swaps / Changes:</strong> The total number of color retractions.</li>
+            <li><strong>Prime Tower Weight (g):</strong> The weight of the wipe tower.</li>
+          </ul>
+        </li>
+        <li><strong>Select Average Flush Volume:</strong> Choose your calibrated flush volume preset (~180 mm³ standard, ~120 mm³ conservative, or ~350 mm³ for black-to-white transitions).</li>
+        <li><strong>Analyze Waste Metrics:</strong> Inspect total wasted grams, waste percentage, and extra financial cost.</li>
+        <li><strong>Inspect the Batch Optimization Table:</strong> See how duplicating your model to print 2, 4, or 8 copies on the same build plate drastically reduces waste per finished piece.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        Purge waste math multiplies volumetric swaps by polymer density:
+      </p>
+      <ul>
+        <li>
+          <strong>Total Purge Volume ($V_{\text{purge}}$):</strong>
+          <br>
+          $$V_{\text{purge (mm}^3\text{)}} = N_{\text{swaps}} \times V_{\text{flush volume per swap}}$$
+        </li>
+        <li>
+          <strong>Purge Waste Mass ($W_{\text{purge}}$):</strong>
+          <br>
+          $$W_{\text{purge (g)}} = \frac{V_{\text{purge (mm}^3\text{)}}}{1000} \times \rho_{\text{density (g/cm}^3\text{)}}$$
+        </li>
+        <li>
+          <strong>Total Waste per Plate ($W_{\text{total waste}}$):</strong>
+          <br>
+          $$W_{\text{total waste}} = W_{\text{purge}} + W_{\text{prime tower}}$$
+        </li>
+        <li>
+          <strong>Total Consumed Filament on Plate ($W_{\text{consumed}}$):</strong>
+          <br>
+          $$W_{\text{consumed}} = (W_{\text{model}} \times K_{\text{copies}}) + W_{\text{total waste}}$$
+        </li>
+        <li>
+          <strong>Waste Percentage (%):</strong>
+          <br>
+          $$\text{Waste \%} = \frac{W_{\text{total waste}}}{W_{\text{consumed}}} \times 100\%$$
+        </li>
+        <li>
+          <strong>Batch Copy Waste Dilution per Unit:</strong>
+          <br>
+          $$\text{Waste per Unit} = \frac{W_{\text{total waste}}}{K_{\text{copies}}}$$
+          <em>(Because $W_{\text{total waste}}$ remains virtually constant across the plate, waste per part approaches zero as plate capacity increases).</em>
+        </li>
+      </ul>
+
+      <h2>Multi-Color Purge Volume Benchmarks</h2>
+      <p>
+        The table below provides recommended flushing volumes for common color transitions in Bambu Studio and OrcaSlicer:
+      </p>
+      <div style="overflow-x: auto; margin: var(--space-3) 0;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-sm); border: 1px solid var(--color-border);">
+          <thead>
+            <tr style="background: var(--color-bg-secondary); border-bottom: 2px solid var(--color-border);">
+              <th style="padding: 0.5rem 0.75rem;">Color Transition</th>
+              <th style="padding: 0.5rem 0.75rem;">Difficulty Level</th>
+              <th style="padding: 0.5rem 0.75rem;">Default Flush (mm³)</th>
+              <th style="padding: 0.5rem 0.75rem;">Calibrated Flush (mm³)</th>
+              <th style="padding: 0.5rem 0.75rem;">Purge Mass per Swap (PLA)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">White &rarr; Yellow / Light Gray</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 600;">Very Easy</td>
+              <td style="padding: 0.5rem 0.75rem;">140 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">90 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">0.11 g</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Red &rarr; Orange / Blue &rarr; Green</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 600;">Easy / Similar</td>
+              <td style="padding: 0.5rem 0.75rem;">180 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">120 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">0.15 g</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Black &rarr; Red / Dark Blue</td>
+              <td style="padding: 0.5rem 0.75rem;">Moderate</td>
+              <td style="padding: 0.5rem 0.75rem;">240 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">170 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">0.21 g</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border); background: rgba(239, 68, 68, 0.05);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Black / Dark Blue &rarr; Pure White</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-danger); font-weight: 700;">Critical (Staining)</td>
+              <td style="padding: 0.5rem 0.75rem;">420 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">320 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">0.40 g</td>
+            </tr>
+            <tr style="background: rgba(37, 99, 235, 0.05);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">PETG &harr; PLA (Support Interface)</td>
+              <td style="padding: 0.5rem 0.75rem; color: #f59e0b; font-weight: 600;">Material Incompatibility</td>
+              <td style="padding: 0.5rem 0.75rem;">380 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">280 mm³</td>
+              <td style="padding: 0.5rem 0.75rem;">0.35 g</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>Commercial Print Farm Quoting:</strong> Accurately calculating that a 4-color keychain with 300 filament swaps requires 85g of purge waste for a 20g part, preventing financial loss on bulk client orders.</li>
+        <li><strong>Batch Plate Multi-Object Optimization:</strong> Filling the build plate with 4 or 6 units instead of printing one at a time, instantly reducing purge waste per part from 120g down to 30g.</li>
+        <li><strong>"Flush into Infill" Evaluation:</strong> Determining how much purge poop can be purged internally inside the infill or supports to avoid purging into the waste chute.</li>
+        <li><strong>Filament Spool Sizing:</strong> Verifying that you have enough filament loaded across all AMS slots to complete both the model and the purge flushes.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        <strong>Scenario:</strong> Printing an 80g multi-color figurine with 420 filament swaps at standard 180 mm³ flush volume and a 25g prime tower.
+      </p>
+      <ul>
+        <li><strong>Purge Volume:</strong> $420 \times 180\text{ mm}^3 = 75,600\text{ mm}^3 = 75.6\text{ cm}^3$</li>
+        <li><strong>Purge Mass:</strong> $75.6\text{ cm}^3 \times 1.24\text{ g/cm}^3 = 93.7\text{ g}$</li>
+        <li><strong>Total Waste:</strong> $93.7\text{g} + 25\text{g tower} = 118.7\text{ g}$</li>
+        <li><strong>Total Consumed (1 copy):</strong> $80\text{g model} + 118.7\text{g waste} = 198.7\text{ g}$ ($59.7\%$ waste ratio).</li>
+        <li><strong>Batch Optimization (4 copies on plate):</strong> Total consumed is $(4 \times 80\text{g}) + 118.7\text{g} = 438.7\text{ g}$. Waste per part drops from $118.7\text{g}$ down to $29.7\text{g}$—a <strong>75% waste reduction per unit</strong>!</li>
+      </ul>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <ul>
+        <li><strong>Client-Side Processing:</strong> Calculations execute synchronously in local memory without transmitting model geometries or slicer parameters.</li>
+        <li><strong>Volumetric Density Scaling:</strong> Automatically recalculates purge mass for materials with differing densities (e.g. ABS 1.04 vs PETG 1.27).</li>
+        <li><strong>Linear Batch Extrapolation:</strong> Generates automated matrices for 1, 2, 4, and 8 copies to demonstrate real-time efficiency savings.</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        Prime tower weight increases slightly with model Z-height (more layers require a taller tower), but is independent of model width. Slicers calculate exact prime tower volume after slicing; entering your slicer's specific tower weight ensures maximum accuracy.
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        Your slicer parameters, model weights, and commercial pricing remain 100% confidential. No data is stored, cached, or transmitted to remote servers.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Can I turn off the prime tower completely to save filament?</h3>
+        <p>
+          Yes, in Bambu Studio and PrusaSlicer you can disable the prime tower. However, doing so increases the risk of surface pimples, oozing, and temporary under-extrusion on the outer wall immediately following a color swap.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>What is the "Flush into Infill" setting?</h3>
+        <p>
+          "Flush into Infill" directs the nozzle to deposit transition colors inside the model's hollow infill grid or support structures instead of purging out the chute. This can save 20% to 50% of purge waste, provided the model's outer walls are thick enough (at least 3–4 perimeters) so dark infill colors don't show through translucent white outer walls.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Does printing multi-color slow down printing speed?</h3>
+        <p>
+          Yes, dramatically. Each color swap takes roughly 45 to 90 seconds (retracting, cutting, pulling back, feeding new spool, purging, wiping, and resuming). A print with 500 swaps adds over 7 to 10 hours of mechanical tool-change time to the print job.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/3d-print-cost-calculator.html" class="related-tool-chip">💰 3D Print Cost Calculator</a>
+        <a href="/tools/filament-remaining-calculator.html" class="related-tool-chip">🧵 Filament Remaining Calculator</a>
+        <a href="/tools/filament-length-calculator.html" class="related-tool-chip">📏 Filament Length Calculator</a>
+        <a href="/tools/percentage-calculator.html" class="related-tool-chip">🔢 Percentage Calculator</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/printing-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // State
+      let lastResult = null;
+
+      // DOM Elements
+      const modelWeightInput = document.getElementById('input-model-weight');
+      const swapsInput = document.getElementById('input-swaps-count');
+      const flushPresetSelect = document.getElementById('select-flush-preset');
+      const customFlushInput = document.getElementById('input-custom-flush');
+      const towerWeightInput = document.getElementById('input-tower-weight');
+      const materialSelect = document.getElementById('select-material');
+      const spoolPriceInput = document.getElementById('input-spool-price');
+      const plateCopiesInput = document.getElementById('input-plate-copies');
+
+      const kpiWasteG = document.getElementById('kpi-waste-g');
+      const kpiWasteSub = document.getElementById('kpi-waste-sub');
+      const kpiWastePct = document.getElementById('kpi-waste-pct');
+      const kpiRatioSub = document.getElementById('kpi-ratio-sub');
+      const kpiConsumedG = document.getElementById('kpi-consumed-g');
+      const kpiConsumedSub = document.getElementById('kpi-consumed-sub');
+      const kpiWasteCost = document.getElementById('kpi-waste-cost');
+      const kpiTotalCost = document.getElementById('kpi-total-cost');
+
+      const batchTbody = document.getElementById('batch-comparison-tbody');
+      const btnCopyWaste = document.getElementById('btn-copy-waste');
+      const btnReset = document.getElementById('btn-reset');
+
+      // Flush preset toggle
+      flushPresetSelect.addEventListener('change', function() {
+        if (this.value === 'custom') {
+          customFlushInput.style.display = 'block';
+        } else {
+          customFlushInput.style.display = 'none';
+          customFlushInput.value = this.value;
+        }
+        calculate();
+      });
+      customFlushInput.addEventListener('input', calculate);
+
+      // Calculate
+      function calculate() {
+        const flushVol = flushPresetSelect.value === 'custom' ? parseFloat(customFlushInput.value) : parseFloat(flushPresetSelect.value);
+
+        const res = PrintingUtils.calculateMultiColorWaste({
+          modelWeightG: parseFloat(modelWeightInput.value) || 0,
+          swapsCount: parseInt(swapsInput.value, 10) || 0,
+          flushVolumeMm3: flushVol || 180,
+          primeTowerWeightG: parseFloat(towerWeightInput.value) || 0,
+          materialDensity: parseFloat(materialSelect.value) || 1.24,
+          costPerKg: parseFloat(spoolPriceInput.value) || 22,
+          copiesCount: parseInt(plateCopiesInput.value, 10) || 1,
+          currency: 'USD'
+        });
+
+        if (!res) return;
+        lastResult = res;
+
+        // KPIs
+        kpiWasteG.textContent = `${res.totalWasteWeightG} g`;
+        kpiWasteSub.textContent = `${res.purgeWasteWeightG}g purge + ${res.primeTowerWeightG}g tower`;
+
+        kpiWastePct.textContent = `${res.wastePercentage}%`;
+        kpiRatioSub.textContent = `${res.wasteRatio}g waste per 1g model`;
+
+        kpiConsumedG.textContent = `${res.totalConsumedG} g`;
+        kpiConsumedSub.textContent = `Total spool usage (${res.copies} unit${res.copies > 1 ? 's' : ''})`;
+
+        kpiWasteCost.textContent = `$${res.costs.wasteFilamentCost.toFixed(2)}`;
+        kpiTotalCost.textContent = `Total print: $${res.costs.totalFilamentCost.toFixed(2)}`;
+
+        // Batch Comparison Table
+        batchTbody.innerHTML = res.batchComparison.map(row => {
+          const isCurrent = row.copies === res.copies;
+          return `
+            <tr style="${isCurrent ? 'background: rgba(37, 99, 235, 0.08); font-weight: 700;' : ''}">
+              <td style="padding: 0.5rem 0.6rem;">
+                ${row.copies} unit${row.copies > 1 ? 's' : ''} ${isCurrent ? '<span style="font-size: 10px; color: var(--color-primary);">(Selected)</span>' : ''}
+              </td>
+              <td style="padding: 0.5rem 0.6rem;">${row.totalFinishedWeightG} g</td>
+              <td style="padding: 0.5rem 0.6rem;">${row.wastePct}%</td>
+              <td style="padding: 0.5rem 0.6rem; color: var(--color-danger);">${row.wasteGPerPart} g</td>
+              <td style="padding: 0.5rem 0.6rem;">$${row.wasteCostPerPart.toFixed(2)}</td>
+              <td style="padding: 0.5rem 0.6rem; text-align: right; color: var(--color-success); font-weight: 700;">
+                ${row.savingsPct > 0 ? `-${row.savingsPct}%` : 'Baseline'}
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // Copy Waste Report
+      btnCopyWaste.addEventListener('click', function() {
+        if (!lastResult) return;
+        const res = lastResult;
+        const lines = [
+          '🎨 MULTI-COLOR 3D PRINTING WASTE & COST REPORT',
+          '==============================================',
+          `Model Weight (Per Unit):    ${res.modelWeightG} g`,
+          `Filament Swaps / Changes:   ${res.swaps}`,
+          `Average Flush Volume:       ${res.flushVolumeMm3} mm³`,
+          `Copies on Build Plate:      ${res.copies}`,
+          '----------------------------------------------',
+          'WASTE & CONSUMPTION TOTALS:',
+          `  • Nozzle Purge Waste:     ${res.purgeWasteWeightG} g`,
+          `  • Prime Tower Scrap:      ${res.primeTowerWeightG} g`,
+          `  • Total Waste per Plate:  ${res.totalWasteWeightG} g`,
+          `  • Finished Models Weight: ${res.totalFinishedModelsWeightG} g`,
+          `  • Total Filament Used:    ${res.totalConsumedG} g`,
+          `  • Waste Percentage:       ${res.wastePercentage}% (${res.wasteRatio}g waste per 1g part)`,
+          '----------------------------------------------',
+          'FINANCIAL OVERHEAD:',
+          `  • Wasted Material Cost:   $${res.costs.wasteFilamentCost.toFixed(2)}`,
+          `  • Total Material Cost:    $${res.costs.totalFilamentCost.toFixed(2)}`,
+          `  • Waste Cost per Part:    $${res.costs.wasteCostPerPart.toFixed(2)}`,
+          '==============================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/multi-color-waste-calculator.html'
+        ];
+
+        PrintingUtils.copyTextToClipboard(lines.join('\n'), btnCopyWaste, 'Report Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        modelWeightInput.value = '80';
+        swapsInput.value = '420';
+        flushPresetSelect.value = '180';
+        customFlushInput.style.display = 'none';
+        customFlushInput.value = '180';
+        towerWeightInput.value = '25';
+        materialSelect.value = '1.24';
+        spoolPriceInput.value = '22';
+        plateCopiesInput.value = '1';
+        calculate();
+      });
+
+      // Bindings
+      [modelWeightInput, swapsInput, towerWeightInput, materialSelect, spoolPriceInput, plateCopiesInput].forEach(inp => {
+        inp.addEventListener('input', calculate);
+        inp.addEventListener('change', calculate);
+      });
+
+      // Init
+      calculate();
+    })();
+  </script>
+</body>
+</html>

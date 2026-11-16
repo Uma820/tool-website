@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixels to Inches Calculator – Print Size &amp; Canvas Dimensions at Any DPI</title>
+  <meta name="description" content="Convert pixels to inches, cm, and mm at any DPI. Or calculate required pixel canvas dimensions from print size with bleed allowance. Quick presets for posters, photos, and POD products.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/pixels-to-inches-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/pixels-to-inches-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/pixels-to-inches-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pixels to Inches & Print Size Calculator",
+    "description": "Convert pixels to inches, cm, and mm at any DPI. Calculate required pixel canvas dimensions from a target print size with bleed allowance. Quick presets for posters, photos, and POD products.",
+    "url": "https://nexivo.com/tools/pixels-to-inches-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I convert pixels to inches?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To convert pixels to inches, divide the pixel dimension by the DPI (dots per inch) of your target print. For example, a 3000-pixel-wide image at 300 DPI equals 10 inches (3000 ÷ 300 = 10). The formula is: Inches = Pixels ÷ DPI."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What DPI should I use for printing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For high-quality photo and professional printing, 300 DPI is the industry standard. For large-format prints (posters, banners) viewed from a distance, 150 DPI is acceptable. Screen displays typically use 72 or 96 DPI. Print-on-demand platforms like Printful and Printify require a minimum of 150 DPI, with 300 DPI strongly recommended."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is bleed allowance and how many pixels do I need to add?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bleed is extra artwork that extends beyond the final trim edge of a print, ensuring no white borders appear after cutting. Standard bleed is 0.125 inches (1/8\") on each side, so add 0.25 inches to both width and height. At 300 DPI, that means adding 75 pixels to each dimension. For a 300 DPI 8×10\" print with 1/8\" bleed, your canvas should be 2475×3075 pixels."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#pod">Print &amp; Design</a></li>
+      <li>/</li>
+      <li aria-current="page">Pixels to Inches Calculator</li>
+    </nav>
+
+    <!-- POD Suite Navigation -->
+    <div class="pod-suite-nav">
+      <span class="aquarium-suite-label">Print &amp; DPI Suite:</span>
+      <a href="/tools/image-dpi-checker.html" class="aquarium-pill">🖼️ DPI Checker</a>
+      <a href="/tools/pixels-to-inches-calculator.html" class="aquarium-pill active">📐 Pixels→Inches</a>
+      <a href="/tools/300-dpi-print-size-checker.html" class="aquarium-pill">🎯 POD Readiness</a>
+      <a href="/tools/print-resolution-report.html" class="aquarium-pill">📋 Etsy Report</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Pixels to Inches &amp; Print Size Calculator</h1>
+      <p class="tool-header-desc">
+        Convert pixel dimensions to real-world print sizes at any DPI — or calculate the exact canvas pixels needed for a target print size with bleed allowance. Essential for Canva, Photoshop, Procreate, Etsy sellers, and POD creators.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">No Upload Needed</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Bleed Support</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">POD Presets</span>
+      </div>
+    </div>
+
+    <!-- Main Tool Card -->
+    <div class="tool-card" style="margin-top: var(--space-4);">
+
+      <!-- Tab Switcher -->
+      <div style="display: flex; gap: var(--space-2); border-bottom: 2px solid var(--color-border); margin-bottom: var(--space-4);">
+        <button type="button" id="tab1Btn" class="tab-btn active" aria-controls="tab1Content" aria-selected="true" onclick="switchTab(1)">
+          📐 Pixels → Print Size
+        </button>
+        <button type="button" id="tab2Btn" class="tab-btn" aria-controls="tab2Content" aria-selected="false" onclick="switchTab(2)">
+          🎨 Print Size → Pixels
+        </button>
+      </div>
+
+      <!-- TAB 1: Pixels → Print Size -->
+      <div id="tab1Content" role="tabpanel">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-3);">
+          <div>
+            <label for="pxWidth" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Image Width (px)</label>
+            <input type="number" id="pxWidth" class="form-input" min="1" max="100000" placeholder="e.g. 4500" aria-label="Image width in pixels" oninput="calcTab1()">
+          </div>
+          <div>
+            <label for="pxHeight" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Image Height (px)</label>
+            <input type="number" id="pxHeight" class="form-input" min="1" max="100000" placeholder="e.g. 5400" aria-label="Image height in pixels" oninput="calcTab1()">
+          </div>
+          <div>
+            <label for="dpiSelect" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">DPI (Dots Per Inch)</label>
+            <select id="dpiSelect" class="form-select" aria-label="Target DPI" onchange="handleDpiChange()">
+              <option value="72">72 DPI (Screen / Web)</option>
+              <option value="96">96 DPI (Windows Screen)</option>
+              <option value="150">150 DPI (Large Format)</option>
+              <option value="300" selected>300 DPI (Photo Quality)</option>
+              <option value="600">600 DPI (Fine Art / Press)</option>
+              <option value="custom">Custom DPI...</option>
+            </select>
+          </div>
+          <div id="customDpiWrapper" style="display:none;">
+            <label for="customDpi" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Custom DPI Value</label>
+            <input type="number" id="customDpi" class="form-input" min="1" max="2400" placeholder="e.g. 240" aria-label="Custom DPI value" oninput="calcTab1()">
+          </div>
+        </div>
+
+        <!-- Results for Tab 1 -->
+        <div id="tab1Results" style="display:none;">
+          <!-- Summary line -->
+          <div id="tab1Summary" style="background: var(--color-primary); color: #fff; border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); margin-bottom: var(--space-3); font-size: var(--font-size-sm); font-weight: 600;"></div>
+
+          <!-- Result grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Width × Height (inches)</div>
+              <div id="resInches" style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);"></div>
+            </div>
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Width × Height (cm)</div>
+              <div id="resCm" style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);"></div>
+            </div>
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Width × Height (mm)</div>
+              <div id="resMm" style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);"></div>
+            </div>
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Megapixels</div>
+              <div id="resMp" style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);"></div>
+            </div>
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Aspect Ratio</div>
+              <div id="resRatio" style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);"></div>
+            </div>
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Print Quality</div>
+              <div id="resDpiBadge" style="font-size: var(--font-size-base); font-weight: 700;"></div>
+            </div>
+          </div>
+        </div>
+        <div id="tab1Placeholder" style="text-align:center; color: var(--color-text-muted); padding: var(--space-6) 0; font-size: var(--font-size-sm);">
+          Enter pixel dimensions above to see your print sizes instantly.
+        </div>
+      </div>
+
+      <!-- TAB 2: Print Size → Pixels -->
+      <div id="tab2Content" role="tabpanel" style="display:none;">
+        <div style="margin-bottom: var(--space-3);">
+          <label style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.4rem;">Input Units</label>
+          <div class="btn-group" role="group" aria-label="Unit toggle">
+            <button type="button" id="unitInchBtn" class="btn btn-secondary active" style="font-size: var(--font-size-xs); padding: 0.35rem 0.9rem;" onclick="setUnit('in')">Inches</button>
+            <button type="button" id="unitCmBtn" class="btn btn-secondary" style="font-size: var(--font-size-xs); padding: 0.35rem 0.9rem;" onclick="setUnit('cm')">Centimeters</button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-3);">
+          <div>
+            <label for="printWidth" id="printWidthLabel" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Print Width (inches)</label>
+            <input type="number" id="printWidth" class="form-input" min="0.1" step="0.01" placeholder="e.g. 8.5" aria-label="Print width" oninput="calcTab2()">
+          </div>
+          <div>
+            <label for="printHeight" id="printHeightLabel" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Print Height (inches)</label>
+            <input type="number" id="printHeight" class="form-input" min="0.1" step="0.01" placeholder="e.g. 11" aria-label="Print height" oninput="calcTab2()">
+          </div>
+          <div>
+            <label for="dpiSelect2" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Target Print DPI</label>
+            <select id="dpiSelect2" class="form-select" aria-label="Target print DPI" onchange="handleDpi2Change()">
+              <option value="150">150 DPI (Large Format)</option>
+              <option value="300" selected>300 DPI (Photo Quality)</option>
+              <option value="600">600 DPI (Fine Art / Press)</option>
+              <option value="custom">Custom DPI...</option>
+            </select>
+          </div>
+          <div id="customDpi2Wrapper" style="display:none;">
+            <label for="customDpi2" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Custom DPI</label>
+            <input type="number" id="customDpi2" class="form-input" min="1" max="2400" placeholder="e.g. 240" aria-label="Custom DPI for tab 2" oninput="calcTab2()">
+          </div>
+        </div>
+
+        <!-- Bleed toggle -->
+        <div style="margin-bottom: var(--space-3);">
+          <label style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.4rem;">Bleed Allowance (per side)</label>
+          <div class="btn-group" role="group" aria-label="Bleed allowance">
+            <button type="button" id="bleedNone" class="btn btn-secondary active" style="font-size: var(--font-size-xs); padding: 0.35rem 0.9rem;" aria-label="No bleed" onclick="setBleed(0)">None (0&quot;)</button>
+            <button type="button" id="bleedEighth" class="btn btn-secondary" style="font-size: var(--font-size-xs); padding: 0.35rem 0.9rem;" aria-label="1/8 inch bleed" onclick="setBleed(0.125)">1/8&quot; (0.125&quot;)</button>
+            <button type="button" id="bleedQuarter" class="btn btn-secondary" style="font-size: var(--font-size-xs); padding: 0.35rem 0.9rem;" aria-label="1/4 inch bleed" onclick="setBleed(0.25)">1/4&quot; (0.25&quot;)</button>
+          </div>
+        </div>
+
+        <!-- Results for Tab 2 -->
+        <div id="tab2Results" style="display:none;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Canvas (no bleed)</div>
+              <div id="resCanvasNoBleed" style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);"></div>
+            </div>
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Canvas (with bleed)</div>
+              <div id="resCanvasBleed" style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);"></div>
+            </div>
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Megapixels (w/ bleed)</div>
+              <div id="resCanvasMp" style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);"></div>
+            </div>
+            <div class="result-card" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.25rem;">Est. Uncompressed Size</div>
+              <div id="resFileSize" style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);"></div>
+            </div>
+          </div>
+          <!-- App tips -->
+          <div id="appTip" style="background: var(--color-bg-secondary); border-left: 3px solid var(--color-primary); border-radius: var(--radius-sm); padding: var(--space-3); font-size: var(--font-size-xs); color: var(--color-text-muted);"></div>
+        </div>
+        <div id="tab2Placeholder" style="text-align:center; color: var(--color-text-muted); padding: var(--space-6) 0; font-size: var(--font-size-sm);">
+          Enter print dimensions above to calculate the required canvas size.
+        </div>
+      </div>
+
+      <!-- Quick Canvas Presets (always visible) -->
+      <div style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding-top: var(--space-4);">
+        <div style="font-weight: 700; font-size: var(--font-size-sm); margin-bottom: var(--space-2);">⚡ Quick Canvas Presets <span style="font-weight:400; font-size: var(--font-size-xs); color: var(--color-text-muted);">(at 300 DPI — click to fill)</span></div>
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+          <button class="preset-pill" onclick="applyPreset(4,6,1200,1800)">4×6"</button>
+          <button class="preset-pill" onclick="applyPreset(5,7,1500,2100)">5×7"</button>
+          <button class="preset-pill" onclick="applyPreset(8,10,2400,3000)">8×10"</button>
+          <button class="preset-pill" onclick="applyPreset(11,14,3300,4200)">11×14"</button>
+          <button class="preset-pill" onclick="applyPreset(16,20,4800,6000)">16×20"</button>
+          <button class="preset-pill" onclick="applyPreset(18,24,5400,7200)">18×24"</button>
+          <button class="preset-pill" onclick="applyPreset(24,36,7200,10800)">24×36"</button>
+          <button class="preset-pill" onclick="applyPreset(8.27,11.69,2480,3508)">A4</button>
+          <button class="preset-pill" onclick="applyPreset(11.69,16.54,3508,4961)">A3</button>
+          <button class="preset-pill" onclick="applyPreset(16.54,23.39,4961,7016)">A2</button>
+          <button class="preset-pill" onclick="applyPreset(8.5,11,2550,3300)">US Letter</button>
+          <button class="preset-pill" onclick="applyPreset(15,18,4500,5400)">POD T-Shirt</button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-4);">
+        <button type="button" class="btn btn-secondary" onclick="resetAll()">🔄 Reset</button>
+        <button type="button" class="btn btn-primary" onclick="copyResults()">📋 Copy Results</button>
+      </div>
+    </div>
+    <!-- End Tool Card -->
+
+    <!-- SEO Documentation -->
+    <div class="tool-documentation" style="margin-top: var(--space-6);">
+
+      <h2>What This Tool Does</h2>
+      <p>The Pixels to Inches Calculator is a dual-mode print dimension tool that works entirely in your browser — no uploads, no accounts, no data sent anywhere. It has two calculation modes:</p>
+      <ul>
+        <li><strong>Pixels → Print Size:</strong> Enter your image's pixel dimensions and DPI to instantly see the real-world print size in inches, centimeters, and millimeters — plus megapixel count, aspect ratio, and a print quality badge.</li>
+        <li><strong>Print Size → Pixels:</strong> Enter your desired print size, DPI, and optional bleed allowance to get the exact pixel canvas dimensions needed for Canva, Photoshop, Procreate, or any POD platform.</li>
+      </ul>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li>Choose a tab: <strong>📐 Pixels → Print Size</strong> or <strong>🎨 Print Size → Pixels</strong>.</li>
+        <li><strong>Tab 1:</strong> Enter your image width and height in pixels, then select a DPI. Results update instantly.</li>
+        <li><strong>Tab 2:</strong> Choose your unit (inches or cm), enter the target print dimensions, select DPI, and choose a bleed allowance.</li>
+        <li>Use <strong>Quick Canvas Presets</strong> to auto-fill common print sizes at 300 DPI with one click.</li>
+        <li>Hit <strong>Copy Results</strong> to copy all output values to your clipboard.</li>
+      </ol>
+
+      <h2>The Core Formula: Pixels = Inches × DPI</h2>
+      <div style="background: var(--color-bg-secondary); border: 2px solid var(--color-primary); border-radius: var(--radius-md); padding: var(--space-4); text-align:center; margin: var(--space-3) 0;">
+        <div style="font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--color-primary); margin-bottom: var(--space-2);">Pixels = Inches × DPI</div>
+        <div style="font-size: var(--font-size-sm); color: var(--color-text-muted);">And conversely: <strong>Inches = Pixels ÷ DPI</strong></div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: var(--space-1);">Example: 3000 px ÷ 300 DPI = 10.00 inches</div>
+      </div>
+
+      <h2>Standard Canvas Size Reference Table</h2>
+      <div style="overflow-x: auto;">
+        <table style="width:100%; border-collapse: collapse; font-size: var(--font-size-xs);">
+          <thead>
+            <tr style="background: var(--color-bg-secondary);">
+              <th style="padding: 0.5rem; border: 1px solid var(--color-border); text-align:left;">Print Size</th>
+              <th style="padding: 0.5rem; border: 1px solid var(--color-border);">150 DPI (px)</th>
+              <th style="padding: 0.5rem; border: 1px solid var(--color-border);">300 DPI (px)</th>
+              <th style="padding: 0.5rem; border: 1px solid var(--color-border);">Est. File Size (300 DPI, RGB)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding: 0.5rem; border: 1px solid var(--color-border);">4×6"</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">600×900</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">1200×1800</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">6.2 MB</td></tr>
+            <tr style="background:var(--color-bg-secondary);"><td style="padding:0.5rem;border:1px solid var(--color-border);">5×7"</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">750×1050</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">1500×2100</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">9.0 MB</td></tr>
+            <tr><td style="padding:0.5rem;border:1px solid var(--color-border);">8×10"</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">1200×1500</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">2400×3000</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">20.6 MB</td></tr>
+            <tr style="background:var(--color-bg-secondary);"><td style="padding:0.5rem;border:1px solid var(--color-border);">11×14"</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">1650×2100</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">3300×4200</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">39.6 MB</td></tr>
+            <tr><td style="padding:0.5rem;border:1px solid var(--color-border);">16×20"</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">2400×3000</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">4800×6000</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">82.4 MB</td></tr>
+            <tr style="background:var(--color-bg-secondary);"><td style="padding:0.5rem;border:1px solid var(--color-border);">18×24"</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">2700×3600</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">5400×7200</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">111 MB</td></tr>
+            <tr><td style="padding:0.5rem;border:1px solid var(--color-border);">24×36"</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">3600×5400</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">7200×10800</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">222 MB</td></tr>
+            <tr style="background:var(--color-bg-secondary);"><td style="padding:0.5rem;border:1px solid var(--color-border);">A4 (8.27×11.69")</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">1240×1754</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">2480×3508</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">24.9 MB</td></tr>
+            <tr><td style="padding:0.5rem;border:1px solid var(--color-border);">US Letter (8.5×11")</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">1275×1650</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">2550×3300</td><td style="padding:0.5rem;border:1px solid var(--color-border);text-align:center;">24.1 MB</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>What Is Bleed Allowance and When Do I Need It?</h2>
+      <p>Bleed is extra artwork that extends 1/8" (0.125") or 1/4" (0.25") beyond the final trim edge of your print. When a printer cuts stacks of paper, the blade can shift slightly — bleed ensures your design fills the page edge-to-edge with no white gaps.</p>
+      <ul>
+        <li><strong>When you need bleed:</strong> Commercial printing, POD products (Printful, Printify, Redbubble), greeting cards, flyers, business cards, and any design with a full-bleed background.</li>
+        <li><strong>When you don't need it:</strong> Digital-only products (PDF downloads, Etsy digital art files), screen mockups, or when the printer specifically says no bleed required.</li>
+        <li><strong>Standard bleed:</strong> 1/8" (0.125") per side = 0.25" total added to each dimension. At 300 DPI that's 75 pixels per side.</li>
+      </ul>
+
+      <h2>Common Use Cases</h2>
+      <ul>
+        <li><strong>Canva:</strong> Use Tab 2 to find your custom canvas size in pixels. Set it in Canva's "Custom Size" dialog.</li>
+        <li><strong>Photoshop / GIMP:</strong> File → New → enter the pixel dimensions from Tab 2. Set resolution to your DPI.</li>
+        <li><strong>Procreate:</strong> New Canvas → Custom Canvas → enter width, height in pixels and resolution (DPI).</li>
+        <li><strong>Etsy Digital Downloads:</strong> Most buyers expect files at 300 DPI. Use Tab 2 to calculate the pixel dimensions for each ratio you offer.</li>
+        <li><strong>Print-on-Demand (Printful, Printify, Merch by Amazon):</strong> Use Tab 2 with 1/8" bleed and 300 DPI to get the exact canvas dimensions required by your chosen product.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p><strong>Scenario:</strong> A photographer has a 4500×5400 px image and wants to know what size it prints at 300 DPI.</p>
+      <ul>
+        <li>Width: 4500 ÷ 300 = <strong>15.00 inches</strong> (38.10 cm)</li>
+        <li>Height: 5400 ÷ 300 = <strong>18.00 inches</strong> (45.72 cm)</li>
+        <li>Megapixels: 4500 × 5400 / 1,000,000 = <strong>24.3 MP</strong></li>
+        <li>Aspect Ratio: 4500:5400 → GCD = 900 → <strong>5:6</strong></li>
+        <li>DPI Badge: 300 DPI → <strong>Crisp ✅</strong></li>
+      </ul>
+
+      <h2>Technical Specifications</h2>
+      <ul>
+        <li><strong>Pixel range:</strong> 1 to 100,000 px per dimension</li>
+        <li><strong>DPI presets:</strong> 72, 96, 150, 300, 600 — plus custom (1–2400)</li>
+        <li><strong>Unit conversions:</strong> 1 inch = 2.54 cm = 25.4 mm (exact)</li>
+        <li><strong>Bleed options:</strong> None, 1/8" (0.125"), 1/4" (0.25")</li>
+        <li><strong>File size estimate:</strong> Uncompressed RGB = W × H × 3 bytes ÷ 1,048,576 (reported in MB)</li>
+        <li><strong>Processing:</strong> 100% client-side JavaScript — instant results, no server round-trips</li>
+        <li><strong>Supported browsers:</strong> Chrome 90+, Firefox 90+, Safari 14+, Edge 90+</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>This calculator computes exact geometric pixel and physical dimensions based on mathematical conversions. It does not inspect individual raster image files or evaluate sub-pixel optical sharpness. Actual perceived print sharpness also depends on the physical printer technology (halftone screens, inkjet droplet dispersion) and the viewing distance of the finished printed artwork.</p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>This tool runs entirely in your browser. No pixel data, no image files, no print dimensions — nothing you enter is ever transmitted to any server. No cookies are set by this tool. No analytics track your inputs. Your design dimensions stay completely private on your device.</p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item" style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-2);">
+        <div style="font-weight: 700; margin-bottom: 0.5rem;">How do I convert pixels to inches?</div>
+        <p style="margin:0; font-size: var(--font-size-sm); color: var(--color-text-muted);">Divide the pixel dimension by the DPI. Example: 3000 pixels at 300 DPI = 3000 ÷ 300 = 10.00 inches. Use the formula <strong>Inches = Pixels ÷ DPI</strong>.</p>
+      </div>
+      <div class="faq-item" style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-2);">
+        <div style="font-weight: 700; margin-bottom: 0.5rem;">What DPI should I use for Printful or Printify?</div>
+        <p style="margin:0; font-size: var(--font-size-sm); color: var(--color-text-muted);">Printful and Printify both recommend <strong>300 DPI</strong> for the sharpest results. The minimum they accept is typically 150 DPI, but anything below 300 may appear pixelated or blurry, especially on close-inspection products like mugs and phone cases.</p>
+      </div>
+      <div class="faq-item" style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-2);">
+        <div style="font-weight: 700; margin-bottom: 0.5rem;">What pixel size is 8×10 at 300 DPI?</div>
+        <p style="margin:0; font-size: var(--font-size-sm); color: var(--color-text-muted);">An 8×10 inch print at 300 DPI requires a canvas of <strong>2400×3000 pixels</strong>. With standard 1/8" bleed on all sides, the canvas becomes 2475×3075 pixels. With 1/4" bleed, it becomes 2550×3150 pixels.</p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+        <a href="/tools/image-dpi-checker.html" class="related-tool-chip" style="display:inline-flex; align-items:center; gap:0.5rem; padding: 0.4rem 0.9rem; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 999px; text-decoration:none; font-size: var(--font-size-xs); font-weight:600; color: var(--color-text);">
+          🖼️ Image DPI &amp; Metadata Checker
+        </a>
+        <a href="/tools/300-dpi-print-size-checker.html" class="related-tool-chip" style="display:inline-flex; align-items:center; gap:0.5rem; padding: 0.4rem 0.9rem; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 999px; text-decoration:none; font-size: var(--font-size-xs); font-weight:600; color: var(--color-text);">
+          🎯 300 DPI POD Product Readiness Checker
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // ─── State ────────────────────────────────────────────────────────────────
+    let activeTab = 1;
+    let unitMode = 'in';   // 'in' | 'cm'
+    let bleedValue = 0;    // inches per side
+
+    // ─── Utility ──────────────────────────────────────────────────────────────
+    function pixelsToInches(px, dpi) { return px / dpi; }
+    function inchesToCm(i) { return i * 2.54; }
+    function inchesToMm(i) { return i * 25.4; }
+
+    function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+    function ratio(w, h) {
+      const rw = Math.round(w), rh = Math.round(h);
+      if (!rw || !rh) return '—';
+      const d = gcd(rw, rh);
+      return (rw / d) + ':' + (rh / d);
+    }
+
+    function getDpi1() {
+      const sel = document.getElementById('dpiSelect').value;
+      if (sel === 'custom') {
+        const v = parseFloat(document.getElementById('customDpi').value);
+        return isNaN(v) || v <= 0 ? null : v;
+      }
+      return parseFloat(sel);
+    }
+
+    function getDpi2() {
+      const sel = document.getElementById('dpiSelect2').value;
+      if (sel === 'custom') {
+        const v = parseFloat(document.getElementById('customDpi2').value);
+        return isNaN(v) || v <= 0 ? null : v;
+      }
+      return parseFloat(sel);
+    }
+
+    function dpiBadge(dpi) {
+      if (dpi >= 300) return '<span style="color:#16a34a; font-weight:700;">✅ Crisp (≥300 DPI)</span>';
+      if (dpi >= 150) return '<span style="color:#d97706; font-weight:700;">⚠️ Good (150–299 DPI)</span>';
+      return '<span style="color:#dc2626; font-weight:700;">❌ Low (&lt;150 DPI)</span>';
+    }
+
+    // ─── Tab 1 Calculation ────────────────────────────────────────────────────
+    window.calcTab1 = function() {
+      const w = parseFloat(document.getElementById('pxWidth').value);
+      const h = parseFloat(document.getElementById('pxHeight').value);
+      const dpi = getDpi1();
+
+      const resDiv = document.getElementById('tab1Results');
+      const placeholder = document.getElementById('tab1Placeholder');
+
+      if (!w || !h || !dpi || w <= 0 || h <= 0) {
+        resDiv.style.display = 'none';
+        placeholder.style.display = 'block';
+        return;
+      }
+
+      const wIn = pixelsToInches(w, dpi);
+      const hIn = pixelsToInches(h, dpi);
+      const wCm = inchesToCm(wIn);
+      const hCm = inchesToCm(hIn);
+      const wMm = inchesToMm(wIn);
+      const hMm = inchesToMm(hIn);
+      const mp = (w * h / 1_000_000).toFixed(2);
+
+      document.getElementById('resInches').textContent = wIn.toFixed(2) + '" × ' + hIn.toFixed(2) + '"';
+      document.getElementById('resCm').textContent = wCm.toFixed(2) + ' × ' + hCm.toFixed(2) + ' cm';
+      document.getElementById('resMm').textContent = wMm.toFixed(1) + ' × ' + hMm.toFixed(1) + ' mm';
+      document.getElementById('resMp').textContent = mp + ' MP';
+      document.getElementById('resRatio').textContent = ratio(w, h);
+      document.getElementById('resDpiBadge').innerHTML = dpiBadge(dpi);
+
+      document.getElementById('tab1Summary').textContent =
+        'At ' + dpi + ' DPI, your ' + Math.round(w) + '×' + Math.round(h) + 'px image prints at ' +
+        wIn.toFixed(2) + '" × ' + hIn.toFixed(2) + '" (' +
+        wCm.toFixed(2) + ' × ' + hCm.toFixed(2) + ' cm)';
+
+      placeholder.style.display = 'none';
+      resDiv.style.display = 'block';
+    };
+
+    // ─── Tab 2 Calculation ────────────────────────────────────────────────────
+    window.calcTab2 = function() {
+      let inputW = parseFloat(document.getElementById('printWidth').value);
+      let inputH = parseFloat(document.getElementById('printHeight').value);
+      const dpi = getDpi2();
+
+      const resDiv = document.getElementById('tab2Results');
+      const placeholder = document.getElementById('tab2Placeholder');
+
+      if (!inputW || !inputH || !dpi || inputW <= 0 || inputH <= 0) {
+        resDiv.style.display = 'none';
+        placeholder.style.display = 'block';
+        return;
+      }
+
+      // Convert cm to inches if needed
+      let inchW = unitMode === 'cm' ? inputW / 2.54 : inputW;
+      let inchH = unitMode === 'cm' ? inputH / 2.54 : inputH;
+
+      // Canvas without bleed
+      const pxWNoBleed = Math.ceil(inchW * dpi);
+      const pxHNoBleed = Math.ceil(inchH * dpi);
+
+      // Canvas with bleed
+      const pxW = Math.ceil((inchW + bleedValue * 2) * dpi);
+      const pxH = Math.ceil((inchH + bleedValue * 2) * dpi);
+
+      const mp = (pxW * pxH / 1_000_000).toFixed(2);
+      const sizeMB = (pxW * pxH * 3 / 1_048_576).toFixed(1);
+
+      document.getElementById('resCanvasNoBleed').textContent = pxWNoBleed + ' × ' + pxHNoBleed + ' px';
+      document.getElementById('resCanvasBleed').textContent = bleedValue > 0
+        ? pxW + ' × ' + pxH + ' px'
+        : pxWNoBleed + ' × ' + pxHNoBleed + ' px (no bleed)';
+      document.getElementById('resCanvasMp').textContent = mp + ' MP';
+      document.getElementById('resFileSize').textContent = sizeMB + ' MB';
+
+      // App tips
+      const tipEl = document.getElementById('appTip');
+      tipEl.innerHTML =
+        '<strong>💡 App Tips:</strong> ' +
+        'In <strong>Canva</strong>, go to Create a design → Custom size → enter <strong>' + pxW + ' × ' + pxH + ' px</strong>. ' +
+        'In <strong>Photoshop</strong>, File → New → Width: <strong>' + pxW + 'px</strong>, Height: <strong>' + pxH + 'px</strong>, Resolution: <strong>' + dpi + ' PPI</strong>. ' +
+        'In <strong>Procreate</strong>, New Canvas → Custom Canvas → enter the same pixel values and set DPI to <strong>' + dpi + '</strong>.';
+
+      placeholder.style.display = 'none';
+      resDiv.style.display = 'block';
+    };
+
+    // ─── DPI select handlers ──────────────────────────────────────────────────
+    window.handleDpiChange = function() {
+      const val = document.getElementById('dpiSelect').value;
+      document.getElementById('customDpiWrapper').style.display = val === 'custom' ? '' : 'none';
+      calcTab1();
+    };
+
+    window.handleDpi2Change = function() {
+      const val = document.getElementById('dpiSelect2').value;
+      document.getElementById('customDpi2Wrapper').style.display = val === 'custom' ? '' : 'none';
+      calcTab2();
+    };
+
+    // ─── Tab switch ───────────────────────────────────────────────────────────
+    window.switchTab = function(n) {
+      activeTab = n;
+      document.getElementById('tab1Content').style.display = n === 1 ? '' : 'none';
+      document.getElementById('tab2Content').style.display = n === 2 ? '' : 'none';
+      document.getElementById('tab1Btn').classList.toggle('active', n === 1);
+      document.getElementById('tab2Btn').classList.toggle('active', n === 2);
+      document.getElementById('tab1Btn').setAttribute('aria-selected', n === 1 ? 'true' : 'false');
+      document.getElementById('tab2Btn').setAttribute('aria-selected', n === 2 ? 'true' : 'false');
+    };
+
+    // ─── Unit toggle ──────────────────────────────────────────────────────────
+    window.setUnit = function(u) {
+      unitMode = u;
+      document.getElementById('unitInchBtn').classList.toggle('active', u === 'in');
+      document.getElementById('unitCmBtn').classList.toggle('active', u === 'cm');
+      const label = u === 'cm' ? 'cm' : 'inches';
+      document.getElementById('printWidthLabel').textContent = 'Print Width (' + label + ')';
+      document.getElementById('printHeightLabel').textContent = 'Print Height (' + label + ')';
+      calcTab2();
+    };
+
+    // ─── Bleed toggle ─────────────────────────────────────────────────────────
+    window.setBleed = function(val) {
+      bleedValue = val;
+      ['bleedNone','bleedEighth','bleedQuarter'].forEach(id => {
+        document.getElementById(id).classList.remove('active');
+      });
+      if (val === 0) document.getElementById('bleedNone').classList.add('active');
+      else if (val === 0.125) document.getElementById('bleedEighth').classList.add('active');
+      else if (val === 0.25) document.getElementById('bleedQuarter').classList.add('active');
+      calcTab2();
+    };
+
+    // ─── Presets ──────────────────────────────────────────────────────────────
+    window.applyPreset = function(inchW, inchH, pxW, pxH) {
+      switchTab(2);
+      setUnit('in');
+      document.getElementById('printWidth').value = inchW;
+      document.getElementById('printHeight').value = inchH;
+      // Set DPI to 300
+      document.getElementById('dpiSelect2').value = '300';
+      document.getElementById('customDpi2Wrapper').style.display = 'none';
+      setBleed(0);
+      calcTab2();
+    };
+
+    // ─── Reset ────────────────────────────────────────────────────────────────
+    window.resetAll = function() {
+      // Tab 1
+      document.getElementById('pxWidth').value = '';
+      document.getElementById('pxHeight').value = '';
+      document.getElementById('dpiSelect').value = '300';
+      document.getElementById('customDpiWrapper').style.display = 'none';
+      document.getElementById('customDpi').value = '';
+      document.getElementById('tab1Results').style.display = 'none';
+      document.getElementById('tab1Placeholder').style.display = 'block';
+      // Tab 2
+      document.getElementById('printWidth').value = '';
+      document.getElementById('printHeight').value = '';
+      document.getElementById('dpiSelect2').value = '300';
+      document.getElementById('customDpi2Wrapper').style.display = 'none';
+      document.getElementById('customDpi2').value = '';
+      document.getElementById('tab2Results').style.display = 'none';
+      document.getElementById('tab2Placeholder').style.display = 'block';
+      setUnit('in');
+      setBleed(0);
+    };
+
+    // ─── Copy Results ─────────────────────────────────────────────────────────
+    window.copyResults = function() {
+      let text = '';
+      if (activeTab === 1) {
+        const w = document.getElementById('pxWidth').value;
+        const h = document.getElementById('pxHeight').value;
+        if (!w || !h) { alert('No results to copy. Enter pixel dimensions first.'); return; }
+        text = [
+          'Pixels to Print Size Results',
+          '─────────────────────────────',
+          'Size (inches): ' + document.getElementById('resInches').textContent,
+          'Size (cm): ' + document.getElementById('resCm').textContent,
+          'Size (mm): ' + document.getElementById('resMm').textContent,
+          'Megapixels: ' + document.getElementById('resMp').textContent,
+          'Aspect Ratio: ' + document.getElementById('resRatio').textContent,
+          document.getElementById('tab1Summary').textContent
+        ].join('\n');
+      } else {
+        const w = document.getElementById('printWidth').value;
+        const h = document.getElementById('printHeight').value;
+        if (!w || !h) { alert('No results to copy. Enter print dimensions first.'); return; }
+        text = [
+          'Print Size to Canvas Pixels Results',
+          '─────────────────────────────────────',
+          'Canvas (no bleed): ' + document.getElementById('resCanvasNoBleed').textContent,
+          'Canvas (with bleed): ' + document.getElementById('resCanvasBleed').textContent,
+          'Megapixels: ' + document.getElementById('resCanvasMp').textContent,
+          'Est. file size: ' + document.getElementById('resFileSize').textContent
+        ].join('\n');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          alert('Results copied to clipboard!');
+        }).catch(function() { fallbackCopy(text); });
+      } else { fallbackCopy(text); }
+    };
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); alert('Results copied to clipboard!'); }
+      catch (e) { alert('Copy failed. Please select and copy manually.'); }
+      document.body.removeChild(ta);
+    }
+
+  })();
+  </script>
+
+  <style>
+    /* Tab buttons */
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 0.6rem 1.1rem;
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      margin-bottom: -2px;
+    }
+    .tab-btn:hover { color: var(--color-primary); }
+    .tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* Preset pill buttons */
+    .preset-pill {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--color-text);
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .preset-pill:hover {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+
+    /* POD suite nav */
+    .pod-suite-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-xs);
+    }
+
+    /* Button group active */
+    .btn-group .btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    /* tool-card if not in global CSS */
+    .tool-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg, 12px);
+      padding: var(--space-5);
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+
+    /* Documentation section */
+    .tool-documentation h2 {
+      font-size: var(--font-size-base);
+      font-weight: 700;
+      margin-top: var(--space-5);
+      margin-bottom: var(--space-2);
+    }
+    .tool-documentation p, .tool-documentation li {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+    .tool-documentation ul, .tool-documentation ol {
+      padding-left: 1.25rem;
+    }
+  </style>
+</body>
+</html>

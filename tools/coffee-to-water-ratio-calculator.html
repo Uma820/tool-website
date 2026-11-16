@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee-to-Water Ratio Calculator — Golden Cup &amp; Brew Presets</title>
+  <meta name="description" content="Calculate the perfect coffee-to-water ratio for Pour-Over, French Press, AeroPress, Drip, Cold Brew, and Espresso. Features step-by-step bloom timing and strength tuning.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/coffee-to-water-ratio-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/coffee-to-water-ratio-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/coffee-to-water-ratio-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Coffee-to-Water Ratio Calculator",
+    "description": "Calculate exact coffee grounds and water weights by brew method (Pour-Over, French Press, AeroPress, Espresso, Cold Brew) or cup count with bloom guide.",
+    "url": "https://nexivo.com/tools/coffee-to-water-ratio-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the SCA Golden Cup Standard ratio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Specialty Coffee Association (SCA) Golden Cup Standard defines 55 grams of coffee per 1,000 milliliters of water (a ratio of 1:18.18) as the benchmark for optimal total dissolved solids (TDS between 1.15% and 1.35%). For standard specialty manual brews, most baristas prefer slightly richer ratios between 1:15 and 1:16.6."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is blooming important during coffee extraction?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Freshly roasted coffee beans contain trapped carbon dioxide (CO2). When hot water hits the grounds, CO2 escapes rapidly. Blooming with 2 to 3 times the coffee weight in water for 30 to 45 seconds degasses the bed, preventing channeling and allowing even saturation for sweet, balanced extraction."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can 1 gram of water equal 1 milliliter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Pure water at brewing temperature has a density very close to 1.00 g/ml (approx 0.96 to 0.98 g/ml at 93°C). In coffee preparation, 1 gram of water on a digital scale is universally treated as 1 milliliter."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does grind size affect brewing ratio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Grind size controls surface area and contact time. Finer grinds (espresso, AeroPress) extract compounds much faster and require shorter contact times or tighter ratios (1:2 to 1:14). Coarser grinds (French Press, Cold Brew) require longer steep times and benefit from 1:15 or 1:5 concentrate ratios."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#food">Food &amp; Baking</a></li>
+      <li>/</li>
+      <li aria-current="page">Coffee-to-Water Ratio Calculator</li>
+    </nav>
+
+    <!-- Baking Suite Navigation -->
+    <div class="baking-suite-nav">
+      <span class="baking-suite-label">Baking Suite:</span>
+      <a href="/tools/pizza-dough-calculator.html" class="baking-pill">Pizza Dough</a>
+      <a href="/tools/sourdough-hydration-calculator.html" class="baking-pill">Sourdough Hydration</a>
+      <a href="/tools/bakers-percentage-calculator.html" class="baking-pill">Baker's %</a>
+      <a href="/tools/bread-recipe-scaler.html" class="baking-pill">Recipe Scaler</a>
+      <a href="/tools/coffee-to-water-ratio-calculator.html" class="baking-pill active">Coffee Ratios</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Coffee-to-Water Ratio Calculator</h1>
+      <p class="tool-header-desc">
+        Calculate precise coffee grounds and water weights for Pour-Over, French Press, AeroPress, Auto-Drip, Cold Brew, and Espresso with interactive bloom guides and strength calibration.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">SCA Golden Cup Standard</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Precision Bloom Guide</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Brew Method Selector Grid -->
+      <div style="margin-bottom: var(--space-4);">
+        <label style="font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-2); display: block;">Select Brew Method Preset</label>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: var(--space-2);">
+          <button type="button" class="btn btn-secondary brew-method-btn active" data-method="pourover" style="padding: 0.6rem 0.5rem; text-align: center; border-radius: var(--border-radius-md);">
+            <div style="font-size: 1.25rem; margin-bottom: 0.2rem;">☕</div>
+            <div style="font-weight: 700; font-size: var(--font-size-xs);">Pour-Over</div>
+            <div style="font-size: 11px; color: var(--color-text-muted);">1:16 (V60/Chemex)</div>
+          </button>
+          <button type="button" class="btn btn-secondary brew-method-btn" data-method="frenchpress" style="padding: 0.6rem 0.5rem; text-align: center; border-radius: var(--border-radius-md);">
+            <div style="font-size: 1.25rem; margin-bottom: 0.2rem;">🫖</div>
+            <div style="font-weight: 700; font-size: var(--font-size-xs);">French Press</div>
+            <div style="font-size: 11px; color: var(--color-text-muted);">1:15 (Full Immersion)</div>
+          </button>
+          <button type="button" class="btn btn-secondary brew-method-btn" data-method="drip" style="padding: 0.6rem 0.5rem; text-align: center; border-radius: var(--border-radius-md);">
+            <div style="font-size: 1.25rem; margin-bottom: 0.2rem;">⚡</div>
+            <div style="font-weight: 700; font-size: var(--font-size-xs);">Auto Drip</div>
+            <div style="font-size: 11px; color: var(--color-text-muted);">1:16.5 (Standard)</div>
+          </button>
+          <button type="button" class="btn btn-secondary brew-method-btn" data-method="aeropress" style="padding: 0.6rem 0.5rem; text-align: center; border-radius: var(--border-radius-md);">
+            <div style="font-size: 1.25rem; margin-bottom: 0.2rem;">🧪</div>
+            <div style="font-weight: 700; font-size: var(--font-size-xs);">AeroPress</div>
+            <div style="font-size: 11px; color: var(--color-text-muted);">1:14 (Concentrated)</div>
+          </button>
+          <button type="button" class="btn btn-secondary brew-method-btn" data-method="coldbrew" style="padding: 0.6rem 0.5rem; text-align: center; border-radius: var(--border-radius-md);">
+            <div style="font-size: 1.25rem; margin-bottom: 0.2rem;">🧊</div>
+            <div style="font-weight: 700; font-size: var(--font-size-xs);">Cold Brew</div>
+            <div style="font-size: 11px; color: var(--color-text-muted);">1:5 (Concentrate)</div>
+          </button>
+          <button type="button" class="btn btn-secondary brew-method-btn" data-method="espresso" style="padding: 0.6rem 0.5rem; text-align: center; border-radius: var(--border-radius-md);">
+            <div style="font-size: 1.25rem; margin-bottom: 0.2rem;">🔥</div>
+            <div style="font-weight: 700; font-size: var(--font-size-xs);">Espresso</div>
+            <div style="font-size: 11px; color: var(--color-text-muted);">1:2 (Double Shot)</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Calculation Direction & Inputs Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-4);">
+        <!-- Column 1: Direction Mode & Values -->
+        <div>
+          <label style="font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-2); display: block;">I want to calculate by:</label>
+          <div class="btn-group" role="tablist" style="display: flex; width: 100%; margin-bottom: var(--space-3);">
+            <button type="button" class="btn btn-secondary active" id="tab-dir-coffee" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem 0.25rem;">
+              Coffee (g)
+            </button>
+            <button type="button" class="btn btn-secondary" id="tab-dir-water" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem 0.25rem;">
+              Water (ml)
+            </button>
+            <button type="button" class="btn btn-secondary" id="tab-dir-cups" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem 0.25rem;">
+              Mug Count
+            </button>
+          </div>
+
+          <!-- Input fields depending on direction -->
+          <div id="field-coffee-input" class="form-group">
+            <label for="input-coffee-grams" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Coffee Beans / Grounds (g):</label>
+            <input type="number" id="input-coffee-grams" class="form-input" value="20" min="5" max="500" step="1" style="font-weight: 700; font-size: var(--font-size-lg); color: var(--color-primary);">
+            <small style="color: var(--color-text-muted); font-size: var(--font-size-xs);">Standard single-cup V60 is 15g - 22g.</small>
+          </div>
+
+          <div id="field-water-input" class="form-group" style="display: none;">
+            <label for="input-water-ml" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Total Water (ml / g):</label>
+            <input type="number" id="input-water-ml" class="form-input" value="320" min="20" max="5000" step="10" style="font-weight: 700; font-size: var(--font-size-lg); color: var(--color-primary);">
+            <small style="color: var(--color-text-muted); font-size: var(--font-size-xs);">Water weight in grams equals volume in milliliters.</small>
+          </div>
+
+          <div id="field-cups-input" class="form-group" style="display: none;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+              <div>
+                <label for="input-cup-count" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Number of Mugs:</label>
+                <input type="number" id="input-cup-count" class="form-input" value="2" min="1" max="20" step="1" style="font-weight: 700;">
+              </div>
+              <div>
+                <label for="input-cup-size" style="font-weight: 600; font-size: var(--font-size-sm); margin-bottom: 0.25rem; display: block;">Mug Volume (ml):</label>
+                <select id="input-cup-size" class="form-select" style="font-size: var(--font-size-xs); padding-block: 0.45rem;">
+                  <option value="200">Small Cup (200 ml / 6.7 oz)</option>
+                  <option value="250" selected>Standard Mug (250 ml / 8.5 oz)</option>
+                  <option value="350">Large Mug (350 ml / 11.8 oz)</option>
+                  <option value="450">Travel Tumbler (450 ml / 15.2 oz)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Ratio Fine-Tuning & Strength -->
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+            <span style="font-weight: 700; font-size: var(--font-size-sm);">Brew Ratio:</span>
+            <span id="display-ratio-badge" style="font-size: var(--font-size-md); font-weight: 800; color: var(--color-primary); font-family: monospace;">1:16.0</span>
+          </div>
+
+          <input type="range" id="ratio-slider" min="1" max="22" step="0.5" value="16.0" style="width: 100%; cursor: pointer;">
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-muted); margin-bottom: var(--space-3);">
+            <span>1:1 (Intense)</span>
+            <span>1:15 (Rich)</span>
+            <span>1:18 (SCA Light)</span>
+            <span>1:22</span>
+          </div>
+
+          <label style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-muted); margin-bottom: var(--space-1); display: block;">Quick Strength Calibration:</label>
+          <div class="btn-group" role="group" style="display: flex; width: 100%;">
+            <button type="button" class="btn btn-secondary btn-strength" data-adj="-1" style="flex: 1; font-size: var(--font-size-xs); padding: 0.35rem 0.25rem;">
+              Bold (-1)
+            </button>
+            <button type="button" class="btn btn-secondary btn-strength active" data-adj="0" style="flex: 1; font-size: var(--font-size-xs); padding: 0.35rem 0.25rem;">
+              Balanced
+            </button>
+            <button type="button" class="btn btn-secondary btn-strength" data-adj="1" style="flex: 1; font-size: var(--font-size-xs); padding: 0.35rem 0.25rem;">
+              Delicate (+1)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4);">
+        <button type="button" class="btn btn-primary" id="btn-copy-brew" style="flex: 1; min-width: 180px;">
+          📋 Copy Brew Recipe Card
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-reset" style="min-width: 100px;">
+          Reset
+        </button>
+      </div>
+
+      <!-- Output KPI Cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4);">
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Coffee Grounds Needed</div>
+          <div id="kpi-coffee-g" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-primary); margin-top: 0.25rem;">20.0 g</div>
+          <div id="kpi-coffee-equiv" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">0.71 oz • ~2.9 tbsp</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Brew Water Needed</div>
+          <div id="kpi-water-g" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-success); margin-top: 0.25rem;">320 g / ml</div>
+          <div id="kpi-water-oz" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">10.8 fl oz</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Recommended Grind</div>
+          <div id="kpi-grind" style="font-size: var(--font-size-base); font-weight: 700; color: var(--color-text); margin-top: 0.35rem;">Medium-Fine</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">Table salt texture</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Water Temperature</div>
+          <div id="kpi-temp" style="font-size: var(--font-size-base); font-weight: 700; color: var(--color-text); margin-top: 0.35rem;">92°C - 96°C</div>
+          <div id="kpi-temp-f" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">198°F - 205°F</div>
+        </div>
+      </div>
+
+      <!-- Step-by-Step Pour-Over & Extraction Guide -->
+      <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); background: var(--color-bg);">
+        <h3 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+          <span>⏱️</span> Extraction &amp; Bloom Step Guide
+        </h3>
+        <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: var(--space-3);">
+          Follow these target scale readouts at each phase to achieve professional SCA-level extraction consistency.
+        </p>
+
+        <div class="bloom-step-grid">
+          <div class="bloom-step-card">
+            <div class="bloom-time">0:00 — 0:45</div>
+            <div style="font-weight: 700; font-size: var(--font-size-sm); margin-bottom: 0.25rem;">Stage 1: The Bloom</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.5rem;">
+              Gently saturate grounds with 2.5x coffee weight. Degasses CO2.
+            </div>
+            <div class="bloom-scale-weight" id="step-bloom-wt">50 g</div>
+          </div>
+
+          <div class="bloom-step-card">
+            <div class="bloom-time">0:45 — 1:30</div>
+            <div style="font-weight: 700; font-size: var(--font-size-sm); margin-bottom: 0.25rem;">Stage 2: Main Body Pour</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.5rem;">
+              Pour in gentle concentric spirals up to 60% of total target water.
+            </div>
+            <div class="bloom-scale-weight" id="step-pour1-wt">192 g</div>
+          </div>
+
+          <div class="bloom-step-card">
+            <div class="bloom-time">1:30 — 3:00</div>
+            <div style="font-weight: 700; font-size: var(--font-size-sm); margin-bottom: 0.25rem;">Stage 3: Final Pour &amp; Drawdown</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: 0.5rem;">
+              Pour remaining water to reach 100%. Allow bed to draw down flat.
+            </div>
+            <div class="bloom-scale-weight" id="step-pour2-wt">320 g</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic Educational Guide Section -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Coffee-to-Water Ratio Calculator</strong> solves the most common frustration in manual coffee brewing: watery, hollow cups or intensely harsh, bitter over-extractions. Making cafe-quality specialty coffee at home is not a matter of guesswork; it is governed by the <strong>Golden Cup Standard</strong>—a quantitative relationship between ground coffee mass, brewing liquid volume, water temperature, and extraction contact time.
+      </p>
+      <p>
+        By selecting your brew method (from a delicate V60 pour-over to an immersion French press or concentrated cold brew), this tool instantly computes your target grams on the kitchen scale, provides level tablespoon equivalents for when a scale is absent, and details exact stage-by-stage pour targets for the bloom and drawdown.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Choose Your Brew Method:</strong> Tap one of the six presets (<em>Pour-Over</em>, <em>French Press</em>, <em>Auto Drip</em>, <em>AeroPress</em>, <em>Cold Brew</em>, or <em>Espresso</em>). The tool automatically loads the internationally recognized standard brew ratio and grind guidance.</li>
+        <li><strong>Select Calculation Mode:</strong>
+          <ul>
+            <li><strong>By Coffee (g):</strong> Enter the grams of beans you want to grind to calculate how much water to pour.</li>
+            <li><strong>By Water (ml):</strong> Enter the amount of water in your kettle or reservoir to find the exact grams of coffee needed.</li>
+            <li><strong>By Mug Count:</strong> Specify how many cups or travel mugs you want to brew, along with mug volume.</li>
+          </ul>
+        </li>
+        <li><strong>Tune Strength (Optional):</strong> Use the slider or quick buttons (<em>Bold</em>, <em>Balanced</em>, <em>Delicate</em>) to fine-tune ratio intensity to your roast profile (dark roasts generally pair well with 1:16–1:17, light floral roasts with 1:15–1:16).</li>
+        <li><strong>Follow the Bloom Step Guide:</strong> Watch the step cards for exact scale weight milestones (0:00 Bloom $\rightarrow$ 0:45 First Pour $\rightarrow$ Final Drawdown).</li>
+        <li><strong>Copy Recipe Card:</strong> Tap <strong>Copy Brew Recipe Card</strong> to paste the complete formula into your brewing log or phone notes.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        Coffee extraction ratios define the mass ratio of dry ground coffee ($C$) to brewing water ($W$):
+      </p>
+      <ul>
+        <li>
+          <strong>Brew Ratio ($R$):</strong>
+          <br>
+          $$R = \frac{W_{\text{grams}}}{C_{\text{grams}}}$$
+          <em>(e.g., $320\text{g water} / 20\text{g coffee} = 16 \implies \text{Ratio 1:16}$)</em>
+        </li>
+        <li>
+          <strong>Water from Known Coffee Mass:</strong>
+          <br>
+          $$W = C \times R$$
+        </li>
+        <li>
+          <strong>Coffee from Known Water Volume:</strong>
+          <br>
+          $$C = \frac{W}{R}$$
+        </li>
+        <li>
+          <strong>Bloom Pour Mass ($W_{\text{bloom}}$):</strong>
+          <br>
+          $$W_{\text{bloom}} = C \times 2.5$$
+          <em>(2.5 times dry coffee mass provides thorough wetting without premature drip-through).</em>
+        </li>
+        <li>
+          <strong>First Main Pour ($W_{\text{pour 1}}$):</strong>
+          <br>
+          $$W_{\text{pour 1}} = W_{\text{total}} \times 0.60$$
+        </li>
+      </ul>
+
+      <h2>Golden Brew Ratio Reference Matrix</h2>
+      <p>
+        Below is the standardized brewing matrix across all major specialty coffee methods:
+      </p>
+      <div style="overflow-x: auto; margin: var(--space-3) 0;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-sm); border: 1px solid var(--color-border);">
+          <thead>
+            <tr style="background: var(--color-bg-secondary); border-bottom: 2px solid var(--color-border);">
+              <th style="padding: 0.5rem 0.75rem;">Brew Method</th>
+              <th style="padding: 0.5rem 0.75rem;">Standard Ratio</th>
+              <th style="padding: 0.5rem 0.75rem;">Grind Profile</th>
+              <th style="padding: 0.5rem 0.75rem;">Water Temp (°C / °F)</th>
+              <th style="padding: 0.5rem 0.75rem;">Typical Brew Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Pour-Over (V60 / Kalita)</td>
+              <td style="padding: 0.5rem 0.75rem;">1:16 (1:15 - 1:17)</td>
+              <td style="padding: 0.5rem 0.75rem;">Medium-Fine (Table Salt)</td>
+              <td style="padding: 0.5rem 0.75rem;">92°C - 96°C / 198°F - 205°F</td>
+              <td style="padding: 0.5rem 0.75rem;">2:45 – 3:30</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">French Press (Cafetière)</td>
+              <td style="padding: 0.5rem 0.75rem;">1:15 (1:14 - 1:16)</td>
+              <td style="padding: 0.5rem 0.75rem;">Coarse (Sea Salt)</td>
+              <td style="padding: 0.5rem 0.75rem;">93°C - 96°C / 200°F - 205°F</td>
+              <td style="padding: 0.5rem 0.75rem;">4:00 – 5:00</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Automatic Drip Maker</td>
+              <td style="padding: 0.5rem 0.75rem;">1:16.5 (SCA standard)</td>
+              <td style="padding: 0.5rem 0.75rem;">Medium (Sand)</td>
+              <td style="padding: 0.5rem 0.75rem;">92°C - 96°C / 198°F - 205°F</td>
+              <td style="padding: 0.5rem 0.75rem;">5:00 – 6:00</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">AeroPress (Inverted / Regular)</td>
+              <td style="padding: 0.5rem 0.75rem;">1:14 (Concentrate 1:6)</td>
+              <td style="padding: 0.5rem 0.75rem;">Medium-Fine</td>
+              <td style="padding: 0.5rem 0.75rem;">85°C - 90°C / 185°F - 194°F</td>
+              <td style="padding: 0.5rem 0.75rem;">1:30 – 2:00</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Cold Brew (Full Immersion)</td>
+              <td style="padding: 0.5rem 0.75rem;">1:5 (Ready-to-Drink 1:8)</td>
+              <td style="padding: 0.5rem 0.75rem;">Extra Coarse (Breadcrumbs)</td>
+              <td style="padding: 0.5rem 0.75rem;">Room Temp / Cold Water</td>
+              <td style="padding: 0.5rem 0.75rem;">16 – 24 hours</td>
+            </tr>
+            <tr style="background: rgba(37, 99, 235, 0.05);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Espresso (9-Bar Extraction)</td>
+              <td style="padding: 0.5rem 0.75rem;">1:2 (18g in $\rightarrow$ 36g out)</td>
+              <td style="padding: 0.5rem 0.75rem;">Fine (Flour / Powder)</td>
+              <td style="padding: 0.5rem 0.75rem;">90°C - 94°C / 194°F - 201°F</td>
+              <td style="padding: 0.5rem 0.75rem;">25 – 30 seconds</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>Morning V60 Pour-Over Dial-In:</strong> Accurately matching water to the 18g or 21g doses produced by your single-dose burr grinder.</li>
+        <li><strong>Batch French Press Prep:</strong> Calculating the exact coarse grounds required to brew 800ml for brunch guests without bitter silty over-extraction.</li>
+        <li><strong>Cold Brew Concentrate Batches:</strong> Sizing a 1-liter mason jar batch with 200g coarse coffee to make a potent concentrate for dilution over ice.</li>
+        <li><strong>Travel Tumbler Filling:</strong> Filling a 16 oz (475 ml) Yeti or Hydro Flask mug with the exact coffee mass required for rich flavor that doesn't fade on the commute.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        <strong>Scenario:</strong> Brewing a morning pour-over with 22g of Ethiopian single-origin beans at a 1:16 ratio.
+      </p>
+      <ul>
+        <li><strong>Coffee Dose ($C$):</strong> 22.0 g</li>
+        <li><strong>Target Water ($W$):</strong> $22.0 \times 16 = 352\text{ g / ml}$ (approx $11.9\text{ fl oz}$).</li>
+        <li><strong>Stage 1 (Bloom):</strong> $22.0 \times 2.5 = 55\text{ g}$ poured from 0:00 to 0:45.</li>
+        <li><strong>Stage 2 (Main Pour):</strong> $352 \times 0.60 = 211\text{ g}$ total on scale at 1:30.</li>
+        <li><strong>Stage 3 (Final Drawdown):</strong> Pour up to $352\text{ g}$ and let drain completely by 3:00.</li>
+      </ul>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <ul>
+        <li><strong>Water Mass Equivalence:</strong> $1.00\text{ gram} = 1.00\text{ milliliter}$ of liquid water at standard brewing temperatures.</li>
+        <li><strong>Volume Approximations:</strong> Level tablespoon conversions use $7.0\text{g}$ per level tbsp of roasted whole beans and $5.0\text{g}$ per level tbsp of medium ground coffee.</li>
+        <li><strong>Client-Side Processing:</strong> Calculations execute synchronously in microsecond time in local browser JavaScript.</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        Brewing delicious coffee also depends on water quality (dissolved calcium and magnesium mineral content between 50 and 150 ppm TDS) and grinder burr alignment. This tool guarantees exact mathematical ratios and volumetric targets; for best taste, pair these numbers with fresh whole beans ground immediately before brewing.
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        Your brew preferences, notes, and cup presets remain strictly in your browser session. No tracking cookies, advertising scripts, or remote server requests are used. 100% private and offline-capable.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Should I weigh my coffee as whole beans or after grinding?</h3>
+        <p>
+          Always weigh your whole coffee beans on your digital scale before grinding, then grind the exact dose. High-quality single-dose grinders have minimal retention (<0.2g), ensuring your ground weight matches your calculated recipe.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Why is water weight on the scale different from the brewed coffee in my cup?</h3>
+        <p>
+          Dry coffee grounds absorb approximately twice their weight in water during brewing (called water retention). If you pour 320g of water over 20g of grounds, the grounds will retain ~40g of water, resulting in ~280g of liquid beverage in your mug. Coffee recipes are always calculated using the <em>total water poured</em>.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>What water temperature is best for light vs. dark roasts?</h3>
+        <p>
+          Light roasts are denser and extract more slowly; brew them with near-boiling water (94°C–96°C / 201°F–205°F) to extract sweet fruit notes. Dark roasts are more porous and extract rapidly; use cooler water (88°C–91°C / 190°F–196°F) to prevent unpleasant ash and bitterness.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/bakers-percentage-calculator.html" class="related-tool-chip">🥖 Baker's Percentage Calculator</a>
+        <a href="/tools/bread-recipe-scaler.html" class="related-tool-chip">🍞 Bread Recipe Scaler</a>
+        <a href="/tools/pizza-dough-calculator.html" class="related-tool-chip">🍕 Pizza Dough Calculator</a>
+        <a href="/tools/sourdough-hydration-calculator.html" class="related-tool-chip">🌾 Sourdough Hydration Calculator</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/baking-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // State
+      let currentMethod = 'pourover';
+      let currentMode = 'coffee_to_water'; // 'coffee_to_water', 'water_to_coffee', 'cups'
+      let currentRatio = 16.0;
+      let strengthAdj = 0;
+      let lastBrewResult = null;
+
+      // Method presets mapping
+      const METHOD_CONFIG = {
+        pourover: { defaultRatio: 16.0, defaultCoffee: 20, defaultWater: 320, name: 'Pour-Over (V60/Chemex)' },
+        frenchpress: { defaultRatio: 15.0, defaultCoffee: 30, defaultWater: 450, name: 'French Press' },
+        drip: { defaultRatio: 16.5, defaultCoffee: 40, defaultWater: 660, name: 'Auto Drip Maker' },
+        aeropress: { defaultRatio: 14.0, defaultCoffee: 15, defaultWater: 210, name: 'AeroPress' },
+        coldbrew: { defaultRatio: 5.0, defaultCoffee: 100, defaultWater: 500, name: 'Cold Brew Concentrate' },
+        espresso: { defaultRatio: 2.0, defaultCoffee: 18, defaultWater: 36, name: 'Espresso (Double Shot)' }
+      };
+
+      // DOM Elements
+      const methodBtns = document.querySelectorAll('.brew-method-btn');
+      const tabCoffee = document.getElementById('tab-dir-coffee');
+      const tabWater = document.getElementById('tab-dir-water');
+      const tabCups = document.getElementById('tab-dir-cups');
+
+      const fieldCoffee = document.getElementById('field-coffee-input');
+      const fieldWater = document.getElementById('field-water-input');
+      const fieldCups = document.getElementById('field-cups-input');
+
+      const inputCoffee = document.getElementById('input-coffee-grams');
+      const inputWater = document.getElementById('input-water-ml');
+      const inputCupCount = document.getElementById('input-cup-count');
+      const inputCupSize = document.getElementById('input-cup-size');
+
+      const ratioSlider = document.getElementById('ratio-slider');
+      const displayRatioBadge = document.getElementById('display-ratio-badge');
+      const strengthBtns = document.querySelectorAll('.btn-strength');
+
+      const kpiCoffeeG = document.getElementById('kpi-coffee-g');
+      const kpiCoffeeEquiv = document.getElementById('kpi-coffee-equiv');
+      const kpiWaterG = document.getElementById('kpi-water-g');
+      const kpiWaterOz = document.getElementById('kpi-water-oz');
+      const kpiGrind = document.getElementById('kpi-grind');
+      const kpiTemp = document.getElementById('kpi-temp');
+      const kpiTempF = document.getElementById('kpi-temp-f');
+
+      const stepBloomWt = document.getElementById('step-bloom-wt');
+      const stepPour1Wt = document.getElementById('step-pour1-wt');
+      const stepPour2Wt = document.getElementById('step-pour2-wt');
+
+      const btnCopyBrew = document.getElementById('btn-copy-brew');
+      const btnReset = document.getElementById('btn-reset');
+
+      // Method preset selector
+      methodBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          methodBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          currentMethod = this.dataset.method;
+
+          const cfg = METHOD_CONFIG[currentMethod];
+          currentRatio = cfg.defaultRatio;
+          ratioSlider.value = currentRatio;
+          inputCoffee.value = cfg.defaultCoffee;
+          inputWater.value = cfg.defaultWater;
+          strengthAdj = 0;
+          strengthBtns.forEach(b => b.classList.toggle('active', b.dataset.adj === '0'));
+
+          calculate();
+        });
+      });
+
+      // Direction mode tabs
+      tabCoffee.addEventListener('click', () => setMode('coffee_to_water'));
+      tabWater.addEventListener('click', () => setMode('water_to_coffee'));
+      tabCups.addEventListener('click', () => setMode('cups'));
+
+      function setMode(mode) {
+        currentMode = mode;
+        tabCoffee.classList.toggle('active', mode === 'coffee_to_water');
+        tabWater.classList.toggle('active', mode === 'water_to_coffee');
+        tabCups.classList.toggle('active', mode === 'cups');
+
+        fieldCoffee.style.display = mode === 'coffee_to_water' ? 'block' : 'none';
+        fieldWater.style.display = mode === 'water_to_coffee' ? 'block' : 'none';
+        fieldCups.style.display = mode === 'cups' ? 'block' : 'none';
+
+        calculate();
+      }
+
+      // Ratio Slider
+      ratioSlider.addEventListener('input', function() {
+        currentRatio = parseFloat(this.value);
+        calculate();
+      });
+
+      // Strength buttons
+      strengthBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          strengthBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          strengthAdj = parseFloat(this.dataset.adj) || 0;
+          calculate();
+        });
+      });
+
+      // Input changes
+      [inputCoffee, inputWater, inputCupCount, inputCupSize].forEach(inp => {
+        inp.addEventListener('input', calculate);
+        inp.addEventListener('change', calculate);
+      });
+
+      // Calculate
+      function calculate() {
+        const res = BakingUtils.calculateCoffeeBrew({
+          brewMethod: currentMethod,
+          ratio: currentRatio,
+          mode: currentMode,
+          coffeeGrams: parseFloat(inputCoffee.value) || 20,
+          waterGrams: parseFloat(inputWater.value) || 320,
+          cupCount: parseInt(inputCupCount.value, 10) || 2,
+          cupSizeMl: parseFloat(inputCupSize.value) || 250,
+          strengthAdjustment: strengthAdj
+        });
+
+        if (!res) return;
+        lastBrewResult = res;
+
+        displayRatioBadge.textContent = res.ratio;
+
+        kpiCoffeeG.textContent = `${res.coffeeGrams} g`;
+        kpiCoffeeEquiv.textContent = `${res.coffeeOunces} oz • ~${res.coffeeTbsp} tbsp`;
+
+        kpiWaterG.textContent = `${res.waterGrams} g / ml`;
+        kpiWaterOz.textContent = `${res.waterFlOz} fl oz`;
+
+        kpiGrind.textContent = res.grindRecommendation;
+        kpiTemp.textContent = res.temperatureC;
+        kpiTempF.textContent = res.temperatureF;
+
+        stepBloomWt.textContent = `${res.steps.bloomG} g`;
+        stepPour1Wt.textContent = `${res.steps.step1G} g`;
+        stepPour2Wt.textContent = `${res.steps.finalG} g`;
+      }
+
+      // Copy Recipe
+      btnCopyBrew.addEventListener('click', function() {
+        if (!lastBrewResult) return;
+        const res = lastBrewResult;
+        const lines = [
+          '☕ COFFEE BREW RECIPE CARD — FREE ONLINE TOOLS',
+          '==============================================',
+          `Method:      ${res.brewMethodName}`,
+          `Ratio:       ${res.ratio}`,
+          `Coffee:      ${res.coffeeGrams} g (${res.coffeeOunces} oz / ~${res.coffeeTbsp} level tbsp)`,
+          `Water:       ${res.waterGrams} ml / g (${res.waterFlOz} fl oz)`,
+          `Grind:       ${res.grindRecommendation}`,
+          `Water Temp:  ${res.temperatureC} (${res.temperatureF})`,
+          '----------------------------------------------',
+          'POUR-OVER EXTRACTION STEPS:',
+          `  • 0:00 - 0:45 Bloom:       Pour to ${res.steps.bloomG} g`,
+          `  • 0:45 - 1:30 Main Pour:   Pour to ${res.steps.step1G} g (60%)`,
+          `  • 1:30 - 3:00 Final Pour:  Pour to ${res.steps.finalG} g (100%)`,
+          '==============================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/coffee-to-water-ratio-calculator.html'
+        ];
+
+        BakingUtils.copyTextToClipboard(lines.join('\n'), btnCopyBrew, 'Brew Recipe Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        methodBtns.forEach(b => b.classList.toggle('active', b.dataset.method === 'pourover'));
+        currentMethod = 'pourover';
+        currentMode = 'coffee_to_water';
+        setMode('coffee_to_water');
+        currentRatio = 16.0;
+        ratioSlider.value = 16.0;
+        strengthAdj = 0;
+        strengthBtns.forEach(b => b.classList.toggle('active', b.dataset.adj === '0'));
+        inputCoffee.value = 20;
+        inputWater.value = 320;
+        inputCupCount.value = 2;
+        inputCupSize.value = 250;
+        calculate();
+      });
+
+      // Init
+      calculate();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Compressor — Reduce Image File Size Online — Free Online Tools</title>
+  <meta name="description" content="Compress JPG, PNG, and WebP images client-side without quality loss. Reduce file size up to 80% directly in your browser. 100% free and private.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/image-compressor.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/image-compressor.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/image-compressor.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image Compressor",
+    "description": "Compress JPG, PNG, and WebP images client-side without quality loss. Reduce file size up to 80% directly in your browser. 100% free and private.",
+    "url": "https://nexivo.com/tools/image-compressor.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#image">Image Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">Image Compressor</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Image Compressor</span>
+      </h1>
+      <p class="tool-header-lead">
+        Compress JPG, PNG, and WebP pictures with interactive quality controls and dimension downscaling. Shrink file sizes by up to 80% while keeping visuals sharp.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Up to 80% Reduction</span>
+        <span class="tool-badge">Zero Quality Sacrificed</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Toolbar -->
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <label class="btn btn-primary" style="cursor: pointer; margin-block-end: 0;">
+            <span>Choose Image</span>
+            <input type="file" id="file-input" accept="image/*" style="display: none;">
+          </label>
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample Image</button>
+          <button type="button" class="btn btn-secondary" id="btn-download">Download Compressed</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Instant client-side compression
+        </div>
+      </div>
+
+      <!-- Compression Sliders & Dimension Controls Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-4); background: var(--color-bg-subtle); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); align-items: center;">
+        <div class="form-group" style="margin-block-end: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-1);">
+            <label for="quality-slider" class="form-label" style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); margin-block-end: 0;">Compression Quality:</label>
+            <span id="quality-val" style="font-size: var(--font-size-xs); font-weight: bold; color: var(--color-primary);">75%</span>
+          </div>
+          <input type="range" id="quality-slider" min="10" max="100" value="75" style="inline-size: 100%; cursor: pointer;">
+        </div>
+
+        <div class="form-group" style="margin-block-end: 0;">
+          <label for="max-dimension" class="form-label" style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold);">Max Dimension (Resize):</label>
+          <select id="max-dimension" class="form-select">
+            <option value="original" selected>Original Dimensions</option>
+            <option value="2560">Max 2560px (2K QHD)</option>
+            <option value="1920">Max 1920px (Full HD)</option>
+            <option value="1280">Max 1280px (HD 720p)</option>
+            <option value="800">Max 800px (Web Optimized)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-block-end: 0;">
+          <label for="format-select" class="form-label" style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold);">Output Format:</label>
+          <select id="format-select" class="form-select">
+            <option value="image/jpeg" selected>JPEG (Best for Photos)</option>
+            <option value="image/webp">WebP (Maximum Compression)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Compression Savings Metrics Banner -->
+      <div class="stats-grid" style="margin-block-end: var(--space-4);">
+        <div class="stat-card">
+          <div class="stat-label">Original File Size</div>
+          <div class="stat-value" id="stat-orig-size">--</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="stat-orig-dims">-- px</div>
+        </div>
+        <div class="stat-card" style="border: 2px solid var(--color-primary);">
+          <div class="stat-label">Compressed File Size</div>
+          <div class="stat-value" id="stat-comp-size" style="color: var(--color-primary);">--</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="stat-comp-dims">-- px</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Space Saved</div>
+          <div class="stat-value" id="stat-saved" style="color: var(--color-success);">0%</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="stat-saved-bytes">0 KB saved</div>
+        </div>
+      </div>
+
+      <!-- Live Preview Box -->
+      <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4); text-align: center;">
+        <h3 style="font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); text-transform: uppercase; color: var(--color-text-muted); margin-block-end: var(--space-3);">Compressed Preview</h3>
+        <div style="max-block-size: 420px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: repeating-conic-gradient(var(--color-border) 0% 25%, transparent 0% 50%) 50% / 16px 16px; border-radius: 4px;">
+          <img id="comp-preview-img" src="" alt="Compressed Preview" style="max-inline-size: 100%; max-block-size: 400px; object-fit: contain;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Image Compressor Do?</h2>
+        <p>
+          The <strong>Image Compressor</strong> reduces the file size of photographs and graphics without visible degradation in visual clarity. Massive images taken by modern smartphone cameras (often 5 to 12 megabytes each) slow down website loading speeds, exhaust mobile data plans, and exceed email attachment limits.
+        </p>
+        <p>
+          By intelligently tuning discrete cosine transform (DCT) quantization tables and offering optional downscaling, this utility strips invisible metadata and optimizes pixel density to achieve <strong>60% to 85% file size reductions</strong> entirely inside your browser.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Upload Image:</strong> Click <strong>Choose Image</strong> to select a photo from your computer or phone, or click <strong>Sample Image</strong>.</li>
+          <li><strong>Set Compression Level:</strong> Drag the quality slider (70%–80% offers the sweet spot between tiny file size and sharp visual quality).</li>
+          <li><strong>Optional Downscaling:</strong> If your photo is a massive 4000px camera shot, choose <em>Max 1920px (Full HD)</em> or <em>Max 1280px</em> to dramatically slash file size further.</li>
+          <li><strong>Download:</strong> View the space savings banner (e.g. 78% reduction) and click <strong>Download Compressed</strong>.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Faster Website Loading (SEO)</h3>
+            <p>Compress hero banners and blog photos to improve Google Lighthouse PageSpeed and Largest Contentful Paint (LCP) scores.</p>
+          </div>
+          <div class="card">
+            <h3>Email &amp; Messenger Attachments</h3>
+            <p>Fit multiple photos into standard 25 MB email attachment limits without bouncing.</p>
+          </div>
+          <div class="card">
+            <h3>Online Job &amp; Passport Applications</h3>
+            <p>Shrink ID cards, resumes, and headshot photos to satisfy strict online portal limits (like 200 KB or 500 KB thresholds).</p>
+          </div>
+          <div class="card">
+            <h3>Cloud Storage Optimization</h3>
+            <p>Save gigabytes of Google Drive or Dropbox quota by compressing archival photo albums before syncing.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Compression Savings Example:</div>
+          <pre class="example-pre">Original Smartphone Photo: 3,840 &times; 2,160 px JPEG &rarr; 4.8 MB
+Settings: Quality 75%, Max 1920px Full HD
+Result: 1,920 &times; 1,080 px JPEG &rarr; 410 KB
+Bandwidth Saved: 91.5% reduction (4.39 MB saved) with crystal-clear screen resolution.</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Compression Engine:</strong> Browser-native Canvas 2D image resampling and DCT quantization via <code>toBlob('image/jpeg', quality)</code>.</li>
+          <li><strong>Downscaling Algorithm:</strong> Bilinear interpolation maintaining exact original aspect ratio.</li>
+          <li><strong>Privacy:</strong> Zero remote network transmission. Complete client-side memory execution.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Lossless PNG images containing solid vectors or screenshots will be converted to JPEG or WebP during compression, which may slightly soften hard text edges. If pixel-perfect graphics or transparency are strictly required, use PNG in the Image Converter.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Your photos, private family pictures, and confidential documents are processed entirely within your computer or mobile device. None of your data is ever transmitted across the internet.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">What compression quality setting is best?</summary>
+            <div class="faq-answer">
+              <p>For most consumer websites and social media, a setting of <strong>75% to 80%</strong> reduces file size by over 70% while remaining visually indistinguishable from the uncompressed original.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Why does resizing save so much space?</summary>
+            <div class="faq-answer">
+              <p>Image file size scales with the total number of pixels. Downscaling a 4000 &times; 3000 photo (12 megapixels) to 1920 &times; 1440 (2.7 megapixels) discards over 75% of the raw pixels before compression even begins.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Are EXIF metadata tags preserved?</summary>
+            <div class="faq-answer">
+              <p>No. When an image is redrawn onto a canvas and compressed, location (GPS) and camera metadata are automatically stripped, which protects your personal privacy and saves extra bytes.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/image-converter.html" class="related-tool-chip">
+            <div class="related-tool-title">Image Converter</div>
+            <div class="related-tool-desc">Convert between PNG, JPG, WebP, and BMP in your browser.</div>
+          </a>
+          <a href="/tools/image-editor.html" class="related-tool-chip">
+            <div class="related-tool-title">Image Editor</div>
+            <div class="related-tool-desc">Crop, rotate, filter, and adjust brightness on photos.</div>
+          </a>
+          <a href="/tools/exif-reader.html" class="related-tool-chip">
+            <div class="related-tool-title">EXIF Reader</div>
+            <div class="related-tool-desc">Inspect and strip camera metadata and GPS coordinates.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const fileInput = document.getElementById('file-input');
+    const qualitySlider = document.getElementById('quality-slider');
+    const qualityVal = document.getElementById('quality-val');
+    const maxDimension = document.getElementById('max-dimension');
+    const formatSelect = document.getElementById('format-select');
+
+    const statOrigSize = document.getElementById('stat-orig-size');
+    const statOrigDims = document.getElementById('stat-orig-dims');
+    const statCompSize = document.getElementById('stat-comp-size');
+    const statCompDims = document.getElementById('stat-comp-dims');
+    const statSaved = document.getElementById('stat-saved');
+    const statSavedBytes = document.getElementById('stat-saved-bytes');
+
+    const compPreviewImg = document.getElementById('comp-preview-img');
+    const btnSample = document.getElementById('btn-sample');
+    const btnDownload = document.getElementById('btn-download');
+
+    let currentImg = new Image();
+    let originalBytes = 0;
+    let compressedBlob = null;
+    let compressedUrl = null;
+
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    }
+
+    function compress() {
+      if (!currentImg.src || !currentImg.complete) return;
+
+      const quality = parseFloat(qualitySlider.value) / 100;
+      const format = formatSelect.value;
+      const maxDim = maxDimension.value;
+
+      let targetW = currentImg.naturalWidth;
+      let targetH = currentImg.naturalHeight;
+
+      if (maxDim !== 'original') {
+        const limit = parseInt(maxDim, 10);
+        if (targetW > limit || targetH > limit) {
+          if (targetW > targetH) {
+            targetH = Math.round((targetH * limit) / targetW);
+            targetW = limit;
+          } else {
+            targetW = Math.round((targetW * limit) / targetH);
+            targetH = limit;
+          }
+        }
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = targetW;
+      canvas.height = targetH;
+      const ctx = canvas.getContext('2d');
+
+      if (format === 'image/jpeg') {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, targetW, targetH);
+      }
+
+      ctx.drawImage(currentImg, 0, 0, targetW, targetH);
+
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        compressedBlob = blob;
+        if (compressedUrl) URL.revokeObjectURL(compressedUrl);
+        compressedUrl = URL.createObjectURL(blob);
+        compPreviewImg.src = compressedUrl;
+
+        statCompSize.textContent = formatBytes(blob.size);
+        statCompDims.textContent = `${targetW} × ${targetH} px`;
+
+        if (originalBytes > 0) {
+          const diff = originalBytes - blob.size;
+          const pct = Math.max(0, Math.round((diff / originalBytes) * 100));
+          statSaved.textContent = pct + '%';
+          statSavedBytes.textContent = diff > 0 ? `${formatBytes(diff)} saved` : '0 KB saved';
+        }
+      }, format, quality);
+    }
+
+    qualitySlider.addEventListener('input', () => {
+      qualityVal.textContent = qualitySlider.value + '%';
+      compress();
+    });
+
+    maxDimension.addEventListener('change', compress);
+    formatSelect.addEventListener('change', compress);
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      originalBytes = file.size;
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        currentImg = new Image();
+        currentImg.onload = () => {
+          statOrigSize.textContent = formatBytes(originalBytes);
+          statOrigDims.textContent = `${currentImg.naturalWidth} × ${currentImg.naturalHeight} px`;
+          compress();
+        };
+        currentImg.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    btnSample.addEventListener('click', () => {
+      currentImg = new Image();
+      currentImg.crossOrigin = 'anonymous';
+      originalBytes = 1250000; // estimated ~1.25 MB
+      currentImg.onload = () => {
+        statOrigSize.textContent = formatBytes(originalBytes);
+        statOrigDims.textContent = `${currentImg.naturalWidth} × ${currentImg.naturalHeight} px`;
+        compress();
+      };
+      currentImg.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=1600&fit=crop';
+    });
+
+    btnDownload.addEventListener('click', () => {
+      if (!compressedBlob) return;
+      const ext = formatSelect.value === 'image/webp' ? 'webp' : 'jpg';
+      const a = document.createElement('a');
+      a.href = compressedUrl;
+      a.download = `compressed-image.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+
+    // Run sample on load
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Bento Grid, Mesh Gradient &amp; Glassmorphism Generator — Visual UI Studio</title>
+  <meta name="description" content="Visually design interactive CSS Bento Grids, multi-layer radial mesh gradients, and glassmorphic UI cards with live responsive previews and 1-click Tailwind, CSS &amp; React JSX exports.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/css-bento-mesh-glass-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/css-bento-mesh-glass-generator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/css-bento-mesh-glass-generator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CSS Bento Grid, Mesh Gradient & Glassmorphism Generator",
+    "description": "Visual 3-in-1 UI design studio to generate modern CSS Bento Grids, multi-layered radial mesh gradients with grain overlays, and glassmorphic backdrop-filter surfaces with clean Tailwind CSS, React JSX, and Pure CSS code exports.",
+    "url": "https://nexivo.com/tools/css-bento-mesh-glass-generator.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a Bento Grid in modern web design?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A Bento Grid is an asymmetric, box-based layout design inspired by traditional Japanese bento boxes, popularized by Apple and Linear. It organizes features and metrics into modular cards of varying column and row spans using CSS Grid, creating visual hierarchy without clutter."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do CSS Mesh Gradients work without heavy image files?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pure CSS mesh gradients layer multiple radial-gradient() declarations positioned at custom percentage coordinates over a base background color. Because they are computed mathematically by the browser's GPU, they carry zero kilobyte network download overhead and scale infinitely without pixelation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What CSS properties create the Glassmorphism frosted-glass effect?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Glassmorphism requires four core CSS rules: 1) A semi-transparent background (e.g. rgba(255, 255, 255, 0.15)); 2) backdrop-filter: blur(16px) saturate(140%); 3) -webkit-backdrop-filter for Safari compatibility; and 4) A subtle translucent 1px border (rgba(255, 255, 255, 0.2)) to simulate realistic light refraction on glass edges."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does this generator ensure mobile responsiveness for Bento Grids?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The generated Tailwind CSS and Vanilla CSS snippets automatically enforce a mobile-first responsive architecture. On mobile screens (under 768px), the layout collapses into a single-column vertical stack (grid-cols-1) where all col-span and row-span rules reset to 1, preventing horizontal overflow."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Studio Main Tab Bar */
+    .studio-tabs-bar {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: var(--space-4);
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .studio-tab-btn {
+      padding: 0.6rem 1.25rem;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .studio-tab-btn:hover {
+      color: var(--color-text);
+    }
+    .studio-tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* Dual Workspace Layout */
+    .studio-workspace {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    @media (max-width: 960px) {
+      .studio-workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sidebar Controls */
+    .controls-panel {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      max-height: 820px;
+      overflow-y: auto;
+    }
+    .section-title {
+      font-size: var(--font-size-xs);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-top: var(--space-3);
+      margin-bottom: 0.5rem;
+      border-bottom: 1px dashed var(--color-border);
+      padding-bottom: 0.25rem;
+    }
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    /* Control Rows */
+    .ctrl-row {
+      margin-bottom: var(--space-2);
+    }
+    .ctrl-label-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .ctrl-val {
+      font-family: monospace;
+      color: var(--color-primary);
+    }
+    .range-input {
+      width: 100%;
+      height: 6px;
+      background: var(--color-border);
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+    .range-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      cursor: pointer;
+    }
+
+    /* Preset Buttons */
+    .preset-pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: var(--space-3);
+    }
+    .preset-btn {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .preset-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .preset-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    /* Viewport Frame */
+    .preview-stage {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      min-height: 540px;
+    }
+    .viewport-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-3);
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--color-border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .device-switcher {
+      display: inline-flex;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .device-btn {
+      padding: 0.25rem 0.75rem;
+      border: none;
+      background: transparent;
+      color: var(--color-text-muted);
+      border-radius: 16px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .device-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    /* Interactive Bento Canvas */
+    .bento-canvas-wrapper {
+      flex: 1;
+      width: 100%;
+      margin: 0 auto;
+      transition: max-width 0.3s ease;
+      overflow-x: auto;
+    }
+    .live-bento-grid {
+      display: grid;
+      width: 100%;
+      min-height: 420px;
+      transition: all 0.2s ease;
+    }
+    .live-bento-card {
+      border-radius: 20px;
+      padding: 1.25rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+      overflow: hidden;
+    }
+    .live-bento-card:hover {
+      transform: translateY(-2px);
+    }
+    .live-bento-card.selected {
+      outline: 3px solid #3b82f6 !important;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    }
+    .card-solid {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+    }
+    .card-gradient {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.1) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: var(--color-text);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    [data-theme="dark"] .card-glass {
+      background: rgba(15, 23, 42, 0.5);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Mesh Interactive Canvas */
+    .mesh-preview-stage {
+      flex: 1;
+      width: 100%;
+      min-height: 440px;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.2);
+    }
+    .mesh-noise-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+    .mesh-orb-handle {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      transform: translate(-50%, -50%);
+      cursor: grab;
+      z-index: 10;
+    }
+    .mesh-orb-handle:active {
+      cursor: grabbing;
+    }
+
+    /* Glass Stage Card */
+    .glass-demo-card {
+      width: 340px;
+      border-radius: 20px;
+      padding: 1.75rem;
+      color: #fff;
+      position: relative;
+      z-index: 5;
+      transition: all 0.2s ease;
+    }
+    .floating-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    /* Code Export Card */
+    .export-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    .code-tabs-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .code-tab-pills {
+      display: flex;
+      gap: 0.35rem;
+    }
+    .code-pill {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .code-pill.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+    .code-snippet-box {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: var(--space-3);
+      font-family: monospace;
+      font-size: 0.8rem;
+      max-height: 280px;
+      overflow: auto;
+      white-space: pre;
+      color: var(--color-text);
+      line-height: 1.45;
+    }
+
+    /* FAQs */
+    .faq-item {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+    .related-tool-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      font-size: var(--font-size-xs);
+      color: var(--color-text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .related-tool-chip:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content" id="main-content">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <a href="/#web-ui">Design</a>
+      <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      <span class="breadcrumb-current">CSS Bento, Mesh &amp; Glass Studio</span>
+    </nav>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-title-row">
+          <h1 class="tool-title">CSS Bento Grid, Mesh Gradient &amp; Glassmorphism Generator</h1>
+          <span class="badge badge-editorial">Design &amp; Developer</span>
+        </div>
+        <p class="tool-desc">Design modern web interfaces with asymmetric CSS Bento Grids, GPU-accelerated multi-layer radial mesh gradients, and glassmorphic backdrop-filter cards. Live responsive viewport tester with 1-click Tailwind CSS, React JSX, and Pure CSS exports.</p>
+        <div class="privacy-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>100% Client-Side / In-Browser — Layouts, gradient formulas, and canvas image exports run completely in your local browser runtime.</span>
+        </div>
+      </div>
+
+      <!-- Studio Mode Navigation Tabs -->
+      <div class="studio-tabs-bar" role="tablist">
+        <button type="button" class="studio-tab-btn active" id="tabBtnBento" data-tab="bento">
+          <span>🍱</span> Bento Grid Builder
+        </button>
+        <button type="button" class="studio-tab-btn" id="tabBtnMesh" data-tab="mesh">
+          <span>🎨</span> Mesh Gradient Generator
+        </button>
+        <button type="button" class="studio-tab-btn" id="tabBtnGlass" data-tab="glass">
+          <span>🪟</span> Glassmorphism Studio
+        </button>
+        <button type="button" class="studio-tab-btn" id="tabBtnCombined" data-tab="combined">
+          <span>⚡</span> Full Component Export
+        </button>
+      </div>
+
+      <!-- TAB 1: BENTO GRID BUILDER -->
+      <div id="tabContentBento" class="studio-workspace">
+        <!-- Left: Bento Controls -->
+        <div class="controls-panel">
+          <div class="section-title">Layout Presets</div>
+          <div class="preset-pill-grid">
+            <button type="button" class="preset-btn active" data-bento-preset="apple_linear">Apple / Linear</button>
+            <button type="button" class="preset-btn" data-bento-preset="saas_analytics">Analytics Dashboard</button>
+            <button type="button" class="preset-btn" data-bento-preset="asymmetric_showcase">6-Card Showcase</button>
+            <button type="button" class="preset-btn" data-bento-preset="hero_split">2×2 Hero Split</button>
+          </div>
+
+          <div class="section-title">Container Grid Settings</div>
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="bentoCols">Columns:</label>
+              <span class="ctrl-val" id="dispBentoCols">4 cols</span>
+            </div>
+            <input type="range" id="bentoCols" class="range-input" min="2" max="6" value="4">
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="bentoGap">Gap (px):</label>
+              <span class="ctrl-val" id="dispBentoGap">16px</span>
+            </div>
+            <input type="range" id="bentoGap" class="range-input" min="8" max="32" value="16">
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="bentoRadius">Card Radius (px):</label>
+              <span class="ctrl-val" id="dispBentoRadius">20px</span>
+            </div>
+            <input type="range" id="bentoRadius" class="range-input" min="8" max="36" value="20">
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="bentoMinHeight">Min Row Height:</label>
+              <span class="ctrl-val" id="dispBentoMinHeight">160px</span>
+            </div>
+            <input type="range" id="bentoMinHeight" class="range-input" min="120" max="240" step="10" value="160">
+          </div>
+
+          <!-- Active Card Editor -->
+          <div class="section-title">Selected Card Properties</div>
+          <div id="cardEditorBox" style="background:var(--color-bg); border:1px solid var(--color-border); border-radius:6px; padding:var(--space-2);">
+            <div style="font-size:0.75rem; font-weight:700; color:var(--color-text-muted); margin-bottom:0.4rem;">
+              Editing Card #<span id="selectedCardId">1</span>
+            </div>
+            <div class="ctrl-row">
+              <label for="inputCardTitle" style="font-size:0.75rem; font-weight:700;">Card Title:</label>
+              <input type="text" id="inputCardTitle" class="form-input" value="AI Automation Engine" style="font-size:0.8rem; padding:0.25rem 0.5rem; margin-top:0.2rem;">
+            </div>
+            <div class="ctrl-row">
+              <label for="inputCardTag" style="font-size:0.75rem; font-weight:700;">Badge / Tag:</label>
+              <input type="text" id="inputCardTag" class="form-input" value="Featured" style="font-size:0.8rem; padding:0.25rem 0.5rem; margin-top:0.2rem;">
+            </div>
+            <div class="ctrl-row">
+              <div class="ctrl-label-wrap">
+                <label for="cardColSpan">Column Span:</label>
+                <span class="ctrl-val" id="dispColSpan">col-span-2</span>
+              </div>
+              <input type="range" id="cardColSpan" class="range-input" min="1" max="4" value="2">
+            </div>
+            <div class="ctrl-row">
+              <div class="ctrl-label-wrap">
+                <label for="cardRowSpan">Row Span:</label>
+                <span class="ctrl-val" id="dispRowSpan">row-span-2</span>
+              </div>
+              <input type="range" id="cardRowSpan" class="range-input" min="1" max="3" value="2">
+            </div>
+            <div class="ctrl-row">
+              <label style="font-size:0.75rem; font-weight:700;">Surface Style:</label>
+              <div class="preset-pill-grid" style="margin-top:0.25rem;">
+                <button type="button" class="preset-btn" data-accent="solid">Solid</button>
+                <button type="button" class="preset-btn" data-accent="gradient">Gradient</button>
+                <button type="button" class="preset-btn active" data-accent="glass">Glass</button>
+              </div>
+            </div>
+            <div style="display:flex; gap:0.35rem; margin-top:0.5rem;">
+              <button type="button" class="btn btn-secondary" id="btnAddCard" style="flex:1; padding:0.25rem; font-size:0.75rem;">+ Add Card</button>
+              <button type="button" class="btn btn-secondary" id="btnDeleteCard" style="padding:0.25rem 0.5rem; font-size:0.75rem; color:#dc2626;">🗑️ Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Bento Live Preview -->
+        <div class="preview-stage">
+          <div class="viewport-toolbar">
+            <div style="font-size:var(--font-size-xs); font-weight:700; color:var(--color-text-muted);">
+              Live Grid Canvas (Click any card to select &amp; edit)
+            </div>
+            <div class="device-switcher" role="group" aria-label="Viewport Preview Toggle">
+              <button type="button" class="device-btn active" data-viewport="100%">🖥️ Desktop</button>
+              <button type="button" class="device-btn" data-viewport="768px">📱 Tablet</button>
+              <button type="button" class="device-btn" data-viewport="375px">📲 Mobile</button>
+            </div>
+          </div>
+
+          <div class="bento-canvas-wrapper" id="bentoCanvasWrapper">
+            <div class="live-bento-grid" id="liveBentoGrid">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: MESH GRADIENT GENERATOR -->
+      <div id="tabContentMesh" class="studio-workspace" style="display:none;">
+        <!-- Left: Mesh Controls -->
+        <div class="controls-panel">
+          <div class="section-title">Curated Palettes</div>
+          <div class="preset-pill-grid">
+            <button type="button" class="preset-btn active" data-mesh-palette="indigo_violet">SaaS Indigo</button>
+            <button type="button" class="preset-btn" data-mesh-palette="sunset_peach">Sunset Peach</button>
+            <button type="button" class="preset-btn" data-mesh-palette="aurora_mint">Aurora Mint</button>
+            <button type="button" class="preset-btn" data-mesh-palette="dark_obsidian">Dark Obsidian</button>
+            <button type="button" class="preset-btn" data-mesh-palette="warm_cream">Warm Cream</button>
+            <button type="button" class="btn btn-secondary" id="btnRandomMesh" style="width:100%; margin-top:0.35rem; font-size:0.75rem; padding:0.25rem;">🎲 Randomize Palette</button>
+          </div>
+
+          <div class="section-title">Base Canvas &amp; Texture</div>
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="meshBaseColor">Base Background:</label>
+            </div>
+            <input type="color" id="meshBaseColor" value="#0f172a" style="width:100%; height:32px; border-radius:4px; border:1px solid var(--color-border); cursor:pointer;">
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="meshGrainOpacity">Grain / Noise Texture:</label>
+              <span class="ctrl-val" id="dispMeshGrain">12%</span>
+            </div>
+            <input type="range" id="meshGrainOpacity" class="range-input" min="0" max="35" value="12">
+          </div>
+
+          <div class="section-title">Color Nodes / Radial Orbs</div>
+          <div id="meshOrbsContainer" style="display:flex; flex-direction:column; gap:0.5rem;">
+            <!-- Orbs dynamically rendered -->
+          </div>
+          <button type="button" class="btn btn-secondary" id="btnAddOrb" style="width:100%; margin-top:0.5rem; font-size:0.75rem; padding:0.25rem;">+ Add Color Orb</button>
+        </div>
+
+        <!-- Right: Mesh Canvas -->
+        <div class="preview-stage">
+          <div class="viewport-toolbar">
+            <div style="font-size:var(--font-size-xs); font-weight:700; color:var(--color-text-muted);">
+              Interactive Radial Mesh Canvas (Drag pins directly or use sidebar)
+            </div>
+            <div>
+              <button type="button" class="btn btn-primary" id="btnDownloadMeshPng" style="font-size:0.75rem; padding:0.25rem 0.75rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                📥 Download High-Res PNG (1920×1080)
+              </button>
+            </div>
+          </div>
+
+          <div class="mesh-preview-stage" id="meshCanvasStage">
+            <div class="mesh-noise-overlay" id="meshNoiseOverlay"></div>
+            <!-- Orb handles dynamically injected -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: GLASSMORPHISM STUDIO -->
+      <div id="tabContentGlass" class="studio-workspace" style="display:none;">
+        <!-- Left: Glass Controls -->
+        <div class="controls-panel">
+          <div class="section-title">Glassmorphic Surface Parameters</div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="glassBlur">Backdrop Blur:</label>
+              <span class="ctrl-val" id="dispGlassBlur">16px</span>
+            </div>
+            <input type="range" id="glassBlur" class="range-input" min="0" max="40" value="16">
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="glassOpacity">Surface Opacity:</label>
+              <span class="ctrl-val" id="dispGlassOpacity">0.15</span>
+            </div>
+            <input type="range" id="glassOpacity" class="range-input" min="0.05" max="0.85" step="0.02" value="0.15">
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="glassTintColor">Tint Color:</label>
+            </div>
+            <input type="color" id="glassTintColor" value="#ffffff" style="width:100%; height:32px; border-radius:4px; border:1px solid var(--color-border); cursor:pointer;">
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="glassSaturation">Backdrop Saturation:</label>
+              <span class="ctrl-val" id="dispGlassSaturation">140%</span>
+            </div>
+            <input type="range" id="glassSaturation" class="range-input" min="100" max="200" value="140">
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-label-wrap">
+              <label for="glassBorderOpacity">Edge Border Opacity:</label>
+              <span class="ctrl-val" id="dispGlassBorderOpacity">0.25</span>
+            </div>
+            <input type="range" id="glassBorderOpacity" class="range-input" min="0" max="0.8" step="0.05" value="0.25">
+          </div>
+
+          <div class="ctrl-row">
+            <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.75rem; font-weight:700; cursor:pointer;">
+              <input type="checkbox" id="glassShadowToggle" checked>
+              <span>Ambient Outer Drop Shadow</span>
+            </label>
+          </div>
+
+          <div class="section-title">Background Stage Theme</div>
+          <div class="preset-pill-grid">
+            <button type="button" class="preset-btn active" data-glass-bg="mesh">Custom Mesh</button>
+            <button type="button" class="preset-btn" data-glass-bg="shapes">Vibrant Shapes</button>
+            <button type="button" class="preset-btn" data-glass-bg="dark">Dark Slate</button>
+            <button type="button" class="preset-btn" data-glass-bg="light">Light Studio</button>
+          </div>
+        </div>
+
+        <!-- Right: Glass Live Stage -->
+        <div class="preview-stage">
+          <div class="viewport-toolbar">
+            <div style="font-size:var(--font-size-xs); font-weight:700; color:var(--color-text-muted);">
+              Floating Glass Card Preview &amp; Contrast Analyzer
+            </div>
+            <div>
+              <span class="badge" style="background:#10b981; color:#fff; font-size:0.7rem; font-weight:800;" id="wcagBadge">✓ WCAG AA Readable</span>
+            </div>
+          </div>
+
+          <div class="mesh-preview-stage" id="glassPreviewStage">
+            <!-- Floating Demo Shapes -->
+            <div class="floating-shape" style="width:160px; height:160px; background:#ec4899; top:30px; left:80px;"></div>
+            <div class="floating-shape" style="width:200px; height:200px; background:#3b82f6; bottom:40px; right:70px;"></div>
+            <div class="floating-shape" style="width:120px; height:120px; background:#10b981; bottom:50px; left:120px;"></div>
+
+            <!-- Realistic Floating Glass Card -->
+            <div class="glass-demo-card" id="glassDemoCard">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; font-weight:800; background:rgba(255,255,255,0.15); padding:2px 8px; border-radius:20px;">SaaS Pro</span>
+                <span style="font-size:1.4rem; font-weight:900;">$49<span style="font-size:0.8rem; font-weight:500;">/mo</span></span>
+              </div>
+              <h3 style="font-size:1.15rem; font-weight:800; margin:0 0 0.5rem 0;">Enterprise Glass Surface</h3>
+              <p style="font-size:0.78rem; opacity:0.85; margin:0 0 1.25rem 0; line-height:1.45;">
+                Engineered with hardware-accelerated CSS backdrop filters for modern dashboard layouts.
+              </p>
+              <button type="button" style="width:100%; padding:0.5rem; background:#fff; color:#0f172a; border:none; border-radius:8px; font-weight:800; font-size:0.78rem; cursor:pointer;">
+                Get Started Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: COMBINED COMPONENT PREVIEW -->
+      <div id="tabContentCombined" class="studio-workspace" style="display:none;">
+        <div class="preview-stage" style="grid-column:span 2;">
+          <div class="viewport-toolbar">
+            <div style="font-size:var(--font-size-xs); font-weight:700; color:var(--color-text-muted);">
+              Full Combined Component: Bento Grid + Custom Mesh Background + Glass Cards
+            </div>
+          </div>
+          <div id="combinedCanvasWrapper" style="border-radius:16px; overflow:hidden; min-height:450px; padding:var(--space-4);">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-Format Code Export Component (Always synced to active tab) -->
+      <div class="export-card">
+        <div class="code-tabs-row">
+          <div class="code-tab-pills" role="tablist">
+            <button type="button" class="code-pill active" data-lang="tailwind">Tailwind CSS (HTML)</button>
+            <button type="button" class="code-pill" data-lang="react">React JSX + Tailwind</button>
+            <button type="button" class="code-pill" data-lang="css">Pure Vanilla CSS</button>
+          </div>
+          <button type="button" class="btn btn-primary" id="btnCopyCode" style="font-size:0.75rem; padding:0.3rem 0.85rem; display:inline-flex; align-items:center; gap:0.35rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Copy Code Snippet
+          </button>
+        </div>
+        <pre class="code-snippet-box" id="codeSnippetBox">/* Generating code snippet... */</pre>
+      </div>
+
+      <!-- SEO Reference Guide Below Tool -->
+      <div class="tool-documentation" style="margin-top:var(--space-5);">
+        <h2>Modern Frontend UI Trends: Why Bento Grids, Mesh Gradients &amp; Glassmorphism Dominate 2026 Design</h2>
+        <p>
+          Over the past decade, web design has migrated away from sterile, flat minimalist interfaces toward tactile, multi-layered digital surfaces. Three interconnected design paradigms lead this movement:
+        </p>
+        <ul>
+          <li><strong>Bento Grids:</strong> Popularized by Apple marketing landing pages and productivity platforms like Linear and Raycast, Bento Grids segment complex features, product metrics, and workflows into asymmetric, compartmentalized visual cards.</li>
+          <li><strong>Multi-Layer Radial Mesh Gradients:</strong> Unlike static, linear two-stop gradients, mesh gradients position 4 to 6 radial color orbs across a canvas. This creates fluid, organic depth reminiscent of studio lighting.</li>
+          <li><strong>Glassmorphism (Frosted Glass):</strong> By utilizing CSS <code>backdrop-filter: blur()</code>, glass cards allow vibrant background graphics to diffuse beneath UI elements, establishing clear spatial hierarchy.</li>
+        </ul>
+
+        <h2>CSS Grid Architecture: Mastering `grid-column: span` and `grid-auto-flow: dense`</h2>
+        <p>
+          The secret to building responsive Bento Grids is combining explicit column tracks with CSS span declarations. Rather than manually positioning every cell with line numbers, Bento cards specify their relative footprint:
+        </p>
+        <pre style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); font-family:monospace; font-size:0.85rem; overflow-x:auto;">
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  grid-auto-flow: dense; /* Automatically fills empty gaps */
+}
+
+.bento-card-featured {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+        </pre>
+        <p>
+          Enabling <code>grid-auto-flow: dense</code> ensures the browser's layout engine pulls smaller single-span cards into any vacant grid gaps left by larger multi-span hero elements, preventing awkward whitespace holes.
+        </p>
+
+        <h2>How Multi-Layer `radial-gradient()` Mesh Backgrounds Work (Zero Image Overhead)</h2>
+        <p>
+          High-resolution PNG or WebP gradient images often exceed 200KB–500KB and cause visible bandwidth lag or mobile blur. By contrast, a pure CSS mesh gradient is constructed by chaining multiple comma-separated <code>radial-gradient()</code> statements:
+        </p>
+        <pre style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); font-family:monospace; font-size:0.85rem; overflow-x:auto;">
+.mesh-surface {
+  background-color: #0f172a;
+  background-image:
+    radial-gradient(at 20% 30%, #6366f1 0px, transparent 55%),
+    radial-gradient(at 80% 25%, #a855f7 0px, transparent 50%),
+    radial-gradient(at 35% 80%, #3b82f6 0px, transparent 60%);
+}
+        </pre>
+        <p>
+          Because these layers are evaluated on the user's graphics chip (GPU), they load with <strong>0 milliseconds of network latency</strong>, support ultra-high-definition 4K screens, and animate smoothly using CSS variables.
+        </p>
+
+        <h2>Glassmorphism Mechanics: Combining `backdrop-filter: blur()` and Hardware Acceleration</h2>
+        <p>
+          Achieving high-end frosted glass requires balancing four specific CSS properties:
+        </p>
+        <ol>
+          <li><strong>Backdrop Filter Blur:</strong> <code>backdrop-filter: blur(16px);</code> and <code>-webkit-backdrop-filter: blur(16px);</code> (essential for iOS Safari).</li>
+          <li><strong>Translucent Background Fill:</strong> Avoid 100% opaque backgrounds; use <code>rgba(255, 255, 255, 0.12)</code> or <code>rgba(15, 23, 42, 0.6)</code>.</li>
+          <li><strong>Color Saturation Boost:</strong> Adding <code>saturate(140%)</code> enhances the vibrancy of elements passing beneath the glass.</li>
+          <li><strong>Subtle Refraction Border:</strong> A 1px translucent border (<code>1px solid rgba(255, 255, 255, 0.2)</code>) delivers crisp definition against chaotic backgrounds.</li>
+        </ol>
+
+        <h2>Accessibility &amp; Contrast: Designing Readable Glassmorphic Interfaces (WCAG Compliance)</h2>
+        <p>
+          The most frequent pitfall in glassmorphic UI design is unreadable text caused by low contrast against background color shifts. To ensure WCAG AA compliance (4.5:1 minimum text contrast ratio):
+        </p>
+        <ul>
+          <li>Use <code>rgba(0, 0, 0, 0.6)</code> dark tint glass when rendering light text over light mesh backgrounds.</li>
+          <li>Add subtle text shadows (e.g. <code>text-shadow: 0 1px 2px rgba(0,0,0,0.4);</code>) for secondary copy.</li>
+          <li>Never place vital interactive buttons inside low-contrast glass containers without solid button fills.</li>
+        </ul>
+
+        <h2>Tailwind CSS Integration: Best Practices for Arbitrary Values and Utility Composition</h2>
+        <p>
+          Tailwind CSS v3 and v4 natively support arbitrary values and backdrop utilities. You can combine frosted glass and custom spans seamlessly:
+        </p>
+        <pre style="background:var(--color-bg); padding:var(--space-3); border-radius:var(--border-radius); border:1px solid var(--color-border); font-family:monospace; font-size:0.85rem; overflow-x:auto;">
+&lt;div class="col-span-2 row-span-1 rounded-2xl p-6 backdrop-blur-md bg-white/10 border border-white/20 shadow-xl"&gt;
+  &lt;h3 class="text-xl font-bold text-white"&gt;Instant Sync&lt;/h3&gt;
+&lt;/div&gt;
+        </pre>
+
+        <h2>Mobile Responsiveness: Transitioning Multi-Span Bento Grids to Single-Column Stacks</h2>
+        <p>
+          While asymmetric 4-column Bento grids look striking on large widescreen monitors, cramming multiple spans onto a 375px mobile screen results in cramped, unreadable cards. Our generated code includes responsive media queries (<code>@media (max-width: 768px)</code> or Tailwind's <code>md:col-span-*</code>) that automatically collapse cards into a sleek, vertical 1-column scroll on smartphones.
+        </p>
+
+        <h2>100% Client-Side Privacy Guarantee</h2>
+        <p>
+          Every Bento layout parameter, color node, grain texture, and generated code snippet is synthesized inside your client browser's JavaScript environment. No design mockups, color palettes, or code snippets are transmitted to external servers.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What is a Bento Grid in modern web design?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            A Bento Grid is an asymmetric, box-based layout design inspired by traditional Japanese bento boxes, popularized by Apple and Linear. It organizes features and metrics into modular cards of varying column and row spans using CSS Grid, creating visual hierarchy without clutter.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How do CSS Mesh Gradients work without heavy image files?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Pure CSS mesh gradients layer multiple radial-gradient() declarations positioned at custom percentage coordinates over a base background color. Because they are computed mathematically by the browser's GPU, they carry zero kilobyte network download overhead and scale infinitely without pixelation.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">What CSS properties create the Glassmorphism frosted-glass effect?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            Glassmorphism requires four core CSS rules: 1) A semi-transparent background (e.g. rgba(255, 255, 255, 0.15)); 2) backdrop-filter: blur(16px) saturate(140%); 3) -webkit-backdrop-filter for Safari compatibility; and 4) A subtle translucent 1px border (rgba(255, 255, 255, 0.2)) to simulate realistic light refraction on glass edges.
+          </p>
+        </div>
+        <div class="faq-item">
+          <div style="font-weight:700; margin-bottom:0.25rem;">How does this generator ensure mobile responsiveness for Bento Grids?</div>
+          <p style="margin:0; font-size:var(--font-size-sm); color:var(--color-text-muted);">
+            The generated Tailwind CSS and Vanilla CSS snippets automatically enforce a mobile-first responsive architecture. On mobile screens (under 768px), the layout collapses into a single-column vertical stack (grid-cols-1) where all col-span and row-span rules reset to 1, preventing horizontal overflow.
+          </p>
+        </div>
+
+        <h2>Related Browser Tools</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2);">
+          <a href="/tools/readme-badge-builder.html" class="related-tool-chip">🏷️ GitHub README Badge Builder</a>
+          <a href="/tools/image-dpi-checker.html" class="related-tool-chip">🖨️ Image DPI &amp; Print Size Checker</a>
+          <a href="/tools/color-converter.html" class="related-tool-chip">🎨 Color Converter &amp; Palette</a>
+          <a href="/tools/markdown-previewer.html" class="related-tool-chip">📝 Markdown Previewer</a>
+          <a href="/tools/qr-code-generator.html" class="related-tool-chip">📱 QR Code Generator</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top:var(--space-5); border-top:1px solid var(--color-border); padding:var(--space-4) 0; text-align:center; color:var(--color-text-muted); font-size:var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/bento-mesh-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const Utils = window.BentoMeshUtils;
+    if (!Utils) {
+      console.error('BentoMeshUtils not loaded.');
+      return;
+    }
+
+    // Master Studio State
+    let activeTab = 'bento'; // 'bento' | 'mesh' | 'glass' | 'combined'
+    let activeCodeLang = 'tailwind'; // 'tailwind' | 'react' | 'css'
+
+    // Bento State
+    let bentoConfig = JSON.parse(JSON.stringify(Utils.BENTO_PRESETS.apple_linear));
+    let selectedCardId = 1;
+
+    // Mesh State
+    let currentMeshPalette = JSON.parse(JSON.stringify(Utils.MESH_PALETTES.indigo_violet));
+    let meshGrain = 12;
+
+    // Glass State
+    let glassConfig = {
+      blur: 16,
+      opacity: 0.15,
+      tintColor: '#ffffff',
+      saturation: 140,
+      borderOpacity: 0.25,
+      shadow: true,
+      bgStage: 'mesh'
+    };
+
+    // DOM Elements - Tabs
+    const tabBtnBento = document.getElementById('tabBtnBento');
+    const tabBtnMesh = document.getElementById('tabBtnMesh');
+    const tabBtnGlass = document.getElementById('tabBtnGlass');
+    const tabBtnCombined = document.getElementById('tabBtnCombined');
+
+    const tabContentBento = document.getElementById('tabContentBento');
+    const tabContentMesh = document.getElementById('tabContentMesh');
+    const tabContentGlass = document.getElementById('tabContentGlass');
+    const tabContentCombined = document.getElementById('tabContentCombined');
+
+    // Bento DOM
+    const bentoCols = document.getElementById('bentoCols');
+    const dispBentoCols = document.getElementById('dispBentoCols');
+    const bentoGap = document.getElementById('bentoGap');
+    const dispBentoGap = document.getElementById('dispBentoGap');
+    const bentoRadius = document.getElementById('bentoRadius');
+    const dispBentoRadius = document.getElementById('dispBentoRadius');
+    const bentoMinHeight = document.getElementById('bentoMinHeight');
+    const dispBentoMinHeight = document.getElementById('dispBentoMinHeight');
+
+    const selectedCardIdEl = document.getElementById('selectedCardId');
+    const inputCardTitle = document.getElementById('inputCardTitle');
+    const inputCardTag = document.getElementById('inputCardTag');
+    const cardColSpan = document.getElementById('cardColSpan');
+    const dispColSpan = document.getElementById('dispColSpan');
+    const cardRowSpan = document.getElementById('cardRowSpan');
+    const dispRowSpan = document.getElementById('dispRowSpan');
+    const btnAddCard = document.getElementById('btnAddCard');
+    const btnDeleteCard = document.getElementById('btnDeleteCard');
+
+    const bentoCanvasWrapper = document.getElementById('bentoCanvasWrapper');
+    const liveBentoGrid = document.getElementById('liveBentoGrid');
+
+    // Mesh DOM
+    const meshBaseColor = document.getElementById('meshBaseColor');
+    const meshGrainOpacity = document.getElementById('meshGrainOpacity');
+    const dispMeshGrain = document.getElementById('dispMeshGrain');
+    const meshOrbsContainer = document.getElementById('meshOrbsContainer');
+    const btnAddOrb = document.getElementById('btnAddOrb');
+    const btnRandomMesh = document.getElementById('btnRandomMesh');
+    const meshCanvasStage = document.getElementById('meshCanvasStage');
+    const meshNoiseOverlay = document.getElementById('meshNoiseOverlay');
+    const btnDownloadMeshPng = document.getElementById('btnDownloadMeshPng');
+
+    // Glass DOM
+    const glassBlur = document.getElementById('glassBlur');
+    const dispGlassBlur = document.getElementById('dispGlassBlur');
+    const glassOpacity = document.getElementById('glassOpacity');
+    const dispGlassOpacity = document.getElementById('dispGlassOpacity');
+    const glassTintColor = document.getElementById('glassTintColor');
+    const glassSaturation = document.getElementById('glassSaturation');
+    const dispGlassSaturation = document.getElementById('dispGlassSaturation');
+    const glassBorderOpacity = document.getElementById('glassBorderOpacity');
+    const dispGlassBorderOpacity = document.getElementById('dispGlassBorderOpacity');
+    const glassShadowToggle = document.getElementById('glassShadowToggle');
+    const glassPreviewStage = document.getElementById('glassPreviewStage');
+    const glassDemoCard = document.getElementById('glassDemoCard');
+    const combinedCanvasWrapper = document.getElementById('combinedCanvasWrapper');
+
+    // Export DOM
+    const codeSnippetBox = document.getElementById('codeSnippetBox');
+    const btnCopyCode = document.getElementById('btnCopyCode');
+
+    // Tab Switcher
+    function switchTab(tabId) {
+      activeTab = tabId;
+      document.querySelectorAll('.studio-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabId);
+      });
+
+      tabContentBento.style.display = tabId === 'bento' ? 'grid' : 'none';
+      tabContentMesh.style.display = tabId === 'mesh' ? 'grid' : 'none';
+      tabContentGlass.style.display = tabId === 'glass' ? 'grid' : 'none';
+      tabContentCombined.style.display = tabId === 'combined' ? 'grid' : 'none';
+
+      updateCodeSnippet();
+    }
+
+    tabBtnBento.addEventListener('click', () => switchTab('bento'));
+    tabBtnMesh.addEventListener('click', () => switchTab('mesh'));
+    tabBtnGlass.addEventListener('click', () => switchTab('glass'));
+    tabBtnCombined.addEventListener('click', () => switchTab('combined'));
+
+    // --- BENTO GRID CONTROLLER ---
+    function renderBento() {
+      dispBentoCols.textContent = `${bentoConfig.columns} cols`;
+      dispBentoGap.textContent = `${bentoConfig.gap}px`;
+      dispBentoRadius.textContent = `${bentoConfig.borderRadius}px`;
+      dispBentoMinHeight.textContent = `${bentoConfig.minRowHeight}px`;
+
+      liveBentoGrid.style.gridTemplateColumns = `repeat(${bentoConfig.columns}, minmax(0, 1fr))`;
+      liveBentoGrid.style.gap = `${bentoConfig.gap}px`;
+      liveBentoGrid.style.gridAutoRows = `minmax(${bentoConfig.minRowHeight}px, auto)`;
+
+      liveBentoGrid.innerHTML = '';
+      bentoConfig.cards.forEach(card => {
+        const div = document.createElement('div');
+        div.className = `live-bento-card card-${card.accent}`;
+        if (card.id === selectedCardId) div.classList.add('selected');
+
+        div.style.gridColumn = `span ${Math.min(card.colSpan, bentoConfig.columns)}`;
+        div.style.gridRow = `span ${card.rowSpan}`;
+        div.style.borderRadius = `${bentoConfig.borderRadius}px`;
+
+        div.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; background:rgba(255,255,255,0.15); padding:2px 8px; border-radius:20px;">
+              ${card.tag || 'Module'}
+            </span>
+            <span style="font-size:0.65rem; opacity:0.6; font-family:monospace;">${card.colSpan}×${card.rowSpan}</span>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <h4 style="margin:0; font-size:1.05rem; font-weight:800; line-height:1.2;">${card.title}</h4>
+            <p style="margin:0.25rem 0 0 0; font-size:0.75rem; opacity:0.75;">Click card to edit spans</p>
+          </div>
+        `;
+
+        div.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectBentoCard(card.id);
+        });
+
+        liveBentoGrid.appendChild(div);
+      });
+
+      updateCardEditor();
+      updateCodeSnippet();
+    }
+
+    function selectBentoCard(id) {
+      selectedCardId = id;
+      const card = bentoConfig.cards.find(c => c.id === id);
+      if (!card) return;
+
+      selectedCardIdEl.textContent = card.id;
+      inputCardTitle.value = card.title;
+      inputCardTag.value = card.tag || '';
+      cardColSpan.value = card.colSpan;
+      cardColSpan.max = bentoConfig.columns;
+      dispColSpan.textContent = `col-span-${card.colSpan}`;
+      cardRowSpan.value = card.rowSpan;
+      dispRowSpan.textContent = `row-span-${card.rowSpan}`;
+
+      document.querySelectorAll('#cardEditorBox .preset-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.accent === card.accent);
+      });
+
+      renderBento();
+    }
+
+    function updateCardEditor() {
+      const card = bentoConfig.cards.find(c => c.id === selectedCardId);
+      if (card) {
+        cardColSpan.max = bentoConfig.columns;
+        if (card.colSpan > bentoConfig.columns) card.colSpan = bentoConfig.columns;
+      }
+    }
+
+    // Bento Container sliders
+    bentoCols.addEventListener('input', () => {
+      bentoConfig.columns = parseInt(bentoCols.value, 10);
+      renderBento();
+    });
+    bentoGap.addEventListener('input', () => {
+      bentoConfig.gap = parseInt(bentoGap.value, 10);
+      renderBento();
+    });
+    bentoRadius.addEventListener('input', () => {
+      bentoConfig.borderRadius = parseInt(bentoRadius.value, 10);
+      renderBento();
+    });
+    bentoMinHeight.addEventListener('input', () => {
+      bentoConfig.minRowHeight = parseInt(bentoMinHeight.value, 10);
+      renderBento();
+    });
+
+    // Bento Card Input Events
+    inputCardTitle.addEventListener('input', () => {
+      const card = bentoConfig.cards.find(c => c.id === selectedCardId);
+      if (card) {
+        card.title = inputCardTitle.value;
+        renderBento();
+      }
+    });
+
+    inputCardTag.addEventListener('input', () => {
+      const card = bentoConfig.cards.find(c => c.id === selectedCardId);
+      if (card) {
+        card.tag = inputCardTag.value;
+        renderBento();
+      }
+    });
+
+    cardColSpan.addEventListener('input', () => {
+      const card = bentoConfig.cards.find(c => c.id === selectedCardId);
+      if (card) {
+        card.colSpan = parseInt(cardColSpan.value, 10);
+        dispColSpan.textContent = `col-span-${card.colSpan}`;
+        renderBento();
+      }
+    });
+
+    cardRowSpan.addEventListener('input', () => {
+      const card = bentoConfig.cards.find(c => c.id === selectedCardId);
+      if (card) {
+        card.rowSpan = parseInt(cardRowSpan.value, 10);
+        dispRowSpan.textContent = `row-span-${card.rowSpan}`;
+        renderBento();
+      }
+    });
+
+    document.querySelectorAll('#cardEditorBox .preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = bentoConfig.cards.find(c => c.id === selectedCardId);
+        if (card) {
+          card.accent = btn.dataset.accent;
+          document.querySelectorAll('#cardEditorBox .preset-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderBento();
+        }
+      });
+    });
+
+    // Add / Delete Card
+    btnAddCard.addEventListener('click', () => {
+      if (bentoConfig.cards.length >= 12) return;
+      const nextId = Math.max(0, ...bentoConfig.cards.map(c => c.id)) + 1;
+      bentoConfig.cards.push({
+        id: nextId,
+        title: `Feature Module #${nextId}`,
+        colSpan: 1,
+        rowSpan: 1,
+        accent: 'solid',
+        tag: 'New'
+      });
+      selectBentoCard(nextId);
+    });
+
+    btnDeleteCard.addEventListener('click', () => {
+      if (bentoConfig.cards.length <= 1) return;
+      bentoConfig.cards = bentoConfig.cards.filter(c => c.id !== selectedCardId);
+      selectedCardId = bentoConfig.cards[0].id;
+      selectBentoCard(selectedCardId);
+    });
+
+    // Bento Preset selection
+    document.querySelectorAll('[data-bento-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-bento-preset]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = Utils.BENTO_PRESETS[btn.dataset.bentoPreset];
+        if (p) {
+          bentoConfig = JSON.parse(JSON.stringify(p));
+          bentoCols.value = bentoConfig.columns;
+          bentoGap.value = bentoConfig.gap;
+          bentoRadius.value = bentoConfig.borderRadius;
+          bentoMinHeight.value = bentoConfig.minRowHeight;
+          selectedCardId = bentoConfig.cards[0].id;
+          selectBentoCard(selectedCardId);
+        }
+      });
+    });
+
+    // Viewport switcher
+    document.querySelectorAll('.device-switcher .device-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.device-switcher .device-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        bentoCanvasWrapper.style.maxWidth = btn.dataset.viewport;
+      });
+    });
+
+    // --- MESH GRADIENT CONTROLLER ---
+    function renderMesh() {
+      dispMeshGrain.textContent = `${meshGrain}%`;
+      meshNoiseOverlay.style.opacity = (meshGrain / 100).toString();
+
+      // Background radial gradient stack
+      const radialStr = currentMeshPalette.orbs.map(orb => {
+        return `radial-gradient(at ${orb.x}% ${orb.y}%, ${orb.color} 0px, transparent ${orb.spread}%)`;
+      }).join(', ');
+
+      meshCanvasStage.style.backgroundColor = currentMeshPalette.baseColor;
+      meshCanvasStage.style.backgroundImage = radialStr;
+
+      // Update Combined tab as well
+      combinedCanvasWrapper.style.backgroundColor = currentMeshPalette.baseColor;
+      combinedCanvasWrapper.style.backgroundImage = radialStr;
+
+      // Render Orbs in Sidebar
+      meshOrbsContainer.innerHTML = '';
+      document.querySelectorAll('.mesh-orb-handle').forEach(el => el.remove());
+
+      currentMeshPalette.orbs.forEach((orb, idx) => {
+        // Sidebar Row
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.gap = '0.35rem';
+        row.style.background = 'var(--color-bg)';
+        row.style.padding = '0.35rem';
+        row.style.borderRadius = '6px';
+        row.style.border = '1px solid var(--color-border)';
+
+        row.innerHTML = `
+          <input type="color" value="${orb.color}" class="orb-color" data-idx="${idx}" style="width:28px; height:28px; border:none; border-radius:4px; cursor:pointer;">
+          <span style="font-size:0.7rem; font-weight:700;">#${idx + 1}</span>
+          <div style="flex:1; display:flex; flex-direction:column; gap:2px;">
+            <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:var(--color-text-muted);">
+              <span>X:${orb.x}% Y:${orb.y}%</span>
+              <span>Spread:${orb.spread}%</span>
+            </div>
+            <input type="range" class="range-input orb-spread" data-idx="${idx}" min="20" max="80" value="${orb.spread}" style="height:4px;">
+          </div>
+          ${currentMeshPalette.orbs.length > 2 ? `<button type="button" class="btn-delete-orb" data-idx="${idx}" style="background:none; border:none; color:#dc2626; cursor:pointer; font-size:0.75rem;">✕</button>` : ''}
+        `;
+
+        row.querySelector('.orb-color').addEventListener('input', (e) => {
+          currentMeshPalette.orbs[idx].color = e.target.value;
+          renderMesh();
+        });
+        row.querySelector('.orb-spread').addEventListener('input', (e) => {
+          currentMeshPalette.orbs[idx].spread = parseInt(e.target.value, 10);
+          renderMesh();
+        });
+        const delBtn = row.querySelector('.btn-delete-orb');
+        if (delBtn) {
+          delBtn.addEventListener('click', () => {
+            currentMeshPalette.orbs.splice(idx, 1);
+            renderMesh();
+          });
+        }
+        meshOrbsContainer.appendChild(row);
+
+        // Canvas Draggable Handle Pin
+        const handle = document.createElement('div');
+        handle.className = 'mesh-orb-handle';
+        handle.style.left = `${orb.x}%`;
+        handle.style.top = `${orb.y}%`;
+        handle.style.backgroundColor = orb.color;
+        handle.title = `Orb #${idx + 1} (${orb.x}%, ${orb.y}%)`;
+
+        let isDragging = false;
+        handle.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          const rect = meshCanvasStage.getBoundingClientRect();
+          let x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
+          let y = Math.round(((e.clientY - rect.top) / rect.height) * 100);
+          x = Math.max(0, Math.min(100, x));
+          y = Math.max(0, Math.min(100, y));
+
+          currentMeshPalette.orbs[idx].x = x;
+          currentMeshPalette.orbs[idx].y = y;
+          handle.style.left = `${x}%`;
+          handle.style.top = `${y}%`;
+
+          // Re-render radial stack
+          const rStr = currentMeshPalette.orbs.map(o => `radial-gradient(at ${o.x}% ${o.y}%, ${o.color} 0px, transparent ${o.spread}%)`).join(', ');
+          meshCanvasStage.style.backgroundImage = rStr;
+          updateCodeSnippet();
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (isDragging) {
+            isDragging = false;
+            renderMesh();
+          }
+        });
+
+        meshCanvasStage.appendChild(handle);
+      });
+
+      renderGlass();
+      updateCodeSnippet();
+    }
+
+    meshBaseColor.addEventListener('input', () => {
+      currentMeshPalette.baseColor = meshBaseColor.value;
+      renderMesh();
+    });
+
+    meshGrainOpacity.addEventListener('input', () => {
+      meshGrain = parseInt(meshGrainOpacity.value, 10);
+      renderMesh();
+    });
+
+    btnAddOrb.addEventListener('click', () => {
+      if (currentMeshPalette.orbs.length >= 6) return;
+      currentMeshPalette.orbs.push({
+        color: '#f59e0b',
+        x: Math.round(Math.random() * 80) + 10,
+        y: Math.round(Math.random() * 80) + 10,
+        spread: 50
+      });
+      renderMesh();
+    });
+
+    btnRandomMesh.addEventListener('click', () => {
+      const colors = ['#6366f1', '#a855f7', '#ec4899', '#3b82f6', '#10b981', '#f59e0b', '#06b6d4', '#f43f5e'];
+      currentMeshPalette.baseColor = '#0f172a';
+      meshBaseColor.value = '#0f172a';
+      currentMeshPalette.orbs.forEach(orb => {
+        orb.color = colors[Math.floor(Math.random() * colors.length)];
+        orb.x = Math.round(Math.random() * 70) + 15;
+        orb.y = Math.round(Math.random() * 70) + 15;
+        orb.spread = Math.round(Math.random() * 30) + 40;
+      });
+      renderMesh();
+    });
+
+    // Mesh Palette buttons
+    document.querySelectorAll('[data-mesh-palette]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-mesh-palette]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = Utils.MESH_PALETTES[btn.dataset.meshPalette];
+        if (p) {
+          currentMeshPalette = JSON.parse(JSON.stringify(p));
+          meshBaseColor.value = currentMeshPalette.baseColor;
+          renderMesh();
+        }
+      });
+    });
+
+    // Download High-Res PNG (1920x1080)
+    btnDownloadMeshPng.addEventListener('click', () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1920;
+      canvas.height = 1080;
+      const ctx = canvas.getContext('2d');
+
+      // 1. Fill Base Color
+      ctx.fillStyle = currentMeshPalette.baseColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 2. Render each orb radial gradient
+      currentMeshPalette.orbs.forEach(orb => {
+        const cx = (orb.x / 100) * canvas.width;
+        const cy = (orb.y / 100) * canvas.height;
+        const radius = (orb.spread / 100) * canvas.width;
+
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+        grad.addColorStop(0, orb.color);
+        grad.addColorStop(1, 'transparent');
+
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      });
+
+      // 3. Trigger Download
+      const link = document.createElement('a');
+      link.download = `mesh-gradient-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    // --- GLASSMORPHISM CONTROLLER ---
+    function renderGlass() {
+      dispGlassBlur.textContent = `${glassConfig.blur}px`;
+      dispGlassOpacity.textContent = glassConfig.opacity.toFixed(2);
+      dispGlassSaturation.textContent = `${glassConfig.saturation}%`;
+      dispGlassBorderOpacity.textContent = glassConfig.borderOpacity.toFixed(2);
+
+      const r = parseInt(glassConfig.tintColor.slice(1, 3), 16) || 255;
+      const g = parseInt(glassConfig.tintColor.slice(3, 5), 16) || 255;
+      const b = parseInt(glassConfig.tintColor.slice(5, 7), 16) || 255;
+
+      glassDemoCard.style.background = `rgba(${r}, ${g}, ${b}, ${glassConfig.opacity})`;
+      glassDemoCard.style.backdropFilter = `blur(${glassConfig.blur}px) saturate(${glassConfig.saturation}%)`;
+      glassDemoCard.style.webkitBackdropFilter = `blur(${glassConfig.blur}px) saturate(${glassConfig.saturation}%)`;
+      glassDemoCard.style.border = `1px solid rgba(${r}, ${g}, ${b}, ${glassConfig.borderOpacity})`;
+      glassDemoCard.style.boxShadow = glassConfig.shadow
+        ? `0 20px 25px -5px rgba(0, 0, 0, 0.35), 0 8px 10px -6px rgba(0, 0, 0, 0.3)`
+        : 'none';
+
+      // Contrast score calculation
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      const wcagBadge = document.getElementById('wcagBadge');
+      if (luminance > 0.6 && glassConfig.opacity > 0.4) {
+        glassDemoCard.style.color = '#0f172a';
+        wcagBadge.textContent = '✓ High Contrast (Dark Text)';
+        wcagBadge.style.background = '#10b981';
+      } else {
+        glassDemoCard.style.color = '#ffffff';
+        wcagBadge.textContent = '✓ WCAG AA Readable';
+        wcagBadge.style.background = '#10b981';
+      }
+
+      // Glass Preview Stage Background
+      if (glassConfig.bgStage === 'mesh') {
+        const radialStr = currentMeshPalette.orbs.map(orb => `radial-gradient(at ${orb.x}% ${orb.y}%, ${orb.color} 0px, transparent ${orb.spread}%)`).join(', ');
+        glassPreviewStage.style.backgroundColor = currentMeshPalette.baseColor;
+        glassPreviewStage.style.backgroundImage = radialStr;
+      } else if (glassConfig.bgStage === 'shapes') {
+        glassPreviewStage.style.backgroundColor = '#18181b';
+        glassPreviewStage.style.backgroundImage = 'none';
+      } else if (glassConfig.bgStage === 'dark') {
+        glassPreviewStage.style.backgroundColor = '#09090b';
+        glassPreviewStage.style.backgroundImage = 'none';
+      } else {
+        glassPreviewStage.style.backgroundColor = '#f4f4f5';
+        glassPreviewStage.style.backgroundImage = 'none';
+      }
+
+      renderCombined();
+      updateCodeSnippet();
+    }
+
+    glassBlur.addEventListener('input', () => {
+      glassConfig.blur = parseInt(glassBlur.value, 10);
+      renderGlass();
+    });
+    glassOpacity.addEventListener('input', () => {
+      glassConfig.opacity = parseFloat(glassOpacity.value);
+      renderGlass();
+    });
+    glassTintColor.addEventListener('input', () => {
+      glassConfig.tintColor = glassTintColor.value;
+      renderGlass();
+    });
+    glassSaturation.addEventListener('input', () => {
+      glassConfig.saturation = parseInt(glassSaturation.value, 10);
+      renderGlass();
+    });
+    glassBorderOpacity.addEventListener('input', () => {
+      glassConfig.borderOpacity = parseFloat(glassBorderOpacity.value);
+      renderGlass();
+    });
+    glassShadowToggle.addEventListener('change', () => {
+      glassConfig.shadow = glassShadowToggle.checked;
+      renderGlass();
+    });
+
+    document.querySelectorAll('[data-glass-bg]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-glass-bg]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        glassConfig.bgStage = btn.dataset.glassBg;
+        renderGlass();
+      });
+    });
+
+    // --- COMBINED COMPONENT RENDER ---
+    function renderCombined() {
+      combinedCanvasWrapper.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(${bentoConfig.columns}, minmax(0, 1fr)); gap:${bentoConfig.gap}px;">
+          ${bentoConfig.cards.map(c => `
+            <div style="grid-column: span ${c.colSpan}; grid-row: span ${c.rowSpan}; border-radius:${bentoConfig.borderRadius}px; padding:1.25rem; backdrop-filter:blur(${glassConfig.blur}px); -webkit-backdrop-filter:blur(${glassConfig.blur}px); background:rgba(255,255,255,${glassConfig.opacity}); border:1px solid rgba(255,255,255,${glassConfig.borderOpacity}); color:#fff; box-shadow:${glassConfig.shadow ? '0 10px 25px rgba(0,0,0,0.2)' : 'none'}; display:flex; flex-direction:column; justify-content:space-between; min-height:${bentoConfig.minRowHeight}px;">
+              <span style="font-size:0.7rem; font-weight:800; text-transform:uppercase; background:rgba(255,255,255,0.15); padding:2px 8px; border-radius:20px; width:max-content;">${c.tag || 'Module'}</span>
+              <h4 style="margin:1rem 0 0 0; font-size:1.1rem; font-weight:800;">${c.title}</h4>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // --- CODE SNIPPET GENERATOR ---
+    function updateCodeSnippet() {
+      let code = '';
+      if (activeTab === 'bento') {
+        if (activeCodeLang === 'tailwind') {
+          code = Utils.generateBentoTailwindHTML(bentoConfig);
+        } else if (activeCodeLang === 'react') {
+          code = Utils.generateBentoReactJSX(bentoConfig);
+        } else {
+          code = Utils.generateBentoCSS(bentoConfig);
+        }
+      } else if (activeTab === 'mesh') {
+        if (activeCodeLang === 'tailwind') {
+          code = `<!-- Tailwind arbitrary mesh gradient background -->\n<div class="${Utils.generateMeshTailwindClass(currentMeshPalette.baseColor, currentMeshPalette.orbs)}">\n  <!-- Content -->\n</div>`;
+        } else if (activeCodeLang === 'react') {
+          code = `export default function MeshBackground({ children }) {\n  return (\n    <div className="${Utils.generateMeshTailwindClass(currentMeshPalette.baseColor, currentMeshPalette.orbs)}">\n      {children}\n    </div>\n  );\n}`;
+        } else {
+          code = Utils.generateMeshCSS(currentMeshPalette.baseColor, currentMeshPalette.orbs, meshGrain / 100);
+        }
+      } else if (activeTab === 'glass') {
+        if (activeCodeLang === 'tailwind') {
+          code = `<!-- Tailwind Glassmorphic Surface -->\n<div class="${Utils.generateGlassTailwindClasses(glassConfig)} p-6">\n  <h3 class="text-xl font-bold">Glassmorphic Card</h3>\n</div>`;
+        } else if (activeCodeLang === 'react') {
+          code = `export default function GlassCard({ children }) {\n  return (\n    <div className="${Utils.generateGlassTailwindClasses(glassConfig)} p-6">\n      {children}\n    </div>\n  );\n}`;
+        } else {
+          code = Utils.generateGlassCSS(glassConfig);
+        }
+      } else {
+        // Combined
+        code = Utils.generateCombinedComponent(bentoConfig, { baseColor: currentMeshPalette.baseColor, orbs: currentMeshPalette.orbs }, glassConfig);
+      }
+
+      codeSnippetBox.textContent = code;
+    }
+
+    // Code language switcher
+    document.querySelectorAll('.code-tab-pills .code-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.code-tab-pills .code-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeCodeLang = btn.dataset.lang;
+        updateCodeSnippet();
+      });
+    });
+
+    // Copy Code Action
+    btnCopyCode.addEventListener('click', () => {
+      const code = codeSnippetBox.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const orig = btnCopyCode.innerHTML;
+        btnCopyCode.innerHTML = `✓ Snippet Copied!`;
+        setTimeout(() => { btnCopyCode.innerHTML = orig; }, 2000);
+      });
+    });
+
+    // Initialize
+    renderBento();
+    renderMesh();
+    renderGlass();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User-Agent Parser &amp; Device Detector — Free Online Tools</title>
+  <meta name="description" content="Parse, decode, and analyze any User-Agent string. Detect browser, operating system, device type, rendering engine, and architecture. 100% private.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/user-agent-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/user-agent-parser.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/user-agent-parser.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "User-Agent Parser & Device Detector",
+    "description": "Parse, decode, and analyze any User-Agent string. Detect browser, operating system, device type, rendering engine, and architecture. 100% private.",
+    "url": "https://nexivo.com/tools/user-agent-parser.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#website">Website &amp; SEO Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">User-Agent Parser</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>User-Agent Parser &amp; Device Detector</span>
+      </h1>
+      <p class="tool-header-lead">
+        Inspect your current browser's User-Agent string or decode any HTTP User-Agent header to identify browser family, version, operating system, rendering engine, and device type.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Device &amp; OS Detection</span>
+        <span class="tool-badge">Bot Recognition</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-current-ua">My Current Browser</button>
+          <button type="button" class="btn btn-secondary" id="btn-copy-json">Copy JSON</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Clear</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Instant parsing
+        </div>
+      </div>
+
+      <!-- Quick Preset Buttons -->
+      <div style="margin-block-end: var(--space-3); display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center;">
+        <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: var(--font-weight-semibold);">Quick Presets:</span>
+        <button type="button" class="btn btn-secondary btn-preset" style="padding: 0.25rem 0.6rem; font-size: var(--font-size-xs);" data-preset="googlebot">Googlebot Desktop</button>
+        <button type="button" class="btn btn-secondary btn-preset" style="padding: 0.25rem 0.6rem; font-size: var(--font-size-xs);" data-preset="iphone">iPhone 15 Safari</button>
+        <button type="button" class="btn btn-secondary btn-preset" style="padding: 0.25rem 0.6rem; font-size: var(--font-size-xs);" data-preset="android">Android Chrome</button>
+        <button type="button" class="btn btn-secondary btn-preset" style="padding: 0.25rem 0.6rem; font-size: var(--font-size-xs);" data-preset="mac">macOS Safari</button>
+        <button type="button" class="btn btn-secondary btn-preset" style="padding: 0.25rem 0.6rem; font-size: var(--font-size-xs);" data-preset="edge">Windows 11 Edge</button>
+      </div>
+
+      <!-- Input UA -->
+      <div class="form-group">
+        <label for="ua-input" class="form-label" style="font-weight: var(--font-weight-semibold);">User-Agent String:</label>
+        <textarea id="ua-input" class="form-textarea" rows="3" placeholder="Paste any User-Agent string here..." style="font-family: var(--font-family-mono); font-size: var(--font-size-sm);"></textarea>
+      </div>
+
+      <!-- Detected Key Metrics Cards -->
+      <div class="stats-grid" style="margin-block-end: var(--space-4);">
+        <div class="stat-card">
+          <div class="stat-label">Browser</div>
+          <div class="stat-value" id="card-browser" style="font-size: var(--font-size-xl);">Unknown</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="card-browser-version">Version --</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Operating System</div>
+          <div class="stat-value" id="card-os" style="font-size: var(--font-size-xl);">Unknown</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="card-os-version">Version --</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Device Type</div>
+          <div class="stat-value" id="card-device" style="font-size: var(--font-size-xl);">Desktop</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="card-device-brand">Form factor</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Rendering Engine</div>
+          <div class="stat-value" id="card-engine" style="font-size: var(--font-size-xl);">Blink</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);" id="card-engine-version">Layout core</div>
+        </div>
+      </div>
+
+      <!-- Comprehensive Attribute Breakdown -->
+      <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4);">
+        <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-3);">Detailed User-Agent Breakdown</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3); font-size: var(--font-size-sm);">
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">Browser Family:</span>
+            <strong id="det-browser-name">--</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">Major Version:</span>
+            <strong id="det-browser-major">--</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">OS Name &amp; Family:</span>
+            <strong id="det-os-name">--</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">OS Architecture:</span>
+            <strong id="det-cpu-arch">--</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">Device Category:</span>
+            <strong id="det-device-type">--</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">Search Bot / Crawler:</span>
+            <strong id="det-is-bot">No</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the User-Agent Parser Do?</h2>
+        <p>
+          The <strong>User-Agent Parser &amp; Device Detector</strong> decomposes the HTTP <code>User-Agent</code> header sent by web browsers, mobile apps, and search engine crawlers. User-Agent strings contain encoded details about the client's web browser, rendering engine, operating system, and hardware architecture, but are notoriously cryptic and inconsistent across vendors.
+        </p>
+        <p>
+          This utility instantly translates messy User-Agent strings into clean, structured data cards and JSON objects. It enables web developers, QA engineers, and system administrators to understand client traffic, troubleshoot browser-specific compatibility bugs, and verify bot identities.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Load or Paste User-Agent:</strong> By default, the tool automatically reads and parses your current web browser's User-Agent. You can also paste any custom string from server access logs or bug reports.</li>
+          <li><strong>Explore Quick Presets:</strong> Click on presets like <em>Googlebot Desktop</em>, <em>iPhone 15 Safari</em>, or <em>Windows 11 Edge</em> to inspect common mobile, desktop, and crawler profiles.</li>
+          <li><strong>Review Parsed Specifications:</strong> Observe the detected browser name, major and full versions, OS name, layout engine (e.g. Blink, Gecko, WebKit), device category, and bot status.</li>
+          <li><strong>Export Parsed JSON:</strong> Click <strong>Copy JSON</strong> to obtain a machine-readable JSON structure for logging, test cases, or database records.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Server Log Analysis</h3>
+            <p>Decode unreadable User-Agent entries in Nginx, Apache, or AWS CloudFront access logs to identify real human visitors versus scrapers.</p>
+          </div>
+          <div class="card">
+            <h3>Responsive QA &amp; Bug Reproduction</h3>
+            <p>Determine the exact browser version and operating system reported by customers filing mobile rendering issues or layout glitches.</p>
+          </div>
+          <div class="card">
+            <h3>Bot &amp; Crawler Identification</h3>
+            <p>Verify whether an incoming request claims to be Googlebot, Bingbot, or an automated scraping agent.</p>
+          </div>
+          <div class="card">
+            <h3>Conditional Feature Auditing</h3>
+            <p>Understand which legacy CSS or JavaScript features are supported by the client engine based on its detected major release.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Example User-Agent String:</div>
+          <pre class="example-pre">Mozilla/5.0 (iPhone; CPU iPhone OS 17_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Mobile/15E148 Safari/604.1</pre>
+          <div class="example-title" style="margin-block-start: var(--space-3);">Parsed Output:</div>
+          <pre class="example-pre">Browser: Safari (v17.4.1)
+Engine: WebKit (v605.1.15)
+Operating System: iOS (v17.4.1)
+Device: Mobile (iPhone)
+Is Bot: No</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Pattern Matcher:</strong> Uses deterministic regex recognition covering Blink (Chromium/Edge/Brave/Opera), Gecko (Firefox), WebKit (Safari), and legacy Trident engines.</li>
+          <li><strong>Client Hints Awareness:</strong> Parses standard User-Agent format alongside modern User-Agent Reduction frozen formats.</li>
+          <li><strong>Zero Network Calls:</strong> All parsing logic is bundled directly in client JavaScript for instantaneous local execution.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          User-Agent strings are self-reported by HTTP clients and can be spoofed or customized by proxies, VPNs, or browser developer tools. Modern browsers also participate in "User-Agent Reduction", which freezes minor version numbers and CPU details for privacy reasons. For strict hardware profiling, modern websites combine User-Agent parsing with Client Hints API where available.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          The User-Agent string is parsed completely in your browser memory. We do not store, log, or track your browser characteristics or IP address on our servers.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Why does my User-Agent say "Mozilla/5.0" even though I use Chrome or Edge?</summary>
+            <div class="faq-answer">
+              <p>For historical compatibility reasons dating back to the early web browser wars (Netscape/Mozilla), virtually all modern browsers include <code>Mozilla/5.0</code> at the beginning of their User-Agent string so that older web servers wouldn't block them.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Can User-Agents be forged?</summary>
+            <div class="faq-answer">
+              <p>Yes. Any HTTP client, cURL command, or browser extension can modify the User-Agent header. You should never rely solely on User-Agent detection for critical application security or access authorization.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What is User-Agent Reduction?</summary>
+            <div class="faq-answer">
+              <p>Both Chrome and Safari have frozen specific parts of their User-Agent strings (such as OS minor versions and exact hardware models) to prevent digital fingerprinting across websites. As a result, many modern strings report standardized placeholder tokens.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/meta-tags-toolkit.html" class="related-tool-chip">
+            <div class="related-tool-title">Meta Tags Toolkit</div>
+            <div class="related-tool-desc">Generate and validate HTML SEO, Open Graph, and Twitter tags.</div>
+          </a>
+          <a href="/tools/serp-preview-tool.html" class="related-tool-chip">
+            <div class="related-tool-title">SERP Preview Tool</div>
+            <div class="related-tool-desc">Simulate how your page title and snippet look in Google search results.</div>
+          </a>
+          <a href="/tools/open-graph-previewer.html" class="related-tool-chip">
+            <div class="related-tool-title">Open Graph Previewer</div>
+            <div class="related-tool-desc">Preview social sharing cards for Facebook, Twitter, and LinkedIn.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const uaInput = document.getElementById('ua-input');
+    const cardBrowser = document.getElementById('card-browser');
+    const cardBrowserVersion = document.getElementById('card-browser-version');
+    const cardOs = document.getElementById('card-os');
+    const cardOsVersion = document.getElementById('card-os-version');
+    const cardDevice = document.getElementById('card-device');
+    const cardDeviceBrand = document.getElementById('card-device-brand');
+    const cardEngine = document.getElementById('card-engine');
+    const cardEngineVersion = document.getElementById('card-engine-version');
+
+    const detBrowserName = document.getElementById('det-browser-name');
+    const detBrowserMajor = document.getElementById('det-browser-major');
+    const detOsName = document.getElementById('det-os-name');
+    const detCpuArch = document.getElementById('det-cpu-arch');
+    const detDeviceType = document.getElementById('det-device-type');
+    const detIsBot = document.getElementById('det-is-bot');
+
+    const btnCurrentUa = document.getElementById('btn-current-ua');
+    const btnCopyJson = document.getElementById('btn-copy-json');
+    const btnClear = document.getElementById('btn-clear');
+    const presetButtons = document.querySelectorAll('.btn-preset');
+
+    const PRESETS = {
+      googlebot: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+      iphone: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Mobile/15E148 Safari/604.1',
+      android: 'Mozilla/5.0 (Linux; Android 14; Pixel 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.82 Mobile Safari/537.36',
+      mac: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15',
+      edge: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.2478.80'
+    };
+
+    function parseUA(ua) {
+      const data = {
+        browser: { name: 'Unknown', version: '--', major: '--' },
+        os: { name: 'Unknown', version: '--' },
+        device: { type: 'Desktop', brand: 'Generic PC / Mac' },
+        engine: { name: 'Unknown', version: '--' },
+        cpu: { arch: 'Unknown' },
+        isBot: false,
+        raw: ua
+      };
+
+      if (!ua || !ua.trim()) return data;
+
+      // 1. Check Bots
+      if (/Googlebot/i.test(ua)) {
+        data.isBot = true;
+        data.browser = { name: 'Googlebot', version: '2.1', major: '2' };
+        data.device = { type: 'Bot / Crawler', brand: 'Google Crawler' };
+        data.os = { name: 'Google Cloud Bot', version: '--' };
+        data.engine = { name: 'Crawler Core', version: '--' };
+        return data;
+      }
+      if (/bingbot/i.test(ua)) {
+        data.isBot = true;
+        data.browser = { name: 'Bingbot', version: '2.0', major: '2' };
+        data.device = { type: 'Bot / Crawler', brand: 'Microsoft Crawler' };
+        data.os = { name: 'Bing Cloud Bot', version: '--' };
+        data.engine = { name: 'Crawler Core', version: '--' };
+        return data;
+      }
+      if (/bot|crawler|spider|crawling/i.test(ua)) {
+        data.isBot = true;
+        data.device = { type: 'Bot / Crawler', brand: 'Automated Bot' };
+      }
+
+      // 2. CPU Architecture
+      if (/x86_64|Win64|x64|amd64|WOW64/i.test(ua)) {
+        data.cpu.arch = '64-bit (x86_64)';
+      } else if (/arm64|aarch64/i.test(ua)) {
+        data.cpu.arch = '64-bit (ARM64)';
+      } else if (/armv[0-9]+|arm/i.test(ua)) {
+        data.cpu.arch = '32-bit (ARM)';
+      } else if (/i686|i386|x86/i.test(ua)) {
+        data.cpu.arch = '32-bit (x86)';
+      }
+
+      // 3. Operating System
+      if (/Windows NT 10.0/i.test(ua)) {
+        data.os = { name: 'Windows', version: '10 / 11' };
+      } else if (/Windows NT 6.3/i.test(ua)) {
+        data.os = { name: 'Windows', version: '8.1' };
+      } else if (/Windows NT 6.2/i.test(ua)) {
+        data.os = { name: 'Windows', version: '8' };
+      } else if (/Windows NT 6.1/i.test(ua)) {
+        data.os = { name: 'Windows', version: '7' };
+      } else if (/Windows NT 6.0/i.test(ua)) {
+        data.os = { name: 'Windows', version: 'Vista' };
+      } else if (/Windows/i.test(ua)) {
+        data.os = { name: 'Windows', version: 'NT' };
+      } else if (/iPhone/i.test(ua)) {
+        const m = ua.match(/OS (\d+[_\.\d]*)/i);
+        data.os = { name: 'iOS', version: m ? m[1].replace(/_/g, '.') : '--' };
+        data.device = { type: 'Mobile', brand: 'Apple iPhone' };
+      } else if (/iPad/i.test(ua)) {
+        const m = ua.match(/OS (\d+[_\.\d]*)/i);
+        data.os = { name: 'iPadOS', version: m ? m[1].replace(/_/g, '.') : '--' };
+        data.device = { type: 'Tablet', brand: 'Apple iPad' };
+      } else if (/Mac OS X (\d+[_\.\d]*)/i.test(ua)) {
+        const m = ua.match(/Mac OS X (\d+[_\.\d]*)/i);
+        data.os = { name: 'macOS', version: m ? m[1].replace(/_/g, '.') : 'X' };
+        data.device = { type: 'Desktop', brand: 'Apple Mac' };
+      } else if (/Android (\d+[\.\d]*)/i.test(ua)) {
+        const m = ua.match(/Android (\d+[\.\d]*)/i);
+        data.os = { name: 'Android', version: m ? m[1] : '--' };
+        data.device = { type: /Mobile/i.test(ua) ? 'Mobile' : 'Tablet', brand: 'Android Device' };
+      } else if (/CrOS/i.test(ua)) {
+        data.os = { name: 'Chrome OS', version: '--' };
+        data.device = { type: 'Desktop', brand: 'Chromebook' };
+      } else if (/Linux/i.test(ua)) {
+        data.os = { name: 'Linux', version: 'Generic' };
+        data.device = { type: 'Desktop', brand: 'Linux PC' };
+      }
+
+      // 4. Rendering Engine
+      if (/AppleWebKit\/(\d+[\.\d]*)/i.test(ua)) {
+        const m = ua.match(/AppleWebKit\/(\d+[\.\d]*)/i);
+        data.engine = { name: 'WebKit', version: m ? m[1] : '--' };
+      }
+      if (/Gecko\/(\d+[\.\d]*)/i.test(ua)) {
+        data.engine = { name: 'Gecko', version: '--' };
+      }
+      if (/Chrome/i.test(ua) && !/Edge?|OPR/i.test(ua)) {
+        data.engine = { name: 'Blink', version: '--' };
+      }
+
+      // 5. Browser Family & Version
+      let bMatch;
+      if ((bMatch = ua.match(/Edg(?:e|A|iOS)?\/(\d+[\.\d]*)/i))) {
+        data.browser = { name: 'Microsoft Edge', version: bMatch[1], major: bMatch[1].split('.')[0] };
+        data.engine.name = 'Blink';
+      } else if ((bMatch = ua.match(/OPR\/(\d+[\.\d]*)/i))) {
+        data.browser = { name: 'Opera', version: bMatch[1], major: bMatch[1].split('.')[0] };
+        data.engine.name = 'Blink';
+      } else if ((bMatch = ua.match(/SamsungBrowser\/(\d+[\.\d]*)/i))) {
+        data.browser = { name: 'Samsung Internet', version: bMatch[1], major: bMatch[1].split('.')[0] };
+        data.engine.name = 'Blink';
+      } else if ((bMatch = ua.match(/Chrome\/(\d+[\.\d]*)/i))) {
+        data.browser = { name: 'Google Chrome', version: bMatch[1], major: bMatch[1].split('.')[0] };
+        data.engine.name = 'Blink';
+      } else if ((bMatch = ua.match(/Firefox\/(\d+[\.\d]*)/i))) {
+        data.browser = { name: 'Mozilla Firefox', version: bMatch[1], major: bMatch[1].split('.')[0] };
+        data.engine.name = 'Gecko';
+      } else if (/Safari/i.test(ua) && (bMatch = ua.match(/Version\/(\d+[\.\d]*)/i))) {
+        data.browser = { name: 'Apple Safari', version: bMatch[1], major: bMatch[1].split('.')[0] };
+        data.engine.name = 'WebKit';
+      } else if ((bMatch = ua.match(/MSIE (\d+[\.\d]*)/i)) || (bMatch = ua.match(/Trident.*rv:(\d+[\.\d]*)/i))) {
+        data.browser = { name: 'Internet Explorer', version: bMatch[1], major: bMatch[1].split('.')[0] };
+        data.engine = { name: 'Trident', version: '--' };
+      }
+
+      return data;
+    }
+
+    let parsedResult = null;
+
+    function update() {
+      const ua = uaInput.value || '';
+      parsedResult = parseUA(ua);
+
+      cardBrowser.textContent = parsedResult.browser.name;
+      cardBrowserVersion.textContent = parsedResult.browser.version !== '--' ? 'v' + parsedResult.browser.version : 'Version unknown';
+
+      cardOs.textContent = parsedResult.os.name;
+      cardOsVersion.textContent = parsedResult.os.version !== '--' ? 'v' + parsedResult.os.version : 'Platform detected';
+
+      cardDevice.textContent = parsedResult.device.type;
+      cardDeviceBrand.textContent = parsedResult.device.brand;
+
+      cardEngine.textContent = parsedResult.engine.name;
+      cardEngineVersion.textContent = parsedResult.engine.version !== '--' ? 'v' + parsedResult.engine.version : 'Core Engine';
+
+      detBrowserName.textContent = parsedResult.browser.name;
+      detBrowserMajor.textContent = parsedResult.browser.major;
+      detOsName.textContent = parsedResult.os.name + (parsedResult.os.version !== '--' ? ' ' + parsedResult.os.version : '');
+      detCpuArch.textContent = parsedResult.cpu.arch;
+      detDeviceType.textContent = parsedResult.device.type + ' (' + parsedResult.device.brand + ')';
+      detIsBot.textContent = parsedResult.isBot ? 'Yes (Crawler Identified)' : 'No (Human Client)';
+    }
+
+    uaInput.addEventListener('input', update);
+
+    btnCurrentUa.addEventListener('click', () => {
+      uaInput.value = navigator.userAgent;
+      update();
+    });
+
+    btnClear.addEventListener('click', () => {
+      uaInput.value = '';
+      update();
+      uaInput.focus();
+    });
+
+    presetButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.preset;
+        if (PRESETS[key]) {
+          uaInput.value = PRESETS[key];
+          update();
+        }
+      });
+    });
+
+    btnCopyJson.addEventListener('click', () => {
+      if (parsedResult) {
+        const jsonStr = JSON.stringify(parsedResult, null, 2);
+        window.FreeOnlineTools.copyToClipboard(jsonStr, 'Parsed User-Agent JSON copied to clipboard!');
+      }
+    });
+
+    // Initialize with current navigator UA
+    btnCurrentUa.click();
+  })();
+  </script>
+</body>
+</html>

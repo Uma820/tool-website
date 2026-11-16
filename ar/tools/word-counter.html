@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عداد الكلمات والأحرف — أدوات مجانية عبر الإنترنت</title>
+  <meta name="description" content="حلل طول النصوص، واعد الأحرف مع المسافات وبدونها، واكتشف الجمل والفقرات، وقدّر وقت القراءة والإلقاء في الوقت الفعلي.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/ar/tools/word-counter.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/word-counter.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/word-counter.html">
+  <link rel="alternate" hreflang="bn" href="https://nexivo.com/bn/tools/word-counter.html">
+  <link rel="alternate" hreflang="hi" href="https://nexivo.com/hi/tools/word-counter.html">
+  <link rel="alternate" hreflang="es" href="https://nexivo.com/es/tools/word-counter.html">
+  <link rel="alternate" hreflang="fr" href="https://nexivo.com/fr/tools/word-counter.html">
+  <link rel="alternate" hreflang="ar" href="https://nexivo.com/ar/tools/word-counter.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "عداد الكلمات والأحرف",
+    "description": "حلل طول النصوص، واعد الأحرف مع المسافات وبدونها، واكتشف الجمل والفقرات، وقدّر وقت القراءة والإلقاء في الوقت الفعلي.",
+    "url": "https://nexivo.com/ar/tools/word-counter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/ar/index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>أدوات مجانية عبر الإنترنت</span>
+      </a>
+      <div class="header-actions">
+        <!-- Language Selector -->
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en">English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar" selected>العربية (Arabic)</option>
+        </select>
+        <a href="/ar/index.html" class="btn btn-secondary">جميع الأدوات</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="تبديل المظهر">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/ar/index.html">الرئيسية</a></li>
+      <li>/</li>
+      <li><a href="/ar/index.html">أدوات النصوص</a></li>
+      <li>/</li>
+      <li aria-current="page">عداد الكلمات والأحرف</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>عداد الكلمات والأحرف</span>
+      </h1>
+      <p class="tool-header-lead">
+        حلل طول النصوص، واعد الأحرف مع المسافات وبدونها، واكتشف الجمل والفقرات، وقدّر وقت القراءة والإلقاء في الوقت الفعلي.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">المستوى 1: مدمج بالمتصفح</span>
+        <span class="tool-badge">خصوصية تامة 100%</span>
+        <span class="tool-badge">تنفيذ فوري محلي</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">تحميل نص تجريبي</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">مسح المدخلات</button>
+          <button type="button" class="btn btn-secondary" id="btn-copy">نسخ النص</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          يتحدث تلقائياً أثناء الكتابة
+        </div>
+      </div>
+
+      <!-- Real-Time Statistics Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-words">0</div>
+          <div class="stat-label">الكلمات</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-chars">0</div>
+          <div class="stat-label">الأحرف الكلية</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-chars-no-space">0</div>
+          <div class="stat-label">أحرف (بدون مسافات)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-sentences">0</div>
+          <div class="stat-label">الجمل</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-paragraphs">0</div>
+          <div class="stat-label">الفقرات</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-lines">0</div>
+          <div class="stat-label">الأسطر</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-reading-time">0m 0s</div>
+          <div class="stat-label">وقت القراءة</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-speaking-time">0m 0s</div>
+          <div class="stat-label">وقت الإلقاء</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-block-start: var(--space-5);">
+        <label for="text-input" class="form-label">اكتب أو الصق نصك أدناه:</label>
+        <textarea id="text-input" class="form-textarea" placeholder="الصق مقالك أو بحثك أو مسودتك هنا..." autofocus></textarea>
+      </div>
+    </div>
+
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>ماذا تفعل هذه الأداة والمشكلة التي تحلها</h2>
+        <p>يوفر <strong>عداد الكلمات والأحرف</strong> تحليلاً إحصائياً فورياً ودقيقاً لأي نص. يساعدك في الالتزام بالحدود المحددة للمقالات الجامعية أو منشورات منصات التواصل الاجتماعي دون إرسال نصوصك الخاصة إلى خوادم خارجية.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>إرشادات الاستخدام خطوة بخطوة</h2>
+        <ol class="doc-steps">
+          <li>اكتب أو الصق النص داخل منطقة العمل المخصصة.</li>
+          <li>تتحدث الإحصائيات تلقائياً في الوقت الفعلي بمجرد الكتابة.</li>
+          <li>راجع شبكة الإحصائيات: عدد الكلمات، الأحرف مع المسافات وبدونها، الجمل، ووقت القراءة.</li>
+          <li>انقر على "نسخ النص" لنسخه إلى الحافظة أو "مسح النص" لبدء نص جديد.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>حالات الاستخدام العملية الشائعة</h2>
+        <ul>
+          <li><strong>البحوث والواجبات الأكاديمية:</strong> التأكد من مطابقة المقالات للحد الأدنى والأقصى المطلوب من قبل الجامعات ودور النشر.</li>
+          <li><strong>منصات التواصل وتحسين محركات البحث (SEO):</strong> ضبط الأوصاف التعريفية تحت 160 حرفاً وتغريدات منصة X تحت 280 حرفاً.</li>
+          <li><strong>التدريب على الخطابات والعروض:</strong> تقدير المدة الزمنية لإلقاء النص بدقة بناءً على معدل 130 كلمة في الدقيقة.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>مثال واقعي والنتيجة المتوقعة</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">مثال الإدخال</div>
+              <pre class="example-pre" dir="ltr">النص العربي يتميز بالبلاغة والدقة والجمال اللغوي.</pre>
+            </div>
+            <div>
+              <div class="example-title">النتيجة المتوقعة</div>
+              <pre class="example-pre" dir="ltr">الكلمات: 8 | الأحرف: 47 | الأحرف (بدون مسافات): 40 | الجمل: 1 | وقت القراءة: 0 د 2 ث</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>المواصفات التقنية وآلية العمل</h2>
+        <p>تعتمد حسابات الكلمات على مطابقة الحدود المعتمدة على الفراغات في اليونيكود (<code>/\s+/</code>). يُقدر معدل القراءة الصامتة بـ 225 كلمة في الدقيقة، وسرعة الإلقاء التحدثي بـ 130 كلمة في الدقيقة.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>القيود وحدود المتصفح</h2>
+        <p>بالنسبة للغات التي لا تعتمد على المسافات للفصل بين الكلمات (كالصينية أو التايلاندية)، يُعتبر مقياس "الأحرف بدون مسافات" هو المقياس الأكثر دقة.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>ضمان الخصوصية والأمان</h2>
+        <p>تتم معالجة نصوصك بالكامل داخل ذاكرة المتصفح المؤقتة على جهازك. لا يتم إرسال أي نصوص عبر الإنترنت مطلقاً.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>الأسئلة الشائعة (FAQs)</h2>
+        
+        <div class="faq-item">
+          <h3>كم عدد الكلمات المناسب لخطاب مدته 5 دقائق؟</h3>
+          <p>بمعدل إلقاء طبيعي يبلغ 130 كلمة في الدقيقة، يتطلب خطاب مدته 5 دقائق حوالي 650 كلمة.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>هل تحفظ هذه الأداة نصوصي المدخلة؟</h3>
+          <p>كلا، بمجرد إغلاق علامة تبويب المتصفح أو تحديثها، يتم محو النص من الذاكرة نهائياً.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>أدوات متصفح ذات صلة</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/ar/tools/case-converter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>محول حالة الأحرف للنصوص</span>
+          </a>
+
+          <a href="/ar/tools/percentage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>حاسبة النسبة المئوية والخصم</span>
+          </a>
+
+          <a href="/ar/tools/pdf-merger.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>دمج ملفات PDF (PDF Merger)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 أدوات مجانية عبر الإنترنت. Client-side browser utilities.</p>
+      <a href="/ar/index.html">العودة للرئيسية</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const textInput = document.getElementById('text-input');
+      const statWords = document.getElementById('stat-words');
+      const statChars = document.getElementById('stat-chars');
+      const statCharsNoSpace = document.getElementById('stat-chars-no-space');
+      const statSentences = document.getElementById('stat-sentences');
+      const statParagraphs = document.getElementById('stat-paragraphs');
+      const statLines = document.getElementById('stat-lines');
+      const statReadingTime = document.getElementById('stat-reading-time');
+      const statSpeakingTime = document.getElementById('stat-speaking-time');
+
+      const btnSample = document.getElementById('btn-sample');
+      const btnمسح = document.getElementById('btn-clear');
+      const btnCopy = document.getElementById('btn-copy');
+
+      function updateStats() {
+        const text = textInput.value;
+        const totalChars = text.length;
+        const charsNoSpace = text.replace(/\s/g, '').length;
+
+        // Words: split by whitespace and filter out blanks
+        const trimmed = text.trim();
+        const wordsArray = trimmed ? trimmed.split(/\s+/) : [];
+        const wordCount = wordsArray.length;
+
+        // Sentences: match . ! ? followed by space or end
+        const sentences = trimmed ? (trimmed.match(/[^.!?]+[.!?]+(\s|$)/g) || [trimmed]).length : 0;
+
+        // Paragraphs: non-empty chunks separated by newlines
+        const paragraphs = trimmed ? trimmed.split(/\n+/).filter(p => p.trim().length > 0).length : 0;
+
+        // Lines: count linebreaks
+        const lines = text ? text.split('\n').length : 0;
+
+        // Reading time: ~225 wpm
+        const readSeconds = Math.round((wordCount / 225) * 60);
+        const readMin = Math.floor(readSeconds / 60);
+        const readSec = readSeconds % 60;
+
+        // Speaking time: ~130 wpm
+        const speakSeconds = Math.round((wordCount / 130) * 60);
+        const speakMin = Math.floor(speakSeconds / 60);
+        const speakSec = speakSeconds % 60;
+
+        statWords.textContent = wordCount.toLocaleString();
+        statChars.textContent = totalChars.toLocaleString();
+        statCharsNoSpace.textContent = charsNoSpace.toLocaleString();
+        statSentences.textContent = sentences.toLocaleString();
+        statParagraphs.textContent = paragraphs.toLocaleString();
+        statLines.textContent = lines.toLocaleString();
+        statReadingTime.textContent = `${readMin}m ${readSec}s`;
+        statSpeakingTime.textContent = `${speakMin}m ${speakSec}s`;
+      }
+
+      textInput.addEventListener('input', updateStats);
+
+      btnSample.addEventListener('click', () => {
+        textInput.value = "The quick brown fox jumps over the lazy dog.\n\nFree Online Tools provides fast, completely private browser utilities. Everything is calculated on your device without transmitting text over the network.";
+        updateStats();
+        textInput.focus();
+      });
+
+      btnمسح.addEventListener('click', () => {
+        textInput.value = '';
+        updateStats();
+        textInput.focus();
+      });
+
+      btnCopy.addEventListener('click', () => {
+        window.FreeOnlineTools.copyToClipboard(textInput.value, 'Text copied to clipboard!');
+      });
+
+      // Initial stats on load
+      updateStats();
+    })();
+  </script>
+</body>
+</html>

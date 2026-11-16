@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quilt Backing Calculator — Yardage, Seams &amp; Cutting Diagram</title>
+  <meta name="description" content="Calculate fabric yardage for quilt backing. Compare vertical vs. horizontal pieced seams to minimize fabric waste, and view a 2D cutting diagram. Free in-browser tool.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/quilt-backing-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/quilt-backing-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/quilt-backing-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Quilt Backing Calculator",
+    "description": "Calculate fabric yardage for quilt backing. Compares vertical and horizontal seams to find the most fabric-efficient cutting layout with 2D cutting diagrams.",
+    "url": "https://nexivo.com/tools/quilt-backing-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much extra backing fabric is needed for longarm quilting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Longarm quilters generally require at least 4 inches of extra backing fabric on all four sides of the quilt top (8 inches total added to both width and length). This overage gives room to clamp the backing to the roller bars."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should quilt backing seams be vertical or horizontal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on the quilt top dimensions and fabric bolt width. This calculator automatically calculates both vertical (lengthwise) and horizontal (crosswise) orientations to highlight which layout saves the most yardage."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is usable bolt width for quilting cotton?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Standard quilting cotton is 42 to 44 inches wide from selvage to selvage. After trimming off the tightly woven, non-stretch printed selvages (about 1 inch per side), the usable fabric width is 40 to 42 inches."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What seam allowance should be used for quilt backings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 1/2-inch seam allowance is recommended for piecing backing panels together. Press the seam open to minimize bulk and prevent visible ridges when quilted."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#crafts">Crafts &amp; Sewing</a></li>
+      <li>/</li>
+      <li aria-current="page">Quilt Backing Calculator</li>
+    </nav>
+
+    <!-- Sewing Suite Navigation -->
+    <div class="sewing-suite-nav">
+      <span class="sewing-suite-label">Sewing Suite:</span>
+      <a href="/tools/quilt-backing-calculator.html" class="sewing-pill active">Quilt Backing</a>
+      <a href="/tools/quilt-binding-calculator.html" class="sewing-pill">Quilt Binding</a>
+      <a href="/tools/fabric-yardage-calculator.html" class="sewing-pill">Fabric Yardage</a>
+      <a href="/tools/curtain-fabric-calculator.html" class="sewing-pill">Curtain Fabric</a>
+      <a href="/tools/fabric-shrinkage-calculator.html" class="sewing-pill">Fabric Shrinkage</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Quilt Backing Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Calculate exact fabric yardage and cutting dimensions for quilt backings. Compare vertical vs. horizontal pieced seams automatically to eliminate fabric waste.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-popular">Popular</span>
+        <span class="tool-badge">Seam Optimizer</span>
+        <span class="tool-badge">2D Diagram</span>
+        <span class="tool-badge">100% In-Browser</span>
+      </div>
+    </div>
+
+    <!-- Calculator Main Panel -->
+    <div class="tool-panel">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); margin-block-end: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); margin: 0; color: var(--color-primary); display: flex; align-items: center; gap: var(--space-2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+          <span>Quilt &amp; Fabric Parameters</span>
+        </h2>
+        
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <span style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-secondary);">Units:</span>
+          <div class="unit-toggle-group" role="radiogroup" aria-label="Measurement Units">
+            <button type="button" class="unit-toggle-btn active" id="btn-imperial" aria-checked="true">Imperial (in / yd)</button>
+            <button type="button" class="unit-toggle-btn" id="btn-metric" aria-checked="false">Metric (cm / m)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-4);">
+        <div class="form-group">
+          <label for="quilt-preset" class="form-label">Quilt Size Preset</label>
+          <select id="quilt-preset" class="form-select">
+            <option value="throw" selected>Throw / Lap (50" × 65")</option>
+            <option value="crib">Crib / Baby (36" × 52")</option>
+            <option value="twin">Twin Bed (68" × 86")</option>
+            <option value="full">Full / Double (84" × 90")</option>
+            <option value="queen">Queen Bed (90" × 95")</option>
+            <option value="king">King Bed (108" × 95")</option>
+            <option value="custom">Custom Dimensions</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="top-width" class="form-label" id="label-top-width">Quilt Top Width (in)</label>
+          <input type="number" id="top-width" class="form-input" value="50" min="1" step="0.5">
+        </div>
+
+        <div class="form-group">
+          <label for="top-length" class="form-label" id="label-top-length">Quilt Top Length (in)</label>
+          <input type="number" id="top-length" class="form-input" value="65" min="1" step="0.5">
+        </div>
+
+        <div class="form-group">
+          <label for="bolt-width" class="form-label" id="label-bolt-width">Fabric Bolt Width</label>
+          <select id="bolt-width" class="form-select">
+            <option value="42" selected>42" Standard Cotton (40" usable)</option>
+            <option value="44">44" Apparel Cotton (42" usable)</option>
+            <option value="54">54" Home Decor (52" usable)</option>
+            <option value="60">60" Wide Fabric (58" usable)</option>
+            <option value="108">108" Wide-Back (106" usable - Seamless)</option>
+            <option value="custom">Custom Bolt Width...</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="custom-bolt-group" style="display: none;">
+          <label for="custom-bolt-width" class="form-label" id="label-custom-bolt">Custom Bolt Width (in)</label>
+          <input type="number" id="custom-bolt-width" class="form-input" value="44" min="10" step="0.5">
+        </div>
+
+        <div class="form-group">
+          <label for="overage-side" class="form-label" id="label-overage">Overage Per Side (in)</label>
+          <input type="number" id="overage-side" class="form-input" value="4" min="0" step="0.5" title="Recommended: 4 inches per side (8 inches total) for longarm quilters">
+        </div>
+
+        <div class="form-group">
+          <label for="seam-allowance" class="form-label" id="label-seam">Seam Allowance (in)</label>
+          <input type="number" id="seam-allowance" class="form-input" value="0.5" min="0.25" max="1" step="0.125">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-block-end: var(--space-5);">
+        <button type="button" class="btn btn-secondary" id="btn-reset">Reset Defaults</button>
+        <button type="button" class="btn btn-primary" id="btn-copy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Shopping List</span>
+        </button>
+      </div>
+
+      <!-- Live Recommendation Banner -->
+      <div id="recommendation-banner" style="display: none; padding: var(--space-4); border-radius: var(--radius-lg); margin-block-end: var(--space-5); border: 1px solid #10b981; background: rgba(16, 185, 129, 0.08);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2);">
+          <div style="display: flex; align-items: center; gap: var(--space-2);">
+            <span class="sewing-winner-badge" id="rec-badge">Best Choice</span>
+            <strong id="rec-title" style="color: var(--color-text);">Vertical Seams Save 0.83 Yards!</strong>
+          </div>
+          <span id="rec-summary" style="font-size: var(--font-size-sm); color: var(--color-text-secondary);"></span>
+        </div>
+      </div>
+
+      <!-- Side-by-Side Orientation Comparison Cards -->
+      <div class="sewing-compare-grid">
+        <!-- Vertical Panels Card -->
+        <div class="sewing-compare-card" id="card-vertical">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+            <h3 style="font-size: var(--font-size-base); margin: 0; color: var(--color-text);">Vertical Seams (Lengthwise)</h3>
+            <span class="badge" id="badge-vertical" style="display: none;">Recommended</span>
+          </div>
+          <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">
+            Panels run parallel to quilt length (top to bottom).
+          </p>
+          <div style="margin-block-end: var(--space-3);">
+            <span class="fractional-highlight" id="vert-fractional">0 yds</span>
+            <div class="fractional-subtext" id="vert-subtext">0 yards / 0 meters</div>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: var(--font-size-sm); display: flex; flex-direction: column; gap: var(--space-1); color: var(--color-text-secondary);">
+            <li><strong>Panels to Cut:</strong> <span id="vert-panels">0</span></li>
+            <li><strong>Length per Panel:</strong> <span id="vert-cut-length">0</span></li>
+            <li><strong>Total Seams:</strong> <span id="vert-seams">0</span></li>
+          </ul>
+        </div>
+
+        <!-- Horizontal Panels Card -->
+        <div class="sewing-compare-card" id="card-horizontal">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+            <h3 style="font-size: var(--font-size-base); margin: 0; color: var(--color-text);">Horizontal Seams (Crosswise)</h3>
+            <span class="badge" id="badge-horizontal" style="display: none;">Recommended</span>
+          </div>
+          <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">
+            Panels run parallel to quilt width (side to side).
+          </p>
+          <div style="margin-block-end: var(--space-3);">
+            <span class="fractional-highlight" id="horiz-fractional">0 yds</span>
+            <div class="fractional-subtext" id="horiz-subtext">0 yards / 0 meters</div>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: var(--font-size-sm); display: flex; flex-direction: column; gap: var(--space-1); color: var(--color-text-secondary);">
+            <li><strong>Panels to Cut:</strong> <span id="horiz-panels">0</span></li>
+            <li><strong>Width per Panel:</strong> <span id="horiz-cut-length">0</span></li>
+            <li><strong>Total Seams:</strong> <span id="horiz-seams">0</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 2D SVG Cutting & Piecing Diagram -->
+      <div class="sewing-diagram-card">
+        <h3 style="font-size: var(--font-size-sm); margin: 0 0 var(--space-2) 0; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+          2D Backing &amp; Seam Cutting Diagram
+        </h3>
+        <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">
+          Outer solid boundary represents the full cut backing with longarm overage. Inner dashed box shows your quilt top. Red dashed lines show panel seams.
+        </p>
+        <div class="sewing-svg-wrapper" id="svg-container">
+          <!-- Dynamic SVG inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational & SEO Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>
+          The <strong>Quilt Backing Calculator</strong> computes the exact fabric yardage, panel counts, and cut lengths needed to back any quilt size. By evaluating both vertical (lengthwise grain) and horizontal (crosswise grain) seam orientations side-by-side, it automatically highlights the orientation that minimizes fabric consumption, preventing costly over-purchasing at the fabric store.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li><strong>Select or enter quilt top dimensions:</strong> Choose a preset (such as Throw, Twin, or Queen) or enter custom width and length.</li>
+          <li><strong>Choose your fabric bolt width:</strong> Select standard 42" quilting cotton, 44" apparel cotton, 54" decorator fabric, or 108" seamless wide-back.</li>
+          <li><strong>Specify overage allowance:</strong> Maintain the standard 4" per side (8" total) for longarm quilters, or adjust for domestic pin basting.</li>
+          <li><strong>Compare vertical vs. horizontal seams:</strong> The calculator highlights the winning layout with exact yardage and percentage savings.</li>
+          <li><strong>Copy your shopping list:</strong> Click <em>"Copy Shopping List"</em> to copy formatted cutting details and store yardage to your clipboard.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Mathematical Formulas Used</h2>
+        <div class="example-box">
+          <p style="margin-block-end: var(--space-2); font-weight: 600;">Backing Dimensions &amp; Panel Logic:</p>
+          <pre class="example-pre">Backing Width = Quilt Top Width + (2 × Overage per side)&#10;Backing Length = Quilt Top Length + (2 × Overage per side)&#10;Usable Fabric Width = Bolt Width - 2 inches (selvage allowance)&#10;Vertical Panels = ⌈(Backing Width - 2 × Seam Allowance) / (Usable Width - 2 × Seam Allowance)⌉&#10;Total Linear Length = Panels × Cut Length</pre>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Standard Quilt Dimensions &amp; Backing Reference Table</h2>
+        <div class="cargo-table-container">
+          <table class="cargo-table">
+            <thead>
+              <tr>
+                <th>Quilt Preset</th>
+                <th>Top Size</th>
+                <th>Backing (+8" Overage)</th>
+                <th>42" Bolt Fabric</th>
+                <th>108" Wide-Back</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Crib / Baby</strong></td>
+                <td>36" × 52"</td>
+                <td>44" × 60"</td>
+                <td>3 1/2 yds (2 horiz panels)</td>
+                <td>1 3/4 yds (1 panel)</td>
+              </tr>
+              <tr>
+                <td><strong>Lap / Throw</strong></td>
+                <td>50" × 65"</td>
+                <td>58" × 73"</td>
+                <td>3 1/4 yds (2 horiz panels)</td>
+                <td>2 1/8 yds (1 panel)</td>
+              </tr>
+              <tr>
+                <td><strong>Twin Bed</strong></td>
+                <td>68" × 86"</td>
+                <td>76" × 94"</td>
+                <td>5 1/4 yds (2 vert panels)</td>
+                <td>2 3/4 yds (1 panel)</td>
+              </tr>
+              <tr>
+                <td><strong>Full / Double</strong></td>
+                <td>84" × 90"</td>
+                <td>92" × 98"</td>
+                <td>7 1/2 yds (3 panels)</td>
+                <td>2 7/8 yds (1 panel)</td>
+              </tr>
+              <tr>
+                <td><strong>Queen Bed</strong></td>
+                <td>90" × 95"</td>
+                <td>98" × 103"</td>
+                <td>8 2/3 yds (3 panels)</td>
+                <td>3 yds (1 panel)</td>
+              </tr>
+              <tr>
+                <td><strong>King Bed</strong></td>
+                <td>108" × 95"</td>
+                <td>116" × 103"</td>
+                <td>8 2/3 yds (3 panels)</td>
+                <td>3 1/4 yds (seamless)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Quilt Shop Yardage Planning:</strong> Determining exact fractional yardage before shopping to avoid running short or buying unnecessary yardage.</li>
+          <li><strong>Longarm Quilting Preparation:</strong> Ensuring backings have the required 4" perimeter overage to mount onto roller bars without needle collision.</li>
+          <li><strong>Wide-Back Fabric Evaluation:</strong> Checking whether 108" seamless fabric eliminates pieced seams for king and queen quilts.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">Quilt Top: 50" × 65" (Throw Quilt)&#10;Fabric Bolt Width: 42" Standard Cotton&#10;Overage: 4" per side (8" total)&#10;Seam Allowance: 0.5"</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">Backing Needed: 58" × 73"&#10;Vertical Layout: 2 panels of 73" = 146" (4 1/8 yds)&#10;Horizontal Layout: 2 panels of 58" = 116" (3 1/4 yds)&#10;Recommendation: Horizontal saves 0.83 yds (20.5%)!&#10;Fabric to Purchase: 3 1/4 yds (3.22 yds / 2.94 m)</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          Calculations account for selvage deductions (2 inches total across bolt width) and seam allowance consumption across joined panels. Rounding up to the nearest 1/8 yard reflects standard retail fabric cutting conventions ($1/8\text{ yd} = 4.5\text{ in} = 11.43\text{ cm}$).
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          This calculator assumes uniform rectangular panels. If you are creating an art quilt with pieced decorative backing strips or improvisational scrap blocks, add extra yardage to account for diagonal squaring and trimming.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All measurements, quilt dimensions, and yardage calculations run 100% locally in your web browser. No project details or personal data are ever uploaded or transmitted to external servers.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Why must fabric selvages be trimmed before piecing quilt backing?</h3>
+          <p>
+            Selvages are woven with tighter tension than the main fabric body so they do not fray during manufacturing. If left inside a pieced backing seam, they shrink unevenly when laundered, causing puckering along the center of the quilt.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Should quilt backing seams run vertically or horizontally?</h3>
+          <p>
+            Both work well! Longarm quilters often prefer vertical seams because they roll parallel to the frame roller bars, ensuring even tension. However, horizontal seams frequently require less total fabric, saving money.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>What needle and thread are recommended for backing seams?</h3>
+          <p>
+            Use 50wt 100% cotton thread and an 80/12 microtex sharp or universal needle. Press seams open with a dry iron to distribute seam bulk evenly across the batting.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/quilt-binding-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            <span>Quilt Binding Calculator</span>
+          </a>
+          <a href="/tools/fabric-yardage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Fabric Yardage Calculator</span>
+          </a>
+          <a href="/tools/fabric-shrinkage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>Fabric Shrinkage Calculator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 Free Online Tools. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/sewing-utils.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let isMetric = false;
+      let lastCalcResult = null;
+
+      const btnImperial = document.getElementById('btn-imperial');
+      const btnMetric = document.getElementById('btn-metric');
+      const quiltPreset = document.getElementById('quilt-preset');
+      const topWidthInput = document.getElementById('top-width');
+      const topLengthInput = document.getElementById('top-length');
+      const boltWidthSelect = document.getElementById('bolt-width');
+      const customBoltGroup = document.getElementById('custom-bolt-group');
+      const customBoltInput = document.getElementById('custom-bolt-width');
+      const overageInput = document.getElementById('overage-side');
+      const seamInput = document.getElementById('seam-allowance');
+      const btnReset = document.getElementById('btn-reset');
+      const btnCopy = document.getElementById('btn-copy');
+
+      const labelTopW = document.getElementById('label-top-width');
+      const labelTopL = document.getElementById('label-top-length');
+      const labelCustomBolt = document.getElementById('label-custom-bolt');
+      const labelOverage = document.getElementById('label-overage');
+      const labelSeam = document.getElementById('label-seam');
+
+      // Presets handler
+      quiltPreset.addEventListener('change', function() {
+        const val = this.value;
+        if (val === 'custom') return;
+        const preset = SewingUtils.QUILT_PRESETS[val];
+        if (preset) {
+          if (isMetric) {
+            topWidthInput.value = SewingUtils.round(preset.width * SewingUtils.IN_TO_CM, 1);
+            topLengthInput.value = SewingUtils.round(preset.length * SewingUtils.IN_TO_CM, 1);
+          } else {
+            topWidthInput.value = preset.width;
+            topLengthInput.value = preset.length;
+          }
+          calculate();
+        }
+      });
+
+      // Bolt width select handler
+      boltWidthSelect.addEventListener('change', function() {
+        if (this.value === 'custom') {
+          customBoltGroup.style.display = 'block';
+        } else {
+          customBoltGroup.style.display = 'none';
+        }
+        calculate();
+      });
+
+      // Unit toggle handlers
+      btnImperial.addEventListener('click', () => setUnitMode(false));
+      btnMetric.addEventListener('click', () => setUnitMode(true));
+
+      function setUnitMode(metric) {
+        if (isMetric === metric) return;
+        isMetric = metric;
+
+        btnImperial.classList.toggle('active', !isMetric);
+        btnImperial.setAttribute('aria-checked', !isMetric ? 'true' : 'false');
+        btnMetric.classList.toggle('active', isMetric);
+        btnMetric.setAttribute('aria-checked', isMetric ? 'true' : 'false');
+
+        // Convert existing input values
+        const factor = isMetric ? SewingUtils.IN_TO_CM : SewingUtils.CM_TO_IN;
+        topWidthInput.value = SewingUtils.round(parseFloat(topWidthInput.value || 0) * factor, 1);
+        topLengthInput.value = SewingUtils.round(parseFloat(topLengthInput.value || 0) * factor, 1);
+        customBoltInput.value = SewingUtils.round(parseFloat(customBoltInput.value || 44) * factor, 1);
+        overageInput.value = SewingUtils.round(parseFloat(overageInput.value || 4) * factor, 1);
+        seamInput.value = SewingUtils.round(parseFloat(seamInput.value || 0.5) * factor, 2);
+
+        // Update labels
+        const unitLabel = isMetric ? '(cm)' : '(in)';
+        labelTopW.textContent = `Quilt Top Width ${unitLabel}`;
+        labelTopL.textContent = `Quilt Top Length ${unitLabel}`;
+        labelCustomBolt.textContent = `Custom Bolt Width ${unitLabel}`;
+        labelOverage.textContent = `Overage Per Side ${unitLabel}`;
+        labelSeam.textContent = `Seam Allowance ${unitLabel}`;
+
+        calculate();
+      }
+
+      function getSelectedBoltWidth() {
+        if (boltWidthSelect.value === 'custom') {
+          return parseFloat(customBoltInput.value) || (isMetric ? 112 : 44);
+        }
+        const presetVal = parseFloat(boltWidthSelect.value) || 42;
+        return isMetric ? (presetVal * SewingUtils.IN_TO_CM) : presetVal;
+      }
+
+      function calculate() {
+        const topW = parseFloat(topWidthInput.value) || 0;
+        const topL = parseFloat(topLengthInput.value) || 0;
+        const boltW = getSelectedBoltWidth();
+        const overage = parseFloat(overageInput.value) || 0;
+        const seam = parseFloat(seamInput.value) || 0;
+
+        if (topW <= 0 || topL <= 0 || boltW <= 0) {
+          return;
+        }
+
+        const res = SewingUtils.calculateQuiltBacking({
+          topWidth: topW,
+          topLength: topL,
+          boltWidth: boltW,
+          overageSide: overage,
+          seamAllowance: seam,
+          isMetric: isMetric
+        });
+
+        if (!res) return;
+        lastCalcResult = res;
+
+        // Update Vertical card
+        document.getElementById('vert-fractional').textContent = res.vertical.yardage.fractionalYards;
+        document.getElementById('vert-subtext').textContent = `${res.vertical.yardage.decimalYards} yds / ${res.vertical.yardage.meters} m`;
+        document.getElementById('vert-panels').textContent = `${res.vertical.panels} ${res.vertical.panels === 1 ? 'panel (Seamless)' : 'panels'}`;
+        document.getElementById('vert-cut-length').textContent = `${res.vertical.cutLength} ${isMetric ? 'cm' : 'in'}`;
+        document.getElementById('vert-seams').textContent = `${res.vertical.seamsCount} ${res.vertical.seamsCount === 1 ? 'seam' : 'seams'}`;
+
+        // Update Horizontal card
+        document.getElementById('horiz-fractional').textContent = res.horizontal.yardage.fractionalYards;
+        document.getElementById('horiz-subtext').textContent = `${res.horizontal.yardage.decimalYards} yds / ${res.horizontal.yardage.meters} m`;
+        document.getElementById('horiz-panels').textContent = `${res.horizontal.panels} ${res.horizontal.panels === 1 ? 'panel (Seamless)' : 'panels'}`;
+        document.getElementById('horiz-cut-length').textContent = `${res.horizontal.cutLength} ${isMetric ? 'cm' : 'in'}`;
+        document.getElementById('horiz-seams').textContent = `${res.horizontal.seamsCount} ${res.horizontal.seamsCount === 1 ? 'seam' : 'seams'}`;
+
+        // Highlight winner
+        const cardVert = document.getElementById('card-vertical');
+        const cardHoriz = document.getElementById('card-horizontal');
+        const badgeVert = document.getElementById('badge-vertical');
+        const badgeHoriz = document.getElementById('badge-horizontal');
+        const banner = document.getElementById('recommendation-banner');
+        const recTitle = document.getElementById('rec-title');
+        const recSummary = document.getElementById('rec-summary');
+
+        cardVert.classList.remove('winner');
+        cardHoriz.classList.remove('winner');
+        badgeVert.style.display = 'none';
+        badgeHoriz.style.display = 'none';
+        banner.style.display = 'block';
+
+        if (res.recommendation.isSeamless) {
+          recTitle.textContent = 'Seamless 1-Panel Backing!';
+          recSummary.textContent = `Your fabric bolt width covers the entire quilt backing (${res.backingDimensions.width} × ${res.backingDimensions.length} ${isMetric ? 'cm' : 'in'}) without any pieced seams.`;
+          cardVert.classList.add('winner');
+          badgeVert.style.display = 'inline-block';
+          badgeVert.textContent = 'Seamless';
+        } else if (res.recommendation.winner === 'vertical') {
+          cardVert.classList.add('winner');
+          badgeVert.style.display = 'inline-block';
+          badgeVert.textContent = 'Saves Fabric';
+          recTitle.textContent = `Vertical Seams Save ${res.recommendation.savingsYards} Yards (${res.recommendation.savingsPercent}%)!`;
+          recSummary.textContent = `Vertical layout requires ${res.vertical.yardage.fractionalYards} vs ${res.horizontal.yardage.fractionalYards} for horizontal.`;
+        } else if (res.recommendation.winner === 'horizontal') {
+          cardHoriz.classList.add('winner');
+          badgeHoriz.style.display = 'inline-block';
+          badgeHoriz.textContent = 'Saves Fabric';
+          recTitle.textContent = `Horizontal Seams Save ${res.recommendation.savingsYards} Yards (${res.recommendation.savingsPercent}%)!`;
+          recSummary.textContent = `Horizontal layout requires ${res.horizontal.yardage.fractionalYards} vs ${res.vertical.yardage.fractionalYards} for vertical.`;
+        } else {
+          recTitle.textContent = 'Equal Yardage';
+          recSummary.textContent = `Both vertical and horizontal layouts use exactly ${res.vertical.yardage.fractionalYards}.`;
+        }
+
+        renderDiagram(res);
+      }
+
+      function renderDiagram(res) {
+        const container = document.getElementById('svg-container');
+        if (!container) return;
+
+        const bw = res.backingDimensions.width;
+        const bl = res.backingDimensions.length;
+        const tw = res.topDimensions.width;
+        const tl = res.topDimensions.length;
+        const isVertWinner = res.recommendation.winner === 'vertical' || res.recommendation.isSeamless;
+        const panels = isVertWinner ? res.vertical.panels : res.horizontal.panels;
+
+        const maxDim = Math.max(bw, bl, 1);
+        const scale = 260 / maxDim;
+        const svgW = Math.max(80, bw * scale);
+        const svgH = Math.max(80, bl * scale);
+
+        // Quilt top offset inside backing
+        const offX = ((bw - tw) / 2) * scale;
+        const offY = ((bl - tl) / 2) * scale;
+        const topW_scaled = tw * scale;
+        const topH_scaled = tl * scale;
+
+        let seamLinesSvg = '';
+        if (panels > 1) {
+          if (isVertWinner) {
+            const panelWidthScaled = svgW / panels;
+            for (let i = 1; i < panels; i++) {
+              const x = i * panelWidthScaled;
+              seamLinesSvg += `<line x1="${x}" y1="0" x2="${x}" y2="${svgH}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4"/>`;
+              seamLinesSvg += `<text x="${x + 4}" y="14" fill="#ef4444" font-size="10" font-weight="700">Seam #${i}</text>`;
+            }
+          } else {
+            const panelHeightScaled = svgH / panels;
+            for (let i = 1; i < panels; i++) {
+              const y = i * panelHeightScaled;
+              seamLinesSvg += `<line x1="0" y1="${y}" x2="${svgW}" y2="${y}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4"/>`;
+              seamLinesSvg += `<text x="8" y="${y - 4}" fill="#ef4444" font-size="10" font-weight="700">Seam #${i}</text>`;
+            }
+          }
+        }
+
+        const unit = isMetric ? 'cm' : 'in';
+
+        container.innerHTML = `
+          <svg viewBox="0 0 ${svgW + 40} ${svgH + 40}" width="100%" height="240" style="overflow: visible;">
+            <!-- Outer Backing Boundary -->
+            <g transform="translate(20, 20)">
+              <rect x="0" y="0" width="${svgW}" height="${svgH}" fill="rgba(37, 99, 235, 0.08)" stroke="#2563eb" stroke-width="2" rx="4"/>
+              
+              <!-- Inner Quilt Top (Dashed) -->
+              <rect x="${offX}" y="${offY}" width="${topW_scaled}" height="${topH_scaled}" fill="rgba(37, 99, 235, 0.16)" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,3" rx="2"/>
+              <text x="${svgW / 2}" y="${svgH / 2}" fill="#1e40af" font-size="11" font-weight="700" text-anchor="middle" dominant-baseline="middle">
+                Quilt Top (${tw} × ${tl} ${unit})
+              </text>
+
+              <!-- Seams -->
+              ${seamLinesSvg}
+
+              <!-- Dimension Annotations -->
+              <text x="${svgW / 2}" y="-6" fill="var(--color-text-secondary)" font-size="10" font-weight="600" text-anchor="middle">
+                Backing Width: ${bw} ${unit}
+              </text>
+              <text x="-8" y="${svgH / 2}" fill="var(--color-text-secondary)" font-size="10" font-weight="600" text-anchor="middle" transform="rotate(-90, -8, ${svgH / 2})">
+                Backing Length: ${bl} ${unit}
+              </text>
+            </g>
+          </svg>
+        `;
+      }
+
+      // Copy Shopping List
+      btnCopy.addEventListener('click', function() {
+        if (!lastCalcResult) return;
+        const res = lastCalcResult;
+        const isVert = res.recommendation.winner === 'vertical' || res.recommendation.isSeamless;
+        const winning = isVert ? res.vertical : res.horizontal;
+        const orientationName = isVert ? 'Vertical (Lengthwise)' : 'Horizontal (Crosswise)';
+        const unit = isMetric ? 'cm' : 'in';
+
+        const text = [
+          '✂️ QUILT BACKING SHOPPING LIST — FREE ONLINE TOOLS',
+          '==================================================',
+          `Quilt Top Size: ${res.topDimensions.width} × ${res.topDimensions.length} ${unit}`,
+          `Backing Dimensions Required: ${res.backingDimensions.width} × ${res.backingDimensions.length} ${unit}`,
+          `Recommended Layout: ${orientationName}`,
+          `Fabric Needed to Buy: ${winning.yardage.fractionalYards} (${winning.yardage.decimalYards} yards / ${winning.yardage.meters} meters)`,
+          `Number of Panels: ${winning.panels}`,
+          `Cut Length per Panel: ${winning.cutLength} ${unit}`,
+          `Total Seams to Sew: ${winning.seamsCount}`,
+          '==================================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/quilt-backing-calculator.html'
+        ].join('\n');
+
+        SewingUtils.copyTextToClipboard(text, btnCopy, 'Shopping List Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        quiltPreset.value = 'throw';
+        if (isMetric) {
+          topWidthInput.value = 127;
+          topLengthInput.value = 165;
+          customBoltInput.value = 112;
+          overageInput.value = 10;
+          seamInput.value = 1.25;
+        } else {
+          topWidthInput.value = 50;
+          topLengthInput.value = 65;
+          customBoltInput.value = 44;
+          overageInput.value = 4;
+          seamInput.value = 0.5;
+        }
+        boltWidthSelect.value = '42';
+        customBoltGroup.style.display = 'none';
+        calculate();
+      });
+
+      // Event listeners
+      [topWidthInput, topLengthInput, customBoltInput, overageInput, seamInput].forEach(inp => {
+        inp.addEventListener('input', calculate);
+      });
+
+      // Initial calculation
+      calculate();
+    })();
+  </script>
+</body>
+</html>

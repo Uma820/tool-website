@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generator Size Calculator — Home Backup &amp; Portable Wattage Estimator</title>
+  <meta name="description" content="Calculate the exact generator size in running and starting surge watts for whole-home emergency backup, RV camping, or job sites with motor surge staggering.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/generator-size-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/generator-size-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/generator-size-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Generator Size Calculator",
+    "description": "Calculate required generator running watts, starting surge watts, and commercial kW/kVA rating with motor surge staggering logic.",
+    "url": "https://nexivo.com/tools/generator-size-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the difference between Running Watts and Starting (Surge) Watts on a generator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Running (continuous) watts represent the ongoing electrical power consumed by appliances while operating normally. Starting (surge) watts represent the momentary burst of high current required by motorized equipment (such as air conditioners, refrigerators, and water pumps) to break motor inertia during the first 2 to 3 seconds of startup. A generator must handle both continuous running load and peak startup surge."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is motor starting surge staggered rather than summed together?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In real-world operation, motorized household appliances do not switch on at the exact same millisecond. Summing all starting surges together dramatically over-sizes the generator, forcing you to buy an excessively large, expensive, and fuel-thirsty unit. Electrical engineering practice sizes generators for: Total Running Watts + Single Highest Startup Surge Delta."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between an Inverter Generator and a Conventional Portable Generator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Conventional portable generators produce raw AC power directly from the alternator, which often contains high Total Harmonic Distortion (THD > 10%–15%), making it risky for delicate electronics like laptops and smart TVs. Inverter generators convert raw AC to DC and then electronically invert it into a pure sine wave with less than 3% THD, providing clean, quiet, and fuel-efficient electricity."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does elevation/altitude affect generator power output?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Internal combustion engines lose approximately 3.5% of their horsepower for every 1,000 feet (305 meters) above sea level due to thinner air and reduced oxygen density. Operating a generator at 5,000 feet causes an engine derate of about 15%–17%, requiring a larger displacement engine or higher rated generator capacity."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#solar">Solar &amp; Energy</a></li>
+      <li>/</li>
+      <li aria-current="page">Generator Size Calculator</li>
+    </nav>
+
+    <!-- Solar & Energy Suite Navigation -->
+    <div class="solar-suite-nav">
+      <span class="solar-suite-label">Solar &amp; Energy Suite:</span>
+      <a href="/tools/battery-runtime-calculator.html" class="solar-pill">Battery Runtime</a>
+      <a href="/tools/inverter-backup-calculator.html" class="solar-pill">Inverter Backup</a>
+      <a href="/tools/solar-panel-size-calculator.html" class="solar-pill">Solar Array Size</a>
+      <a href="/tools/generator-size-calculator.html" class="solar-pill active">Generator Sizing</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Generator Size &amp; Wattage Calculator</h1>
+      <p class="tool-header-desc">
+        Calculate the exact portable or whole-house generator size (kW &amp; kVA) required to power your critical household appliances with realistic motor starting surge staggering.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Staggered Motor Surge</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">kW &amp; kVA Commercial Sizing</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Section 1: Quick Add Common Appliances -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+          <span>⚡</span> 1. Select Appliances to Power
+        </h2>
+        <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); display: block; margin-bottom: var(--space-3);">
+          Click to add common appliances with pre-calibrated continuous running and starting surge wattages:
+        </span>
+
+        <div class="appliance-preset-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 0.5rem;">
+          <button type="button" class="appliance-chip-btn" data-id="fridge" data-name="Refrigerator" data-run="150" data-surge="600" aria-label="Add Refrigerator: 150 Watts running, 600 Watts surge">
+            <span>🧊 Refrigerator</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">150W / 600W <span class="surge-badge">4x</span></span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-id="split_ac" data-name="1.5 Ton Inverter AC" data-run="1500" data-surge="3200" aria-label="Add 1.5 Ton AC: 1500 Watts running, 3200 Watts surge">
+            <span>❄️ 1.5 Ton AC</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">1500W / 3200W <span class="surge-badge">2.1x</span></span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-id="water_pump" data-name="1 HP Water Pump" data-run="750" data-surge="2200" aria-label="Add 1 HP Water Pump: 750 Watts running, 2200 Watts surge">
+            <span>💧 1 HP Water Pump</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">750W / 2200W <span class="surge-badge">3x</span></span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-id="sump_pump" data-name="1/2 HP Sump Pump" data-run="800" data-surge="2150" aria-label="Add 1/2 HP Sump Pump: 800 Watts running, 2150 Watts surge">
+            <span>🚰 1/2 HP Sump Pump</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">800W / 2150W <span class="surge-badge">2.7x</span></span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-id="microwave" data-name="Microwave Oven" data-run="1000" data-surge="1000" aria-label="Add Microwave: 1000 Watts">
+            <span>🍿 Microwave</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">1000W / 1000W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-id="tv" data-name="Smart LED TV" data-run="100" data-surge="120" aria-label="Add Smart TV: 100 Watts">
+            <span>📺 Smart LED TV</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">100W / 120W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-id="fan" data-name="Ceiling Fan" data-run="75" data-surge="150" aria-label="Add Ceiling Fan: 75 Watts running, 150 Watts surge">
+            <span>🌀 Ceiling Fan</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">75W / 150W <span class="surge-badge">2x</span></span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-id="bulb" data-name="LED Light Bulb" data-run="12" data-surge="12" aria-label="Add LED Light Bulb: 12 Watts">
+            <span>💡 LED Bulb</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">12W / 12W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-id="desktop" data-name="Desktop PC &amp; Monitor" data-run="250" data-surge="300" aria-label="Add Desktop PC: 250 Watts">
+            <span>💻 Desktop PC</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">250W / 300W</span>
+          </button>
+          <button type="button" class="appliance-chip-btn" data-id="router" data-name="Wi-Fi Router" data-run="15" data-surge="15" aria-label="Add Wi-Fi Router: 15 Watts">
+            <span>📶 Wi-Fi Router</span>
+            <span style="font-size: 11px; color: var(--color-text-muted);">15W / 15W</span>
+          </button>
+        </div>
+
+        <!-- Appliance Load Table -->
+        <div style="margin-top: var(--space-4); overflow-x: auto;">
+          <table class="table" style="width: 100%; font-size: var(--font-size-sm); border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--color-border); text-align: left; background: var(--color-bg-secondary);">
+                <th style="padding: 0.6rem 0.5rem;">Appliance Name</th>
+                <th style="padding: 0.6rem 0.5rem; width: 110px;">Running (W)</th>
+                <th style="padding: 0.6rem 0.5rem; width: 110px;">Surge (W)</th>
+                <th style="padding: 0.6rem 0.5rem; width: 85px;">Qty</th>
+                <th style="padding: 0.6rem 0.5rem; text-align: right; width: 100px;">Total W</th>
+                <th style="padding: 0.6rem 0.5rem; text-align: center; width: 45px;"></th>
+              </tr>
+            </thead>
+            <tbody id="appliance-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+            <tfoot>
+              <tr style="border-top: 2px solid var(--color-border); font-weight: 700; background: var(--color-bg-secondary);">
+                <td style="padding: 0.6rem 0.5rem;">Total Continuous Running Watts</td>
+                <td colspan="3"></td>
+                <td id="tbl-total-running" style="padding: 0.6rem 0.5rem; text-align: right; color: var(--color-primary);">0 W</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-3); flex-wrap: wrap;">
+          <button type="button" id="btn-add-custom-row" class="btn btn-secondary" style="font-size: var(--font-size-xs);">+ Add Custom Appliance</button>
+          <button type="button" id="btn-clear-all" class="btn btn-secondary" style="font-size: var(--font-size-xs); color: #dc2626;">Clear All Items</button>
+        </div>
+      </div>
+
+      <!-- Section 2: Sizing Parameters -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>⚙️</span> 2. Generator Sizing Safety Margins &amp; Environment
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3);">
+          <!-- Safety Margin -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+              <label for="safety-slider" style="font-weight: 600; font-size: var(--font-size-xs); margin: 0;">Continuous Headroom Safety Margin:</label>
+              <span id="lbl-safety-val" style="font-weight: 700; color: var(--color-primary); font-size: var(--font-size-xs);">20% (Recommended)</span>
+            </div>
+            <input type="range" id="safety-slider" min="10" max="35" step="5" value="20" class="form-range" style="width: 100%;" aria-label="Generator safety headroom buffer slider">
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              Industry standard practice prevents running a generator above 80% continuous rated load.
+            </span>
+          </div>
+
+          <!-- Altitude / Ambient Derating -->
+          <div>
+            <label for="altitude-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Altitude &amp; Temperature Derating:</label>
+            <select id="altitude-select" class="form-select" aria-label="Altitude and temperature derating factor">
+              <option value="0" selected>Sea Level to 2,000 ft (0% Engine Derate)</option>
+              <option value="10">2,000 to 4,000 ft or Hot Climate (+10% Capacity)</option>
+              <option value="15">4,000+ ft High Altitude / Desert (+15% Capacity)</option>
+            </select>
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              Combustion engines lose ~3.5% power per 1,000 ft elevation due to thin air.
+            </span>
+          </div>
+
+          <!-- Power Factor -->
+          <div>
+            <label for="pf-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Assumed Power Factor (PF):</label>
+            <select id="pf-select" class="form-select" aria-label="Commercial generator power factor">
+              <option value="0.8" selected>0.8 PF (Standard AC Alternator Rating)</option>
+              <option value="1.0">1.0 PF (Pure Resistive Heater / Stove Load)</option>
+            </select>
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              Used to calculate apparent generator kVA rating ($\text{kVA} = \text{kW} / \text{PF}$).
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); margin-top: var(--space-4); flex-wrap: wrap;">
+        <button type="button" id="btn-copy-report" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Generator Sizing Report</span>
+        </button>
+        <button type="button" id="btn-reset" class="btn btn-secondary">Reset to Standard Load</button>
+      </div>
+
+      <!-- Section 3: Sizing KPI Output Cards -->
+      <div style="margin-top: var(--space-5);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>📊</span> Recommended Generator Sizing
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3);">
+          <!-- KPI 1: Recommended Commercial Generator -->
+          <div style="background: var(--color-bg-surface); border: 2px solid var(--color-primary); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Recommended Commercial Size</span>
+            <div id="kpi-gen-kw" style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin: 0.25rem 0;">7.5 kW</div>
+            <div id="kpi-gen-kva" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">9.4 kVA @ 0.8 PF</div>
+          </div>
+
+          <!-- KPI 2: Continuous Running Load -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Continuous Running Load</span>
+            <div id="kpi-running-watts" style="font-size: 2rem; font-weight: 800; color: #16a34a; margin: 0.25rem 0;">3,762 W</div>
+            <div id="kpi-running-kw" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">3.76 kW continuous draw</div>
+          </div>
+
+          <!-- KPI 3: Peak Starting Surge -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Peak Motor Starting Surge</span>
+            <div id="kpi-surge-watts" style="font-size: 2rem; font-weight: 800; color: #ea580c; margin: 0.25rem 0;">5,462 W</div>
+            <div id="kpi-surge-desc" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Staggered largest motor delta</div>
+          </div>
+
+          <!-- KPI 4: Minimum Required Generator -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Minimum Capacity Buffer</span>
+            <div id="kpi-min-rated-kw" style="font-size: 2rem; font-weight: 800; color: #0284c7; margin: 0.25rem 0;">4.51 kW</div>
+            <div id="kpi-min-rated-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">With 20% safety margin</div>
+          </div>
+        </div>
+
+        <!-- Sizing Engineering Advice Callout -->
+        <div style="margin-top: var(--space-3); background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: var(--space-3); border: 1px solid var(--color-border);">
+          <div style="display: flex; gap: var(--space-3); align-items: flex-start;">
+            <span style="font-size: 1.5rem;">💡</span>
+            <div>
+              <h3 style="font-size: var(--font-size-sm); font-weight: 700; margin: 0 0 0.25rem 0; color: var(--color-text-primary);">
+                Sizing Advice &amp; Generator Type Selection:
+              </h3>
+              <p id="advice-text" style="font-size: var(--font-size-xs); color: var(--color-text-secondary); margin: 0; line-height: 1.5;">
+                For loads requiring under 4,000 Watts with sensitive electronics (laptops, TVs, smartphones), an <strong>Inverter Generator</strong> is strongly recommended for clean pure sine wave power (THD &lt; 3%). For loads exceeding 5,000 Watts with whole-home AC and water pumps, consider a <strong>Dual-Fuel Portable Generator</strong> or permanently wired <strong>Standby Generator</strong> paired with a manual or automatic transfer switch.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Documentation & Educational Guide -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Generator Size Calculator</strong> accurately computes the electrical wattage and kVA required to power your critical household or job-site equipment during a grid outage. Choosing a generator that is too small leads to chronic overload trips, engine stalling, and dangerous voltage sags that can burn out refrigerator and air conditioning compressors. Conversely, choosing an unnecessarily oversized generator wastes fuel, produces excessive noise, and risks engine cylinder glazing from running under insufficient mechanical load. This calculator applies engineering-grade <strong>motor surge staggering logic</strong>, accounts for elevation derating, and factors in safe continuous operating margins.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Add Your Essential Appliances:</strong> Click on the preset buttons (such as Refrigerator, 1.5 Ton AC, Water Pump, Sump Pump, Microwave, and Lights) or click <strong>+ Add Custom Appliance</strong> to enter custom equipment.</li>
+        <li><strong>Verify Running &amp; Surge Wattages:</strong> Double-check the continuous running watts and startup surge ratings for each item. Motorized equipment draws 2x to 4x its running watts upon initial startup.</li>
+        <li><strong>Adjust Continuous Safety Margin:</strong> Keep the safety margin slider at <strong>20% (recommended)</strong> to ensure your generator never operates at 100% capacity continuously.</li>
+        <li><strong>Select Altitude &amp; Temperature Derating:</strong> If operating at elevations above 2,000 feet (600 meters) or in extreme summer heat above 104°F (40°C), select the appropriate derating factor to compensate for atmospheric air density loss.</li>
+        <li><strong>Review Commercial Recommendations:</strong> Note the recommended commercial generator size in kW and kVA, continuous running load, and peak staggered motor surge.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        In residential and job-site operation, appliances do not start simultaneously. A well-designed electrical setup powers appliances in sequence: the largest motor is started first, followed by smaller motors and resistive lighting loads. Thus, total peak surge is mathematically formulated as:
+      </p>
+      <ul>
+        <li>$$\text{Total Running Watts} = \sum (\text{Unit Running Watts} \times \text{Quantity})$$</li>
+        <li>$$\text{Max Single Surge Delta} = \max_{i} (\text{Surge Watts}_i - \text{Running Watts}_i)$$</li>
+        <li>$$\text{Peak Starting Surge Watts} = \text{Total Running Watts} + \text{Max Single Surge Delta}$$</li>
+        <li>$$\text{Required Continuous kW} = \frac{\text{Total Running Watts} \times (1 + \text{Safety Margin}) \times (1 + \text{Altitude Derate})}{1000}$$</li>
+        <li>$$\text{Commercial kVA Rating} = \frac{\text{Recommended Generator kW}}{\text{Power Factor (0.8)}}$$</li>
+      </ul>
+
+      <h2>Reference Matrix: Common Motor Startup Surge Multipliers</h2>
+      <table class="table" style="width: 100%; font-size: var(--font-size-sm); margin-top: var(--space-3); border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--color-border); text-align: left;">
+            <th style="padding: 0.5rem;">Equipment / Motor Type</th>
+            <th style="padding: 0.5rem;">Typical Running Watts</th>
+            <th style="padding: 0.5rem;">Starting Surge Watts</th>
+            <th style="padding: 0.5rem;">Surge Multiplier</th>
+            <th style="padding: 0.5rem;">Load Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Inverter Refrigerator / Freezer</td>
+            <td style="padding: 0.5rem;">150 W – 200 W</td>
+            <td style="padding: 0.5rem;">600 W – 800 W</td>
+            <td style="padding: 0.5rem; color: #ea580c; font-weight: 600;">3.5x – 4.0x</td>
+            <td style="padding: 0.5rem;">Compressor Motor</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">1.5 Ton Split Air Conditioner</td>
+            <td style="padding: 0.5rem;">1,500 W – 1,800 W</td>
+            <td style="padding: 0.5rem;">3,200 W – 4,500 W</td>
+            <td style="padding: 0.5rem; color: #ea580c; font-weight: 600;">2.1x – 2.5x</td>
+            <td style="padding: 0.5rem;">Heavy Inductive</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">1 HP Submersible Well Pump</td>
+            <td style="padding: 0.5rem;">750 W – 1,000 W</td>
+            <td style="padding: 0.5rem;">2,200 W – 3,000 W</td>
+            <td style="padding: 0.5rem; color: #ea580c; font-weight: 600;">3.0x – 3.5x</td>
+            <td style="padding: 0.5rem;">Deep Well Motor</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">1/2 HP Sump Pump</td>
+            <td style="padding: 0.5rem;">800 W – 1,050 W</td>
+            <td style="padding: 0.5rem;">2,150 W – 2,500 W</td>
+            <td style="padding: 0.5rem; color: #ea580c; font-weight: 600;">2.5x – 2.7x</td>
+            <td style="padding: 0.5rem;">Basement Flood Protection</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Microwave Oven (Countertop)</td>
+            <td style="padding: 0.5rem;">1,000 W</td>
+            <td style="padding: 0.5rem;">1,000 W</td>
+            <td style="padding: 0.5rem; color: #16a34a; font-weight: 600;">1.0x (Resistive)</td>
+            <td style="padding: 0.5rem;">Magnetron / Kitchen</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; font-weight: 600;">LED Lighting &amp; Wi-Fi Router</td>
+            <td style="padding: 0.5rem;">15 W – 75 W</td>
+            <td style="padding: 0.5rem;">15 W – 75 W</td>
+            <td style="padding: 0.5rem; color: #16a34a; font-weight: 600;">1.0x (Resistive)</td>
+            <td style="padding: 0.5rem;">Essential Electronics</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Generator Type Comparison: Inverter vs. Conventional vs. Standby</h2>
+      <table class="table" style="width: 100%; font-size: var(--font-size-sm); margin-top: var(--space-3); border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--color-border); text-align: left;">
+            <th style="padding: 0.5rem;">Feature</th>
+            <th style="padding: 0.5rem;">Inverter Generator</th>
+            <th style="padding: 0.5rem;">Conventional Open-Frame</th>
+            <th style="padding: 0.5rem;">Whole-House Standby</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Power Quality (THD)</td>
+            <td style="padding: 0.5rem; color: #16a34a; font-weight: 600;">Clean (&lt;3% THD) Pure Sine Wave</td>
+            <td style="padding: 0.5rem; color: #ea580c;">Rough (10%–20% THD) Modified Wave</td>
+            <td style="padding: 0.5rem; color: #16a34a; font-weight: 600;">Utility-grade (&lt;5% THD)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Typical Output Range</td>
+            <td style="padding: 0.5rem;">1,800 W – 4,500 W</td>
+            <td style="padding: 0.5rem;">4,000 W – 12,000 W</td>
+            <td style="padding: 0.5rem;">10,000 W – 26,000 W</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Noise Level</td>
+            <td style="padding: 0.5rem; color: #16a34a;">Very Quiet (50–60 dBA)</td>
+            <td style="padding: 0.5rem; color: #dc2626;">Loud (68–78 dBA)</td>
+            <td style="padding: 0.5rem;">Moderate (65–70 dBA)</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; font-weight: 600;">Fuel Consumption</td>
+            <td style="padding: 0.5rem; color: #16a34a;">Auto-throttles to load (High efficiency)</td>
+            <td style="padding: 0.5rem;">Constant 3600 RPM (High consumption)</td>
+            <td style="padding: 0.5rem;">Direct Natural Gas / Propane line</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>Storm &amp; Emergency Survival:</strong> Powers a full-size refrigerator, sump pump, Wi-Fi router, smartphone/laptop chargers, and 5–8 LED bulbs during hurricane or winter storm blackouts.</li>
+        <li><strong>Job Site &amp; Power Tools:</strong> Sizing generators to handle circular saws, air compressors, and welding machines that draw high inductive startup surges.</li>
+        <li><strong>RV Camping &amp; Food Trucks:</strong> Powering rooftop RV air conditioning units and commercial food warmers quietly in mobile environments.</li>
+        <li><strong>Critical Well Water Pumping:</strong> Ensuring reliable power for 240V submersible water pumps during multi-day rural grid failures.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        <strong>Scenario:</strong> You need emergency storm backup for a refrigerator (150W running / 600W surge), a 1 HP submersible water pump (750W running / 2,200W surge), a countertop microwave (1,000W), 2 ceiling fans (150W), 6 LED bulbs (72W), and a Wi-Fi router (15W).
+      </p>
+      <ul>
+        <li><strong>Total Continuous Running Load:</strong> $150 + 750 + 1,000 + 150 + 72 + 15 = 2,137\text{ Watts}$ ($2.14\text{ kW}$).</li>
+        <li><strong>Highest Single Motor Surge Delta:</strong> The water pump creates the largest delta ($2,200\text{W} - 750\text{W} = 1,450\text{ Watts}$).</li>
+        <li><strong>Peak Staggered Starting Surge:</strong> $2,137\text{W} + 1,450\text{W} = 3,587\text{ Watts}$ ($3.59\text{ kW}$).</li>
+        <li><strong>Continuous Capacity with 20% Headroom:</strong> $2,137\text{W} \times 1.20 = 2,564\text{ Watts}$ ($2.56\text{ kW}$).</li>
+        <li><strong>Recommended Commercial Generator:</strong> Next standard size is $\mathbf{3.5\text{ kW}}$ ($4.4\text{ kVA}$ at $0.8\text{ PF}$), offering plenty of headroom.</li>
+      </ul>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <ul>
+        <li><strong>Harmonic Distortion Consideration:</strong> Conventional generators produce 10% to 20% THD; sensitive electronic boards can overheat. Inverter generators synthesize pure sine waves (<3% THD).</li>
+        <li><strong>Motor Surge Delta Principle:</strong> Prevents oversizing by staggering startup sequence instead of summing non-coincident starting currents.</li>
+        <li><strong>Altitude Derating Compensation:</strong> Automatically adds capacity when operating above 2,000 ft or in ambient heat above 40°C.</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        Generator sizing figures provided by this browser tool represent engineering approximations based on nominal manufacturer nameplate ratings. Actual motor starting currents vary by motor NEMA design letter (Design B, C, D) and compressor age.
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        All entered appliance wattages and sizing configurations execute 100% locally on your computer or mobile device. Zero data is transmitted to external servers.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Can I run my generator continuously at 100% capacity?</h3>
+        <p>
+          No. Manufacturers design generators to deliver their rated continuous watts under normal conditions, but running them at 100% load continuously produces severe thermal stress, accelerates engine wear, increases fuel consumption, and risks tripping the circuit breaker. Always size your generator so your continuous load represents no more than 75% to 80% of its rated capacity.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Will a generator damage sensitive electronics like laptops and televisions?</h3>
+        <p>
+          Conventional portable generators with open frames can produce dirty power with harmonic distortion exceeding 15%, causing overheating in delicate digital power supplies. Use an <strong>Inverter Generator</strong> with clean pure sine wave power (THD &lt; 3%) or connect an online double-conversion UPS between a conventional generator and sensitive electronic equipment.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>How many watts does it take to run a central AC unit?</h3>
+        <p>
+          A standard 3-Ton central air conditioner requires roughly 3,000 to 3,500 running watts, but demands a massive starting surge between 7,000 and 10,000 watts. Installing an aftermarket <strong>Soft Starter</strong> (such as an EasyStart) reduces compressor startup surge by up to 60%–70%, allowing a much smaller generator (e.g. 5 kW to 7.5 kW) to start and run the unit effortlessly.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>What is the difference between kW and kVA on generator spec sheets?</h3>
+        <p>
+          kW (kilowatts) measures real, working electrical power, while kVA (kilo-volt-amperes) measures apparent power. Because alternating current electric motors introduce inductive reactance, current and voltage fall slightly out of phase. In commercial generator ratings with a standard 0.8 Power Factor (PF), a 7.5 kW generator is rated at $7.5 / 0.8 = 9.4\text{ kVA}$.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/battery-runtime-calculator.html" class="related-tool-chip">🔋 Battery Runtime Calculator</a>
+        <a href="/tools/inverter-backup-calculator.html" class="related-tool-chip">⚡ Inverter Backup Calculator</a>
+        <a href="/tools/solar-panel-size-calculator.html" class="related-tool-chip">☀️ Solar Panel Size Calculator</a>
+        <a href="/tools/unit-converter.html" class="related-tool-chip">🔄 Universal Unit Converter</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/solar-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // Default initial appliance load
+      const DEFAULT_APPLIANCES = [
+        { id: 'fridge', name: 'Refrigerator', runningWatts: 150, surgeWatts: 600, quantity: 1 },
+        { id: 'water_pump', name: '1 HP Water Pump', runningWatts: 750, surgeWatts: 2200, quantity: 1 },
+        { id: 'microwave', name: 'Microwave Oven', runningWatts: 1000, surgeWatts: 1000, quantity: 1 },
+        { id: 'fan', name: 'Ceiling Fan', runningWatts: 75, surgeWatts: 150, quantity: 2 },
+        { id: 'bulb', name: 'LED Light Bulb', runningWatts: 12, surgeWatts: 12, quantity: 6 },
+        { id: 'router', name: 'Wi-Fi Router', runningWatts: 15, surgeWatts: 15, quantity: 1 }
+      ];
+
+      let appliances = JSON.parse(JSON.stringify(DEFAULT_APPLIANCES));
+      let lastResult = null;
+
+      // DOM Elements
+      const tbody = document.getElementById('appliance-tbody');
+      const tblTotalRunning = document.getElementById('tbl-total-running');
+      const btnAddCustom = document.getElementById('btn-add-custom-row');
+      const btnClearAll = document.getElementById('btn-clear-all');
+
+      const presetBtns = document.querySelectorAll('.appliance-chip-btn');
+
+      const safetySlider = document.getElementById('safety-slider');
+      const lblSafetyVal = document.getElementById('lbl-safety-val');
+      const altitudeSelect = document.getElementById('altitude-select');
+      const pfSelect = document.getElementById('pf-select');
+
+      const kpiGenKw = document.getElementById('kpi-gen-kw');
+      const kpiGenKva = document.getElementById('kpi-gen-kva');
+      const kpiRunningWatts = document.getElementById('kpi-running-watts');
+      const kpiRunningKw = document.getElementById('kpi-running-kw');
+      const kpiSurgeWatts = document.getElementById('kpi-surge-watts');
+      const kpiSurgeDesc = document.getElementById('kpi-surge-desc');
+      const kpiMinRatedKw = document.getElementById('kpi-min-rated-kw');
+      const kpiMinRatedSub = document.getElementById('kpi-min-rated-sub');
+
+      const adviceText = document.getElementById('advice-text');
+      const btnCopyReport = document.getElementById('btn-copy-report');
+      const btnReset = document.getElementById('btn-reset');
+
+      // Render appliance list rows
+      function renderAppliances() {
+        if (appliances.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 1.5rem; color: var(--color-text-muted);">
+                No appliances added. Click any preset above or "Add Custom Appliance" to begin.
+              </td>
+            </tr>
+          `;
+          tblTotalRunning.textContent = '0 W';
+          return;
+        }
+
+        tbody.innerHTML = appliances.map((item, idx) => {
+          const totalW = item.runningWatts * item.quantity;
+          const isSurge = item.surgeWatts > item.runningWatts;
+          return `
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.4rem 0.5rem;">
+                <input type="text" class="form-control inp-app-name" data-idx="${idx}" value="${item.name}" aria-label="Appliance Name for row ${idx + 1}" style="font-size: var(--font-size-xs); padding: 0.25rem 0.4rem;">
+              </td>
+              <td style="padding: 0.4rem 0.5rem;">
+                <input type="number" class="form-control inp-app-run" data-idx="${idx}" value="${item.runningWatts}" min="0" step="5" aria-label="Running watts for row ${idx + 1}" style="font-size: var(--font-size-xs); padding: 0.25rem 0.4rem;">
+              </td>
+              <td style="padding: 0.4rem 0.5rem;">
+                <input type="number" class="form-control inp-app-surge" data-idx="${idx}" value="${item.surgeWatts}" min="0" step="5" aria-label="Surge watts for row ${idx + 1}" style="font-size: var(--font-size-xs); padding: 0.25rem 0.4rem; ${isSurge ? 'border-color: #ea580c;' : ''}">
+              </td>
+              <td style="padding: 0.4rem 0.5rem;">
+                <input type="number" class="form-control inp-app-qty" data-idx="${idx}" value="${item.quantity}" min="0" max="99" aria-label="Quantity for row ${idx + 1}" style="font-size: var(--font-size-xs); padding: 0.25rem 0.4rem;">
+              </td>
+              <td style="padding: 0.4rem 0.5rem; text-align: right; font-weight: 600;">
+                ${totalW.toLocaleString()} W
+              </td>
+              <td style="padding: 0.4rem 0.5rem; text-align: center;">
+                <button type="button" class="btn btn-secondary btn-del-row" data-idx="${idx}" aria-label="Remove ${item.name}" style="padding: 0.2rem 0.4rem; color: #dc2626; font-size: 11px;">✕</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        attachRowListeners();
+      }
+
+      function attachRowListeners() {
+        tbody.querySelectorAll('.inp-app-name').forEach(inp => {
+          inp.addEventListener('input', function() {
+            const idx = parseInt(this.dataset.idx, 10);
+            if (appliances[idx]) appliances[idx].name = this.value;
+          });
+        });
+
+        tbody.querySelectorAll('.inp-app-run').forEach(inp => {
+          inp.addEventListener('input', function() {
+            const idx = parseInt(this.dataset.idx, 10);
+            if (appliances[idx]) {
+              appliances[idx].runningWatts = Math.max(0, parseFloat(this.value) || 0);
+              calculate();
+            }
+          });
+        });
+
+        tbody.querySelectorAll('.inp-app-surge').forEach(inp => {
+          inp.addEventListener('input', function() {
+            const idx = parseInt(this.dataset.idx, 10);
+            if (appliances[idx]) {
+              appliances[idx].surgeWatts = Math.max(0, parseFloat(this.value) || 0);
+              calculate();
+            }
+          });
+        });
+
+        tbody.querySelectorAll('.inp-app-qty').forEach(inp => {
+          inp.addEventListener('input', function() {
+            const idx = parseInt(this.dataset.idx, 10);
+            if (appliances[idx]) {
+              appliances[idx].quantity = Math.max(0, parseInt(this.value, 10) || 0);
+              calculate();
+            }
+          });
+        });
+
+        tbody.querySelectorAll('.btn-del-row').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const idx = parseInt(this.dataset.idx, 10);
+            appliances.splice(idx, 1);
+            renderAppliances();
+            calculate();
+          });
+        });
+      }
+
+      // Preset click: increment quantity or append
+      presetBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const id = this.dataset.id;
+          const name = this.dataset.name;
+          const run = parseFloat(this.dataset.run) || 0;
+          const surge = parseFloat(this.dataset.surge) || run;
+
+          const existing = appliances.find(a => a.name.toLowerCase() === name.toLowerCase());
+          if (existing) {
+            existing.quantity += 1;
+          } else {
+            appliances.push({ id, name, runningWatts: run, surgeWatts: surge, quantity: 1 });
+          }
+          renderAppliances();
+          calculate();
+        });
+      });
+
+      // Add custom row
+      btnAddCustom.addEventListener('click', function() {
+        appliances.push({
+          id: `custom-${Date.now()}`,
+          name: `Custom Equipment #${appliances.length + 1}`,
+          runningWatts: 500,
+          surgeWatts: 1000,
+          quantity: 1
+        });
+        renderAppliances();
+        calculate();
+      });
+
+      // Clear all
+      btnClearAll.addEventListener('click', function() {
+        appliances = [];
+        renderAppliances();
+        calculate();
+      });
+
+      // Safety slider
+      safetySlider.addEventListener('input', function() {
+        lblSafetyVal.textContent = `${this.value}% (Recommended)`;
+        calculate();
+      });
+
+      altitudeSelect.addEventListener('change', calculate);
+      pfSelect.addEventListener('change', calculate);
+
+      // Sizing calculation
+      function calculate() {
+        const res = SolarUtils.calculateGeneratorSize({
+          appliances,
+          safetyMarginPct: parseFloat(safetySlider.value) || 20,
+          altitudeDeratingPct: parseFloat(altitudeSelect.value) || 0,
+          powerFactor: parseFloat(pfSelect.value) || 0.8
+        });
+
+        if (!res) return;
+        lastResult = res;
+
+        // Populate table footer
+        tblTotalRunning.textContent = `${res.totalRunningWatts.toLocaleString()} W`;
+
+        // Update KPIs
+        kpiGenKw.textContent = `${res.recommendedGeneratorKw} kW`;
+        kpiGenKva.textContent = `${res.recommendedGeneratorKva} kVA @ ${pfSelect.value} PF`;
+
+        kpiRunningWatts.textContent = `${res.totalRunningWatts.toLocaleString()} W`;
+        kpiRunningKw.textContent = `${res.totalRunningKw} kW continuous draw`;
+
+        kpiSurgeWatts.textContent = `${res.peakStartingSurgeWatts.toLocaleString()} W`;
+        kpiSurgeDesc.textContent = `Staggered largest motor delta (+${res.peakStartingSurgeWatts - res.totalRunningWatts}W)`;
+
+        kpiMinRatedKw.textContent = `${res.requiredRunningKw} kW`;
+        kpiMinRatedSub.textContent = `With ${safetySlider.value}% margin & altitude`;
+
+        // Dynamic Advice Text
+        if (res.recommendedGeneratorKw <= 3.5) {
+          adviceText.innerHTML = `
+            Your continuous load (${res.totalRunningWatts}W) fits cleanly inside a portable <strong>Inverter Generator (2.0 kW – 3.5 kW)</strong>.
+            Inverter units produce clean power (THD &lt; 3%) safe for electronics and run quietly with automatic throttle matching.
+          `;
+        } else if (res.recommendedGeneratorKw <= 8.0) {
+          adviceText.innerHTML = `
+            Your load (${res.totalRunningWatts}W running, ${res.peakStartingSurgeWatts}W surge) requires a <strong>Mid-size Portable or Dual-Fuel Generator (5.0 kW – 7.5 kW)</strong>.
+            Ensure you start motorized appliances (water pumps, ACs) in staggered order. Connect via a transfer switch for safe whole-panel power.
+          `;
+        } else {
+          adviceText.innerHTML = `
+            Your load (${res.totalRunningWatts}W running, ${res.peakStartingSurgeWatts}W surge) calls for a heavy-duty <strong>Whole-House Standby Generator (${res.recommendedGeneratorKw} kW / ${res.recommendedGeneratorKva} kVA)</strong>
+            fueled by natural gas or propane, with an Automatic Transfer Switch (ATS) to seamlessly power central HVAC and heavy machinery.
+          `;
+        }
+      }
+
+      // Copy Report
+      btnCopyReport.addEventListener('click', function() {
+        if (!lastResult) return;
+        const res = lastResult;
+        const lines = [
+          '⚙️ GENERATOR SIZING & ELECTRICAL LOAD REPORT',
+          '=============================================',
+          `Total Continuous Running Load: ${res.totalRunningWatts} Watts (${res.totalRunningKw} kW)`,
+          `Peak Staggered Starting Surge: ${res.peakStartingSurgeWatts} Watts (${res.peakStartingSurgeKw} kW)`,
+          `Continuous Headroom Margin:    ${safetySlider.value}%`,
+          `Altitude / Temp Derating:      ${altitudeSelect.value}%`,
+          '---------------------------------------------',
+          `RECOMMENDED GENERATOR SIZE:    ${res.recommendedGeneratorKw} kW (${res.recommendedGeneratorKva} kVA @ ${pfSelect.value} PF)`,
+          `Minimum Rated Continuous kW:   ${res.requiredRunningKw} kW`,
+          '=============================================',
+          'APPLIANCE LOAD BREAKDOWN:'
+        ];
+
+        appliances.forEach((a, i) => {
+          lines.push(`  ${i + 1}. ${a.name} (Qty: ${a.quantity}) -> Running: ${a.runningWatts * a.quantity}W | Surge: ${a.surgeWatts * a.quantity}W`);
+        });
+
+        lines.push(
+          '=============================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/generator-size-calculator.html'
+        );
+
+        SolarUtils.copyTextToClipboard(lines.join('\n'), btnCopyReport, 'Report Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        appliances = JSON.parse(JSON.stringify(DEFAULT_APPLIANCES));
+        safetySlider.value = '20';
+        lblSafetyVal.textContent = '20% (Recommended)';
+        altitudeSelect.value = '0';
+        pfSelect.value = '0.8';
+        renderAppliances();
+        calculate();
+      });
+
+      // Initial render & run
+      renderAppliances();
+      calculate();
+    })();
+  </script>
+</body>
+</html>

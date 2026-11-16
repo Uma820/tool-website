@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phone Number Validator &amp; Format Checker — Free Online Tools</title>
+  <meta name="description" content="Validate international phone number formats, check ITU-T E.164 compliance, identify country prefixes, and beautify telephone numbers. 100% private in-browser tool.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/phone-number-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/phone-number-validator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/phone-number-validator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Phone Number Validator & Format Checker",
+    "description": "Validate international phone number formats, check ITU-T E.164 compliance, identify country prefixes, and beautify telephone numbers. 100% private in-browser tool.",
+    "url": "https://nexivo.com/tools/phone-number-validator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#calc">Calculators</a></li>
+      <li>/</li>
+      <li aria-current="page">Phone Number Validator</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Phone Number Validator &amp; Format Checker</span>
+      </h1>
+      <p class="tool-header-lead">
+        Validate telephone numbers against international ITU-T E.164 standards, identify country dial codes, extract area codes, and format clean dialable strings.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">ITU-T E.164 Compliance</span>
+        <span class="tool-badge">Offline Syntax Only</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Notice on Offline Verification Scope -->
+      <div style="background: rgba(2, 132, 199, 0.08); border-left: 4px solid var(--color-primary); padding: var(--space-3); border-radius: var(--radius-sm); margin-block-end: var(--space-4); font-size: var(--font-size-xs); color: var(--color-text);">
+        <strong>Offline Format Verification Notice:</strong> This tool validates phone number structure, country calling codes, digit lengths, and formatting rules offline in your browser. It does not query live telecom carrier networks (HLR/SS7) to check if a subscriber line is currently connected, active, or registered to a person.
+      </div>
+
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary btn-sample-num" data-num="+1 (415) 555-2671">Sample US (+1)</button>
+          <button type="button" class="btn btn-secondary btn-sample-num" data-num="+44 20 7946 0958">Sample UK (+44)</button>
+          <button type="button" class="btn btn-secondary btn-sample-num" data-num="+91 98765 43210">Sample India (+91)</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Clear</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          Instant validation
+        </div>
+      </div>
+
+      <!-- Phone Input Box -->
+      <div class="form-group">
+        <label for="phone-input" class="form-label" style="font-weight: var(--font-weight-semibold);">Enter Phone Number with Country Code:</label>
+        <input type="tel" id="phone-input" class="form-input" placeholder="e.g. +1 415 555 2671 or +44 20 7946 0958" style="font-size: var(--font-size-lg); font-family: var(--font-family-mono);">
+      </div>
+
+      <!-- Validation Status Banner -->
+      <div id="validation-banner" style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 2px solid var(--color-border); padding: var(--space-4); margin-block-end: var(--space-4); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3);">
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <div id="status-icon" style="font-size: 28px; line-height: 1;">❓</div>
+          <div>
+            <div id="status-title" style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold);">Awaiting Phone Number Input</div>
+            <div id="status-desc" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Enter a telephone number above to validate formatting.</div>
+          </div>
+        </div>
+        <div id="country-badge" style="font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); background: var(--color-bg); padding: 0.35rem 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border); display: none;">
+          Country: --
+        </div>
+      </div>
+
+      <!-- Formatted Representations Grid -->
+      <div style="background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border); padding: var(--space-4); margin-block-end: var(--space-4);">
+        <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-bold); margin-block-end: var(--space-3);">Normalized Number Representations</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3); font-size: var(--font-size-sm);">
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">E.164 Standard:</span>
+            <strong id="rep-e164" style="font-family: var(--font-family-mono);">--</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">RFC 3966 URI:</span>
+            <strong id="rep-tel" style="font-family: var(--font-family-mono);">--</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">Country Code:</span>
+            <strong id="rep-cc">--</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-2);">
+            <span style="color: var(--color-text-muted);">Digit Count:</span>
+            <strong id="rep-digits">0 digits</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the Phone Number Validator Do?</h2>
+        <p>
+          The <strong>Phone Number Validator &amp; Format Checker</strong> validates the structural syntax of international telephone numbers against the <strong>ITU-T E.164</strong> standard. The E.164 standard defines the international numbering plan used in telecommunications, ensuring that numbers are globally unique, routable, and adhere to a maximum length of 15 digits (excluding the international prefix).
+        </p>
+        <p>
+          This utility parses country calling codes (e.g., <code>+1</code> for North America, <code>+44</code> for the United Kingdom, <code>+91</code> for India), cleans away inconsistent punctuation, spaces, and dashes, and generates standardized dialable strings including <code>tel:</code> URIs for mobile web links.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Enter Phone Number:</strong> Type or paste the number into the input field, including the international plus sign (<code>+</code>) and country calling code, or click one of the sample buttons.</li>
+          <li><strong>Inspect Validation Status:</strong> The status banner displays whether the number adheres to valid international length limits (between 7 and 15 digits) and recognizes the country prefix.</li>
+          <li><strong>Review Standardized Representations:</strong> Observe the clean E.164 format (e.g. <code>+14155552671</code>) and the clickable RFC 3966 <code>tel:</code> link.</li>
+          <li><strong>Copy Normalized Format:</strong> Copy the cleaned E.164 string to store in your CRM, database, or WhatsApp link generator.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>CRM &amp; Contact List Sanitization</h3>
+            <p>Clean up messy spreadsheets containing inconsistent parenthesized area codes or missing country codes before importing into Salesforce or HubSpot.</p>
+          </div>
+          <div class="card">
+            <h3>Web Form Input Normalization</h3>
+            <p>Ensure customer phone numbers conform to the standard 15-digit E.164 specification required by SMS gateways (such as Twilio).</p>
+          </div>
+          <div class="card">
+            <h3>Mobile Link Creation</h3>
+            <p>Generate valid <code>&lt;a href="tel:+..."&gt;</code> click-to-call hyperlinks for responsive mobile business websites.</p>
+          </div>
+          <div class="card">
+            <h3>Country Prefix Verification</h3>
+            <p>Determine which nation an unfamiliar international area code or missed call originates from.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Example Input Number:</div>
+          <pre class="example-pre">(415) 555-2671 (with US +1 prefix)</pre>
+          <div class="example-title" style="margin-block-start: var(--space-3);">Validated Output:</div>
+          <pre class="example-pre">ITU-T E.164 Format: +14155552671
+Country Detected: United States / Canada (+1)
+Total Digits: 11 (Valid length)
+Tel URI: tel:+14155552671</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Standards Compliance:</strong> Conforms strictly to ITU-T Recommendation E.164 and RFC 3966 URI formatting standards.</li>
+          <li><strong>Prefix Engine:</strong> Built-in country dial code dictionary covering major nations across North America, Europe, Asia, Latin America, and Oceania.</li>
+          <li><strong>Digit Length Rules:</strong> Enforces minimum 7 digits (small island territories) and maximum 15 digits (global E.164 cap).</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          This tool executes <strong>offline format validation only</strong>. It checks syntax, country code prefix, and mathematical digit lengths. It does not perform active Home Location Register (HLR) or SS7 carrier network queries, and therefore cannot confirm whether a specific line is actively in service, disconnected, or assigned to a specific subscriber.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          Your telephone numbers and client contact information never leave your web browser. All parsing occurs strictly in your device's memory with zero server telemetry or database storage.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">What is the E.164 format?</summary>
+            <div class="faq-answer">
+              <p>E.164 is an international standard numbering plan established by the International Telecommunication Union (ITU). An E.164 number begins with a plus sign (<code>+</code>), followed by the country calling code, national destination code (area code), and subscriber number, containing no spaces, dashes, or parentheses, and capped at 15 digits.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Why must I include the country code?</summary>
+            <div class="faq-answer">
+              <p>Without an international prefix (like +1 or +44), a 10-digit number is ambiguous because multiple countries utilize 10-digit national telephone numbers.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Can this tool detect whether a phone is a mobile or landline?</summary>
+            <div class="faq-answer">
+              <p>Determining whether a specific number is mobile, VoIP, or landline requires live carrier routing lookups (HLR). Since this tool runs 100% offline in your browser, it provides structural format checks only.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/whatsapp-link-generator.html" class="related-tool-chip">
+            <div class="related-tool-title">WhatsApp Link Generator</div>
+            <div class="related-tool-desc">Create direct chat links with clean international phone numbers.</div>
+          </a>
+          <a href="/tools/mailto-link-generator.html" class="related-tool-chip">
+            <div class="related-tool-title">Mailto Link Generator</div>
+            <div class="related-tool-desc">Build validated click-to-email links with subject and body presets.</div>
+          </a>
+          <a href="/tools/text-size-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Text Size Calculator</div>
+            <div class="related-tool-desc">Calculate character count, UTF-8 byte sizes, and reading time.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const phoneInput = document.getElementById('phone-input');
+    const validationBanner = document.getElementById('validation-banner');
+    const statusIcon = document.getElementById('status-icon');
+    const statusTitle = document.getElementById('status-title');
+    const statusDesc = document.getElementById('status-desc');
+    const countryBadge = document.getElementById('country-badge');
+
+    const repE164 = document.getElementById('rep-e164');
+    const repTel = document.getElementById('rep-tel');
+    const repCc = document.getElementById('rep-cc');
+    const repDigits = document.getElementById('rep-digits');
+
+    const btnClear = document.getElementById('btn-clear');
+    const sampleButtons = document.querySelectorAll('.btn-sample-num');
+
+    // Common Country Dial Codes Dictionary
+    const COUNTRY_CODES = [
+      { code: '1', country: 'United States & Canada', flag: '🇺🇸 / 🇨🇦', min: 10, max: 10 },
+      { code: '44', country: 'United Kingdom', flag: '🇬🇧', min: 9, max: 10 },
+      { code: '91', country: 'India', flag: '🇮🇳', min: 10, max: 10 },
+      { code: '880', country: 'Bangladesh', flag: '🇧🇩', min: 10, max: 10 },
+      { code: '33', country: 'France', flag: '🇫🇷', min: 9, max: 9 },
+      { code: '49', country: 'Germany', flag: '🇩🇪', min: 10, max: 11 },
+      { code: '81', country: 'Japan', flag: '🇯🇵', min: 10, max: 10 },
+      { code: '86', country: 'China', flag: '🇨🇳', min: 11, max: 11 },
+      { code: '61', country: 'Australia', flag: '🇦🇺', min: 9, max: 9 },
+      { code: '34', country: 'Spain', flag: '🇪🇸', min: 9, max: 9 },
+      { code: '55', country: 'Brazil', flag: '🇧🇷', min: 10, max: 11 },
+      { code: '7', country: 'Russia & Kazakhstan', flag: '🇷🇺 / 🇰🇿', min: 10, max: 10 },
+      { code: '971', country: 'United Arab Emirates', flag: '🇦🇪', min: 9, max: 9 },
+      { code: '966', country: 'Saudi Arabia', flag: '🇸🇦', min: 9, max: 9 },
+      { code: '234', country: 'Nigeria', flag: '🇳🇬', min: 10, max: 10 },
+      { code: '27', country: 'South Africa', flag: '🇿🇦', min: 9, max: 9 },
+      { code: '52', country: 'Mexico', flag: '🇲🇽', min: 10, max: 10 },
+      { code: '39', country: 'Italy', flag: '🇮🇹', min: 9, max: 10 },
+      { code: '82', country: 'South Korea', flag: '🇰🇷', min: 9, max: 10 },
+      { code: '62', country: 'Indonesia', flag: '🇮🇩', min: 10, max: 12 }
+    ];
+
+    function validate() {
+      const raw = phoneInput.value.trim();
+
+      if (!raw) {
+        statusIcon.textContent = '❓';
+        statusTitle.textContent = 'Awaiting Phone Number Input';
+        statusDesc.textContent = 'Enter a telephone number above to validate formatting.';
+        countryBadge.style.display = 'none';
+        repE164.textContent = '--';
+        repTel.textContent = '--';
+        repCc.textContent = '--';
+        repDigits.textContent = '0 digits';
+        validationBanner.style.borderColor = 'var(--color-border)';
+        return;
+      }
+
+      // Extract all digits and check if has leading plus
+      const hasPlus = raw.startsWith('+');
+      const cleanDigits = raw.replace(/\D/g, '');
+      const totalLen = cleanDigits.length;
+
+      repDigits.textContent = `${totalLen} digit${totalLen === 1 ? '' : 's'}`;
+
+      if (totalLen < 6) {
+        statusIcon.textContent = '⚠️';
+        statusTitle.textContent = 'Number is Too Short';
+        statusDesc.textContent = 'Telephone numbers must contain at least 7 digits to be valid internationally.';
+        countryBadge.style.display = 'none';
+        validationBanner.style.borderColor = 'var(--color-warning)';
+        repE164.textContent = '+' + cleanDigits;
+        repTel.textContent = 'tel:+' + cleanDigits;
+        repCc.textContent = 'Unknown';
+        return;
+      }
+
+      if (totalLen > 15) {
+        statusIcon.textContent = '❌';
+        statusTitle.textContent = 'Exceeds E.164 Maximum (15 Digits)';
+        statusDesc.textContent = `ITU-T E.164 limits telephone numbers to a maximum of 15 digits (excluding prefix). Entered: ${totalLen} digits.`;
+        countryBadge.style.display = 'none';
+        validationBanner.style.borderColor = 'var(--color-danger)';
+        repE164.textContent = '+' + cleanDigits;
+        repTel.textContent = 'tel:+' + cleanDigits;
+        repCc.textContent = 'Invalid length';
+        return;
+      }
+
+      // Identify country code by prefix matching (sorted descending by length of code)
+      let matchedCountry = null;
+      const sortedCodes = [...COUNTRY_CODES].sort((a, b) => b.code.length - a.code.length);
+
+      for (const item of sortedCodes) {
+        if (cleanDigits.startsWith(item.code)) {
+          matchedCountry = item;
+          break;
+        }
+      }
+
+      if (matchedCountry) {
+        const subscriberDigits = cleanDigits.substring(matchedCountry.code.length);
+        const subLen = subscriberDigits.length;
+
+        repE164.textContent = '+' + cleanDigits;
+        repTel.textContent = 'tel:+' + cleanDigits;
+        repCc.textContent = `+${matchedCountry.code} (${matchedCountry.country})`;
+
+        countryBadge.style.display = 'inline-block';
+        countryBadge.textContent = `${matchedCountry.flag} ${matchedCountry.country} (+${matchedCountry.code})`;
+
+        if (subLen >= matchedCountry.min && subLen <= matchedCountry.max) {
+          statusIcon.textContent = '✅';
+          statusTitle.textContent = 'Valid International Format (E.164)';
+          statusDesc.textContent = `Matches national numbering length for ${matchedCountry.country}. Formatted as +${matchedCountry.code} ${subscriberDigits}.`;
+          validationBanner.style.borderColor = 'var(--color-success)';
+        } else {
+          statusIcon.textContent = '⚠️';
+          statusTitle.textContent = 'Dial Code Recognized, Length Warning';
+          statusDesc.textContent = `Country code +${matchedCountry.code} detected, but expected ${matchedCountry.min}–${matchedCountry.max} subscriber digits (entered: ${subLen}).`;
+          validationBanner.style.borderColor = 'var(--color-warning)';
+        }
+      } else {
+        // Generic valid E.164 length
+        repE164.textContent = '+' + cleanDigits;
+        repTel.textContent = 'tel:+' + cleanDigits;
+        repCc.textContent = 'Unknown Country Prefix';
+        countryBadge.style.display = 'none';
+
+        statusIcon.textContent = 'ℹ️';
+        statusTitle.textContent = 'Conforms to General E.164 Length';
+        statusDesc.textContent = 'The number satisfies general international digit count limits (7–15 digits), though the country calling prefix is not in our primary dictionary.';
+        validationBanner.style.borderColor = 'var(--color-primary)';
+      }
+    }
+
+    phoneInput.addEventListener('input', validate);
+
+    sampleButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        phoneInput.value = btn.dataset.num;
+        validate();
+      });
+    });
+
+    btnClear.addEventListener('click', () => {
+      phoneInput.value = '';
+      validate();
+      phoneInput.focus();
+    });
+
+    // Run first sample on load
+    sampleButtons[0].click();
+  })();
+  </script>
+</body>
+</html>

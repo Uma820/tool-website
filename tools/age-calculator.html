@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age & Date Difference Calculator — Free Online Tools</title>
+  <meta name="description" content="Calculate your exact age in years, months, days, hours, and find the exact duration between any two dates. Free and 100% private.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/age-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/age-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/age-calculator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Age & Date Difference Calculator",
+    "description": "Calculate your exact age in years, months, days, hours, and find the exact duration between any two dates. Free and 100% private.",
+    "url": "https://nexivo.com/tools/age-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#calculators">Calculators</a></li>
+      <li>/</li>
+      <li aria-current="page">Age & Date Difference Calculator</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Age & Date Difference Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Find your exact chronological age down to days and hours, calculate the time elapsed between any two calendar dates, and see your next birthday countdown.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Calendar Leap-Year Aware</span>
+        <span class="tool-badge">Zero Data Logging</span>
+      </div>
+    </div>
+
+    <div class="tool-panel">
+      <!-- Input Dates -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-6);">
+        <div>
+          <label for="birth-date" class="form-label">Date of Birth (or Start Date):</label>
+          <input type="date" id="birth-date" class="form-input">
+        </div>
+        <div>
+          <label for="target-date" class="form-label">Age as of Date (or End Date):</label>
+          <input type="date" id="target-date" class="form-input">
+        </div>
+      </div>
+
+      <!-- Main Result Card -->
+      <div style="background: var(--color-bg-subtle); border: 2px solid var(--color-primary-border); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; margin-block-end: var(--space-6);">
+        <div style="font-size: var(--font-size-sm); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); margin-block-end: var(--space-1);">Exact Age / Duration</div>
+        <div id="main-age-result" style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--color-primary); line-height: 1.3;">
+          Select your birth date
+        </div>
+        <div id="next-bday-note" style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-block-start: var(--space-2);"></div>
+      </div>
+
+      <!-- Breakdown Grid -->
+      <h2 style="font-size: var(--font-size-base); margin-block-end: var(--space-3);">Detailed Time Breakdown</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="breakdown-years">0</div>
+          <div class="stat-label">Years</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="breakdown-months">0</div>
+          <div class="stat-label">Months</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="breakdown-days">0</div>
+          <div class="stat-label">Total Days</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="breakdown-weeks">0</div>
+          <div class="stat-label">Total Weeks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="breakdown-hours">0</div>
+          <div class="stat-label">Total Hours</div>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>The <strong>Age &amp; Date Difference Calculator</strong> calculates precise chronological age and time elapsed between any two calendar dates. It accounts for leap years, differing month lengths, and gives a complete breakdown in years, months, days, weeks, and total days lived.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li>Select your Date of Birth or starting date using the date picker.</li>
+          <li>Select the target comparison date (defaults automatically to today).</li>
+          <li>View your exact chronological age in years, months, and days.</li>
+          <li>Explore secondary statistics including total days lived, weeks elapsed, and upcoming milestone dates.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Official Application Requirements:</strong> Verify exact eligibility ages for passport applications, driver licenses, retirement benefits, or school admissions.</li>
+          <li><strong>Milestone Celebrations:</strong> Find out when someone reaches their 10,000th day of life or upcoming milestone birthdays.</li>
+          <li><strong>Project Timeline Measurement:</strong> Calculate the exact calendar duration between a project kickoff date and final milestone delivery.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">Birth Date: January 15, 2000 | Target Date: January 15, 2026</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">Age: 26 Years, 0 Months, 0 Days | Total Days: 9,497 Days | Total Weeks: 1,356 Weeks</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>Calculates calendar time using Gregorian calendar mechanics, factoring in leap years (every 4th year except century years not divisible by 400). Millisecond differences are converted to exact solar day units.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>Based on the standard international Gregorian calendar; historical calendar adjustments (such as the Julian-to-Gregorian transition in 1582) are not retroactively modeled.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>Your dates of birth and personal timelines exist exclusively in your browser memory. Nothing is tracked or logged.</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+          <h3>How does the calculator handle leap years?</h3>
+          <p>Leap years are fully accounted for, accurately adding February 29th for every applicable leap year in the range.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I calculate the date difference between two past dates?</h3>
+          <p>Yes. You can customize both the start and end dates to measure any historical period.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Does it calculate total hours lived?</h3>
+          <p>Yes. The statistics grid provides an estimate of total hours, weeks, and days elapsed.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/tools/percentage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Percentage & Discount Calculator</span>
+          </a>
+
+          <a href="/tools/unit-converter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Universal Unit Converter</span>
+          </a>
+
+          <a href="/tools/reading-time-estimator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Reading Time Estimator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const birthDateInput = document.getElementById('birth-date');
+      const targetDateInput = document.getElementById('target-date');
+      const mainResult = document.getElementById('main-age-result');
+      const nextBdayNote = document.getElementById('next-bday-note');
+
+      const bYears = document.getElementById('breakdown-years');
+      const bMonths = document.getElementById('breakdown-months');
+      const bDays = document.getElementById('breakdown-days');
+      const bWeeks = document.getElementById('breakdown-weeks');
+      const bHours = document.getElementById('breakdown-hours');
+
+      // Set target date default to today
+      const today = new Date();
+      targetDateInput.value = today.toISOString().split('T')[0];
+      
+      // Default sample birth date: 2000-01-01
+      birthDateInput.value = '2000-01-01';
+
+      function calculateAge() {
+        const d1Val = birthDateInput.value;
+        const d2Val = targetDateInput.value;
+
+        if (!d1Val || !d2Val) {
+          mainResult.textContent = 'Please choose both dates.';
+          return;
+        }
+
+        const startDate = new Date(d1Val + 'T00:00:00');
+        const endDate = new Date(d2Val + 'T00:00:00');
+
+        if (isNaN(startDate) || isNaN(endDate)) {
+          mainResult.textContent = 'Invalid date input.';
+          return;
+        }
+
+        let isReversed = false;
+        let early = startDate;
+        let late = endDate;
+
+        if (startDate > endDate) {
+          isReversed = true;
+          early = endDate;
+          late = startDate;
+        }
+
+        let years = late.getFullYear() - early.getFullYear();
+        let months = late.getMonth() - early.getMonth();
+        let days = late.getDate() - early.getDate();
+
+        if (days < 0) {
+          months--;
+          // Days in previous month
+          const prevMonthLastDay = new Date(late.getFullYear(), late.getMonth(), 0).getDate();
+          days += prevMonthLastDay;
+        }
+
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        const prefix = isReversed ? 'Negative duration: ' : '';
+        mainResult.textContent = `${prefix}${years} Year${years === 1 ? '' : 's'}, ${months} Month${months === 1 ? '' : 's'}, ${days} Day${days === 1 ? '' : 's'}`;
+
+        // Total ms difference
+        const diffMs = Math.abs(endDate - startDate);
+        const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        const totalWeeks = Math.floor(totalDays / 7);
+        const totalHours = totalDays * 24;
+        const totalMonths = (years * 12) + months;
+
+        bYears.textContent = years.toLocaleString();
+        bMonths.textContent = totalMonths.toLocaleString();
+        bDays.textContent = totalDays.toLocaleString();
+        bWeeks.textContent = totalWeeks.toLocaleString();
+        bHours.textContent = totalHours.toLocaleString();
+
+        // Next Birthday calculation (only if target is today or forward)
+        const nextBday = new Date(endDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        if (nextBday < endDate) {
+          nextBday.setFullYear(endDate.getFullYear() + 1);
+        }
+        const bdayDiffDays = Math.ceil((nextBday - endDate) / (1000 * 60 * 60 * 24));
+        const weekdayName = nextBday.toLocaleDateString(undefined, { weekday: 'long' });
+
+        if (bdayDiffDays === 0) {
+          nextBdayNote.textContent = '🎉 Happy Birthday! Today is your birthday!';
+        } else {
+          nextBdayNote.textContent = `Next birthday is in ${bdayDiffDays} day${bdayDiffDays === 1 ? '' : 's'} on a ${weekdayName}.`;
+        }
+      }
+
+      birthDateInput.addEventListener('change', calculateAge);
+      targetDateInput.addEventListener('change', calculateAge);
+
+      calculateAge();
+    })();
+  </script>
+</body>
+</html>

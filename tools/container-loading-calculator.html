@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Container Loading Calculator — 20ft & 40ft Shipping Container Stuffing</title>
+  <meta name="description" content="Calculate ocean container space utilization for 20ft, 40ft, and 40ft High Cube containers. Test volume vs weight payload limits client-side.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/container-loading-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/container-loading-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/container-loading-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Container Loading Calculator",
+    "description": "Calculate ocean container space and payload utilization for 20'GP, 40'GP, and 40'HC shipping containers with packing efficiency buffers.",
+    "url": "https://nexivo.com/tools/container-loading-calculator.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the packing efficiency buffer in container stuffing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The packing efficiency buffer (typically 80% to 85%) accounts for 'broken stowage'—the inevitable void space between cartons, pallet bases, container corrugation, and door clearance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does 'volume-out' vs 'weight-out' mean?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A container 'volumes out' when its cubic space is completely filled before reaching the maximum payload weight limit. A container 'weights out' when the cargo reaches the legal road or rail weight limit while physical space remains empty."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the internal dimensions of standard ocean containers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 20'GP container measures 589 × 235 × 239 cm (nominal 33.2 CBM, max payload 28,200 kg). A 40'GP measures 1203 × 235 × 239 cm (67.7 CBM, payload 26,700 kg). A 40'HC measures 1203 × 235 × 269 cm (76.4 CBM, payload 26,500 kg)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my container cargo manifest confidential?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. This calculator processes all calculations 100% locally in your web browser. No box dimensions, weights, or shipping schedules are uploaded."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#logistics">Logistics</a></li>
+      <li>/</li>
+      <li aria-current="page">Container Loading Calculator</li>
+    </nav>
+
+    <!-- Cross-Linking Freight Suite Nav -->
+    <div class="freight-suite-nav">
+      <span class="freight-suite-label">Freight Suite:</span>
+      <a href="/tools/cbm-calculator.html" class="freight-pill">CBM Calculator</a>
+      <a href="/tools/volumetric-weight-calculator.html" class="freight-pill">Volumetric Weight</a>
+      <a href="/tools/chargeable-weight-calculator.html" class="freight-pill">Chargeable Weight</a>
+      <a href="/tools/container-loading-calculator.html" class="freight-pill active">Container Loading</a>
+      <a href="/tools/pallet-calculator.html" class="freight-pill">Pallet Calculator</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Container Loading Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Simulate cargo stuffing, volume utilization, and payload limits for 20ft Standard, 40ft Standard, and 40ft High Cube ocean shipping containers.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-popular">Logistics</span>
+        <span class="tool-badge">20'GP / 40'GP / 40'HC</span>
+        <span class="tool-badge">Volume vs. Weight Limits</span>
+        <span class="tool-badge">100% In-Browser</span>
+      </div>
+    </div>
+
+    <!-- Calculator Main Panel -->
+    <div class="tool-panel">
+      <!-- Top Controls Bar -->
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-4); margin-block-end: var(--space-4); border-block-end: 1px solid var(--color-border); padding-block-end: var(--space-4);">
+        <!-- Efficiency Slider -->
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3);">
+          <label for="efficiency-slider" style="font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text-primary);">
+            Packing Usable Space: <span id="label-efficiency" style="color: var(--color-primary); font-weight: 700;">85%</span>
+          </label>
+          <input type="range" id="efficiency-slider" min="70" max="100" value="85" step="1" style="inline-size: 140px; cursor: pointer;">
+          <span style="font-size: var(--font-size-xs); color: var(--color-text-muted);">(85% standard for broken stowage)</span>
+        </div>
+
+        <!-- Stacking & Units -->
+        <div style="display: flex; align-items: center; gap: var(--space-4);">
+          <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); cursor: pointer;">
+            <input type="checkbox" id="check-stacking" checked style="cursor: pointer;">
+            <span>Cartons Stackable</span>
+          </label>
+
+          <div class="unit-toggle-group" role="radiogroup" aria-label="Measurement Units">
+            <button type="button" class="unit-toggle-btn active" id="btn-metric">Metric (cm/kg)</button>
+            <button type="button" class="unit-toggle-btn" id="btn-imperial">Imperial (in/lbs)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-Row Cargo Table -->
+      <div class="cargo-table-container">
+        <table class="cargo-table" id="container-items-table">
+          <thead>
+            <tr>
+              <th style="inline-size: 22%;">Box / Cargo Name</th>
+              <th style="inline-size: 15%;">Length (<span class="unit-len-label">cm</span>)</th>
+              <th style="inline-size: 15%;">Width (<span class="unit-len-label">cm</span>)</th>
+              <th style="inline-size: 15%;">Height (<span class="unit-len-label">cm</span>)</th>
+              <th style="inline-size: 15%;">Unit Wt (<span class="unit-wt-label">kg</span>)</th>
+              <th style="inline-size: 14%;">Quantity</th>
+              <th style="inline-size: 4%;"></th>
+            </tr>
+          </thead>
+          <tbody id="container-items-tbody">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cargo-table-actions">
+        <div class="cargo-action-btns">
+          <button type="button" class="btn btn-primary" id="btn-add-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Add Another Item</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btn-reset">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>Reset</span>
+          </button>
+        </div>
+
+        <div class="cargo-action-btns">
+          <button type="button" class="btn btn-secondary" id="btn-copy-summary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy Results</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btn-send-pallet">
+            <span>Send to Pallet Calculator &rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Oversized Box Alert / Warnings -->
+      <div id="oversized-warning" class="alert alert-danger" style="margin-block-start: var(--space-4); display: none;">
+        <strong>Oversized Cargo Alert:</strong> <span id="oversized-warning-text">One or more items exceed container internal width (235 cm) or door height (228 cm). Special Open-Top or Flat-Rack equipment may be required.</span>
+      </div>
+
+      <div id="container-warning" class="alert alert-info" style="margin-block-start: var(--space-4); display: none;">
+        <span>Please enter valid positive numbers for carton dimensions and weight.</span>
+      </div>
+
+      <!-- Recommended Container Recommendation Banner -->
+      <div style="background: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-5); margin-block-start: var(--space-6);">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-4);">
+          <div>
+            <div style="font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); margin-block-end: var(--space-1);">
+              Optimal Shipping Equipment Recommendation
+            </div>
+            <div id="res-container-recommendation" style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--color-primary);">
+              1 × 20' Standard (20'GP)
+            </div>
+            <div id="res-recommendation-detail" style="font-size: var(--font-size-xs); color: var(--color-text-secondary); margin-block-start: var(--space-1);">
+              Cargo fits efficiently within a single 20ft container with safe payload margin.
+            </div>
+          </div>
+
+          <div style="text-align: right;">
+            <div id="res-limiting-factor-badge" class="freight-status-badge badge-actual">
+              Volume-Limited (Volumes Out)
+            </div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);">
+              Total Cargo: <strong id="res-total-cargo-cbm">0.00 m³</strong> | <strong id="res-total-cargo-wt">0 kg</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container Breakdown Cards (20'GP, 40'GP, 40'HC) -->
+      <h3 style="font-size: var(--font-size-base); margin-block-start: var(--space-8); margin-block-end: var(--space-3); color: var(--color-text-primary);">
+        Container Capacity &amp; Payload Utilization Breakdown
+      </h3>
+
+      <div class="utilization-grid">
+        <!-- 20'GP Card -->
+        <div class="utilization-card">
+          <div class="utilization-header">
+            <span>20' Standard (20'GP)</span>
+            <span id="badge-20gp-status" class="freight-status-badge badge-actual" style="font-size: 0.65rem;">Fits</span>
+          </div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-secondary);">
+            Internal: 589 × 235 × 239 cm | Nominal: 33.2 m³ | Max: 28,200 kg
+          </div>
+
+          <!-- Volume Bar -->
+          <div style="margin-block-start: var(--space-2);">
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); margin-block-end: 2px;">
+              <span>Volume Utilization (<span id="cbm-usable-20gp">28.2</span> m³ usable):</span>
+              <strong id="pct-vol-20gp">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill fill-safe" id="bar-vol-20gp" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Weight Bar -->
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); margin-block-end: 2px;">
+              <span>Weight Utilization (Max 28.2t):</span>
+              <strong id="pct-wt-20gp">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill fill-safe" id="bar-wt-20gp" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 40'GP Card -->
+        <div class="utilization-card">
+          <div class="utilization-header">
+            <span>40' Standard (40'GP)</span>
+            <span id="badge-40gp-status" class="freight-status-badge badge-actual" style="font-size: 0.65rem;">Fits</span>
+          </div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-secondary);">
+            Internal: 1203 × 235 × 239 cm | Nominal: 67.7 m³ | Max: 26,700 kg
+          </div>
+
+          <!-- Volume Bar -->
+          <div style="margin-block-start: var(--space-2);">
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); margin-block-end: 2px;">
+              <span>Volume Utilization (<span id="cbm-usable-40gp">57.5</span> m³ usable):</span>
+              <strong id="pct-vol-40gp">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill fill-safe" id="bar-vol-40gp" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Weight Bar -->
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); margin-block-end: 2px;">
+              <span>Weight Utilization (Max 26.7t):</span>
+              <strong id="pct-wt-40gp">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill fill-safe" id="bar-wt-40gp" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 40'HC Card -->
+        <div class="utilization-card">
+          <div class="utilization-header">
+            <span>40' High Cube (40'HC)</span>
+            <span id="badge-40hc-status" class="freight-status-badge badge-actual" style="font-size: 0.65rem;">Fits</span>
+          </div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-secondary);">
+            Internal: 1203 × 235 × 269 cm | Nominal: 76.4 m³ | Max: 26,500 kg
+          </div>
+
+          <!-- Volume Bar -->
+          <div style="margin-block-start: var(--space-2);">
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); margin-block-end: 2px;">
+              <span>Volume Utilization (<span id="cbm-usable-40hc">64.9</span> m³ usable):</span>
+              <strong id="pct-vol-40hc">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill fill-safe" id="bar-vol-40hc" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Weight Bar -->
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); margin-block-end: 2px;">
+              <span>Weight Utilization (Max 26.5t):</span>
+              <strong id="pct-wt-40hc">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill fill-safe" id="bar-wt-40hc" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational & SEO Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>
+          The <strong>Container Loading Calculator</strong> evaluates whether your export cargo will fit inside standard intermodal ocean containers (20ft, 40ft, and 40ft High Cube). Beyond raw volume, it cross-references cargo gross weight against container maximum structural payloads and checks for oversized box dimensions that cannot clear container door frames. It guides supply chain planners on equipment selection and flags whether your shipment will volume-out or weight-out first.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li><strong>Set the packing efficiency buffer:</strong> The slider defaults to $85\%$ to model real-world broken stowage (adjust between $70\%$ for irregular cartons and $95\%$ for uniform interlocking cartons).</li>
+          <li><strong>Indicate stackability:</strong> Check or uncheck <em>"Cartons Stackable"</em> based on whether your cargo packaging is crush-sensitive.</li>
+          <li><strong>Select your unit preference:</strong> Switch between Metric ($cm / kg$) or Imperial ($in / lbs$).</li>
+          <li><strong>Enter box inventory:</strong> Fill in lengths, widths, heights, unit gross weights, and carton counts.</li>
+          <li><strong>Review the container stuffing recommendation:</strong> The tool suggests whether a 20'GP, 40'GP, or 40'HC is best suited, and highlights any container payload or door threshold violations.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Mathematical Formulas Used</h2>
+        <div class="example-box">
+          <p style="margin-block-end: var(--space-2); font-weight: 600;">Usable Container Volume &amp; Space Utilization:</p>
+          <pre class="example-pre">Usable Volume (m³) = Nominal Container CBM × (Efficiency % / 100)&#10;Volume Utilization % = (Total Cargo CBM / Usable Volume) × 100&#10;Weight Payload Utilization % = (Total Cargo Weight kg / Max Container Payload kg) × 100</pre>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Standard Ocean Container Specifications Reference Table</h2>
+        <div class="cargo-table-container">
+          <table class="cargo-table">
+            <thead>
+              <tr>
+                <th>Container Model</th>
+                <th>Internal Length × Width × Height</th>
+                <th>Door Opening (W × H)</th>
+                <th>Max Payload Weight</th>
+                <th>Nominal CBM</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>20' General Purpose (20'GP)</strong></td>
+                <td>589 × 235 × 239 cm (19'4" × 7'8" × 7'10")</td>
+                <td>234 × 228 cm (92" × 90")</td>
+                <td>28,200 kg (62,170 lbs)</td>
+                <td>33.2 m³</td>
+              </tr>
+              <tr>
+                <td><strong>40' General Purpose (40'GP)</strong></td>
+                <td>1203 × 235 × 239 cm (39'5" × 7'8" × 7'10")</td>
+                <td>234 × 228 cm (92" × 90")</td>
+                <td>26,700 kg (58,863 lbs)</td>
+                <td>67.7 m³</td>
+              </tr>
+              <tr>
+                <td><strong>40' High Cube (40'HC)</strong></td>
+                <td>1203 × 235 × 269 cm (39'5" × 7'8" × 8'10")</td>
+                <td>234 × 258 cm (92" × 101")</td>
+                <td>26,500 kg (58,422 lbs)</td>
+                <td>76.4 m³</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Container Stuffing Optimization:</strong> Ensuring factory shipments utilize maximum container capacity to lower per-unit freight costs.</li>
+          <li><strong>Heavy vs. Lightweight Cargo Planning:</strong> Verifying that high-density shipments (e.g. tiles, beverages, canned goods) do not exceed container payload limits or local highway axle restrictions before booking.</li>
+          <li><strong>LCL to FCL Transition:</strong> Comparing LCL freight quotes against the flat cost of hiring a dedicated 20ft container once cargo reaches ~15 CBM.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input</div>
+              <pre class="example-pre">Cargo: 400 boxes @ 60 × 40 × 40 cm&#10;Weight: 25 kg per box&#10;Total Volume: 38.4 CBM | Weight: 10,000 kg&#10;Efficiency: 85%</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">20'GP: 38.4 / 28.2 m³ = 136% (Exceeds 1 container)&#10;40'GP: 38.4 / 57.5 m³ = 66.8% (Comfortable fit)&#10;Recommendation: 1 × 40'GP (Volume-Limited)</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          Internal container dimensions adhere to ISO 668 specifications. Payload ratings reflect standard heavy-tested CSC plate ratings. Warning algorithms trap cartons exceeding container internal width ($235\text{ cm}$) or door height ($228\text{ cm}$ for GP, $258\text{ cm}$ for HC).
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          While this tool computes realistic volumetric packing with broken stowage buffers, specialized cargo (e.g., long steel pipes or machinery with non-uniform centers of gravity) requires professional 3D load planning software and axle-weight distribution testing.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All load computations occur entirely in your local browser environment. No product descriptions, proprietary dimensions, or cargo plans are shared or stored.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Why is the maximum weight payload lower on a 40ft container than a 20ft container?</h3>
+          <p>
+            A 40ft container has a larger steel tare weight (approx. 3,750 kg vs. 2,300 kg for a 20ft). Because total gross weight (container + cargo) is regulated to roughly 30,480 kg, the 40ft container has slightly less cargo payload capacity than a 20ft container.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What does High Cube (HC) offer over standard 40ft containers?</h3>
+          <p>
+            High Cube containers provide an extra 30 cm (1 foot) of vertical clearance ($269\text{ cm}$ vs $239\text{ cm}$). This provides approximately $8.7\text{ CBM}$ more volume, making it the preferred choice for lightweight, bulky goods like furniture and apparel.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I transfer these boxes to the Pallet Calculator?</h3>
+          <p>
+            Yes. Click "Send to Pallet Calculator" to see how many standard Euro or US pallets you will need to palletize these boxes.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/cbm-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>CBM Calculator</span>
+          </a>
+          <a href="/tools/volumetric-weight-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>Volumetric Weight Calculator</span>
+          </a>
+          <a href="/tools/chargeable-weight-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>Chargeable Weight Calculator</span>
+          </a>
+          <a href="/tools/pallet-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16M4 16h16M6 12h12M4 8h16M8 4h8"/></svg>
+            <span>Pallet Calculator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/freight-utils.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let isMetric = true;
+      const tbody = document.getElementById('container-items-tbody');
+      const btnMetric = document.getElementById('btn-metric');
+      const btnImperial = document.getElementById('btn-imperial');
+      const btnAddRow = document.getElementById('btn-add-row');
+      const btnReset = document.getElementById('btn-reset');
+      const btnCopy = document.getElementById('btn-copy-summary');
+      const btnSendPallet = document.getElementById('btn-send-pallet');
+      const efficiencySlider = document.getElementById('efficiency-slider');
+      const labelEfficiency = document.getElementById('label-efficiency');
+      const checkStacking = document.getElementById('check-stacking');
+      const oversizedWarning = document.getElementById('oversized-warning');
+      const containerWarning = document.getElementById('container-warning');
+
+      const lenLabels = document.querySelectorAll('.unit-len-label');
+      const wtLabels = document.querySelectorAll('.unit-wt-label');
+
+      const defaultRows = [
+        { name: 'Carton Type 1', l: 60, w: 40, h: 40, wt: 15, qty: 150 },
+        { name: 'Carton Type 2', l: 50, w: 35, h: 30, wt: 10, qty: 100 }
+      ];
+
+      function updateUnitLabels() {
+        lenLabels.forEach(el => el.textContent = isMetric ? 'cm' : 'in');
+        wtLabels.forEach(el => el.textContent = isMetric ? 'kg' : 'lbs');
+      }
+
+      function createRowHtml(item = { name: '', l: 0, w: 0, h: 0, wt: 0, qty: 1 }) {
+        const tr = document.createElement('tr');
+        tr.className = 'cargo-row';
+        tr.innerHTML = `
+          <td><input type="text" class="form-input row-name" placeholder="Box description" value="${escapeAttr(item.name)}"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-l" value="${item.l || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-w" value="${item.w || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-h" value="${item.h || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="any" min="0" class="form-input row-wt" value="${item.wt || ''}" placeholder="0"></td>
+          <td class="cargo-input-cell"><input type="number" step="1" min="1" class="form-input row-qty" value="${item.qty || 1}"></td>
+          <td style="text-align: center;">
+            <button type="button" class="btn btn-icon btn-remove-row" title="Delete this row" aria-label="Delete this row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        `;
+        return tr;
+      }
+
+      function escapeAttr(str) {
+        return (str || '').replace(/"/g, '&quot;');
+      }
+
+      function getItems() {
+        const rows = tbody.querySelectorAll('.cargo-row');
+        const items = [];
+        rows.forEach(tr => {
+          items.push({
+            name: tr.querySelector('.row-name').value.trim(),
+            l: parseFloat(tr.querySelector('.row-l').value) || 0,
+            w: parseFloat(tr.querySelector('.row-w').value) || 0,
+            h: parseFloat(tr.querySelector('.row-h').value) || 0,
+            wt: parseFloat(tr.querySelector('.row-wt').value) || 0,
+            qty: parseInt(tr.querySelector('.row-qty').value, 10) || 0
+          });
+        });
+        return items;
+      }
+
+      function calculate() {
+        const items = getItems();
+        const efficiency = parseInt(efficiencySlider.value, 10) / 100;
+        let totalCargoCbm = 0;
+        let totalCargoWeight = 0;
+        let totalQty = 0;
+        let hasInvalidInput = false;
+        let hasOversized = false;
+
+        // Container door constraints (cm)
+        const maxDoorW = 234;
+        const maxDoorH = 228;
+
+        items.forEach(it => {
+          if (it.l < 0 || it.w < 0 || it.h < 0 || it.wt < 0 || it.qty < 0) {
+            hasInvalidInput = true;
+          }
+
+          // Convert to cm for dimension threshold checks
+          const lCm = isMetric ? it.l : it.l * 2.54;
+          const wCm = isMetric ? it.w : it.w * 2.54;
+          const hCm = isMetric ? it.h : it.h * 2.54;
+
+          // Check if any single dimension cannot fit through door or container width
+          const dims = [lCm, wCm, hCm].sort((a, b) => b - a); // largest to smallest
+          // A box needs at least two dimensions smaller than door width & height
+          if (dims[1] > maxDoorW || dims[2] > maxDoorH) {
+            hasOversized = true;
+          }
+
+          let unitCbm = 0;
+          if (it.l > 0 && it.w > 0 && it.h > 0) {
+            unitCbm = isMetric ? ((it.l * it.w * it.h) / 1000000) : ((it.l * it.w * it.h) / 61023.7);
+          }
+
+          totalCargoCbm += (unitCbm * it.qty);
+          totalCargoWeight += (it.wt * it.qty);
+          totalQty += it.qty;
+        });
+
+        oversizedWarning.style.display = hasOversized ? 'block' : 'none';
+        containerWarning.style.display = hasInvalidInput ? 'block' : 'none';
+
+        const totalWeightKg = isMetric ? totalCargoWeight : (totalCargoWeight * 0.453592);
+        const totalWeightLbs = isMetric ? (totalCargoWeight * 2.20462) : totalCargoWeight;
+
+        // Display Header Stats
+        document.getElementById('res-total-cargo-cbm').textContent = `${totalCargoCbm.toFixed(2)} m³`;
+        document.getElementById('res-total-cargo-wt').textContent = `${totalWeightKg.toLocaleString(undefined, { maximumFractionDigits: 0 })} kg (${totalWeightLbs.toLocaleString(undefined, { maximumFractionDigits: 0 })} lbs)`;
+
+        // Container Specs & Usable capacities
+        const c20 = { id: '20gp', nomCbm: 33.2, maxKg: 28200, name: "20' Standard (20'GP)" };
+        const c40 = { id: '40gp', nomCbm: 67.7, maxKg: 26700, name: "40' Standard (40'GP)" };
+        const c40hc = { id: '40hc', nomCbm: 76.4, maxKg: 26500, name: "40' High Cube (40'HC)" };
+
+        const usable20 = c20.nomCbm * efficiency;
+        const usable40 = c40.nomCbm * efficiency;
+        const usable40hc = c40hc.nomCbm * efficiency;
+
+        document.getElementById('cbm-usable-20gp').textContent = usable20.toFixed(1);
+        document.getElementById('cbm-usable-40gp').textContent = usable40.toFixed(1);
+        document.getElementById('cbm-usable-40hc').textContent = usable40hc.toFixed(1);
+
+        // Update Progress Bars & Cards
+        const res20 = updateCard('20gp', totalCargoCbm, usable20, totalWeightKg, c20.maxKg);
+        const res40 = updateCard('40gp', totalCargoCbm, usable40, totalWeightKg, c40.maxKg);
+        const res40hc = updateCard('40hc', totalCargoCbm, usable40hc, totalWeightKg, c40hc.maxKg);
+
+        // Recommendation Logic
+        const recTitle = document.getElementById('res-container-recommendation');
+        const recDetail = document.getElementById('res-recommendation-detail');
+        const factorBadge = document.getElementById('res-limiting-factor-badge');
+
+        if (totalCargoCbm <= 0) {
+          recTitle.textContent = 'Enter Cargo Dimensions';
+          recDetail.textContent = 'Add box measurements above to view container recommendations.';
+          factorBadge.textContent = 'Awaiting Input';
+          factorBadge.className = 'freight-status-badge badge-actual';
+          return;
+        }
+
+        // Determine if volumes out or weights out
+        const volPct20 = (totalCargoCbm / usable20) * 100;
+        const wtPct20 = (totalWeightKg / c20.maxKg) * 100;
+
+        if (volPct20 > wtPct20) {
+          factorBadge.className = 'freight-status-badge badge-volumetric';
+          factorBadge.textContent = 'Volume-Limited (Volumes Out)';
+        } else {
+          factorBadge.className = 'freight-status-badge badge-actual';
+          factorBadge.textContent = 'Weight-Limited (Weights Out)';
+        }
+
+        if (res20.fits) {
+          recTitle.textContent = "1 × 20' Standard (20'GP)";
+          recDetail.textContent = `Cargo fits comfortably within a single 20ft container (${res20.volPct.toFixed(1)}% volume, ${res20.wtPct.toFixed(1)}% weight payload).`;
+        } else if (res40.fits) {
+          recTitle.textContent = "1 × 40' Standard (40'GP)";
+          recDetail.textContent = `Exceeds 20ft volume/weight. Comfortably fits a 40'GP (${res40.volPct.toFixed(1)}% volume, ${res40.wtPct.toFixed(1)}% weight payload).`;
+        } else if (res40hc.fits) {
+          recTitle.textContent = "1 × 40' High Cube (40'HC)";
+          recDetail.textContent = `Requires extra height clearance of a 40'HC container (${res40hc.volPct.toFixed(1)}% volume, ${res40hc.wtPct.toFixed(1)}% weight payload).`;
+        } else {
+          // Multiple containers required
+          const containersNeeded = Math.ceil(Math.max(totalCargoCbm / usable40hc, totalWeightKg / c40hc.maxKg));
+          recTitle.textContent = `${containersNeeded} × 40' High Cube Containers`;
+          recDetail.textContent = `Cargo consignment exceeds single container capacities. Multiple equipment bookings required.`;
+        }
+      }
+
+      function updateCard(id, cargoCbm, usableCbm, cargoKg, maxKg) {
+        const volPct = (cargoCbm / usableCbm) * 100;
+        const wtPct = (cargoKg / maxKg) * 100;
+
+        const barVol = document.getElementById(`bar-vol-${id}`);
+        const barWt = document.getElementById(`bar-wt-${id}`);
+        const pctVol = document.getElementById(`pct-vol-${id}`);
+        const pctWt = document.getElementById(`pct-wt-${id}`);
+        const badge = document.getElementById(`badge-${id}-status`);
+
+        pctVol.textContent = `${volPct.toFixed(1)}%`;
+        pctWt.textContent = `${wtPct.toFixed(1)}%`;
+
+        barVol.style.width = `${Math.min(volPct, 100)}%`;
+        barWt.style.width = `${Math.min(wtPct, 100)}%`;
+
+        barVol.className = volPct <= 85 ? 'progress-fill fill-safe' : (volPct <= 100 ? 'progress-fill fill-near' : 'progress-fill fill-overflow');
+        barWt.className = wtPct <= 85 ? 'progress-fill fill-safe' : (wtPct <= 100 ? 'progress-fill fill-near' : 'progress-fill fill-overflow');
+
+        const fits = volPct <= 100 && wtPct <= 100;
+
+        if (fits) {
+          badge.className = 'freight-status-badge badge-actual';
+          badge.textContent = 'Fits Inside';
+        } else {
+          badge.className = 'freight-status-badge badge-overflow';
+          if (volPct > 100 && wtPct > 100) {
+            badge.textContent = 'Over Volume & Wt';
+          } else if (volPct > 100) {
+            badge.textContent = 'Volumes Out';
+          } else {
+            badge.textContent = 'Overweight';
+          }
+        }
+
+        return { fits, volPct, wtPct };
+      }
+
+      function populateRows(data) {
+        tbody.innerHTML = '';
+        data.forEach(item => {
+          tbody.appendChild(createRowHtml(item));
+        });
+        calculate();
+      }
+
+      tbody.addEventListener('input', calculate);
+
+      tbody.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.btn-remove-row');
+        if (removeBtn) {
+          const rows = tbody.querySelectorAll('.cargo-row');
+          if (rows.length > 1) {
+            removeBtn.closest('tr').remove();
+            calculate();
+          } else {
+            const tr = rows[0];
+            tr.querySelectorAll('input').forEach(inp => inp.value = '');
+            tr.querySelector('.row-qty').value = '1';
+            calculate();
+          }
+        }
+      });
+
+      btnAddRow.addEventListener('click', () => {
+        const rows = tbody.querySelectorAll('.cargo-row');
+        tbody.appendChild(createRowHtml({ name: `Cargo ${rows.length + 1}`, l: '', w: '', h: '', wt: '', qty: 1 }));
+        calculate();
+      });
+
+      btnReset.addEventListener('click', () => {
+        efficiencySlider.value = '85';
+        labelEfficiency.textContent = '85%';
+        checkStacking.checked = true;
+        populateRows(defaultRows);
+      });
+
+      efficiencySlider.addEventListener('input', () => {
+        labelEfficiency.textContent = `${efficiencySlider.value}%`;
+        calculate();
+      });
+
+      checkStacking.addEventListener('change', calculate);
+
+      btnMetric.addEventListener('click', () => {
+        if (!isMetric) {
+          isMetric = true;
+          btnMetric.classList.add('active');
+          btnImperial.classList.remove('active');
+          updateUnitLabels();
+          calculate();
+        }
+      });
+
+      btnImperial.addEventListener('click', () => {
+        if (isMetric) {
+          isMetric = false;
+          btnImperial.classList.add('active');
+          btnMetric.classList.remove('active');
+          updateUnitLabels();
+          calculate();
+        }
+      });
+
+      btnCopy.addEventListener('click', () => {
+        const rec = document.getElementById('res-container-recommendation').textContent.trim();
+        const detail = document.getElementById('res-recommendation-detail').textContent.trim();
+        const factor = document.getElementById('res-limiting-factor-badge').textContent.trim();
+        const cbm = document.getElementById('res-total-cargo-cbm').textContent.trim();
+        const wt = document.getElementById('res-total-cargo-wt').textContent.trim();
+
+        const text = `--- Container Loading Calculation ---
+Recommended Equipment: ${rec}
+Status: ${detail} (${factor})
+Total Cargo Volume: ${cbm}
+Total Cargo Weight: ${wt}
+Packing Buffer: ${efficiencySlider.value}%
+Generated via Free Online Tools (https://freeonlinetools.net/tools/container-loading-calculator.html)`;
+
+        if (window.FreightUtils && window.FreightUtils.copyTextToClipboard) {
+          window.FreightUtils.copyTextToClipboard(text, 'Container loading summary copied!');
+        }
+      });
+
+      btnSendPallet.addEventListener('click', () => {
+        const items = getItems();
+        if (window.FreightUtils && window.FreightUtils.encodeCargoParams) {
+          const url = window.FreightUtils.encodeCargoParams('/tools/pallet-calculator.html', items, isMetric);
+          window.location.href = url;
+        } else {
+          window.location.href = '/tools/pallet-calculator.html';
+        }
+      });
+
+      if (window.FreightUtils && window.FreightUtils.parseCargoParams) {
+        const parsed = window.FreightUtils.parseCargoParams();
+        if (parsed && parsed.items && parsed.items.length) {
+          if (!parsed.isMetric) {
+            btnImperial.click();
+          }
+          populateRows(parsed.items);
+          return;
+        }
+      }
+
+      populateRows(defaultRows);
+    })();
+  </script>
+</body>
+</html>

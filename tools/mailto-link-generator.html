@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mailto Link Generator — Free Online Tools</title>
+  <meta name="description" content="Generate custom HTML mailto links with pre-filled subject, body, CC, and BCC. 100% free, private client-side mailto link creator.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/mailto-link-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/mailto-link-generator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/mailto-link-generator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Mailto Link Generator",
+    "description": "Generate custom HTML mailto links with pre-filled subject, body, CC, and BCC. 100% free, private client-side mailto link creator.",
+    "url": "https://nexivo.com/tools/mailto-link-generator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#social">Social &amp; Link Tools</a></li>
+      <li>/</li>
+      <li aria-current="page">Mailto Link Generator</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Mailto Link Generator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Build RFC 6068 compliant email links with pre-populated recipient addresses, carbon copy (CC), blind carbon copy (BCC), subject line, and draft body text.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">RFC 6068 Standard</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">Sample Support Link</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">Clear</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          URL-encodes special characters &amp; linebreaks automatically
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: var(--space-6);">
+        <!-- Form Inputs -->
+        <div>
+          <div class="form-group" style="margin-block-end: var(--space-3);">
+            <label for="mailto-to" class="form-label">Recipient Email (To):</label>
+            <input type="email" id="mailto-to" class="form-input" placeholder="e.g. support@example.com">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-block-end: var(--space-3);">
+            <div>
+              <label for="mailto-cc" class="form-label">CC (Optional):</label>
+              <input type="email" id="mailto-cc" class="form-input" placeholder="manager@example.com">
+            </div>
+            <div>
+              <label for="mailto-bcc" class="form-label">BCC (Optional):</label>
+              <input type="email" id="mailto-bcc" class="form-input" placeholder="archive@example.com">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-block-end: var(--space-3);">
+            <label for="mailto-subject" class="form-label">Subject Line:</label>
+            <input type="text" id="mailto-subject" class="form-input" placeholder="e.g. Website Support Inquiry">
+          </div>
+
+          <div class="form-group" style="margin-block-end: var(--space-3);">
+            <label for="mailto-body" class="form-label">Email Body:</label>
+            <textarea id="mailto-body" class="form-textarea" rows="4" placeholder="Hello Support Team,&#10;&#10;I have a question regarding..."></textarea>
+          </div>
+
+          <div class="form-group" style="margin-block-end: var(--space-4);">
+            <label for="mailto-link-text" class="form-label">Anchor Display Text:</label>
+            <input type="text" id="mailto-link-text" class="form-input" value="Email Us Today" placeholder="e.g. Contact Support">
+          </div>
+        </div>
+
+        <!-- Output Cards -->
+        <div class="stat-card" style="text-align: left; padding: var(--space-5); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-3);">
+              <span style="font-weight: 700; font-size: var(--font-size-base);">Ready-to-Use Code Snippets</span>
+              <a id="btn-test-link" href="#" class="btn btn-secondary" style="font-size: var(--font-size-xs);">Test Link &rarr;</a>
+            </div>
+
+            <!-- Mailto URL -->
+            <div class="form-group" style="margin-block-end: var(--space-3);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: 0.25rem;">
+                <label for="out-url" class="form-label" style="margin: 0;">Raw mailto: Link</label>
+                <button type="button" class="btn btn-secondary copy-field-btn" data-field="out-url" style="font-size: 0.7rem; padding: 2px 6px;">Copy</button>
+              </div>
+              <input type="text" id="out-url" class="form-input" readonly style="font-family: var(--font-mono); font-size: var(--font-size-xs);">
+            </div>
+
+            <!-- HTML Anchor Tag -->
+            <div class="form-group" style="margin-block-end: var(--space-3);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: 0.25rem;">
+                <label for="out-html" class="form-label" style="margin: 0;">HTML Code</label>
+                <button type="button" class="btn btn-secondary copy-field-btn" data-field="out-html" style="font-size: 0.7rem; padding: 2px 6px;">Copy</button>
+              </div>
+              <input type="text" id="out-html" class="form-input" readonly style="font-family: var(--font-mono); font-size: var(--font-size-xs);">
+            </div>
+
+            <!-- Markdown Link -->
+            <div class="form-group" style="margin-block-end: var(--space-3);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: 0.25rem;">
+                <label for="out-md" class="form-label" style="margin: 0;">Markdown Format</label>
+                <button type="button" class="btn btn-secondary copy-field-btn" data-field="out-md" style="font-size: 0.7rem; padding: 2px 6px;">Copy</button>
+              </div>
+              <input type="text" id="out-md" class="form-input" readonly style="font-family: var(--font-mono); font-size: var(--font-size-xs);">
+            </div>
+          </div>
+
+          <div style="background: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-sm); border-inline-start: 4px solid var(--color-primary); font-size: var(--font-size-xs); color: var(--color-text-secondary); margin-block-start: var(--space-3);">
+            <strong>Browser Tip:</strong> Clicking "Test Link" will launch your computer or phone's default email client (Outlook, Apple Mail, Gmail, or Thunderbird).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>User Problem &amp; Purpose</h2>
+        <p>
+          Creating an email link on a website or in a marketing newsletter can be frustrating when dealing with spaces, linebreaks, question marks, and multiple recipients. Hand-writing URL-encoded parameters frequently results in broken links. This generator formats all parameters adhering strictly to the official RFC 6068 standard.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol style="padding-inline-start: 1.5rem; line-height: 1.8;">
+          <li>Enter your primary recipient email address in the <strong>Recipient Email (To)</strong> box.</li>
+          <li>Optionally provide carbon copy (CC) and blind carbon copy (BCC) addresses.</li>
+          <li>Specify the default subject line so incoming messages can be automatically filtered by your email rules.</li>
+          <li>Type your pre-filled draft body text. Line breaks will be preserved cleanly.</li>
+          <li>Copy the raw link, the complete HTML <code>&lt;a&gt;</code> tag, or the Markdown snippet for your repository or newsletter.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul style="padding-inline-start: 1.5rem; line-height: 1.8;">
+          <li><strong>Website Contact Buttons:</strong> Adding click-to-email links on portfolio sites, footers, and landing pages.</li>
+          <li><strong>Job Application Postings:</strong> Pre-filling the exact job reference number and applicant name placeholder in the subject line.</li>
+          <li><strong>Bug Reports &amp; Feature Requests:</strong> Pre-formatting diagnostic questions (e.g. "Browser: / OS: / Steps to reproduce:") into the email body.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Inputs</div>
+              <pre class="example-pre">To: contact@example.com
+Subject: Inquiry
+Body: Hello team!</pre>
+            </div>
+            <div>
+              <div class="example-title">Generated HTML Tag</div>
+              <pre class="example-pre">&lt;a href="mailto:contact@example.com?subject=Inquiry&amp;body=Hello%20team!"&gt;Email Us Today&lt;/a&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          The <code>mailto:</code> URI scheme is specified by <strong>RFC 6068</strong>. Query headers begin with a question mark (<code>?</code>) and are chained using ampersands (<code>&amp;</code>). Reserved characters including spaces (<code>%20</code>), line feeds (<code>%0A</code>), and quotation marks are encoded using standard percent-encoding to ensure compatibility across all operating systems.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          When a user clicks a <code>mailto:</code> link, the behavior depends on the visitor's operating system default email application. If the visitor does not have an email client configured (e.g. using webmail without handler permissions), clicking the link may prompt them to choose an app.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All URL encoding is computed locally in your browser. We never collect or store the email addresses or draft messages you enter into this tool.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Can I send emails to multiple people at once?</h3>
+          <p>Yes. You can enter multiple comma-separated email addresses in the To, CC, or BCC fields (e.g. <code>alice@example.com, bob@example.com</code>).</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do linebreaks work in the email body?</h3>
+          <p>Linebreaks are automatically converted to <code>%0A</code> in the mailto URL, ensuring that newlines appear correctly formatted when the email composer opens.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Will this link work on mobile devices?</h3>
+          <p>Yes. Tapping a mailto link on an iPhone or Android smartphone automatically launches the device's native Mail or Gmail app with the recipient and draft pre-filled.</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/url-encoder-decoder.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>URL Encoder &amp; Decoder</span>
+          </a>
+          <a href="/tools/whatsapp-link-generator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>WhatsApp Link Generator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 Free Online Tools. Client-side browser utilities.</p>
+      <a href="/">Back to Home</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    const inputTo = document.getElementById('mailto-to');
+    const inputCc = document.getElementById('mailto-cc');
+    const inputBcc = document.getElementById('mailto-bcc');
+    const inputSubject = document.getElementById('mailto-subject');
+    const inputBody = document.getElementById('mailto-body');
+    const inputLinkText = document.getElementById('mailto-link-text');
+
+    const outUrl = document.getElementById('out-url');
+    const outHtml = document.getElementById('out-html');
+    const outMd = document.getElementById('out-md');
+    const btnTest = document.getElementById('btn-test-link');
+    const btnSample = document.getElementById('btn-sample');
+    const btnClear = document.getElementById('btn-clear');
+
+    function updateMailto() {
+      const to = inputTo.value.trim();
+      const cc = inputCc.value.trim();
+      const bcc = inputBcc.value.trim();
+      const subject = inputSubject.value.trim();
+      const body = inputBody.value;
+      const text = inputLinkText.value.trim() || 'Send Email';
+
+      let url = 'mailto:' + encodeURIComponent(to).replace(/%40/g, '@').replace(/%2C/g, ',');
+      const params = [];
+
+      if (cc) params.push('cc=' + encodeURIComponent(cc).replace(/%40/g, '@').replace(/%2C/g, ','));
+      if (bcc) params.push('bcc=' + encodeURIComponent(bcc).replace(/%40/g, '@').replace(/%2C/g, ','));
+      if (subject) params.push('subject=' + encodeURIComponent(subject));
+      if (body) {
+        // preserve newlines as %0A
+        params.push('body=' + encodeURIComponent(body).replace(/\n/g, '%0A'));
+      }
+
+      if (params.length > 0) {
+        url += '?' + params.join('&');
+      }
+
+      outUrl.value = url;
+      outHtml.value = '<a href="' + url.replace(/"/g, '&quot;') + '">' + text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</a>';
+      outMd.value = '[' + text + '](' + url + ')';
+      btnTest.href = url;
+    }
+
+    [inputTo, inputCc, inputBcc, inputSubject, inputBody, inputLinkText].forEach(el => {
+      el.addEventListener('input', updateMailto);
+    });
+
+    btnSample.addEventListener('click', () => {
+      inputTo.value = 'hello@example.com';
+      inputCc.value = '';
+      inputBcc.value = '';
+      inputSubject.value = 'Inquiry about Free Online Tools';
+      inputBody.value = 'Hi Team,\n\nI have a question about your privacy-first browser tools.\n\nBest regards,\nVisitor';
+      inputLinkText.value = 'Contact the Free Online Tools Team';
+      updateMailto();
+    });
+
+    btnClear.addEventListener('click', () => {
+      inputTo.value = '';
+      inputCc.value = '';
+      inputBcc.value = '';
+      inputSubject.value = '';
+      inputBody.value = '';
+      inputLinkText.value = 'Email Us Today';
+      updateMailto();
+      inputTo.focus();
+    });
+
+    document.querySelectorAll('.copy-field-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const fieldId = btn.getAttribute('data-field');
+        const field = document.getElementById(fieldId);
+        if (field && field.value) {
+          window.FreeOnlineTools.copyToClipboard(field.value, 'Copied snippet to clipboard!');
+        }
+      });
+    });
+
+    // Initial setup with sample
+    btnSample.click();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>वर्ड एवं कैरेक्टर काउंटर — फ्री ऑनलाइन टूल्स</title>
+  <meta name="description" content="रियल टाइम में शब्दों, स्पेस सहित और बिना स्पेस के अक्षरों, वाक्यों और अनुच्छेदों की गिनती करें एवं पढ़ने और बोलने के समय का अनुमान लगाएं।">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/hi/tools/word-counter.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/word-counter.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/word-counter.html">
+  <link rel="alternate" hreflang="bn" href="https://nexivo.com/bn/tools/word-counter.html">
+  <link rel="alternate" hreflang="hi" href="https://nexivo.com/hi/tools/word-counter.html">
+  <link rel="alternate" hreflang="es" href="https://nexivo.com/es/tools/word-counter.html">
+  <link rel="alternate" hreflang="fr" href="https://nexivo.com/fr/tools/word-counter.html">
+  <link rel="alternate" hreflang="ar" href="https://nexivo.com/ar/tools/word-counter.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "वर्ड एवं कैरेक्टर काउंटर",
+    "description": "रियल टाइम में शब्दों, स्पेस सहित और बिना स्पेस के अक्षरों, वाक्यों और अनुच्छेदों की गिनती करें एवं पढ़ने और बोलने के समय का अनुमान लगाएं।",
+    "url": "https://nexivo.com/hi/tools/word-counter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/hi/index.html" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>फ्री ऑनलाइन टूल्स</span>
+      </a>
+      <div class="header-actions">
+        <!-- Language Selector -->
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en">English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi" selected>हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/hi/index.html" class="btn btn-secondary">सभी टूल्स</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="थीम बदलें">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/hi/index.html">होम</a></li>
+      <li>/</li>
+      <li><a href="/hi/index.html">टेक्स्ट टूल्स</a></li>
+      <li>/</li>
+      <li aria-current="page">वर्ड एवं कैरेक्टर काउंटर</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>वर्ड एवं कैरेक्टर काउंटर</span>
+      </h1>
+      <p class="tool-header-lead">
+        रियल टाइम में शब्दों, स्पेस सहित और बिना स्पेस के अक्षरों, वाक्यों और अनुच्छेदों की गिनती करें एवं पढ़ने और बोलने के समय का अनुमान लगाएं।
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">टियर 1: ब्राउज़र आधारित</span>
+        <span class="tool-badge">100% सुरक्षित एवं निजी</span>
+        <span class="tool-badge">तुरंत परिणाम</span>
+      </div>
+    </div>
+
+    <!-- Interactive Workspace Panel -->
+    <div class="tool-panel">
+      <div class="tool-toolbar">
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="btn-sample">नमूना टेक्स्ट भरें</button>
+          <button type="button" class="btn btn-secondary" id="btn-clear">साफ करें</button>
+          <button type="button" class="btn btn-secondary" id="btn-copy">कॉपी करें</button>
+        </div>
+        <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">
+          टाइप करते ही तुरंत अपडेट होता है
+        </div>
+      </div>
+
+      <!-- Real-Time Statistics Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-words">0</div>
+          <div class="stat-label">शब्द</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-chars">0</div>
+          <div class="stat-label">कुल अक्षर</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-chars-no-space">0</div>
+          <div class="stat-label">अक्षर (बिना स्पेस)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-sentences">0</div>
+          <div class="stat-label">वाक्य</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-paragraphs">0</div>
+          <div class="stat-label">पैराग्राफ</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-lines">0</div>
+          <div class="stat-label">पंक्तियाँ</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-reading-time">0m 0s</div>
+          <div class="stat-label">पढ़ने का समय</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-speaking-time">0m 0s</div>
+          <div class="stat-label">बोलने का समय</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-block-start: var(--space-5);">
+        <label for="text-input" class="form-label">नीचे अपना टेक्स्ट लिखें या पेस्ट करें:</label>
+        <textarea id="text-input" class="form-textarea" placeholder="अपना निबंध, लेख, ब्लॉग या ड्राफ्ट यहाँ पेस्ट करें..." autofocus></textarea>
+      </div>
+    </div>
+
+    <!-- Documentation & Educational Guide -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>यह टूल क्या करता है और कैसे मदद करता है</h2>
+        <p><strong>वर्ड एवं कैरेक्टर काउंटर</strong> किसी भी टेक्स्ट का वास्तविक समय में सटीक सांख्यिकीय विश्लेषण प्रदान करता है। यह शब्दों, वर्णों, वाक्यों और समय अनुमानों की तुरंत गणना करता है बिना आपकी संवेदनशील सामग्री को किसी सर्वर पर भेजे।</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>कदम-दर-कदम उपयोग निर्देश</h2>
+        <ol class="doc-steps">
+          <li>इनपुट बॉक्स में अपना टेक्स्ट टाइप करें या पेस्ट करें।</li>
+          <li>टाइप करते ही आंकड़े अपने आप अपडेट होते रहेंगे।</li>
+          <li>सांख्यिकी ग्रिड में कुल शब्द, स्पेस सहित वर्ण, बिना स्पेस के वर्ण, वाक्य और पैराग्राफ देखें।</li>
+          <li>"कॉपी करें" बटन से टेक्स्ट कॉपी करें या "साफ करें" से नया टेक्स्ट शुरू करें।</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>व्यावहारिक उपयोग के उदाहरण</h2>
+        <ul>
+          <li><strong>शैक्षणिक लेखन एवं निबंध सीमा:</strong> सुनिश्चित करें कि छात्र निबंध या शोध पत्र विश्वविद्यालयों द्वारा निर्धारित शब्द सीमा के भीतर रहें।</li>
+          <li><strong>सोशल मीडिया एवं एसईओ (SEO):</strong> ट्विटर (X) के 280 अक्षर या मेटा विवरण के 160 अक्षरों की सीमा को आसानी से नियंत्रित करें।</li>
+          <li><strong>भाषण एवं प्रस्तुति की तैयारी:</strong> 130 शब्द प्रति मिनट की औसत गति के अनुसार अपने भाषण की अवधि का सटीक अनुमान लगाएं।</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>वास्तविक उदाहरण एवं अपेक्षित परिणाम</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">इनपुट उदाहरण</div>
+              <pre class="example-pre" dir="ltr">The quick brown fox jumps over the lazy dog. हिन्दी टेक्स्ट विश्लेषण।</pre>
+            </div>
+            <div>
+              <div class="example-title">अपेक्षित परिणाम</div>
+              <pre class="example-pre" dir="ltr">शब्द: 11 | कुल अक्षर: 67 | बिना स्पेस अक्षर: 57 | वाक्य: 2 | पैराग्राफ: 1</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>तकनीकी विशेषताएं एवं कार्यप्रणाली</h2>
+        <p>शब्द गणना यूनिकोड-सचेत रिक्त स्थान पृथक्करण (<code>/\s+/</code>) द्वारा की जाती है। औसत पठन गति 225 शब्द प्रति मिनट (WPM) और भाषण गति 130 WPM पर आधारित है।</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>सीमाएं एवं ब्राउज़र सीमा</h2>
+        <p>जिन भाषाओं में शब्दों के बीच स्पेस नहीं होता (जैसे चीनी या थाई), उनमें "अक्षर (बिना स्पेस)" मीट्रिक सबसे सटीक मानक प्रस्तुत करता है।</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>गोपनीयता एवं सुरक्षा की गारंटी</h2>
+        <p>आपका टेक्स्ट केवल आपके ब्राउज़र की वोलेटाइल मेमोरी में प्रोसेस होता है। कोई भी डेटा सर्वर पर स्टोर या ट्रांसमिट नहीं होता।</p>
+      </div>
+
+      <div class="doc-section">
+        <h2>अक्सर पूछे जाने वाले प्रश्न (FAQs)</h2>
+        
+        <div class="faq-item">
+          <h3>5 मिनट के भाषण के लिए कितने शब्द चाहिए?</h3>
+          <p>130 शब्द प्रति मिनट की सहज गति से 5 मिनट के भाषण में लगभग 650 शब्द होते हैं।</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>क्या यह टूल मेरे टेक्स्ट को सेव करता है?</h3>
+          <p>नहीं। जब आप ब्राउज़र टैब बंद करते हैं, तो आपका टेक्स्ट मेमोरी से पूरी तरह मिट जाता है।</p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>संबंधित ब्राउज़र टूल्स</h2>
+        <div class="related-tools-grid">
+          
+          <a href="/hi/tools/case-converter.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>टेक्स्ट केस कनवर्टर</span>
+          </a>
+
+          <a href="/hi/tools/percentage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>प्रतिशत एवं डिस्काउंट कैलकुलेटर</span>
+          </a>
+
+          <a href="/hi/tools/pdf-merger.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>पीडीएफ मर्जर (PDF Merger)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border: none;">
+      <p>&copy; 2026 फ्री ऑनलाइन टूल्स. Client-side browser utilities.</p>
+      <a href="/hi/index.html">होम पर वापस जाएं</a>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      const textInput = document.getElementById('text-input');
+      const statWords = document.getElementById('stat-words');
+      const statChars = document.getElementById('stat-chars');
+      const statCharsNoSpace = document.getElementById('stat-chars-no-space');
+      const statSentences = document.getElementById('stat-sentences');
+      const statParagraphs = document.getElementById('stat-paragraphs');
+      const statLines = document.getElementById('stat-lines');
+      const statReadingTime = document.getElementById('stat-reading-time');
+      const statSpeakingTime = document.getElementById('stat-speaking-time');
+
+      const btnSample = document.getElementById('btn-sample');
+      const btnसाफ करें = document.getElementById('btn-clear');
+      const btnCopy = document.getElementById('btn-copy');
+
+      function updateStats() {
+        const text = textInput.value;
+        const totalChars = text.length;
+        const charsNoSpace = text.replace(/\s/g, '').length;
+
+        // Words: split by whitespace and filter out blanks
+        const trimmed = text.trim();
+        const wordsArray = trimmed ? trimmed.split(/\s+/) : [];
+        const wordCount = wordsArray.length;
+
+        // Sentences: match . ! ? followed by space or end
+        const sentences = trimmed ? (trimmed.match(/[^.!?]+[.!?]+(\s|$)/g) || [trimmed]).length : 0;
+
+        // Paragraphs: non-empty chunks separated by newlines
+        const paragraphs = trimmed ? trimmed.split(/\n+/).filter(p => p.trim().length > 0).length : 0;
+
+        // Lines: count linebreaks
+        const lines = text ? text.split('\n').length : 0;
+
+        // Reading time: ~225 wpm
+        const readSeconds = Math.round((wordCount / 225) * 60);
+        const readMin = Math.floor(readSeconds / 60);
+        const readSec = readSeconds % 60;
+
+        // Speaking time: ~130 wpm
+        const speakSeconds = Math.round((wordCount / 130) * 60);
+        const speakMin = Math.floor(speakSeconds / 60);
+        const speakSec = speakSeconds % 60;
+
+        statWords.textContent = wordCount.toLocaleString();
+        statChars.textContent = totalChars.toLocaleString();
+        statCharsNoSpace.textContent = charsNoSpace.toLocaleString();
+        statSentences.textContent = sentences.toLocaleString();
+        statParagraphs.textContent = paragraphs.toLocaleString();
+        statLines.textContent = lines.toLocaleString();
+        statReadingTime.textContent = `${readMin}m ${readSec}s`;
+        statSpeakingTime.textContent = `${speakMin}m ${speakSec}s`;
+      }
+
+      textInput.addEventListener('input', updateStats);
+
+      btnSample.addEventListener('click', () => {
+        textInput.value = "The quick brown fox jumps over the lazy dog.\n\nFree Online Tools provides fast, completely private browser utilities. Everything is calculated on your device without transmitting text over the network.";
+        updateStats();
+        textInput.focus();
+      });
+
+      btnसाफ करें.addEventListener('click', () => {
+        textInput.value = '';
+        updateStats();
+        textInput.focus();
+      });
+
+      btnCopy.addEventListener('click', () => {
+        window.FreeOnlineTools.copyToClipboard(textInput.value, 'Text copied to clipboard!');
+      });
+
+      // Initial stats on load
+      updateStats();
+    })();
+  </script>
+</body>
+</html>

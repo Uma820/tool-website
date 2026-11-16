@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fabric Shrinkage Calculator — Test Swatch &amp; Pre-Wash Yardage</title>
+  <meta name="description" content="Calculate fabric shrinkage percentages from test swatches and determine pre-wash yardage allowances to ensure accurate finished garment and quilt sizing.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/fabric-shrinkage-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/fabric-shrinkage-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/fabric-shrinkage-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Fabric Shrinkage Calculator",
+    "description": "Calculate fabric shrinkage rates from test swatches and compute pre-wash fabric allowances for garments, quilts, and drapery.",
+    "url": "https://nexivo.com/tools/fabric-shrinkage-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why does fabric shrink when washed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "During spinning and industrial weaving, natural yarns (like cotton, linen, and wool) are pulled under tremendous mechanical tension. When submerged in hot water and agitated, the fibers relax and contract back to their natural coiled state."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do fabrics shrink more in length than width?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The warp yarns (which run lengthwise along the fabric roll) are held under the greatest continuous tension on the industrial loom. Consequently, warp yarns experience significantly more post-wash relaxation than the weft yarns."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you perform an accurate fabric test swatch?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cut an exact 10\" x 10\" (or 25 x 25 cm) square of fabric. Serge or zigzag the edges to prevent fraying. Wash and dry the swatch using the exact cycle and temperature you plan to use for the finished project, press flat without stretching, and measure the new dimensions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should quilting cotton always be pre-washed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It is a matter of preference. If you prefer the vintage, crinkled puckered look of an antique quilt, do not pre-wash; the quilt will shrink 3% to 5% after the first wash. However, for garments, table runners, and fitted items, pre-washing is essential to prevent distortion."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#crafts">Crafts &amp; Sewing</a></li>
+      <li>/</li>
+      <li aria-current="page">Fabric Shrinkage Calculator</li>
+    </nav>
+
+    <!-- Sewing Suite Navigation -->
+    <div class="sewing-suite-nav">
+      <span class="sewing-suite-label">Sewing Suite:</span>
+      <a href="/tools/quilt-backing-calculator.html" class="sewing-pill">Quilt Backing</a>
+      <a href="/tools/quilt-binding-calculator.html" class="sewing-pill">Quilt Binding</a>
+      <a href="/tools/fabric-yardage-calculator.html" class="sewing-pill">Fabric Yardage</a>
+      <a href="/tools/curtain-fabric-calculator.html" class="sewing-pill">Curtain Fabric</a>
+      <a href="/tools/fabric-shrinkage-calculator.html" class="sewing-pill active">Fabric Shrinkage</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>Fabric Shrinkage Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Calculate exact shrinkage rates from test swatch measurements, or determine how much extra fabric to purchase to guarantee finished garment and home decor dimensions.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-popular">Popular</span>
+        <span class="tool-badge">Test Swatch Mode</span>
+        <span class="tool-badge">Pre-Wash Allowance</span>
+        <span class="tool-badge">100% In-Browser</span>
+      </div>
+    </div>
+
+    <!-- Calculator Main Panel -->
+    <div class="tool-panel">
+      <!-- Mode Tabs -->
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); margin-block-end: var(--space-5);">
+        <div class="unit-toggle-group" role="tablist" aria-label="Calculator Modes">
+          <button type="button" class="unit-toggle-btn active" id="tab-swatch" role="tab" aria-selected="true">
+            1. Test Swatch Shrinkage %
+          </button>
+          <button type="button" class="unit-toggle-btn" id="tab-prewash" role="tab" aria-selected="false">
+            2. Pre-Wash Yardage Allowance
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <span style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text-secondary);">Units:</span>
+          <div class="unit-toggle-group" role="radiogroup" aria-label="Measurement Units">
+            <button type="button" class="unit-toggle-btn active" id="btn-imperial" aria-checked="true">Imperial (in / yd)</button>
+            <button type="button" class="unit-toggle-btn" id="btn-metric" aria-checked="false">Metric (cm / m)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- MODE 1: Test Swatch Shrinkage Calculator -->
+      <!-- ============================================== -->
+      <div id="mode-swatch-panel">
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-block-end: var(--space-4);">
+          Enter the dimensions of your test swatch before and after laundering to calculate precise length, width, and surface area shrinkage percentages.
+        </p>
+
+        <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-4);">
+          <div class="form-group">
+            <label for="swatch-pre-w" class="form-label" id="label-swatch-pre-w">Pre-Wash Width (in)</label>
+            <input type="number" id="swatch-pre-w" class="form-input" value="10" min="1" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="swatch-pre-l" class="form-label" id="label-swatch-pre-l">Pre-Wash Length (in)</label>
+            <input type="number" id="swatch-pre-l" class="form-input" value="10" min="1" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="swatch-post-w" class="form-label" id="label-swatch-post-w">Post-Wash Width (in)</label>
+            <input type="number" id="swatch-post-w" class="form-input" value="9.6" min="0.5" step="0.05">
+          </div>
+
+          <div class="form-group">
+            <label for="swatch-post-l" class="form-label" id="label-swatch-post-l">Post-Wash Length (in)</label>
+            <input type="number" id="swatch-post-l" class="form-input" value="9.4" min="0.5" step="0.05">
+          </div>
+        </div>
+
+        <!-- Swatch Results Cards -->
+        <div class="utilization-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-block-end: var(--space-5);">
+          <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Length Shrinkage (Warp)</div>
+            <div style="font-size: var(--font-size-xl); font-weight: 800; color: #ef4444;" id="stat-len-shrink">6.0%</div>
+            <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Along the fabric roll</div>
+          </div>
+
+          <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Width Shrinkage (Weft)</div>
+            <div style="font-size: var(--font-size-xl); font-weight: 800; color: #f59e0b;" id="stat-wid-shrink">4.0%</div>
+            <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Across selvage to selvage</div>
+          </div>
+
+          <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Total Area Shrinkage</div>
+            <div style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-primary);" id="stat-area-shrink">9.8%</div>
+            <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Overall surface reduction</div>
+          </div>
+        </div>
+
+        <!-- 2D SVG Swatch Comparison -->
+        <div class="sewing-diagram-card">
+          <h3 style="font-size: var(--font-size-sm); margin: 0 0 var(--space-2) 0; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+            Visual Swatch Contraction Overlay
+          </h3>
+          <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-end: var(--space-3);">
+            Dashed blue border represents pre-wash swatch cut. Solid amber fill shows post-wash relaxed dimensions.
+          </p>
+          <div class="sewing-svg-wrapper" id="svg-swatch-container">
+            <!-- Dynamic SVG inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- MODE 2: Pre-Wash Yardage Adjustment Calculator -->
+      <!-- ============================================== -->
+      <div id="mode-prewash-panel" style="display: none;">
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-block-end: var(--space-4);">
+          Enter your desired finished project dimensions and fabric fiber preset to calculate the exact pre-wash cut size and extra yardage you need to purchase.
+        </p>
+
+        <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-block-end: var(--space-4);">
+          <div class="form-group">
+            <label for="fiber-preset" class="form-label">Fabric Fiber Preset</label>
+            <select id="fiber-preset" class="form-select">
+              <option value="cotton" selected>100% Cotton / Quilting (4% length, 3% width)</option>
+              <option value="linen">100% Linen (6% length, 4% width)</option>
+              <option value="wool">Wool / Wool Flannel (8% length, 6% width)</option>
+              <option value="rayon">Rayon / Viscose (5% length, 5% width)</option>
+              <option value="denim">Denim / Raw Twill (7% length, 4% width)</option>
+              <option value="silk">Silk Crepe / Habotai (3% length, 2% width)</option>
+              <option value="polyester">Polyester / Synthetic Blend (0.5% length, 0.5% width)</option>
+              <option value="custom">Custom Shrinkage %...</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="custom-shrink-group" style="display: none;">
+            <label for="custom-len-shrink" class="form-label">Custom Length Shrinkage (%)</label>
+            <input type="number" id="custom-len-shrink" class="form-input" value="5.0" min="0" max="40" step="0.5">
+          </div>
+
+          <div class="form-group" id="custom-wid-shrink-group" style="display: none;">
+            <label for="custom-wid-shrink" class="form-label">Custom Width Shrinkage (%)</label>
+            <input type="number" id="custom-wid-shrink" class="form-input" value="3.0" min="0" max="40" step="0.5">
+          </div>
+
+          <div class="form-group">
+            <label for="desired-width" class="form-label" id="label-desired-w">Desired Finished Width (in)</label>
+            <input type="number" id="desired-width" class="form-input" value="50" min="1" step="0.5">
+          </div>
+
+          <div class="form-group">
+            <label for="desired-length" class="form-label" id="label-desired-l">Desired Finished Length (in)</label>
+            <input type="number" id="desired-length" class="form-input" value="65" min="1" step="0.5">
+          </div>
+        </div>
+
+        <!-- Pre-Wash Highlights -->
+        <div class="utilization-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-block-end: var(--space-5);">
+          <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Pre-Wash Fabric to Buy</div>
+            <div class="fractional-highlight" id="prewash-res-fractional" style="font-size: var(--font-size-xl);">0 yds</div>
+            <div style="font-size: 0.75rem; color: var(--color-text-secondary);" id="prewash-res-subtext">0 yds / 0 m</div>
+          </div>
+
+          <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Pre-Wash Cut Dimensions</div>
+            <div style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary);" id="prewash-cut-dim">0 × 0 in</div>
+            <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Cut before washing</div>
+          </div>
+
+          <div class="utilization-card" style="padding: var(--space-3); background: var(--color-bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Extra Fabric Allowance Needed</div>
+            <div style="font-size: var(--font-size-lg); font-weight: 700; color: #10b981;" id="prewash-extra-len">+0 in (+0 yds)</div>
+            <div style="font-size: 0.75rem; color: var(--color-text-secondary);">Buffer for wash shrinkage</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-block-start: var(--space-4);">
+        <button type="button" class="btn btn-secondary" id="btn-reset">Reset Example</button>
+        <button type="button" class="btn btn-primary" id="btn-copy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Calculations</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Educational & SEO Documentation Section -->
+    <div class="tool-documentation">
+      <div class="doc-section">
+        <h2>What This Tool Does &amp; Problem It Solves</h2>
+        <p>
+          The <strong>Fabric Shrinkage Calculator</strong> solves the critical challenge of dimensional contraction in laundered woven and knitted textiles. It provides two integrated tools: a <em>Test Swatch Shrinkage % Calculator</em> to analyze physical swatch measurements, and a <em>Pre-Wash Yardage Allowance Calculator</em> that determines exact pre-wash cut dimensions and extra fabric to buy to guarantee your finished garment or quilt measurements.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="doc-steps">
+          <li><strong>Select your calculator mode:</strong> Choose <em>1. Test Swatch Shrinkage %</em> to evaluate physical sample cuts, or <em>2. Pre-Wash Yardage Allowance</em> to plan fabric purchasing.</li>
+          <li><strong>For Test Swatches:</strong> Measure your test cut before washing (e.g. 10" × 10"), launder according to your project's care plan, press flat, and enter the post-wash dimensions.</li>
+          <li><strong>For Pre-Wash Planning:</strong> Select your fabric fiber preset (Cotton, Linen, Wool, Rayon, Denim, or Custom) and enter your desired finished project dimensions.</li>
+          <li><strong>Review contraction results:</strong> Observe warp (lengthwise) and weft (widthwise) contraction percentages and the visual swatch overlay.</li>
+          <li><strong>Copy calculations:</strong> Click <em>"Copy Calculations"</em> to save full measurements and purchase recommendations to your clipboard.</li>
+        </ol>
+      </div>
+
+      <div class="doc-section">
+        <h2>Mathematical Formulas Used</h2>
+        <div class="example-box">
+          <p style="margin-block-end: var(--space-2); font-weight: 600;">Shrinkage Rate &amp; Pre-Wash Dimensions:</p>
+          <pre class="example-pre">Width Shrinkage % = ((Pre-Wash Width - Post-Wash Width) / Pre-Wash Width) × 100&#10;Length Shrinkage % = ((Pre-Wash Length - Post-Wash Length) / Pre-Wash Length) × 100&#10;Area Shrinkage % = (1 - (Post-Wash Area / Pre-Wash Area)) × 100&#10;Pre-Wash Cut Width = Desired Finished Width / (1 - (Width Shrinkage % / 100))&#10;Pre-Wash Cut Length = Desired Finished Length / (1 - (Length Shrinkage % / 100))&#10;Extra Fabric to Buy = Pre-Wash Cut Length - Desired Finished Length</pre>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Average Shrinkage Rates by Fiber Content Reference Table</h2>
+        <div class="cargo-table-container">
+          <table class="cargo-table">
+            <thead>
+              <tr>
+                <th>Fiber Type</th>
+                <th>Expected Lengthwise Shrinkage (Warp)</th>
+                <th>Expected Widthwise Shrinkage (Weft)</th>
+                <th>Care &amp; Pre-Treatment Advice</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>100% Quilting Cotton</strong></td>
+                <td>3% – 5%</td>
+                <td>2% – 3%</td>
+                <td>Machine wash warm, tumble dry medium. Press with steam before cutting.</td>
+              </tr>
+              <tr>
+                <td><strong>100% Linen</strong></td>
+                <td>5% – 8%</td>
+                <td>3% – 5%</td>
+                <td>Linen shrinks significantly. Wash hot and machine dry twice to soften fibers.</td>
+              </tr>
+              <tr>
+                <td><strong>Wool / Flannel</strong></td>
+                <td>6% – 10%</td>
+                <td>4% – 7%</td>
+                <td>High risk of felting. Steam-press thoroughly or use gentle wool wash cycle.</td>
+              </tr>
+              <tr>
+                <td><strong>Rayon / Viscose</strong></td>
+                <td>5% – 7%</td>
+                <td>4% – 6%</td>
+                <td>Rayon is vulnerable to shrinkage when wet. Hand wash cold or gentle cycle; air dry flat.</td>
+              </tr>
+              <tr>
+                <td><strong>Denim (Raw / Unwashed)</strong></td>
+                <td>7% – 10%</td>
+                <td>3% – 5%</td>
+                <td>Raw selvedge denim contracts heavily. Pre-wash in warm water to prevent seam twisting.</td>
+              </tr>
+              <tr>
+                <td><strong>Polyester / Synthetic Blend</strong></td>
+                <td>0% – 1%</td>
+                <td>0% – 1%</td>
+                <td>Thermoplastic synthetic fibers are heat-set during manufacturing and do not shrink.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <ul>
+          <li><strong>Apparel Dressmaking &amp; Tailoring:</strong> Calculating pre-wash fabric yardage so garments maintain tailored ease after laundering.</li>
+          <li><strong>Curtain &amp; Drapery Lengths:</strong> Preventing custom floor-length drapes from shrinking several inches above the baseboard when washed.</li>
+          <li><strong>Quilt Backing &amp; Patchwork:</strong> Deciding whether to pre-wash fabrics for crisp geometric seams or assemble raw for vintage crinkled shrinkage.</li>
+        </ul>
+      </div>
+
+      <div class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-grid">
+            <div>
+              <div class="example-title">Example Input (Linen Pre-Wash)</div>
+              <pre class="example-pre">Finished Dimensions: 50" W × 60" L&#10;Fabric Preset: 100% Linen&#10;Expected Shrinkage: 6% Length (Warp), 4% Width (Weft)</pre>
+            </div>
+            <div>
+              <div class="example-title">Expected Output</div>
+              <pre class="example-pre">Pre-Wash Cut Width: 52.08"&#10;Pre-Wash Cut Length: 63.83"&#10;Extra Length Needed: +3.83" (+0.11 yds)&#10;Pre-Wash Yardage to Buy: 1 7/8 yds (1.77 yds / 1.62 m)</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <p>
+          Calculations use differential warp and weft shrinkage modeling because woven fabrics experience significantly higher mechanical tension along warp yarns during weaving than along weft threads. Mathematical inverse division ensures true pre-wash dimensional restoration without undershooting finished targets.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          Shrinkage percentages vary based on water temperature, wash cycle agitation, detergent enzymes, and dryer heat. Always conduct a physical 10" × 10" test swatch on your specific fabric cut for critical tailoring projects.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All measurements, percentages, and reports are computed 100% locally in your web browser. No project details or personal notes are stored on or sent to remote web servers.
+        </p>
+      </div>
+
+      <div class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Why do fabrics shrink more in length than in width?</h3>
+          <p>
+            Warp yarns running lengthwise along the fabric roll are held under continuous high tension on commercial looms. When immersed in warm water and agitated, the microscopic fibers relax and return to their naturally coiled, unstressed dimensions.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>How should I wash a test swatch for maximum accuracy?</h3>
+          <p>
+            Cut an exact 10" × 10" (or 25 × 25 cm) square and finish the edges with a zigzag or serger stitch to avoid fraying. Launder and dry the swatch using the exact water temperature and cycle planned for the finished item, press flat without stretching, and measure with an acrylic ruler.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I prevent fabric yardage from twisting during pre-washing?</h3>
+          <p>
+            Snip 45-degree angles off the raw corners of your fabric yardage before placing it into the washing machine. Alternatively, sew the cut ends together into a continuous loop to eliminate fraying and reduce machine entanglement.
+          </p>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/fabric-yardage-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Fabric Yardage Calculator</span>
+          </a>
+          <a href="/tools/curtain-fabric-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+            <span>Curtain Fabric Calculator</span>
+          </a>
+          <a href="/tools/quilt-backing-calculator.html" class="related-tool-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            <span>Quilt Backing Calculator</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 Free Online Tools. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/sewing-utils.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let isMetric = false;
+      let activeMode = 'swatch'; // 'swatch' or 'prewash'
+
+      // DOM Elements
+      const tabSwatch = document.getElementById('tab-swatch');
+      const tabPrewash = document.getElementById('tab-prewash');
+      const modeSwatchPanel = document.getElementById('mode-swatch-panel');
+      const modePrewashPanel = document.getElementById('mode-prewash-panel');
+
+      const btnImperial = document.getElementById('btn-imperial');
+      const btnMetric = document.getElementById('btn-metric');
+
+      // Swatch inputs
+      const preW = document.getElementById('swatch-pre-w');
+      const preL = document.getElementById('swatch-pre-l');
+      const postW = document.getElementById('swatch-post-w');
+      const postL = document.getElementById('swatch-post-l');
+
+      const labelSwatchPreW = document.getElementById('label-swatch-pre-w');
+      const labelSwatchPreL = document.getElementById('label-swatch-pre-l');
+      const labelSwatchPostW = document.getElementById('label-swatch-post-w');
+      const labelSwatchPostL = document.getElementById('label-swatch-post-l');
+
+      // Prewash inputs
+      const fiberPreset = document.getElementById('fiber-preset');
+      const customShrinkGroup = document.getElementById('custom-shrink-group');
+      const customWidShrinkGroup = document.getElementById('custom-wid-shrink-group');
+      const customLenInput = document.getElementById('custom-len-shrink');
+      const customWidInput = document.getElementById('custom-wid-shrink');
+      const desiredW = document.getElementById('desired-width');
+      const desiredL = document.getElementById('desired-length');
+
+      const labelDesiredW = document.getElementById('label-desired-w');
+      const labelDesiredL = document.getElementById('label-desired-l');
+
+      const btnReset = document.getElementById('btn-reset');
+      const btnCopy = document.getElementById('btn-copy');
+
+      // Mode Switcher
+      tabSwatch.addEventListener('click', () => setMode('swatch'));
+      tabPrewash.addEventListener('click', () => setMode('prewash'));
+
+      function setMode(mode) {
+        activeMode = mode;
+        const isS = mode === 'swatch';
+        tabSwatch.classList.toggle('active', isS);
+        tabSwatch.setAttribute('aria-selected', isS ? 'true' : 'false');
+        tabPrewash.classList.toggle('active', !isS);
+        tabPrewash.setAttribute('aria-selected', !isS ? 'true' : 'false');
+
+        modeSwatchPanel.style.display = isS ? 'block' : 'none';
+        modePrewashPanel.style.display = !isS ? 'block' : 'none';
+
+        if (isS) calculateSwatch();
+        else calculatePrewash();
+      }
+
+      // Unit Toggle
+      btnImperial.addEventListener('click', () => setUnitMode(false));
+      btnMetric.addEventListener('click', () => setUnitMode(true));
+
+      function setUnitMode(metric) {
+        if (isMetric === metric) return;
+        isMetric = metric;
+
+        btnImperial.classList.toggle('active', !isMetric);
+        btnImperial.setAttribute('aria-checked', !isMetric ? 'true' : 'false');
+        btnMetric.classList.toggle('active', isMetric);
+        btnMetric.setAttribute('aria-checked', isMetric ? 'true' : 'false');
+
+        const factor = isMetric ? SewingUtils.IN_TO_CM : SewingUtils.CM_TO_IN;
+
+        preW.value = SewingUtils.round(parseFloat(preW.value || 10) * factor, 1);
+        preL.value = SewingUtils.round(parseFloat(preL.value || 10) * factor, 1);
+        postW.value = SewingUtils.round(parseFloat(postW.value || 9.6) * factor, 2);
+        postL.value = SewingUtils.round(parseFloat(postL.value || 9.4) * factor, 2);
+
+        desiredW.value = SewingUtils.round(parseFloat(desiredW.value || 50) * factor, 1);
+        desiredL.value = SewingUtils.round(parseFloat(desiredL.value || 65) * factor, 1);
+
+        const unitLabel = isMetric ? '(cm)' : '(in)';
+        labelSwatchPreW.textContent = `Pre-Wash Width ${unitLabel}`;
+        labelSwatchPreL.textContent = `Pre-Wash Length ${unitLabel}`;
+        labelSwatchPostW.textContent = `Post-Wash Width ${unitLabel}`;
+        labelSwatchPostL.textContent = `Post-Wash Length ${unitLabel}`;
+        labelDesiredW.textContent = `Desired Finished Width ${unitLabel}`;
+        labelDesiredL.textContent = `Desired Finished Length ${unitLabel}`;
+
+        calculateSwatch();
+        calculatePrewash();
+      }
+
+      fiberPreset.addEventListener('change', function() {
+        const isCustom = this.value === 'custom';
+        customShrinkGroup.style.display = isCustom ? 'block' : 'none';
+        customWidShrinkGroup.style.display = isCustom ? 'block' : 'none';
+        calculatePrewash();
+      });
+
+      function calculateSwatch() {
+        const res = SewingUtils.calculateSwatchShrinkage({
+          preWashWidth: parseFloat(preW.value) || 0,
+          preWashLength: parseFloat(preL.value) || 0,
+          postWashWidth: parseFloat(postW.value) || 0,
+          postWashLength: parseFloat(postL.value) || 0
+        });
+
+        if (!res) return;
+
+        document.getElementById('stat-len-shrink').textContent = `${res.lengthShrinkagePct}%`;
+        document.getElementById('stat-wid-shrink').textContent = `${res.widthShrinkagePct}%`;
+        document.getElementById('stat-area-shrink').textContent = `${res.areaShrinkagePct}%`;
+
+        renderSwatchDiagram(res);
+      }
+
+      function renderSwatchDiagram(res) {
+        const container = document.getElementById('svg-swatch-container');
+        if (!container) return;
+
+        const maxPre = Math.max(parseFloat(preW.value) || 10, parseFloat(preL.value) || 10, 1);
+        const scale = 180 / maxPre;
+        const preW_s = (parseFloat(preW.value) || 10) * scale;
+        const preL_s = (parseFloat(preL.value) || 10) * scale;
+        const postW_s = (parseFloat(postW.value) || 9.6) * scale;
+        const postL_s = (parseFloat(postL.value) || 9.4) * scale;
+
+        const unit = isMetric ? 'cm' : 'in';
+
+        container.innerHTML = `
+          <svg viewBox="0 0 320 220" width="100%" height="220" style="overflow: visible;">
+            <g transform="translate(60, 20)">
+              <!-- Pre-Wash (Original) Outline -->
+              <rect x="0" y="0" width="${preW_s}" height="${preL_s}" fill="rgba(37, 99, 235, 0.08)" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,4" rx="4"/>
+              
+              <!-- Post-Wash Shrunk -->
+              <rect x="0" y="0" width="${postW_s}" height="${postL_s}" fill="rgba(245, 158, 11, 0.3)" stroke="#d97706" stroke-width="2" rx="3"/>
+              
+              <text x="${postW_s / 2}" y="${postL_s / 2}" fill="#b45309" font-size="11" font-weight="700" text-anchor="middle" dominant-baseline="middle">
+                Shrunk (${postW.value} × ${postL.value} ${unit})
+              </text>
+
+              <!-- Dimension notes -->
+              <text x="${preW_s / 2}" y="-8" fill="var(--color-text-secondary)" font-size="10" font-weight="600" text-anchor="middle">
+                Pre-Wash: ${preW.value} ${unit}
+              </text>
+              <text x="-8" y="${preL_s / 2}" fill="var(--color-text-secondary)" font-size="10" font-weight="600" text-anchor="middle" transform="rotate(-90, -8, ${preL_s / 2})">
+                Pre-Wash: ${preL.value} ${unit}
+              </text>
+            </g>
+          </svg>
+        `;
+      }
+
+      function calculatePrewash() {
+        let lenShrink = 4.0;
+        let widShrink = 3.0;
+
+        if (fiberPreset.value === 'custom') {
+          lenShrink = parseFloat(customLenInput.value) || 0;
+          widShrink = parseFloat(customWidInput.value) || 0;
+        } else {
+          const preset = SewingUtils.SHRINKAGE_PRESETS[fiberPreset.value];
+          if (preset) {
+            lenShrink = preset.length;
+            widShrink = preset.width;
+          }
+        }
+
+        const res = SewingUtils.calculatePreWashAdjustment({
+          finishedWidth: parseFloat(desiredW.value) || 0,
+          finishedLength: parseFloat(desiredL.value) || 0,
+          lengthShrinkagePct: lenShrink,
+          widthShrinkagePct: widShrink,
+          isMetric: isMetric
+        });
+
+        if (!res) return;
+
+        const unit = isMetric ? 'cm' : 'in';
+
+        document.getElementById('prewash-res-fractional').textContent = res.preWashYardage.fractionalYards;
+        document.getElementById('prewash-res-subtext').textContent = `${res.preWashYardage.decimalYards} yds / ${res.preWashYardage.meters} m`;
+        document.getElementById('prewash-cut-dim').textContent = `${res.preWashDimensions.width} × ${res.preWashDimensions.length} ${unit}`;
+        document.getElementById('prewash-extra-len').textContent = `+${res.extraRequired.length} ${unit} (+${res.extraRequired.yards} yds)`;
+      }
+
+      // Copy calculations
+      btnCopy.addEventListener('click', function() {
+        const unit = isMetric ? 'cm' : 'in';
+        let text = '';
+
+        if (activeMode === 'swatch') {
+          const lShrink = document.getElementById('stat-len-shrink').textContent;
+          const wShrink = document.getElementById('stat-wid-shrink').textContent;
+          const aShrink = document.getElementById('stat-area-shrink').textContent;
+
+          text = [
+            '✂️ FABRIC TEST SWATCH SHRINKAGE REPORT — FREE ONLINE TOOLS',
+            '==========================================================',
+            `Pre-Wash Swatch: ${preW.value} × ${preL.value} ${unit}`,
+            `Post-Wash Swatch: ${postW.value} × ${postL.value} ${unit}`,
+            `Lengthwise Shrinkage (Warp): ${lShrink}`,
+            `Widthwise Shrinkage (Weft): ${wShrink}`,
+            `Overall Surface Area Shrinkage: ${aShrink}`,
+            '==========================================================',
+            'Calculated 100% in-browser at https://nexivo.com/tools/fabric-shrinkage-calculator.html'
+          ].join('\n');
+        } else {
+          const frac = document.getElementById('prewash-res-fractional').textContent;
+          const sub = document.getElementById('prewash-res-subtext').textContent;
+          const cutDim = document.getElementById('prewash-cut-dim').textContent;
+          const extra = document.getElementById('prewash-extra-len').textContent;
+
+          text = [
+            '✂️ PRE-WASH YARDAGE ALLOWANCE REPORT — FREE ONLINE TOOLS',
+            '=========================================================',
+            `Desired Finished Size: ${desiredW.value} × ${desiredL.value} ${unit}`,
+            `Fabric Preset: ${fiberPreset.options[fiberPreset.selectedIndex].text}`,
+            `Pre-Wash Cut Dimensions: ${cutDim}`,
+            `Extra Allowance Needed: ${extra}`,
+            `Pre-Wash Yardage to Purchase: ${frac} (${sub})`,
+            '=========================================================',
+            'Calculated 100% in-browser at https://nexivo.com/tools/fabric-shrinkage-calculator.html'
+          ].join('\n');
+        }
+
+        SewingUtils.copyTextToClipboard(text, btnCopy, 'Report Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        if (isMetric) {
+          preW.value = 25;
+          preL.value = 25;
+          postW.value = 24;
+          postL.value = 23.5;
+          desiredW.value = 127;
+          desiredL.value = 165;
+        } else {
+          preW.value = 10;
+          preL.value = 10;
+          postW.value = 9.6;
+          postL.value = 9.4;
+          desiredW.value = 50;
+          desiredL.value = 65;
+        }
+        fiberPreset.value = 'cotton';
+        customShrinkGroup.style.display = 'none';
+        customWidShrinkGroup.style.display = 'none';
+        calculateSwatch();
+        calculatePrewash();
+      });
+
+      [preW, preL, postW, postL].forEach(inp => inp.addEventListener('input', calculateSwatch));
+      [desiredW, desiredL, customLenInput, customWidInput].forEach(inp => inp.addEventListener('input', calculatePrewash));
+
+      calculateSwatch();
+      calculatePrewash();
+    })();
+  </script>
+</body>
+</html>

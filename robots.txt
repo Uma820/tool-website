@@ -1,0 +1,13 @@
+# Robots.txt for Free Online Tools
+# Permits crawling of all public canonical tool and informational pages.
+
+User-agent: *
+Allow: /
+
+# Disallow internal test suites and scratch scripts from indexing
+Disallow: /tests/
+Disallow: /scratch/
+
+# Sitemap Directive:
+# When deploying to production with a verified domain, uncomment and set your domain:
+Sitemap: https://nexivo.com/sitemap.xml

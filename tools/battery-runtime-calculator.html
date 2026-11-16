@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battery Runtime Calculator — Inverter &amp; UPS Backup Estimator</title>
+  <meta name="description" content="Calculate battery backup runtime in hours and minutes for 12V, 24V, and 48V banks across Lead-Acid, AGM, and LiFePO4 chemistries with inverter efficiency.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/battery-runtime-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/battery-runtime-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/battery-runtime-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Battery Runtime Calculator",
+    "description": "Calculate exact battery bank backup duration in hours and minutes based on battery voltage, Ah capacity, chemistry DoD, and electrical load.",
+    "url": "https://nexivo.com/tools/battery-runtime-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Depth of Discharge (DoD) and why does it affect runtime?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depth of Discharge (DoD) represents the maximum percentage of battery capacity that can be safely used without degrading cell longevity. Flooded lead-acid batteries should only be discharged to 50% DoD, AGM to 60%, whereas modern LiFePO4 lithium batteries can safely discharge to 85%–90% DoD, providing significantly longer usable runtime from the same Ah capacity."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does inverter efficiency impact battery backup duration?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Inverters consume internal power converting DC battery voltage into 110V/230V AC household electricity. Standard home inverters operate at 85% to 92% efficiency. For example, a 300W AC load running on an 88% efficient inverter actually pulls approximately 341W from the battery bank."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between wiring batteries in Series vs Parallel?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Connecting batteries in Series increases total system voltage while keeping Ah capacity constant (e.g. two 12V 150Ah batteries in series equal a 24V 150Ah bank). Connecting in Parallel keeps voltage the same while summing Ah capacity (e.g. two 12V 150Ah batteries in parallel equal a 12V 300Ah bank). Both configurations store the exact same total energy: 3,600 Watt-hours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Peukert's Law in lead-acid batteries?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Peukert's Law dictates that discharging a lead-acid battery at high current rates causes internal resistance and chemical bottlenecks, temporarily reducing effective capacity below its nominal 20-hour rating. Lithium LiFePO4 batteries suffer almost zero Peukert loss."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#solar">Solar &amp; Energy</a></li>
+      <li>/</li>
+      <li aria-current="page">Battery Runtime Calculator</li>
+    </nav>
+
+    <!-- Solar & Energy Suite Navigation -->
+    <div class="solar-suite-nav">
+      <span class="solar-suite-label">Solar &amp; Energy Suite:</span>
+      <a href="/tools/battery-runtime-calculator.html" class="solar-pill active">Battery Runtime</a>
+      <a href="/tools/inverter-backup-calculator.html" class="solar-pill">Inverter Backup</a>
+      <a href="/tools/solar-panel-size-calculator.html" class="solar-pill">Solar Array Size</a>
+      <a href="/tools/generator-size-calculator.html" class="solar-pill">Generator Sizing</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Battery Runtime &amp; Backup Calculator</h1>
+      <p class="tool-header-desc">
+        Calculate exact battery backup duration in hours and minutes for home inverters, solar storage, UPS systems, and RV battery banks across Lead-Acid, AGM, and LiFePO4 chemistries.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Lead-Acid &amp; LiFePO4 DoD</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Load vs. Runtime Matrix</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Section 1: Battery Bank Configuration -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>🔋</span> 1. Battery Bank Specifications
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3);">
+          <div>
+            <label style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Battery Voltage (Per Unit):</label>
+            <div class="btn-group" role="group" aria-label="Battery Voltage Preset" style="display: flex;">
+              <button type="button" class="btn btn-secondary btn-volt active" data-v="12" style="flex: 1; padding: 0.4rem 0.25rem; font-size: var(--font-size-xs);">12V</button>
+              <button type="button" class="btn btn-secondary btn-volt" data-v="24" style="flex: 1; padding: 0.4rem 0.25rem; font-size: var(--font-size-xs);">24V</button>
+              <button type="button" class="btn btn-secondary btn-volt" data-v="48" style="flex: 1; padding: 0.4rem 0.25rem; font-size: var(--font-size-xs);">48V</button>
+            </div>
+            <input type="number" id="custom-voltage" class="form-input" value="12" min="1" max="100" step="1" aria-label="Custom battery voltage in volts" style="display: none; margin-top: 0.25rem; font-size: var(--font-size-xs);">
+          </div>
+
+          <div>
+            <label for="battery-capacity-ah" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Rated Capacity (Ah per Battery):</label>
+            <div style="display: flex; gap: var(--space-1);">
+              <input type="number" id="battery-capacity-ah" class="form-input" value="150" min="5" max="1000" step="10" style="font-weight: 700; font-size: var(--font-size-sm); color: var(--color-primary);">
+              <select id="quick-ah-select" class="form-select" aria-label="Quick Ah presets" style="font-size: var(--font-size-xs); width: auto; padding-inline: 0.5rem;">
+                <option value="">Quick Pick</option>
+                <option value="100">100 Ah</option>
+                <option value="150">150 Ah (Standard)</option>
+                <option value="200">200 Ah (Heavy)</option>
+                <option value="220">220 Ah</option>
+                <option value="300">300 Ah</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="battery-count" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Number of Batteries:</label>
+            <input type="number" id="battery-count" class="form-input" value="1" min="1" max="32" step="1" style="font-size: var(--font-size-sm); font-weight: 700;">
+          </div>
+
+          <div>
+            <label for="wiring-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Bank Wiring Config:</label>
+            <select id="wiring-select" class="form-select" style="font-size: var(--font-size-xs); padding-block: 0.45rem;">
+              <option value="parallel" selected>Parallel (More Ah, Same Volts)</option>
+              <option value="series">Series (More Volts, Same Ah)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Battery Chemistry & DoD -->
+      <div class="form-section" style="margin-bottom: var(--space-4); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>⚗️</span> 2. Battery Chemistry &amp; Depth of Discharge (DoD)
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3); align-items: center;">
+          <div>
+            <label for="chemistry-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Battery Type Preset:</label>
+            <select id="chemistry-select" class="form-select" style="font-size: var(--font-size-xs); padding-block: 0.45rem;">
+              <option value="50" selected>Tubular / Flooded Lead-Acid (50% DoD)</option>
+              <option value="60">AGM / Sealed Gel Lead-Acid (60% DoD)</option>
+              <option value="85">LiFePO4 Lithium Iron Phosphate (85% DoD)</option>
+              <option value="custom">Custom Depth of Discharge</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="dod-slider" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">
+              Usable Discharge Limit (DoD): <strong id="lbl-dod-val" style="color: var(--color-primary);">50%</strong>
+            </label>
+            <input type="range" id="dod-slider" min="10" max="95" step="5" value="50" style="width: 100%; cursor: pointer;">
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--color-text-muted);">
+              <span>30% (Gentle)</span>
+              <span>50% (Lead-Acid)</span>
+              <span>85% (Lithium)</span>
+              <span>95% (Max)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Electrical Load & Inverter Efficiency -->
+      <div class="form-section" style="margin-bottom: var(--space-4); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>💡</span> 3. Connected Electrical Load
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3);">
+          <div>
+            <label for="load-value-input" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Total Load Draw:</label>
+            <div style="display: flex; gap: var(--space-2);">
+              <input type="number" id="load-value-input" class="form-input" value="300" min="1" max="20000" step="25" style="font-weight: 700; font-size: var(--font-size-base); color: var(--color-primary); flex: 2;">
+              <select id="load-type-select" class="form-select" aria-label="Load Unit" style="font-size: var(--font-size-xs); flex: 1; padding-block: 0.45rem;">
+                <option value="watts" selected>Watts (W)</option>
+                <option value="amps">Amps (A)</option>
+              </select>
+            </div>
+            <small style="color: var(--color-text-muted); font-size: 11px;">e.g. 2 fans (150W) + lights (50W) + TV (100W) = 300W</small>
+          </div>
+
+          <div>
+            <label for="inverter-efficiency-slider" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">
+              Inverter DC-to-AC Efficiency: <strong id="lbl-eff-val" style="color: var(--color-primary);">88%</strong>
+            </label>
+            <input type="range" id="inverter-efficiency-slider" min="70" max="100" step="1" value="88" style="width: 100%; cursor: pointer;">
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--color-text-muted);">
+              <span>75% (Old Inverter)</span>
+              <span>88% (Standard)</span>
+              <span>100% (Direct DC)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4);">
+        <button type="button" class="btn btn-primary" id="btn-copy-specs" style="flex: 1; min-width: 180px;">
+          📋 Copy System Specs &amp; Runtime Log
+        </button>
+        <a href="/tools/inverter-backup-calculator.html" class="btn btn-secondary" style="flex: 1; min-width: 180px; text-decoration: none; text-align: center;">
+          ⚡ Size My Inverter &rarr;
+        </a>
+        <button type="button" class="btn btn-secondary" id="btn-reset" style="min-width: 100px;">
+          Reset
+        </button>
+      </div>
+
+      <!-- Primary Output KPI Cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-4);">
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Estimated Backup Runtime</div>
+          <div id="kpi-runtime" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-primary); margin-top: 0.25rem;">2 hrs 38 mins</div>
+          <div id="kpi-runtime-decimal" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">2.64 hours continuous</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Total Bank Capacity</div>
+          <div id="kpi-total-wh" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-text); margin-top: 0.25rem;">1,800 Wh</div>
+          <div id="kpi-total-kwh" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">1.80 kWh @ 12V 150Ah</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Usable Energy (DoD)</div>
+          <div id="kpi-usable-wh" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-success); margin-top: 0.25rem;">900 Wh</div>
+          <div id="kpi-usable-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">50% safe discharge limit</div>
+        </div>
+
+        <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); text-align: center;">
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Effective Battery Draw</div>
+          <div id="kpi-eff-draw" style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-text); margin-top: 0.25rem;">340.9 W</div>
+          <div id="kpi-eff-sub" style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 0.2rem;">Includes 12% inverter loss</div>
+        </div>
+      </div>
+
+      <!-- Load-vs-Runtime Benchmark Matrix -->
+      <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--space-3); background: var(--color-bg); margin-bottom: var(--space-4);">
+        <h3 style="font-size: var(--font-size-sm); font-weight: 700; margin-top: 0; margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+          <span>⏱️</span> Load vs. Runtime Reference Table (For This Configured Bank)
+        </h3>
+        <p style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-bottom: var(--space-3);">
+          Quickly estimate how long your configured battery bank will last at different continuous power draws:
+        </p>
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-sm);">
+            <thead>
+              <tr style="background: var(--color-bg-secondary); border-bottom: 2px solid var(--color-border);">
+                <th style="padding: 0.5rem 0.75rem;">Continuous Load</th>
+                <th style="padding: 0.5rem 0.75rem;">Example Appliances</th>
+                <th style="padding: 0.5rem 0.75rem;">Effective Battery Draw</th>
+                <th style="padding: 0.5rem 0.75rem; text-align: right;">Estimated Runtime</th>
+              </tr>
+            </thead>
+            <tbody id="benchmark-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic Educational Guide Section -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Battery Runtime Calculator</strong> calculates accurate backup duration for home inverters, solar energy storage systems, camper van batteries, and uninterruptible power supplies (UPS).
+      </p>
+      <p>
+        Most homeowners and solar installers mistakenly divide nominal battery watt-hours by connected load without accounting for two critical electrical factors: <strong>Depth of Discharge (DoD)</strong> and <strong>Inverter Inefficiency</strong>. Draining a lead-acid battery completely to 0% destroys its lead plates and voids manufacturer warranties within months. By applying safe DoD thresholds (50% for flooded tubular, 60% for AGM, 85% for LiFePO4) and inverter conversion losses (typically 12% to 15%), this tool provides realistic, safe backup estimates.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Select Battery Voltage &amp; Capacity:</strong> Choose your battery voltage (12V, 24V, or 48V) and rated amp-hour capacity (e.g. 150Ah or 200Ah).</li>
+        <li><strong>Set Battery Quantity &amp; Wiring:</strong>
+          <ul>
+            <li><strong>Parallel Wiring:</strong> Increases total Amp-Hours while keeping voltage constant. Ideal for 12V high-capacity banks.</li>
+            <li><strong>Series Wiring:</strong> Increases total Voltage (e.g., $2 \times 12\text{V} = 24\text{V}$) while maintaining the same Ah rating. Ideal for reducing heavy cable current.</li>
+          </ul>
+        </li>
+        <li><strong>Choose Chemistry &amp; DoD:</strong> Select your battery type (Tubular Flooded, AGM, or LiFePO4 Lithium) to load the recommended safe depth of discharge.</li>
+        <li><strong>Input Connected Load:</strong> Enter the combined power draw of your appliances in Watts (W) or Amps (A).</li>
+        <li><strong>Adjust Inverter Efficiency:</strong> Keep at 88% for standard household AC inverters, or set to 100% if powering direct DC loads (LED lights, 12V car fridges).</li>
+        <li><strong>Review Runtime &amp; Reference Table:</strong> Read your exact runtime in hours and minutes, and check the load benchmark table to see how turning off non-essential appliances extends your backup.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        Battery runtime calculations follow rigorous electrical physics:
+      </p>
+      <ul>
+        <li>
+          <strong>Total Stored Energy ($E_{\text{total}}$):</strong>
+          <br>
+          $$E_{\text{total (Wh)}} = V_{\text{bank}} \times \text{Capacity}_{\text{Ah}}$$
+        </li>
+        <li>
+          <strong>Usable Battery Energy ($E_{\text{usable}}$):</strong>
+          <br>
+          $$E_{\text{usable (Wh)}} = E_{\text{total (Wh)}} \times \left( \frac{\text{DoD \%}}{100} \right)$$
+        </li>
+        <li>
+          <strong>Effective Power Draw ($P_{\text{battery}}$):</strong>
+          <br>
+          $$P_{\text{battery (Watts)}} = \frac{P_{\text{appliance load}}}{\eta_{\text{inverter efficiency}}}$$
+        </li>
+        <li>
+          <strong>Runtime Hours ($T_{\text{hours}}$):</strong>
+          <br>
+          $$T_{\text{hours}} = \frac{E_{\text{usable (Wh)}}}{P_{\text{battery (Watts)}}}$$
+        </li>
+      </ul>
+
+      <h2>Battery Chemistry &amp; Usable Energy Comparison Matrix</h2>
+      <p>
+        The table below demonstrates how chemistry dictates true usable energy from a single 12V 150Ah (1,800 Wh nominal) battery:
+      </p>
+      <div style="overflow-x: auto; margin: var(--space-3) 0;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-sm); border: 1px solid var(--color-border);">
+          <thead>
+            <tr style="background: var(--color-bg-secondary); border-bottom: 2px solid var(--color-border);">
+              <th style="padding: 0.5rem 0.75rem;">Battery Chemistry</th>
+              <th style="padding: 0.5rem 0.75rem;">Nominal Voltage &amp; Ah</th>
+              <th style="padding: 0.5rem 0.75rem;">Recommended Safe DoD</th>
+              <th style="padding: 0.5rem 0.75rem;">Usable Energy (Wh)</th>
+              <th style="padding: 0.5rem 0.75rem;">Expected Cycle Life</th>
+              <th style="padding: 0.5rem 0.75rem;">Runtime @ 300W Load</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Tubular Flooded Lead-Acid</td>
+              <td style="padding: 0.5rem 0.75rem;">12V 150Ah (1,800 Wh)</td>
+              <td style="padding: 0.5rem 0.75rem;">50%</td>
+              <td style="padding: 0.5rem 0.75rem;">900 Wh</td>
+              <td style="padding: 0.5rem 0.75rem;">800 – 1,200 cycles</td>
+              <td style="padding: 0.5rem 0.75rem;">~2 hrs 38 mins</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--color-border);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">AGM / Sealed Gel Lead-Acid</td>
+              <td style="padding: 0.5rem 0.75rem;">12V 150Ah (1,800 Wh)</td>
+              <td style="padding: 0.5rem 0.75rem;">60%</td>
+              <td style="padding: 0.5rem 0.75rem;">1,080 Wh</td>
+              <td style="padding: 0.5rem 0.75rem;">500 – 800 cycles</td>
+              <td style="padding: 0.5rem 0.75rem;">~3 hrs 10 mins</td>
+            </tr>
+            <tr style="background: rgba(37, 99, 235, 0.05);">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">LiFePO4 Lithium Iron Phosphate</td>
+              <td style="padding: 0.5rem 0.75rem;">12.8V 150Ah (1,920 Wh)</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 700;">85% – 90%</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 700;">1,632 Wh</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 700;">3,500 – 5,000 cycles</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-success); font-weight: 700;">~4 hrs 47 mins</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>Storm Outage Planning:</strong> Determining whether your single 150Ah inverter battery can sustain 2 ceiling fans, internet Wi-Fi, and laptop chargers through a 4-hour monsoon power cut.</li>
+        <li><strong>Camper Van / Off-Grid RV Sizing:</strong> Sizing auxiliary house batteries to run a 12V compressor fridge, diesel heater, and interior lighting off-grid.</li>
+        <li><strong>Solar Storage Upgrades:</strong> Comparing whether replacing two lead-acid batteries with a single 24V LiFePO4 pack will double usable backup hours without adding weight.</li>
+        <li><strong>Critical Medical Device Backup:</strong> Calculating exact runtime duration for home CPAP machines or oxygen concentrators during utility grid failure.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        <strong>Scenario:</strong> You have a standard 12V 150Ah tall tubular lead-acid inverter battery (50% DoD) powering 2 ceiling fans (150W), 3 LED bulbs (36W), and a TV (100W) = 286W total load. Inverter efficiency is 88%.
+      </p>
+      <ul>
+        <li><strong>Total Stored Energy:</strong> $12\text{V} \times 150\text{Ah} = 1,800\text{ Wh}$</li>
+        <li><strong>Safe Usable Energy (50% DoD):</strong> $1,800 \times 0.50 = 900\text{ Wh}$</li>
+        <li><strong>Effective Load from Battery:</strong> $286\text{W} / 0.88 = 325\text{ W}$</li>
+        <li><strong>Expected Runtime:</strong> $900 / 325 = 2.77\text{ hours} \implies \mathbf{2\text{ hrs } 46\text{ mins}}$.</li>
+      </ul>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <ul>
+        <li><strong>Zero Remote Transmission:</strong> Calculations execute 100% on the client side with sub-millisecond responsiveness.</li>
+        <li><strong>Peukert Compensation Awareness:</strong> Lead-acid discharge curves experience thermal degradation above 0.2C discharge rates. For heavy loads (>500W on a 12V battery), real-world runtime may reduce by an additional 10%–15%.</li>
+        <li><strong>Multi-Battery Matrix Calculations:</strong> Automatically recalculates series and parallel energy banks with proper voltage multipliers.</li>
+      </ul>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        Ambient temperature affects chemical battery performance. Operating lead-acid batteries below 0°C (32°F) can reduce available capacity by 20% to 30%, while extreme heat (>40°C / 104°F) accelerates internal plate corrosion.
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        All entered voltages, appliance loads, and capacity values remain strictly inside your browser. No telemetry data or analytics tracking is recorded.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Why shouldn't I discharge my lead-acid battery to 100%?</h3>
+        <p>
+          Deeply discharging lead-acid batteries below 50% causes hard lead sulfate crystals to permanently harden onto the plates (sulfation), irreversibly destroying capacity and reducing battery lifespan from 4 years down to under 6 months.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I mix old and new batteries in the same bank?</h3>
+        <p>
+          No. Never mix old and new batteries, or different brands and capacities. The older, weaker battery will pull down the charging voltage of the new battery, causing chronic undercharging and premature failure.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I convert Amps to Watts?</h3>
+        <p>
+          Multiply Amps by the System Voltage ($\text{Watts} = \text{Volts} \times \text{Amps}$). For example, a 25 Amp draw on a 12V battery equals $12 \times 25 = 300\text{ Watts}$.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/inverter-backup-calculator.html" class="related-tool-chip">⚡ Inverter Backup Calculator</a>
+        <a href="/tools/solar-panel-size-calculator.html" class="related-tool-chip">☀️ Solar Panel Size Calculator</a>
+        <a href="/tools/generator-size-calculator.html" class="related-tool-chip">⚙️ Generator Size Calculator</a>
+        <a href="/tools/unit-converter.html" class="related-tool-chip">🔄 Universal Unit Converter</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/solar-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // State
+      let activeVoltage = 12;
+      let lastResult = null;
+
+      // DOM Elements
+      const voltBtns = document.querySelectorAll('.btn-volt');
+      const customVoltInput = document.getElementById('custom-voltage');
+      const capacityAhInput = document.getElementById('battery-capacity-ah');
+      const quickAhSelect = document.getElementById('quick-ah-select');
+      const countInput = document.getElementById('battery-count');
+      const wiringSelect = document.getElementById('wiring-select');
+
+      const chemSelect = document.getElementById('chemistry-select');
+      const dodSlider = document.getElementById('dod-slider');
+      const lblDodVal = document.getElementById('lbl-dod-val');
+
+      const loadValueInput = document.getElementById('load-value-input');
+      const loadTypeSelect = document.getElementById('load-type-select');
+      const effSlider = document.getElementById('inverter-efficiency-slider');
+      const lblEffVal = document.getElementById('lbl-eff-val');
+
+      const kpiRuntime = document.getElementById('kpi-runtime');
+      const kpiRuntimeDecimal = document.getElementById('kpi-runtime-decimal');
+      const kpiTotalWh = document.getElementById('kpi-total-wh');
+      const kpiTotalKwh = document.getElementById('kpi-total-kwh');
+      const kpiUsableWh = document.getElementById('kpi-usable-wh');
+      const kpiUsableSub = document.getElementById('kpi-usable-sub');
+      const kpiEffDraw = document.getElementById('kpi-eff-draw');
+      const kpiEffSub = document.getElementById('kpi-eff-sub');
+
+      const benchmarkTbody = document.getElementById('benchmark-tbody');
+      const btnCopySpecs = document.getElementById('btn-copy-specs');
+      const btnReset = document.getElementById('btn-reset');
+
+      // Voltage Presets
+      voltBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          voltBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          activeVoltage = parseFloat(this.dataset.v);
+          customVoltInput.style.display = 'none';
+          customVoltInput.value = activeVoltage;
+          calculate();
+        });
+      });
+
+      // Quick Ah Pick
+      quickAhSelect.addEventListener('change', function() {
+        if (this.value) {
+          capacityAhInput.value = this.value;
+          calculate();
+        }
+      });
+
+      // Chemistry & DoD
+      chemSelect.addEventListener('change', function() {
+        if (this.value !== 'custom') {
+          dodSlider.value = this.value;
+          lblDodVal.textContent = `${this.value}%`;
+        }
+        calculate();
+      });
+
+      dodSlider.addEventListener('input', function() {
+        lblDodVal.textContent = `${this.value}%`;
+        calculate();
+      });
+
+      // Inverter Efficiency Slider
+      effSlider.addEventListener('input', function() {
+        lblEffVal.textContent = `${this.value}%`;
+        calculate();
+      });
+
+      // Calculate
+      function calculate() {
+        const res = SolarUtils.calculateBatteryRuntime({
+          voltage: activeVoltage,
+          capacityAh: parseFloat(capacityAhInput.value) || 150,
+          batteryCount: parseInt(countInput.value, 10) || 1,
+          wiring: wiringSelect.value,
+          dodPercentage: parseFloat(dodSlider.value) || 50,
+          loadType: loadTypeSelect.value,
+          loadValue: parseFloat(loadValueInput.value) || 0,
+          inverterEfficiencyPct: parseFloat(effSlider.value) || 88
+        });
+
+        if (!res) return;
+        lastResult = res;
+
+        // KPIs
+        kpiRuntime.textContent = res.runtimeFormatted;
+        kpiRuntimeDecimal.textContent = `${res.runtimeHours} hours continuous`;
+        kpiTotalWh.textContent = `${res.totalCapacityWh.toLocaleString()} Wh`;
+        kpiTotalKwh.textContent = `${res.totalCapacityKwh} kWh @ ${res.totalVoltage}V ${res.totalAh}Ah`;
+        kpiUsableWh.textContent = `${res.usableEnergyWh.toLocaleString()} Wh`;
+        kpiUsableSub.textContent = `${res.dodPercentage}% safe discharge limit`;
+        kpiEffDraw.textContent = `${res.effectiveDrawWatts} W`;
+        kpiEffSub.textContent = `Includes ${100 - parseFloat(effSlider.value)}% inverter loss`;
+
+        // Benchmark table
+        const benchDescriptions = {
+          100: 'Wi-Fi Router + 2 LED Bulbs + Laptop',
+          250: '1 Ceiling Fan + TV + 3 Lights',
+          500: '2 Ceiling Fans + TV + Fridge running',
+          1000: 'Kitchen Microwave or Inverter AC idle',
+          1500: '1.5 Ton Split AC or Water Pump'
+        };
+
+        benchmarkTbody.innerHTML = res.benchmarks.map(b => {
+          const isNear = Math.abs(b.loadWatts - res.loadWatts) < 100;
+          return `
+            <tr style="${isNear ? 'background: rgba(37, 99, 235, 0.08); font-weight: 700;' : ''}">
+              <td style="padding: 0.5rem 0.75rem; font-weight: 600;">${b.loadWatts} W</td>
+              <td style="padding: 0.5rem 0.75rem; color: var(--color-text-muted); font-size: var(--font-size-xs);">${benchDescriptions[b.loadWatts] || ''}</td>
+              <td style="padding: 0.5rem 0.75rem; font-family: monospace;">${(b.loadWatts / (parseFloat(effSlider.value)/100)).toFixed(1)} W</td>
+              <td style="padding: 0.5rem 0.75rem; text-align: right; color: var(--color-primary); font-weight: 700;">${b.runtimeFormatted}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // Copy Specs
+      btnCopySpecs.addEventListener('click', function() {
+        if (!lastResult) return;
+        const res = lastResult;
+        const lines = [
+          '🔋 BATTERY RUNTIME & BACKUP SYSTEM SPECIFICATIONS',
+          '=================================================',
+          `Battery Bank Configuration: ${res.totalVoltage}V ${res.totalAh}Ah (${wiringSelect.value.toUpperCase()})`,
+          `Batteries Count:            ${countInput.value} unit(s)`,
+          `Total Bank Capacity:        ${res.totalCapacityWh} Wh (${res.totalCapacityKwh} kWh)`,
+          `Safe Usable Energy:         ${res.usableEnergyWh} Wh (${res.dodPercentage}% DoD)`,
+          '-------------------------------------------------',
+          `Connected Load:             ${res.loadWatts} Watts (${loadTypeSelect.value})`,
+          `Inverter Efficiency:        ${effSlider.value}%`,
+          `Effective Draw on Bank:     ${res.effectiveDrawWatts} Watts`,
+          '-------------------------------------------------',
+          `ESTIMATED BACKUP RUNTIME:   ${res.runtimeFormatted} (${res.runtimeHours} hrs)`,
+          '=================================================',
+          'LOAD RUNTIME BENCHMARKS:',
+          ...res.benchmarks.map(b => `  • ${String(b.loadWatts).padEnd(5)} W: ${b.runtimeFormatted}`),
+          '=================================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/battery-runtime-calculator.html'
+        ];
+
+        SolarUtils.copyTextToClipboard(lines.join('\n'), btnCopySpecs, 'Specs Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        voltBtns.forEach(b => b.classList.toggle('active', b.dataset.v === '12'));
+        activeVoltage = 12;
+        capacityAhInput.value = '150';
+        quickAhSelect.value = '';
+        countInput.value = '1';
+        wiringSelect.value = 'parallel';
+        chemSelect.value = '50';
+        dodSlider.value = '50';
+        lblDodVal.textContent = '50%';
+        loadValueInput.value = '300';
+        loadTypeSelect.value = 'watts';
+        effSlider.value = '88';
+        lblEffVal.textContent = '88%';
+        calculate();
+      });
+
+      // Bindings
+      [capacityAhInput, countInput, wiringSelect, loadValueInput, loadTypeSelect].forEach(inp => {
+        inp.addEventListener('input', calculate);
+        inp.addEventListener('change', calculate);
+      });
+
+      // Init
+      calculate();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Money &amp; Earnings Calculator — Free Online Tools</title>
+  <meta name="description" content="Estimate daily, monthly, and yearly YouTube AdSense earnings based on view counts and niche RPM rates. 100% free and private browser tool.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/youtube-money-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/youtube-money-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/youtube-money-calculator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "YouTube Money & Earnings Calculator",
+    "description": "Estimate daily, monthly, and yearly YouTube AdSense earnings based on view counts and niche RPM rates. 100% free and private browser tool.",
+    "url": "https://nexivo.com/tools/youtube-money-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#calc">Calculators</a></li>
+      <li>/</li>
+      <li aria-current="page">YouTube Money Calculator</li>
+    </nav>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">
+        <span>YouTube Money &amp; Earnings Calculator</span>
+      </h1>
+      <p class="tool-header-lead">
+        Project estimated YouTube ad revenue based on daily video views and niche RPM rates. Explore realistic creator revenue projections with customizable benchmarks.
+      </p>
+      <div class="tool-meta-tags">
+        <span class="tool-badge badge-implemented">Tier 1: Browser Native</span>
+        <span class="tool-badge">Niche RPM Benchmarks</span>
+        <span class="tool-badge">Estimate Disclosure</span>
+        <span class="tool-badge">100% Private</span>
+      </div>
+    </div>
+
+    <!-- Workspace Panel -->
+    <div class="tool-panel">
+      <!-- Prominent Disclaimers Alert -->
+      <div style="background: rgba(2, 132, 199, 0.08); border-left: 4px solid var(--color-primary); padding: var(--space-3); border-radius: var(--radius-sm); margin-block-end: var(--space-4); font-size: var(--font-size-xs); color: var(--color-text);">
+        <strong>Important Disclaimer:</strong> All revenue figures shown are mathematical estimates based on user-supplied parameters. YouTube does not guarantee specific earnings. Real-world payouts depend heavily on creator geography, viewer demographics, ad-blocker usage, video duration (mid-roll ad placement), seasonal advertiser spend (e.g., Q4 spikes), and YouTube Partner Program eligibility.
+      </div>
+
+      <!-- Controls & Slider Section -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-5); margin-block-end: var(--space-5);">
+        <div>
+          <!-- Daily Views Control -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+              <label for="input-views" class="form-label" style="font-weight: var(--font-weight-semibold); margin-block-end: 0;">Daily Video Views:</label>
+              <input type="number" id="input-views" class="form-input" value="10000" min="100" max="10000000" step="500" style="inline-size: 140px; font-weight: bold; text-align: end; padding: 0.35rem;">
+            </div>
+            <input type="range" id="slider-views" min="500" max="500000" step="500" value="10000" style="inline-size: 100%; cursor: pointer;">
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: 4px;">
+              <span>500 views</span>
+              <span>250K</span>
+              <span>500K+</span>
+            </div>
+          </div>
+
+          <!-- RPM Rate Control -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-block-end: var(--space-2);">
+              <label for="input-rpm" class="form-label" style="font-weight: var(--font-weight-semibold); margin-block-end: 0;">Estimated RPM ($ / 1k views):</label>
+              <input type="number" id="input-rpm" class="form-input" value="3.50" min="0.10" max="30.00" step="0.10" style="inline-size: 100px; font-weight: bold; text-align: end; padding: 0.35rem;">
+            </div>
+            <input type="range" id="slider-rpm" min="0.50" max="15.00" step="0.25" value="3.50" style="inline-size: 100%; cursor: pointer;">
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: 4px;">
+              <span>$0.50 (Low)</span>
+              <span>$7.50 (Average)</span>
+              <span>$15.00+ (High)</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!-- Niche Presets -->
+          <div class="form-group">
+            <label class="form-label" style="font-weight: var(--font-weight-semibold);">Quick Niche Benchmarks:</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+              <button type="button" class="btn btn-secondary btn-niche" data-rpm="2.00">Gaming (~$2.00)</button>
+              <button type="button" class="btn btn-secondary btn-niche" data-rpm="3.50">Lifestyle / Vlog (~$3.50)</button>
+              <button type="button" class="btn btn-secondary btn-niche" data-rpm="5.50">Tech &amp; Gadgets (~$5.50)</button>
+              <button type="button" class="btn btn-secondary btn-niche" data-rpm="12.00">Finance &amp; Investing (~$12.00)</button>
+            </div>
+          </div>
+
+          <div style="background: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border); font-size: var(--font-size-xs); color: var(--color-text-muted);">
+            <strong style="color: var(--color-text);">What is RPM?</strong> RPM (Revenue Per Mille) represents the creator's actual take-home earnings per 1,000 views <em>after</em> YouTube's 45% revenue share is deducted.
+          </div>
+        </div>
+      </div>
+
+      <!-- Projected Earnings Hero Grid -->
+      <div class="stats-grid" style="margin-block-end: var(--space-4);">
+        <div class="stat-card" style="border: 2px solid var(--color-primary);">
+          <div class="stat-label">Estimated Daily Earnings</div>
+          <div class="stat-value" id="est-daily" style="color: var(--color-primary);">$35.00</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);"><span id="est-daily-views">10,000</span> views / day</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Estimated Monthly Earnings</div>
+          <div class="stat-value" id="est-monthly">$1,050.00</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);">Based on 30 calendar days</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Projected Yearly Earnings</div>
+          <div class="stat-value" id="est-yearly">$12,775.00</div>
+          <div style="font-size: var(--font-size-xs); color: var(--color-text-muted); margin-block-start: var(--space-1);">Based on 365 calendar days</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structured 9-Section Documentation -->
+    <div class="tool-documentation">
+      <section class="doc-section">
+        <h2>What Does the YouTube Money Calculator Do?</h2>
+        <p>
+          The <strong>YouTube Money &amp; Earnings Calculator</strong> helps video creators, aspiring YouTubers, and digital marketers forecast potential ad revenue from their channels. Video monetization is governed by <strong>RPM (Revenue Per Mille)</strong>, representing the amount of ad revenue a creator earns per 1,000 video views after YouTube's platform cut.
+        </p>
+        <p>
+          By adjusting estimated daily view volumes and category RPM rates, creators can visualize realistic daily, monthly, and annual revenue goals, plan upload schedules, and evaluate the earning potential of different content niches.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Step-by-Step Instructions</h2>
+        <ol class="step-list">
+          <li><strong>Set Daily Views:</strong> Move the views slider or type your daily average view count into the box.</li>
+          <li><strong>Select or Adjust RPM:</strong> Pick a preset niche (such as Gaming, Tech, or Finance) or manually adjust the RPM slider to match your channel's actual YouTube Analytics dashboard.</li>
+          <li><strong>Review Projections:</strong> Instantly inspect projected daily, monthly, and annual AdSense earnings.</li>
+          <li><strong>Model Growth Scenarios:</strong> Test higher view counts to evaluate how publishing more videos or increasing view duration could impact your monthly income.</li>
+        </ol>
+      </section>
+
+      <section class="doc-section">
+        <h2>Common Practical Use Cases</h2>
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Channel Growth Planning</h3>
+            <p>Model the viewership milestones needed to reach full-time creator income thresholds or cover production costs.</p>
+          </div>
+          <div class="card">
+            <h3>Niche Comparison</h3>
+            <p>Understand why a personal finance channel with 50,000 views often earns as much as an entertainment channel with 500,000 views.</p>
+          </div>
+          <div class="card">
+            <h3>Sponsorship Baseline Setting</h3>
+            <p>Use estimated AdSense baseline earnings as a benchmark when negotiating flat-rate brand sponsorship packages.</p>
+          </div>
+          <div class="card">
+            <h3>Financial Budgeting</h3>
+            <p>Calculate realistic conservative and optimistic annual earnings brackets for tax planning and equipment upgrades.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Realistic Example &amp; Expected Output</h2>
+        <div class="example-box">
+          <div class="example-title">Example Channel Scenario (Tech Review Channel):</div>
+          <pre class="example-pre">Daily Views: 25,000 views
+Niche RPM: $5.50 per 1,000 views
+
+Daily Revenue: (25,000 / 1,000) &times; $5.50 = $137.50 / day
+Monthly Revenue: $137.50 &times; 30 = $4,125.00 / month
+Yearly Revenue: $137.50 &times; 365 = $50,187.50 / year</pre>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Technical Specifications &amp; Mechanics</h2>
+        <ul class="specs-list">
+          <li><strong>Formula:</strong> <code>Estimated Earnings = (Daily Views / 1,000) &times; RPM</code>.</li>
+          <li><strong>Calendar Multipliers:</strong> Monthly estimates use standard 30-day billing periods; annual estimates use a 365-day year.</li>
+          <li><strong>Currency:</strong> Displayed in US Dollars (USD), the global benchmark for YouTube Google AdSense payments.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section">
+        <h2>Limitations &amp; Browser Boundaries</h2>
+        <p>
+          This calculator models display and video ad revenue only. It does not account for channel memberships, Super Chats, YouTube Premium subscriber revenue shares, merchandise sales, or private third-party affiliate partnerships.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Privacy &amp; Security Guarantee</h2>
+        <p>
+          All projection calculations execute locally in your web browser. None of your channel metrics, view counts, or revenue simulations are ever tracked, logged, or uploaded to an external server.
+        </p>
+      </section>
+
+      <section class="doc-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">What is the difference between CPM and RPM?</summary>
+            <div class="faq-answer">
+              <p><strong>CPM (Cost Per Mille)</strong> is what advertisers pay YouTube for 1,000 ad impressions. <strong>RPM (Revenue Per Mille)</strong> is the actual metric that matters to creators: it measures how much money the creator earns per 1,000 total video views after YouTube's 45% revenue cut.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Why do different niches have different RPMs?</summary>
+            <div class="faq-answer">
+              <p>Advertisers bid higher rates on audiences with high purchasing intent. Financial software, real estate, and B2B SaaS companies compete fiercely for adult viewers interested in investments, resulting in $10–$20+ RPMs. In contrast, gaming or comedy channels attract younger viewers where general advertisers bid lower rates ($1.50–$3.00 RPM).</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Do YouTube Shorts pay the same as long-form videos?</summary>
+            <div class="faq-answer">
+              <p>No. YouTube Shorts currently have significantly lower RPMs (typically $0.05 to $0.20 per 1,000 views) because ads run between Shorts in the feed rather than directly on individual videos.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="doc-section">
+        <h2>Related Browser Tools</h2>
+        <div class="related-tools-grid">
+          <a href="/tools/percentage-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Percentage Calculator</div>
+            <div class="related-tool-desc">Calculate percentage increase, revenue splits, and discounts.</div>
+          </a>
+          <a href="/tools/youtube-thumbnail-downloader.html" class="related-tool-chip">
+            <div class="related-tool-title">YouTube Thumbnail Downloader</div>
+            <div class="related-tool-desc">Extract high-resolution thumbnail images from any YouTube video.</div>
+          </a>
+          <a href="/tools/grade-calculator.html" class="related-tool-chip">
+            <div class="related-tool-title">Grade Calculator</div>
+            <div class="related-tool-desc">Calculate weighted course grades and target exam scores.</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-links">
+        <a href="/pages/about.html">About Us</a>
+        <a href="/pages/privacy.html">Privacy Policy</a>
+        <a href="/pages/terms.html">Terms and Conditions</a>
+        <a href="/pages/disclaimer.html">Disclaimer</a>
+        <a href="/pages/contact.html">Contact Us</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Free Online Tools. Built for speed, privacy, and simplicity. 100% Client-Side Processing.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    const inputViews = document.getElementById('input-views');
+    const sliderViews = document.getElementById('slider-views');
+    const inputRpm = document.getElementById('input-rpm');
+    const sliderRpm = document.getElementById('slider-rpm');
+
+    const estDaily = document.getElementById('est-daily');
+    const estDailyViews = document.getElementById('est-daily-views');
+    const estMonthly = document.getElementById('est-monthly');
+    const estYearly = document.getElementById('est-yearly');
+
+    const nicheButtons = document.querySelectorAll('.btn-niche');
+
+    function formatMoney(amount) {
+      return '$' + amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function calculate() {
+      const views = parseFloat(inputViews.value) || 0;
+      const rpm = parseFloat(inputRpm.value) || 0;
+
+      const dailyEarnings = (views / 1000) * rpm;
+      const monthlyEarnings = dailyEarnings * 30;
+      const yearlyEarnings = dailyEarnings * 365;
+
+      estDaily.textContent = formatMoney(dailyEarnings);
+      estDailyViews.textContent = views.toLocaleString();
+      estMonthly.textContent = formatMoney(monthlyEarnings);
+      estYearly.textContent = formatMoney(yearlyEarnings);
+    }
+
+    inputViews.addEventListener('input', () => {
+      sliderViews.value = inputViews.value;
+      calculate();
+    });
+
+    sliderViews.addEventListener('input', () => {
+      inputViews.value = sliderViews.value;
+      calculate();
+    });
+
+    inputRpm.addEventListener('input', () => {
+      sliderRpm.value = inputRpm.value;
+      calculate();
+    });
+
+    sliderRpm.addEventListener('input', () => {
+      inputRpm.value = sliderRpm.value;
+      calculate();
+    });
+
+    nicheButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const rate = parseFloat(btn.dataset.rpm);
+        inputRpm.value = rate.toFixed(2);
+        sliderRpm.value = rate.toFixed(2);
+        calculate();
+      });
+    });
+
+    // Initial calculation
+    calculate();
+  })();
+  </script>
+</body>
+</html>

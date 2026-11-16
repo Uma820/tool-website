@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar Panel Size Calculator — Solar Array &amp; Roof Space Estimator</title>
+  <meta name="description" content="Calculate the number of solar panels, array kW capacity, roof area, and off-grid battery storage needed based on your electricity bill or daily power usage.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://nexivo.com/tools/solar-panel-size-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://nexivo.com/tools/solar-panel-size-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://nexivo.com/tools/solar-panel-size-calculator.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Solar Panel Size Calculator",
+    "description": "Calculate solar array size in kW, required panel count, roof area, and battery storage based on electricity bill or daily energy consumption.",
+    "url": "https://nexivo.com/tools/solar-panel-size-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All modern browsers",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are Peak Sun Hours (PSH) and how do they differ from daylight hours?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Peak Sun Hours (PSH) measure the equivalent number of hours per day when solar irradiance averages 1,000 Watts per square meter (1 kW/m²). While a region may experience 12 hours of total daylight, morning and late afternoon sunlight is weak. Most sunny regions receive between 4.5 and 6.0 Peak Sun Hours per day."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is a system derate factor (efficiency loss) applied to solar arrays?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Solar panels operate under real-world conditions that differ from factory Standard Test Conditions (STC, 25°C). High ambient temperatures reduce panel voltage, inverters lose 3%–5% during DC-to-AC conversion, dust and soiling block light, and wiring creates resistive drops. An industry-standard derate factor of 75% to 80% (0.78 default) ensures your system realistically generates the target energy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between On-Grid, Off-Grid, and Hybrid solar systems?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "On-Grid (grid-tied) systems connect directly to the public utility grid without batteries, feeding excess electricity for net-metering credits. Off-Grid systems operate independently from the grid and require dedicated battery banks to provide power during nights and cloudy days. Hybrid systems combine both: they feature battery storage for emergency blackout backup while remaining tied to the utility grid for net-metering."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much roof space do modern monocrystalline solar panels require?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Modern high-efficiency monocrystalline solar panels (400W to 550W) measure approximately 2.0 to 2.2 meters in length and 1.0 to 1.1 meters in width, occupying about 21 to 24 square feet (1.95 to 2.2 m²) per panel. A standard residential 4 kW system (approx. 8–10 panels) requires around 175 to 220 square feet of unobstructed, unshaded roof space."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span>Free Online Tools</span>
+      </a>
+      <div class="header-actions">
+        <select class="form-select lang-selector" aria-label="Select Language" style="inline-size: auto; padding-block: 0.35rem; font-size: var(--font-size-xs);">
+          <option value="en" selected>English</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="fr">Français (French)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+        <a href="/" class="btn btn-secondary">All Tools</a>
+        <button type="button" class="btn btn-icon theme-toggle-btn" aria-label="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tool-workspace">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li>/</li>
+      <li><a href="/#solar">Solar &amp; Energy</a></li>
+      <li>/</li>
+      <li aria-current="page">Solar Panel Size Calculator</li>
+    </nav>
+
+    <!-- Solar & Energy Suite Navigation -->
+    <div class="solar-suite-nav">
+      <span class="solar-suite-label">Solar &amp; Energy Suite:</span>
+      <a href="/tools/battery-runtime-calculator.html" class="solar-pill">Battery Runtime</a>
+      <a href="/tools/inverter-backup-calculator.html" class="solar-pill">Inverter Backup</a>
+      <a href="/tools/solar-panel-size-calculator.html" class="solar-pill active">Solar Array Size</a>
+      <a href="/tools/generator-size-calculator.html" class="solar-pill">Generator Sizing</a>
+    </div>
+
+    <div class="tool-header-area">
+      <h1 class="tool-header-title">Solar Panel Size &amp; Roof Space Calculator</h1>
+      <p class="tool-header-desc">
+        Calculate the exact solar system size in kW, total number of solar panels, required roof area, and off-grid battery storage needed to offset your electric bill.
+      </p>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-success">100% In-Browser</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">On-Grid &amp; Off-Grid</span>
+        <span class="badge" style="background: var(--color-bg-secondary); border: 1px solid var(--color-border);">Roof Space &amp; Battery Sizing</span>
+      </div>
+    </div>
+
+    <div class="calculator-card" style="margin-top: var(--space-4);">
+      <!-- Section 1: System Type & Input Mode -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>☀️</span> 1. System Architecture &amp; Consumption Mode
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-3);">
+          <div>
+            <label style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">System Architecture:</label>
+            <div class="btn-group" role="group" aria-label="System Type Selector" style="display: flex;">
+              <button type="button" class="btn btn-secondary btn-sys active" data-type="ongrid" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem;">On-Grid (Grid-Tied)</button>
+              <button type="button" class="btn btn-secondary btn-sys" data-type="offgrid" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem;">Off-Grid (Battery)</button>
+              <button type="button" class="btn btn-secondary btn-sys" data-type="hybrid" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem;">Hybrid (Grid+Bat)</button>
+            </div>
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              On-grid feeds utility grid; off-grid/hybrid sizes an autonomous battery bank.
+            </span>
+          </div>
+
+          <div>
+            <label style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Consumption Input Mode:</label>
+            <div class="btn-group" role="group" aria-label="Input Mode Selector" style="display: flex;">
+              <button type="button" class="btn btn-secondary btn-mode active" data-mode="monthly_bill" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem;">Monthly Bill (kWh)</button>
+              <button type="button" class="btn btn-secondary btn-mode" data-mode="daily_load" style="flex: 1; font-size: var(--font-size-xs); padding: 0.4rem;">Daily Load (Wh/day)</button>
+            </div>
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              Enter monthly bill from your utility or sum of daily appliance watt-hours.
+            </span>
+          </div>
+        </div>
+
+        <!-- Energy Inputs Container -->
+        <div style="margin-top: var(--space-3); background: var(--color-bg-secondary); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+          <div id="wrapper-monthly-bill">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+              <label for="monthly-kwh-input" style="font-weight: 600; font-size: var(--font-size-xs); margin: 0;">Monthly Electricity Consumption (kWh / Units):</label>
+              <span id="lbl-daily-equiv" style="font-size: 11px; color: var(--color-text-muted);">15.0 kWh / day</span>
+            </div>
+            <div style="display: flex; gap: var(--space-2); align-items: center;">
+              <input type="number" id="monthly-kwh-input" class="form-control" value="450" min="10" max="50000" step="10" aria-label="Monthly electricity units in kilowatt-hours" style="font-size: var(--font-size-base); font-weight: 700; max-width: 200px;">
+              <span style="font-weight: 600; color: var(--color-text-muted);">kWh / month</span>
+            </div>
+            <div style="display: flex; gap: var(--space-1); margin-top: var(--space-2); flex-wrap: wrap;">
+              <button type="button" class="btn btn-secondary btn-quick-kwh" data-kwh="250" style="padding: 0.2rem 0.5rem; font-size: 11px;">Small Apt (250 kWh)</button>
+              <button type="button" class="btn btn-secondary btn-quick-kwh" data-kwh="450" style="padding: 0.2rem 0.5rem; font-size: 11px;">Avg Home (450 kWh)</button>
+              <button type="button" class="btn btn-secondary btn-quick-kwh" data-kwh="750" style="padding: 0.2rem 0.5rem; font-size: 11px;">AC / High (750 kWh)</button>
+              <button type="button" class="btn btn-secondary btn-quick-kwh" data-kwh="1200" style="padding: 0.2rem 0.5rem; font-size: 11px;">Large / EV (1,200 kWh)</button>
+            </div>
+          </div>
+
+          <div id="wrapper-daily-load" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+              <label for="daily-wh-input" style="font-weight: 600; font-size: var(--font-size-xs); margin: 0;">Daily Consumption (Watt-Hours / day):</label>
+              <span id="lbl-monthly-equiv" style="font-size: 11px; color: var(--color-text-muted);">450 kWh / month</span>
+            </div>
+            <div style="display: flex; gap: var(--space-2); align-items: center;">
+              <input type="number" id="daily-wh-input" class="form-control" value="15000" min="100" max="500000" step="500" aria-label="Daily consumption in Watt-hours" style="font-size: var(--font-size-base); font-weight: 700; max-width: 200px;">
+              <span style="font-weight: 600; color: var(--color-text-muted);">Wh / day</span>
+            </div>
+            <div style="display: flex; gap: var(--space-1); margin-top: var(--space-2); flex-wrap: wrap;">
+              <button type="button" class="btn btn-secondary btn-quick-wh" data-wh="5000" style="padding: 0.2rem 0.5rem; font-size: 11px;">5,000 Wh (Cabin)</button>
+              <button type="button" class="btn btn-secondary btn-quick-wh" data-wh="10000" style="padding: 0.2rem 0.5rem; font-size: 11px;">10,000 Wh</button>
+              <button type="button" class="btn btn-secondary btn-quick-wh" data-wh="15000" style="padding: 0.2rem 0.5rem; font-size: 11px;">15,000 Wh (Standard)</button>
+              <button type="button" class="btn btn-secondary btn-quick-wh" data-wh="25000" style="padding: 0.2rem 0.5rem; font-size: 11px;">25,000 Wh (High)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Solar Insolation & Panel Specifications -->
+      <div class="form-section" style="margin-bottom: var(--space-4);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>⚙️</span> 2. Solar Insolation &amp; Module Configuration
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-3);">
+          <!-- Peak Sun Hours -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+              <label for="psh-slider" style="font-weight: 600; font-size: var(--font-size-xs); margin: 0;">Peak Sun Hours (PSH / Day):</label>
+              <span id="lbl-psh-val" style="font-weight: 700; color: var(--color-primary); font-size: var(--font-size-xs);">5.0 hrs / day</span>
+            </div>
+            <input type="range" id="psh-slider" min="2.0" max="8.0" step="0.1" value="5.0" class="form-range" style="width: 100%;" aria-label="Peak Sun Hours per day slider">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-top: 0.4rem;">
+              <button type="button" class="btn btn-secondary btn-psh" data-psh="3.5" style="padding: 0.25rem; font-size: 10px;">Cloudy (3.5 PSH)</button>
+              <button type="button" class="btn btn-secondary btn-psh" data-psh="4.5" style="padding: 0.25rem; font-size: 10px;">Moderate (4.5 PSH)</button>
+              <button type="button" class="btn btn-secondary btn-psh active" data-psh="5.0" style="padding: 0.25rem; font-size: 10px;">Sunny (5.0 PSH)</button>
+              <button type="button" class="btn btn-secondary btn-psh" data-psh="6.5" style="padding: 0.25rem; font-size: 10px;">Desert (6.5 PSH)</button>
+            </div>
+          </div>
+
+          <!-- Panel Wattage -->
+          <div>
+            <label style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Individual Panel Rating:</label>
+            <div class="btn-group" role="group" aria-label="Panel Wattage Selector" style="display: flex; margin-bottom: 0.4rem;">
+              <button type="button" class="btn btn-secondary btn-watt" data-w="400" style="flex: 1; font-size: var(--font-size-xs); padding: 0.35rem;">400W</button>
+              <button type="button" class="btn btn-secondary btn-watt" data-w="450" style="flex: 1; font-size: var(--font-size-xs); padding: 0.35rem;">450W</button>
+              <button type="button" class="btn btn-secondary btn-watt active" data-w="540" style="flex: 1; font-size: var(--font-size-xs); padding: 0.35rem;">540W</button>
+              <button type="button" class="btn btn-secondary btn-watt" data-w="550" style="flex: 1; font-size: var(--font-size-xs); padding: 0.35rem;">550W</button>
+              <button type="button" class="btn btn-secondary btn-watt" data-w="custom" style="flex: 1; font-size: var(--font-size-xs); padding: 0.35rem;">Custom</button>
+            </div>
+            <div id="custom-watt-wrapper" style="display: none; margin-top: 0.25rem;">
+              <input type="number" id="custom-watt-input" class="form-control" value="540" min="50" max="800" step="10" placeholder="Custom Wattage (e.g. 520)" aria-label="Custom panel wattage in watts">
+            </div>
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block;">
+              Commercial monocrystalline half-cut PERC/TOPCon modules typically range 450W–550W.
+            </span>
+          </div>
+
+          <!-- Derate Factor -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+              <label for="derate-slider" style="font-weight: 600; font-size: var(--font-size-xs); margin: 0;">System Efficiency / Derate Factor:</label>
+              <span id="lbl-derate-val" style="font-weight: 700; color: var(--color-primary); font-size: var(--font-size-xs);">78%</span>
+            </div>
+            <input type="range" id="derate-slider" min="65" max="90" step="1" value="78" class="form-range" style="width: 100%;" aria-label="System efficiency and derate factor slider">
+            <span style="font-size: 11px; color: var(--color-text-muted); display: block; margin-top: 0.25rem;">
+              Accounts for inverter losses (4%), wiring resistance (2%), dust/soiling (3%), and cell heat derating (13%).
+            </span>
+          </div>
+        </div>
+
+        <!-- Section 2B: Off-Grid / Hybrid Battery Storage Parameters (Dynamic) -->
+        <div id="offgrid-options-panel" style="display: none; margin-top: var(--space-4); padding: var(--space-3); border-radius: var(--radius-md); background: rgba(234, 88, 12, 0.05); border: 1px solid rgba(234, 88, 12, 0.25);">
+          <h3 style="font-size: var(--font-size-sm); font-weight: 700; margin-top: 0; margin-bottom: var(--space-2); color: #ea580c; display: flex; align-items: center; gap: 0.5rem;">
+            <span>🔋</span> Off-Grid &amp; Hybrid Battery Storage Options
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3);">
+            <div>
+              <label for="autonomy-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Days of Autonomy (Cloudy Backup):</label>
+              <select id="autonomy-select" class="form-select" aria-label="Days of autonomy for battery backup">
+                <option value="1" selected>1 Day (Standard Sunny Climate)</option>
+                <option value="2">2 Days (Recommended Residential)</option>
+                <option value="3">3 Days (Critical / Remote Off-Grid)</option>
+              </select>
+            </div>
+            <div>
+              <label for="bat-voltage-select" style="font-weight: 600; font-size: var(--font-size-xs); display: block; margin-bottom: 0.25rem;">Battery Bank Nominal Voltage:</label>
+              <select id="bat-voltage-select" class="form-select" aria-label="Battery bank nominal system voltage">
+                <option value="48" selected>48V (Standard for Solar Arrays &gt;2kW)</option>
+                <option value="24">24V (Mid-size Solar Systems)</option>
+                <option value="12">12V (Small RV / Shed Systems)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-2); margin-top: var(--space-4); flex-wrap: wrap;">
+        <button type="button" id="btn-copy-specs" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy Solar System Specs</span>
+        </button>
+        <button type="button" id="btn-reset" class="btn btn-secondary">Reset to Defaults</button>
+      </div>
+
+      <!-- Section 3: Sizing KPI Output Cards -->
+      <div style="margin-top: var(--space-5);">
+        <h2 style="font-size: var(--font-size-base); font-weight: 700; margin-top: 0; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+          <span>📊</span> Recommended Solar Sizing Summary
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3);">
+          <!-- KPI 1: System Size -->
+          <div style="background: var(--color-bg-surface); border: 2px solid var(--color-primary); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Required Array Size</span>
+            <div id="kpi-array-kw" style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin: 0.25rem 0;">3.85 kW</div>
+            <div id="kpi-actual-array-kw" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Actual Installed: 4.32 kW</div>
+          </div>
+
+          <!-- KPI 2: Panel Count -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Solar Panel Count</span>
+            <div id="kpi-panel-count" style="font-size: 2rem; font-weight: 800; color: #16a34a; margin: 0.25rem 0;">8 Panels</div>
+            <div id="kpi-panel-desc" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">@ 540W monocrystalline</div>
+          </div>
+
+          <!-- KPI 3: Roof Area -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Estimated Roof Area</span>
+            <div id="kpi-roof-sqft" style="font-size: 2rem; font-weight: 800; color: #0284c7; margin: 0.25rem 0;">176 sq ft</div>
+            <div id="kpi-roof-sqm" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">16.4 m² unshaded area</div>
+          </div>
+
+          <!-- KPI 4: Daily Generation -->
+          <div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
+            <span style="font-size: var(--font-size-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase;">Daily Generation Target</span>
+            <div id="kpi-daily-gen" style="font-size: 2rem; font-weight: 800; color: #9333ea; margin: 0.25rem 0;">15.0 kWh/d</div>
+            <div id="kpi-monthly-gen" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">~450 kWh / month</div>
+          </div>
+        </div>
+
+        <!-- Off-Grid Battery Storage Recommendation Card -->
+        <div id="battery-kpi-card" style="display: none; margin-top: var(--space-3); background: var(--color-bg-surface); border: 1px solid #ea580c; border-radius: var(--radius-md); padding: var(--space-3);">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); align-items: center;">
+            <div>
+              <span style="font-size: 11px; font-weight: 700; color: #ea580c; text-transform: uppercase;">Recommended Battery Bank</span>
+              <div id="kpi-bat-kwh" style="font-size: 1.5rem; font-weight: 800; color: #ea580c;">22.1 kWh</div>
+              <div id="kpi-bat-ah" style="font-size: var(--font-size-xs); color: var(--color-text-muted);">460 Ah @ 48V bank</div>
+            </div>
+            <div>
+              <span style="font-size: 11px; font-weight: 700; color: #ea580c; text-transform: uppercase;">Charge Controller (MPPT)</span>
+              <div id="kpi-mppt-amps" style="font-size: 1.5rem; font-weight: 800; color: #ea580c;">113 Amps</div>
+              <div style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Min MPPT rating with 1.25 margin</div>
+            </div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-secondary); line-height: 1.4;">
+              💡 <strong>Storage Note:</strong> Calculated assuming 80% safe Depth of Discharge and 85% roundtrip chemical efficiency for LiFePO4 or industrial deep-cycle battery banks.
+            </div>
+          </div>
+        </div>
+
+        <!-- Environmental & Energy Offset Impact -->
+        <div style="margin-top: var(--space-3); background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: var(--space-3); border: 1px solid var(--color-border);">
+          <h3 style="font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; margin-top: 0; margin-bottom: var(--space-2); color: var(--color-text-muted);">
+            🌱 Estimated Annual Environmental &amp; Energy Impact
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-2); font-size: var(--font-size-sm);">
+            <div><strong>Annual Clean Energy:</strong> <span id="env-annual-kwh" style="color: #16a34a; font-weight: 700;">6,156 kWh / year</span></div>
+            <div><strong>CO₂ Emissions Avoided:</strong> <span id="env-annual-co2" style="color: #16a34a; font-weight: 700;">4.3 Metric Tons</span></div>
+            <div><strong>Equivalent Trees Planted:</strong> <span id="env-trees" style="color: #16a34a; font-weight: 700;">~72 Trees / year</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Documentation & Educational Guide -->
+    <div class="tool-documentation" style="margin-top: var(--space-5);">
+      <h2>What This Tool Does &amp; Problem It Solves</h2>
+      <p>
+        The <strong>Solar Panel Size Calculator</strong> eliminates guesswork when designing residential or commercial photovoltaic (PV) systems. Homeowners, electricians, and solar installers often struggle to translate raw utility bills or appliance watt-hours into physical hardware requirements. This tool mathematically back-calculates your exact daily electrical demand, correlates it against your local <strong>Peak Sun Hours (PSH)</strong>, accounts for real-world system inefficiencies (thermal derating, inverter losses, dirt, and wiring resistance), and computes the exact number of solar panels, nominal array kW capacity, physical roof area, and off-grid battery storage needed.
+      </p>
+
+      <h2>Step-by-Step Instructions</h2>
+      <ol>
+        <li><strong>Choose Your System Architecture:</strong> Select <strong>On-Grid</strong> if you intend to feed excess energy back to your utility via net-metering. Select <strong>Off-Grid</strong> or <strong>Hybrid</strong> if you require stand-alone battery storage for night usage or blackout resilience.</li>
+        <li><strong>Enter Electricity Consumption:</strong> Enter your average monthly electric bill in kilowatt-hours (kWh) from your latest utility statement, or toggle to <strong>Daily Load (Wh)</strong> if calculating from a custom list of appliances.</li>
+        <li><strong>Set Regional Peak Sun Hours:</strong> Adjust the slider to match your location's daily solar insolation. Use regional presets (e.g. 5.0 PSH for sunny temperate zones, 3.5 PSH for cloudy northern climates).</li>
+        <li><strong>Select Panel Wattage:</strong> Choose standard commercial panel ratings (400W, 450W, 540W, 550W) or input custom module ratings.</li>
+        <li><strong>Review Sizing Results:</strong> Instantly inspect required array kW, panel count, minimum unshaded roof area (in both square feet and square meters), and off-grid battery bank specifications.</li>
+      </ol>
+
+      <h2>Mathematical Formulas Used</h2>
+      <p>
+        Photovoltaic engineering sizing is governed by solar insolation and system-level thermal/electrical losses:
+      </p>
+      <ul>
+        <li>$$\text{Daily kWh Consumption} = \frac{\text{Monthly kWh}}{30}$$</li>
+        <li>$$\text{Required Solar Array (kW)} = \frac{\text{Daily kWh}}{\text{Peak Sun Hours (PSH)} \times \text{Derate Factor}}$$</li>
+        <li>$$\text{Panel Count} = \left\lceil \frac{\text{Required Solar Array (Watts)}}{\text{Individual Panel Wattage}} \right\rceil$$</li>
+        <li>$$\text{Actual Installed Capacity (kW)} = \frac{\text{Panel Count} \times \text{Panel Wattage}}{1000}$$</li>
+        <li>$$\text{Roof Area (sq ft)} = \text{Panel Count} \times 22.0\text{ sq ft}$$</li>
+        <li>$$\text{Off-Grid Battery Bank (kWh)} = \frac{\text{Daily kWh} \times \text{Days of Autonomy}}{\text{Depth of Discharge (0.80)} \times \text{Roundtrip Efficiency (0.85)}}$$</li>
+      </ul>
+
+      <h2>Reference Table: Global Peak Sun Hours (PSH) by Region &amp; Climate</h2>
+      <table class="table" style="width: 100%; font-size: var(--font-size-sm); margin-top: var(--space-3); border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--color-border); text-align: left;">
+            <th style="padding: 0.5rem;">Climate / Region</th>
+            <th style="padding: 0.5rem;">Representative Locations</th>
+            <th style="padding: 0.5rem;">Average Daily PSH</th>
+            <th style="padding: 0.5rem;">Solar Viability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem;">Cloudy / Northern Climate</td>
+            <td style="padding: 0.5rem;">UK, Germany, Pacific Northwest, Scandinavia</td>
+            <td style="padding: 0.5rem;">3.0 – 3.8 hrs/day</td>
+            <td style="padding: 0.5rem; color: #ea580c; font-weight: 600;">Moderate (Larger array needed)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem;">Moderate / Temperate</td>
+            <td style="padding: 0.5rem;">Central US, Southern Europe, Japan</td>
+            <td style="padding: 0.5rem;">4.2 – 4.8 hrs/day</td>
+            <td style="padding: 0.5rem; color: #0284c7; font-weight: 600;">Good (Standard sizing)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem;">Sunny / Subtropical</td>
+            <td style="padding: 0.5rem;">India, Florida, Australia, Southeast Asia</td>
+            <td style="padding: 0.5rem;">5.0 – 5.8 hrs/day</td>
+            <td style="padding: 0.5rem; color: #16a34a; font-weight: 600;">Excellent (High ROI)</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem;">Desert / Arid Sunbelt</td>
+            <td style="padding: 0.5rem;">Arizona, Middle East, North Africa, Rajasthan</td>
+            <td style="padding: 0.5rem;">6.0 – 7.0 hrs/day</td>
+            <td style="padding: 0.5rem; color: #16a34a; font-weight: 700;">Optimal (Maximum generation)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Comparison Table: On-Grid vs. Off-Grid vs. Hybrid Solar Systems</h2>
+      <table class="table" style="width: 100%; font-size: var(--font-size-sm); margin-top: var(--space-3); border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--color-border); text-align: left;">
+            <th style="padding: 0.5rem;">System Feature</th>
+            <th style="padding: 0.5rem;">On-Grid (Grid-Tied)</th>
+            <th style="padding: 0.5rem;">Off-Grid (Stand-Alone)</th>
+            <th style="padding: 0.5rem;">Hybrid (Grid + Storage)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Battery Storage</td>
+            <td style="padding: 0.5rem;">None (Utility acts as virtual battery)</td>
+            <td style="padding: 0.5rem;">Mandatory large battery bank</td>
+            <td style="padding: 0.5rem;">Optional / Medium battery bank</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Grid Blackout Behavior</td>
+            <td style="padding: 0.5rem; color: #dc2626;">Shuts down immediately (anti-islanding)</td>
+            <td style="padding: 0.5rem; color: #16a34a;">Unaffected (Continuous power)</td>
+            <td style="padding: 0.5rem; color: #16a34a;">Seamless backup switchover</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--color-border);">
+            <td style="padding: 0.5rem; font-weight: 600;">Upfront Capital Cost</td>
+            <td style="padding: 0.5rem; color: #16a34a; font-weight: 600;">Lowest (Fastest payback: 3–5 yrs)</td>
+            <td style="padding: 0.5rem; color: #ea580c;">Highest (Batteries add 40%–60%)</td>
+            <td style="padding: 0.5rem;">Moderate to High</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem; font-weight: 600;">Best Suited For</td>
+            <td style="padding: 0.5rem;">Urban / Suburban homes with reliable grid</td>
+            <td style="padding: 0.5rem;">Remote cabins, rural sites, off-grid farms</td>
+            <td style="padding: 0.5rem;">Homes with frequent power outages</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Common Practical Use Cases</h2>
+      <ul>
+        <li><strong>Residential Rooftop Solar:</strong> Sizing grid-tied rooftop solar installations to achieve net-zero electricity bills and maximize utility feed-in tariff credits.</li>
+        <li><strong>Off-Grid Homesteads &amp; Remote Cabins:</strong> Calculating autonomous battery storage and PV array capacity for off-grid homes without grid power connection.</li>
+        <li><strong>Commercial &amp; Small Business:</strong> Evaluating daytime solar capacity for retail stores, workshops, and offices to slash expensive commercial peak-hour power tariffs.</li>
+        <li><strong>Agricultural &amp; Water Pumping:</strong> Determining dedicated solar array wattage for DC and AC agricultural solar irrigation pumps.</li>
+      </ul>
+
+      <h2>Realistic Example &amp; Expected Output</h2>
+      <p>
+        Consider a standard family home with a monthly electric bill of <strong>450 kWh</strong> located in a sunny region receiving <strong>5.0 Peak Sun Hours/day</strong>:
+      </p>
+      <ul>
+        <li><strong>Daily Electrical Consumption:</strong> $450\text{ kWh} / 30 = 15.0\text{ kWh/day}$.</li>
+        <li><strong>System Efficiency Derating:</strong> Applying a standard $78\%$ derate factor accounts for cell heating and inverter conversion losses ($5.0 \times 0.78 = 3.90\text{ effective generating hours}$).</li>
+        <li><strong>Required Solar Array Capacity:</strong> $15.0\text{ kWh} / 3.90\text{ hrs} = 3.85\text{ kW}$.</li>
+        <li><strong>Module Sizing:</strong> Using modern $540\text{W}$ monocrystalline panels, the system requires $\lceil 3,850\text{W} / 540\text{W} \rceil = 8\text{ panels}$.</li>
+        <li><strong>Actual Installed Capacity:</strong> $8 \times 540\text{W} = 4.32\text{ kW}$ DC rating.</li>
+        <li><strong>Roof Space Required:</strong> $8 \times 22\text{ sq ft} = 176\text{ sq ft}$ ($16.4\text{ m}^2$) of unshaded south or southwest roof pitch.</li>
+      </ul>
+
+      <h2>Technical Specifications &amp; Mechanics</h2>
+      <p>
+        Solar panels are rated in watts under Standard Test Conditions (STC: $1,000\text{ W/m}^2$ irradiance, $25^\circ\text{C}$ cell temperature, Air Mass 1.5). In hot summer conditions, photovoltaic cells heat up to $50^\circ\text{C}$ to $65^\circ\text{C}$. Because silicon has a negative temperature coefficient of approximately $-0.35\%/\text{°C}$, actual midday module output drops by $10\%$ to $14\%$. Additional losses include DC-to-AC inverter inefficiency ($3\%–5\%$), cabling resistance ($1\%–2\%$), and soiling/dust accumulation ($2\%–5\%$). Our calculator combines these into an editable $78\%$ system derate factor.
+      </p>
+
+      <h2>Limitations &amp; Browser Boundaries</h2>
+      <p>
+        This calculator executes 100% locally in your web browser. It does not access private utility accounts or cloud satellite roof geometry tools. Final installation planning requires on-site structural roof load evaluation, shading analysis from nearby trees or chimneys, local net-metering regulatory caps, and electrical service panel busbar compliance (NEC 120% rule).
+      </p>
+
+      <h2>Privacy &amp; Security Guarantee</h2>
+      <p>
+        All inputs, electricity usage figures, and system dimensions remain entirely confidential on your local device. Zero data is transmitted, logged, or shared across external cloud servers.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>How many solar panels do I need for a 1,500 sq ft home?</h3>
+        <p>
+          Panel requirements depend on electricity consumption rather than home square footage. However, a typical 1,500 sq ft home consumes about 500 to 700 kWh/month. In a sunny region (5 PSH), this requires approximately 10 to 14 solar panels (400W–540W each) producing a 4.5 kW to 6.5 kW solar array.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>Can solar panels generate electricity on cloudy or rainy days?</h3>
+        <p>
+          Yes. Solar panels generate power from both direct beam radiation and diffuse ambient daylight. On overcast or rainy days, panels typically generate between 10% and 25% of their rated peak output.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>What direction should solar panels face?</h3>
+        <p>
+          In the Northern Hemisphere, solar panels should ideally face true South to maximize total annual energy yield. In the Southern Hemisphere, panels should face true North. A West-facing array is also beneficial in areas with time-of-use (TOU) utility rates that peak during late afternoons.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3>How long do modern solar panels last?</h3>
+        <p>
+          Most Tier-1 monocrystalline solar panels come with a 25-year performance warranty guaranteeing at least 80% to 85% of their original rated output after 25 years. Modern panels degrade at a modest rate of roughly 0.5% per year.
+        </p>
+      </div>
+
+      <h2>Related Browser Tools</h2>
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2);">
+        <a href="/tools/battery-runtime-calculator.html" class="related-tool-chip">🔋 Battery Runtime Calculator</a>
+        <a href="/tools/inverter-backup-calculator.html" class="related-tool-chip">⚡ Inverter Backup Calculator</a>
+        <a href="/tools/generator-size-calculator.html" class="related-tool-chip">⚙️ Generator Size Calculator</a>
+        <a href="/tools/unit-converter.html" class="related-tool-chip">🔄 Universal Unit Converter</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding: var(--space-4) 0; text-align: center; color: var(--color-text-muted); font-size: var(--font-size-xs);">
+    <div class="container">
+      <p>&copy; 2026 Free Online Tools. All rights reserved. 100% client-side privacy guaranteed.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/solar-utils.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      // State
+      let systemType = 'ongrid';
+      let inputMode = 'monthly_bill';
+      let panelWattage = 540;
+      let lastResult = null;
+
+      // DOM Elements
+      const sysBtns = document.querySelectorAll('.btn-sys');
+      const modeBtns = document.querySelectorAll('.btn-mode');
+      const wrapperMonthly = document.getElementById('wrapper-monthly-bill');
+      const wrapperDaily = document.getElementById('wrapper-daily-load');
+      const monthlyInput = document.getElementById('monthly-kwh-input');
+      const dailyInput = document.getElementById('daily-wh-input');
+      const lblDailyEquiv = document.getElementById('lbl-daily-equiv');
+      const lblMonthlyEquiv = document.getElementById('lbl-monthly-equiv');
+
+      const quickKwhBtns = document.querySelectorAll('.btn-quick-kwh');
+      const quickWhBtns = document.querySelectorAll('.btn-quick-wh');
+
+      const pshSlider = document.getElementById('psh-slider');
+      const lblPshVal = document.getElementById('lbl-psh-val');
+      const pshBtns = document.querySelectorAll('.btn-psh');
+
+      const wattBtns = document.querySelectorAll('.btn-watt');
+      const customWattWrapper = document.getElementById('custom-watt-wrapper');
+      const customWattInput = document.getElementById('custom-watt-input');
+
+      const derateSlider = document.getElementById('derate-slider');
+      const lblDerateVal = document.getElementById('lbl-derate-val');
+
+      const offgridPanel = document.getElementById('offgrid-options-panel');
+      const autonomySelect = document.getElementById('autonomy-select');
+      const batVoltageSelect = document.getElementById('bat-voltage-select');
+
+      const kpiArrayKw = document.getElementById('kpi-array-kw');
+      const kpiActualArrayKw = document.getElementById('kpi-actual-array-kw');
+      const kpiPanelCount = document.getElementById('kpi-panel-count');
+      const kpiPanelDesc = document.getElementById('kpi-panel-desc');
+      const kpiRoofSqft = document.getElementById('kpi-roof-sqft');
+      const kpiRoofSqm = document.getElementById('kpi-roof-sqm');
+      const kpiDailyGen = document.getElementById('kpi-daily-gen');
+      const kpiMonthlyGen = document.getElementById('kpi-monthly-gen');
+
+      const batteryKpiCard = document.getElementById('battery-kpi-card');
+      const kpiBatKwh = document.getElementById('kpi-bat-kwh');
+      const kpiBatAh = document.getElementById('kpi-bat-ah');
+      const kpiMpptAmps = document.getElementById('kpi-mppt-amps');
+
+      const envAnnualKwh = document.getElementById('env-annual-kwh');
+      const envAnnualCo2 = document.getElementById('env-annual-co2');
+      const envTrees = document.getElementById('env-trees');
+
+      const btnCopySpecs = document.getElementById('btn-copy-specs');
+      const btnReset = document.getElementById('btn-reset');
+
+      // System Type selection
+      sysBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          sysBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          systemType = this.dataset.type;
+          offgridPanel.style.display = (systemType === 'offgrid' || systemType === 'hybrid') ? 'block' : 'none';
+          calculate();
+        });
+      });
+
+      // Input Mode selection
+      modeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          modeBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          inputMode = this.dataset.mode;
+          if (inputMode === 'monthly_bill') {
+            wrapperMonthly.style.display = 'block';
+            wrapperDaily.style.display = 'none';
+          } else {
+            wrapperMonthly.style.display = 'none';
+            wrapperDaily.style.display = 'block';
+          }
+          calculate();
+        });
+      });
+
+      // Quick picks for kWh
+      quickKwhBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          monthlyInput.value = this.dataset.kwh;
+          calculate();
+        });
+      });
+
+      // Quick picks for Wh
+      quickWhBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          dailyInput.value = this.dataset.wh;
+          calculate();
+        });
+      });
+
+      // PSH Slider & Presets
+      pshSlider.addEventListener('input', function() {
+        lblPshVal.textContent = `${this.value} hrs / day`;
+        pshBtns.forEach(b => b.classList.toggle('active', parseFloat(b.dataset.psh) === parseFloat(this.value)));
+        calculate();
+      });
+
+      pshBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          pshBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          pshSlider.value = this.dataset.psh;
+          lblPshVal.textContent = `${this.dataset.psh} hrs / day`;
+          calculate();
+        });
+      });
+
+      // Wattage selection
+      wattBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          wattBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          if (this.dataset.w === 'custom') {
+            customWattWrapper.style.display = 'block';
+            panelWattage = parseFloat(customWattInput.value) || 540;
+          } else {
+            customWattWrapper.style.display = 'none';
+            panelWattage = parseFloat(this.dataset.w);
+          }
+          calculate();
+        });
+      });
+
+      customWattInput.addEventListener('input', function() {
+        panelWattage = parseFloat(this.value) || 540;
+        calculate();
+      });
+
+      // Derate slider
+      derateSlider.addEventListener('input', function() {
+        lblDerateVal.textContent = `${this.value}%`;
+        calculate();
+      });
+
+      // Autonomy & Voltage
+      autonomySelect.addEventListener('change', calculate);
+      batVoltageSelect.addEventListener('change', calculate);
+
+      // Calculation Engine Call
+      function calculate() {
+        const mKwh = parseFloat(monthlyInput.value) || 0;
+        const dWh = parseFloat(dailyInput.value) || 0;
+
+        lblDailyEquiv.textContent = `${(mKwh / 30).toFixed(1)} kWh / day`;
+        lblMonthlyEquiv.textContent = `${Math.round((dWh * 30) / 1000)} kWh / month`;
+
+        const res = SolarUtils.calculateSolarPanelSize({
+          systemType,
+          inputMode,
+          monthlyKwh: mKwh,
+          dailyWh: dWh,
+          peakSunHours: parseFloat(pshSlider.value) || 5.0,
+          panelWattage,
+          systemDerateFactorPct: parseFloat(derateSlider.value) || 78,
+          daysOfAutonomy: parseFloat(autonomySelect.value) || 1,
+          batterySystemVoltage: parseFloat(batVoltageSelect.value) || 48
+        });
+
+        if (!res) return;
+        lastResult = res;
+
+        // Populate KPIs
+        kpiArrayKw.textContent = `${res.recommendedSystemSizeKw} kW`;
+        kpiActualArrayKw.textContent = `Actual Array: ${res.actualArraySizeKw} kW DC`;
+        kpiPanelCount.textContent = `${res.panelCount} Panel${res.panelCount === 1 ? '' : 's'}`;
+        kpiPanelDesc.textContent = `@ ${res.singlePanelWattage}W monocrystalline`;
+        kpiRoofSqft.textContent = `${res.roofAreaSqFt} sq ft`;
+        kpiRoofSqm.textContent = `${res.roofAreaSqM} m² unshaded area`;
+        kpiDailyGen.textContent = `${res.dailyKwh} kWh/d`;
+        kpiMonthlyGen.textContent = `~${res.monthlyKwh} kWh / month`;
+
+        // Battery Storage Display
+        if (res.batteryStorage && res.batteryStorage.needed) {
+          batteryKpiCard.style.display = 'block';
+          kpiBatKwh.textContent = `${res.batteryStorage.bankKwh} kWh`;
+          kpiBatAh.textContent = `${res.batteryStorage.bankAh} Ah @ ${res.batteryStorage.systemVoltage}V bank`;
+          kpiMpptAmps.textContent = `${res.batteryStorage.chargeControllerAmps} Amps`;
+        } else {
+          batteryKpiCard.style.display = 'none';
+        }
+
+        // Environmental Impact (approx 1,425 kWh/year per installed kW; 0.7 kg CO2 / kWh)
+        const annualGen = res.actualArraySizeKw * 1425;
+        const annualCo2Kg = annualGen * 0.70;
+        const metricTons = annualCo2Kg / 1000;
+        const trees = Math.round(annualGen * 0.0117);
+
+        envAnnualKwh.textContent = `${Math.round(annualGen).toLocaleString()} kWh / year`;
+        envAnnualCo2.textContent = `${metricTons.toFixed(1)} Metric Tons`;
+        envTrees.textContent = `~${trees} Trees / year`;
+      }
+
+      // Copy Specs
+      btnCopySpecs.addEventListener('click', function() {
+        if (!lastResult) return;
+        const res = lastResult;
+        const lines = [
+          '☀️ SOLAR PHOTOVOLTAIC (PV) SYSTEM SIZING SPECIFICATIONS',
+          '=======================================================',
+          `System Architecture:       ${systemType.toUpperCase()} Solar Array`,
+          `Daily Consumption Target:  ${res.dailyKwh} kWh / day (${res.monthlyKwh} kWh / month)`,
+          `Peak Sun Hours (PSH):      ${res.peakSunHours} hrs / day`,
+          `System Derate Efficiency:  ${res.systemDeratePct}%`,
+          '-------------------------------------------------------',
+          `REQUIRED SOLAR CAPACITY:   ${res.recommendedSystemSizeKw} kW DC`,
+          `RECOMMENDED PANEL COUNT:   ${res.panelCount} panels (@ ${res.singlePanelWattage}W)`,
+          `ACTUAL INSTALLED CAPACITY: ${res.actualArraySizeKw} kW DC`,
+          `ESTIMATED ROOF AREA:       ${res.roofAreaSqFt} sq ft (${res.roofAreaSqM} m²)`,
+          '-------------------------------------------------------'
+        ];
+
+        if (res.batteryStorage && res.batteryStorage.needed) {
+          lines.push(
+            `OFF-GRID BATTERY STORAGE:  ${res.batteryStorage.bankKwh} kWh (${res.batteryStorage.bankAh} Ah @ ${res.batteryStorage.systemVoltage}V)`,
+            `CHARGE CONTROLLER (MPPT):  ${res.batteryStorage.chargeControllerAmps} Amps`,
+            '-------------------------------------------------------'
+          );
+        }
+
+        lines.push(
+          `Estimated Annual Yield:    ~${Math.round(res.actualArraySizeKw * 1425).toLocaleString()} kWh / year`,
+          `Estimated CO2 Offset:      ~${((res.actualArraySizeKw * 1425 * 0.7) / 1000).toFixed(1)} Metric Tons CO2 / year`,
+          '=======================================================',
+          'Calculated 100% in-browser at https://nexivo.com/tools/solar-panel-size-calculator.html'
+        );
+
+        SolarUtils.copyTextToClipboard(lines.join('\n'), btnCopySpecs, 'Specs Copied!');
+      });
+
+      // Reset
+      btnReset.addEventListener('click', function() {
+        sysBtns.forEach(b => b.classList.toggle('active', b.dataset.type === 'ongrid'));
+        systemType = 'ongrid';
+        offgridPanel.style.display = 'none';
+
+        modeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === 'monthly_bill'));
+        inputMode = 'monthly_bill';
+        wrapperMonthly.style.display = 'block';
+        wrapperDaily.style.display = 'none';
+
+        monthlyInput.value = '450';
+        dailyInput.value = '15000';
+
+        pshSlider.value = '5.0';
+        lblPshVal.textContent = '5.0 hrs / day';
+        pshBtns.forEach(b => b.classList.toggle('active', b.dataset.psh === '5.0'));
+
+        wattBtns.forEach(b => b.classList.toggle('active', b.dataset.w === '540'));
+        customWattWrapper.style.display = 'none';
+        panelWattage = 540;
+
+        derateSlider.value = '78';
+        lblDerateVal.textContent = '78%';
+
+        autonomySelect.value = '1';
+        batVoltageSelect.value = '48';
+
+        calculate();
+      });
+
+      // Bind input events
+      monthlyInput.addEventListener('input', calculate);
+      dailyInput.addEventListener('input', calculate);
+
+      // Initial calculation
+      calculate();
+    })();
+  </script>
+</body>
+</html>

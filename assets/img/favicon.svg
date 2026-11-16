@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="fot-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="fot-spark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#67e8f9"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7.5" fill="url(#fot-bg)"/>
+  <!-- Modern Geometric Craft / Wrench Mark -->
+  <path d="M19.8 7.2a4.2 4.2 0 0 0-4.8.9l-1.9 1.9 3.8 3.8 1.9-1.9a4.2 4.2 0 0 0 .9-4.8l-1.5 1.5-1.4-.2-.2-1.4 1.4-1.4a4.1 4.1 0 0 0-2.2.2l-7 7a2.5 2.5 0 0 0 0 3.5l1.6 1.6a2.5 2.5 0 0 0 3.5 0l7-7a4.2 4.2 0 0 0 .2-2.2l-1.4 1.4-.2-1.4 1.4-.2 1.5-1.5z" fill="#ffffff" opacity="0.95"/>
+  <!-- Fast Spark Indicator -->
+  <polygon points="24,19 19,19 22,14 17,14 17,21 21,21 19,26" fill="url(#fot-spark)"/>
+</svg>
